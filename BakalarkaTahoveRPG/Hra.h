@@ -19,7 +19,7 @@ public:
 	void start();
 	void hlavnaSlucka();
 	void zmenStavRozhrania(std::string paStav);
-
+	qwe
 private:
 	
 };
