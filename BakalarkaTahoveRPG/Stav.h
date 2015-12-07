@@ -13,7 +13,7 @@ public:
 	Stav(std::string paNazov, sf::RenderWindow* paOkno,Hra* paHra);
 	virtual ~Stav();
 	virtual void update(double delta);
-	virtual void render(sf::RenderWindow* okno);
+	virtual void render();
 	virtual void onEnter();
 	virtual void onExit();
 	std::string Getnazov();

@@ -29,7 +29,7 @@ void StavVolbaZamerania::onExit() {
 }
 
 
-void StavVolbaZamerania::render(sf::RenderWindow* okno) {
+void StavVolbaZamerania::render() {
 	
 	int i = 60;
 	sf::RectangleShape rectangle;

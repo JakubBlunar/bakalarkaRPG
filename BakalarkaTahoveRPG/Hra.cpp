@@ -60,7 +60,7 @@ void Hra::hlavnaSlucka() {
 
 		stavRozhraniaHry->update(20);
 		okno->clear();
-		stavRozhraniaHry->render(okno);
+		stavRozhraniaHry->render();
 		okno->display();
 	}
 

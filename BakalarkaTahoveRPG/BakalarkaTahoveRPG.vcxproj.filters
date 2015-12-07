@@ -36,6 +36,9 @@
     <ClInclude Include="StavHlavneMenu.h">
       <Filter>Header Files\Stavy</Filter>
     </ClInclude>
+    <ClInclude Include="StavHranieHry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -55,6 +58,9 @@
     </ClCompile>
     <ClCompile Include="StavHlavneMenu.cpp">
       <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="StavHranieHry.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

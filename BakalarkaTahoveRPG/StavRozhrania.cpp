@@ -28,8 +28,8 @@ void StavRozhrania::update(double cas) {
 	aktualnyStav->update(cas);
 }
 
-void StavRozhrania::render(sf::RenderWindow* okno) {
-	aktualnyStav->render(okno);
+void StavRozhrania::render() {
+	aktualnyStav->render();
 }
 
 

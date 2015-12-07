@@ -14,7 +14,7 @@ public:
 
 	void onEnter();
 	void onExit();
-	void render(sf::RenderWindow* okno);
+	void render();
 	void update(double delta);
 
 private:

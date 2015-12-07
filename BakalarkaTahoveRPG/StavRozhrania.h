@@ -12,7 +12,7 @@ public:
 	~StavRozhrania();
 
 	void zmenMapu();
-	void render(sf::RenderWindow* okno);
+	void render();
 	void update(double cas);
 	void pridajStav(Stav* stav);
 	Stav* GetaktualnyStav();

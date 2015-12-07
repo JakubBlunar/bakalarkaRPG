@@ -20,7 +20,7 @@ void Stav::update(double delta) {
 }
 
 
-void Stav::render(sf::RenderWindow* okno) {
+void Stav::render() {
 	
 	std::cout << "Stav " << nazov << " render" << std::endl;
 }

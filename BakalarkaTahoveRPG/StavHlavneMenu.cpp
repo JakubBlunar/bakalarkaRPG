@@ -31,7 +31,7 @@ void StavHlavneMenu::onExit() {
 }
 
 
-void StavHlavneMenu::render(sf::RenderWindow* okno) {
+void StavHlavneMenu::render() {
 
 	for (unsigned int i = 0; i < moznosti.size(); i++)
 	{
