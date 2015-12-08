@@ -1,5 +1,6 @@
 #include "Animacia.h"
 #include <string>
+#include <iostream>
 
 Animacia::Animacia(std::string cesta, int pocetObrazkov, int trvanie, int velkost) {
 	aktObrazok = 0;
@@ -8,9 +9,10 @@ Animacia::Animacia(std::string cesta, int pocetObrazkov, int trvanie, int velkos
 	this->velkostTextury = velkost;
 
 	
-	if (!textura.loadFromFile("image.png", sf::IntRect(0, 0, velkost, velkost)))
+	if (!textura.loadFromFile(cesta, sf::IntRect(0, 0, velkost, velkost)))
 	{
-		// error...
+		std::cout << "Chyba nacitavania textury " << cesta << std::endl;
+		exit(1);
 	}
 
 	obrazok = new sf::Sprite();

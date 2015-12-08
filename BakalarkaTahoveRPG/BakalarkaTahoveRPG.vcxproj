@@ -154,6 +154,7 @@
     <ClInclude Include="StavHranieHry.h" />
     <ClInclude Include="StavRozhrania.h" />
     <ClInclude Include="StavVolbaZamerania.h" />
+    <ClInclude Include="Zameranie.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animacia.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="StavHranieHry.cpp" />
     <ClCompile Include="StavRozhrania.cpp" />
     <ClCompile Include="StavVolbaZamerania.cpp" />
+    <ClCompile Include="Zameranie.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
