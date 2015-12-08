@@ -48,6 +48,9 @@
     <ClInclude Include="StavHranieHry.h">
       <Filter>Header Files\Stavy</Filter>
     </ClInclude>
+    <ClInclude Include="StavPauza.h">
+      <Filter>Header Files\Stavy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -78,6 +81,9 @@
       <Filter>Source Files\Stavy</Filter>
     </ClCompile>
     <ClCompile Include="StavRozhrania.cpp">
+      <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="StavPauza.cpp">
       <Filter>Source Files\Stavy</Filter>
     </ClCompile>
   </ItemGroup>

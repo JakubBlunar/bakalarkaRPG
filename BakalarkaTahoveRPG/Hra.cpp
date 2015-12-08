@@ -3,6 +3,7 @@
 #include "StavVolbaZamerania.h"
 #include "StavHlavneMenu.h"
 #include "StavHranieHry.h"
+#include "StavPauza.h"
 
 #define NAZOV "SUPERRPG"
 
@@ -23,6 +24,10 @@ Hra::Hra() {
 	std::string nazov3 = "hranieHry";
 	Stav* stav3 = new StavHranieHry(nazov3, okno, this);
 	stavRozhraniaHry->pridajStav(stav3);
+
+	std::string nazov4 = "stavPauza";
+	Stav* stav4 = new StavPauza(nazov4, okno, this);
+	stavRozhraniaHry->pridajStav(stav4);
 }
 
 

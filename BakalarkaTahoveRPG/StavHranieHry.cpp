@@ -53,6 +53,11 @@ void StavHranieHry::update(double delta) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		hrac->zmenSmerPohladu(SmerPohladu::dole);
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+		hra->zmenStavRozhrania("stavPauza");
+	}
+
 	/*
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
 		stlacenaKlavesa = false;

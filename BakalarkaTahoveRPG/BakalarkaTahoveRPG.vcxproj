@@ -153,6 +153,7 @@
     <ClInclude Include="Stav.h" />
     <ClInclude Include="StavHlavneMenu.h" />
     <ClInclude Include="StavHranieHry.h" />
+    <ClInclude Include="StavPauza.h" />
     <ClInclude Include="StavRozhrania.h" />
     <ClInclude Include="StavVolbaZamerania.h" />
     <ClInclude Include="Zameranie.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Stav.cpp" />
     <ClCompile Include="StavHlavneMenu.cpp" />
     <ClCompile Include="StavHranieHry.cpp" />
+    <ClCompile Include="StavPauza.cpp" />
     <ClCompile Include="StavRozhrania.cpp" />
     <ClCompile Include="StavVolbaZamerania.cpp" />
     <ClCompile Include="Zameranie.cpp" />
