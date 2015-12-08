@@ -1,11 +1,3 @@
-///////////////////////////////////////////////////////////
-//  Hra.cpp
-//  Implementation of the Class Hra
-//  Created on:      05-12-2015 21:07:41
-//  Original author: Jakub Blunár
-///////////////////////////////////////////////////////////
-
-
 #include "Hra.h"
 #include "StavRozhrania.h"
 #include "StavVolbaZamerania.h"

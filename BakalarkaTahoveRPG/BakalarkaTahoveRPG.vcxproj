@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animacia.h" />
     <ClInclude Include="Hra.h" />
     <ClInclude Include="Stav.h" />
     <ClInclude Include="StavHlavneMenu.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="StavVolbaZamerania.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animacia.cpp" />
     <ClCompile Include="Hra.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Stav.cpp" />
