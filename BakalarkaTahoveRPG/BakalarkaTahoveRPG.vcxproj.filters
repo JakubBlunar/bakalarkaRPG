@@ -24,9 +24,6 @@
     <ClInclude Include="Stav.h">
       <Filter>Header Files\Stavy</Filter>
     </ClInclude>
-    <ClInclude Include="StavRozhrania.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StavVolbaZamerania.h">
       <Filter>Header Files\Stavy</Filter>
     </ClInclude>
@@ -36,14 +33,20 @@
     <ClInclude Include="StavHlavneMenu.h">
       <Filter>Header Files\Stavy</Filter>
     </ClInclude>
-    <ClInclude Include="StavHranieHry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Animacia.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Zameranie.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hrac.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StavRozhrania.h">
+      <Filter>Header Files\Stavy</Filter>
+    </ClInclude>
+    <ClInclude Include="StavHranieHry.h">
+      <Filter>Header Files\Stavy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -56,23 +59,26 @@
     <ClCompile Include="StavVolbaZamerania.cpp">
       <Filter>Source Files\Stavy</Filter>
     </ClCompile>
-    <ClCompile Include="StavRozhrania.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Hra.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StavHlavneMenu.cpp">
       <Filter>Source Files\Stavy</Filter>
     </ClCompile>
-    <ClCompile Include="StavHranieHry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Animacia.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Zameranie.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hrac.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StavHranieHry.cpp">
+      <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="StavRozhrania.cpp">
+      <Filter>Source Files\Stavy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

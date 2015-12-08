@@ -1,5 +1,7 @@
 #include "StavVolbaZamerania.h"
 #include "Hra.h"
+#include "Hrac.h"
+#include "Zameranie.h"
 
 StavVolbaZamerania::StavVolbaZamerania(std::string paNazov, sf::RenderWindow* paOkno,Hra* paHra) : Stav(paNazov,paOkno,paHra) {
 	font = new sf::Font();
@@ -21,6 +23,8 @@ StavVolbaZamerania::~StavVolbaZamerania() {
 
 void StavVolbaZamerania::onEnter() {
 	Stav::onEnter();
+    stlacenaKlavesa = true;
+	
 }
 
 
@@ -81,8 +85,17 @@ void StavVolbaZamerania::update(double delta) {
 		hra->zmenStavRozhrania("hlavneMenu");
 	}
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
+		stlacenaKlavesa = true;
+		Zameranie* zameranie = new Zameranie("Warrior", 1.2, 1.1, 1.3, 1.1, 1.1);
+		zamerania.push_back(zameranie);
 
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		Hrac* hrac = new Hrac(zameranie);
+		hra->SetHrac(hrac);
+		hra->zmenStavRozhrania("hranieHry");
+	}
+
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
 		stlacenaKlavesa = false;
 	}
 

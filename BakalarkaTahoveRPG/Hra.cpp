@@ -2,6 +2,7 @@
 #include "StavRozhrania.h"
 #include "StavVolbaZamerania.h"
 #include "StavHlavneMenu.h"
+#include "StavHranieHry.h"
 
 #define NAZOV "SUPERRPG"
 
@@ -19,8 +20,9 @@ Hra::Hra() {
 	Stav* stav2 = new StavVolbaZamerania(nazov2,okno,this);
 	stavRozhraniaHry->pridajStav(stav2);
 
-	
-
+	std::string nazov3 = "hranieHry";
+	Stav* stav3 = new StavHranieHry(nazov3, okno, this);
+	stavRozhraniaHry->pridajStav(stav3);
 }
 
 
@@ -42,7 +44,6 @@ void Hra::hlavnaSlucka() {
 	while (okno->isOpen())
 	{
 		sf::Event event;
-
 		while (okno->pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
@@ -60,4 +61,13 @@ void Hra::hlavnaSlucka() {
 
 void Hra::zmenStavRozhrania(std::string paStav) {
 	stavRozhraniaHry->zmenStav(paStav);
+}
+
+void Hra::SetHrac(Hrac* paHrac) {
+	hrac = paHrac;
+}
+
+
+Hrac* Hra::GetHrac() {
+	return hrac;
 }

@@ -9,7 +9,7 @@ Animacia::Animacia(std::string cesta, int pocetObrazkov, int trvanie, int velkos
 	this->velkostTextury = velkost;
 
 	
-	if (!textura.loadFromFile(cesta, sf::IntRect(0, 0, velkost, velkost)))
+	if (!textura.loadFromFile(cesta, sf::IntRect(0, 0, velkost*pocetObrazkov, velkost)))
 	{
 		std::cout << "Chyba nacitavania textury " << cesta << std::endl;
 		exit(1);
@@ -17,7 +17,7 @@ Animacia::Animacia(std::string cesta, int pocetObrazkov, int trvanie, int velkos
 
 	obrazok = new sf::Sprite();
 	obrazok->setTexture(textura);
-	obrazok->setTextureRect(sf::IntRect(aktObrazok*velkost, 0, aktObrazok*velkost + velkost, velkost));
+	obrazok->setTextureRect(sf::IntRect(aktObrazok*velkost, 0, velkost, velkost));
 
 }
 
@@ -26,7 +26,7 @@ Animacia::~Animacia() {
 }
 
 sf::Sprite* Animacia::dajObrazok() {
-	obrazok->setTextureRect(sf::IntRect(aktObrazok*velkostTextury, 0, aktObrazok*velkostTextury + velkostTextury, velkostTextury));
+	obrazok->setTextureRect(sf::IntRect(aktObrazok*velkostTextury, 0, velkostTextury, velkostTextury));
 	return obrazok;
 }
 
@@ -39,4 +39,11 @@ void Animacia::reset() {
 
 void Animacia::tick() {
 	trvanieCounter++;
+	if (trvanieCounter >= trvanie) {
+		aktObrazok++;
+		if (aktObrazok >= pocetObrazkov) {
+			aktObrazok = 0;
+		}
+		trvanieCounter = 0;
+	}
 }

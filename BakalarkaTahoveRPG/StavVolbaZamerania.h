@@ -1,6 +1,10 @@
 #pragma once
+#include <vector>
 #include <iostream>
 #include "Stav.h"
+
+
+class Zameranie;
 
 class StavVolbaZamerania : public Stav
 {
@@ -17,5 +21,5 @@ private:
 	sf::Font* font;
 	signed int oznacene;
 	bool stlacenaKlavesa;
-
+	std::vector<Zameranie*> zamerania;
 };
