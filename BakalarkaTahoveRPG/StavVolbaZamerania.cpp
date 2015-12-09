@@ -2,6 +2,8 @@
 #include "Hra.h"
 #include "Hrac.h"
 #include "Zameranie.h"
+#include "StavHranieHry.h"
+#include "Mapa.h"
 
 StavVolbaZamerania::StavVolbaZamerania(std::string paNazov, sf::RenderWindow* paOkno,Hra* paHra) : Stav(paNazov,paOkno,paHra) {
 	font = new sf::Font();
@@ -92,7 +94,12 @@ void StavVolbaZamerania::update(double delta) {
 
 		Hrac* hrac = new Hrac(zameranie);
 		hra->SetHrac(hrac);
+		
+		StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
+		stav->getMapa()->setHrac(hrac);
+		
 		hra->zmenStavRozhrania("hranieHry");
+		
 	}
 
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {

@@ -14,7 +14,8 @@ enum SmerPohladu
 	hore,
 	dole,
 	vlavo,
-	vpravo
+	vpravo,
+	stoji
 };
 
 class Hrac
@@ -28,6 +29,18 @@ public:
 	void render(sf::RenderWindow* paOkno);
 	void update(double delta);
 	void zmenSmerPohladu(SmerPohladu smer);
+	void posun(int x, int y);
+	void animaciaTick();
+
+	void chodVpravo();
+	void chodVlavo();
+	void chodHore();
+	void chodDole();
+	bool GethybeSa();
+
+	void setPolickoX(int paX);
+	void setPolickoY(int paY);
+	
 
 	int GetoffsetX();
 	int GetoffsetY();
@@ -51,6 +64,10 @@ private:
 	int polickoY;
 	int offsetX;
 	int offsetY;
+
+	SmerPohladu smerPohybu;
+	bool hybeSa;
+	int pohybDelta;
 
 };
 

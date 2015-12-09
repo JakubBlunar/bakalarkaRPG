@@ -10,21 +10,32 @@ class Mapa
 {
 
 public:
-	Mapa();
+	Mapa(Hrac* hrac);
 	~Mapa();
 	//Policko *m_Policko;
 	//Npc *m_Npc;
+	void setHrac(Hrac* paHrac);
 
-	void posun(int posunY, int posunX);
+	void posunVpravo();
+	void posunVlavo();
+	void posunHore();
+	void posunDole();
+	int Getsmerpohybu();
+
+	void posun(int posunX, int posunY);
 	void render(sf::RenderWindow* okno);
-	void update();
+	void update(double delta);
 
 private:
 	Hrac* hrac;
 	Policko* mapa[100][100];
 	int sirka;
 	int vyska;
+
 	int posunX;
 	int posunY;
+	bool hybeSa;
+	int pohybDelta;
+	int smerPohybu;
 
 };

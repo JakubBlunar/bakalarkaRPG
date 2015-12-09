@@ -17,6 +17,7 @@ public:
 	void render();
 	//void Setmapa(Mapa newVal);
 	void update(double delta);
+	Mapa* getMapa();
 
 private:
 	Mapa* mapa;

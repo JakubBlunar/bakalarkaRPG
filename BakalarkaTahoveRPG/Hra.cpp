@@ -77,3 +77,6 @@ Hrac* Hra::GetHrac() {
 	return hrac;
 }
 
+Stav* Hra::dajStav(std::string stav) {
+	return stavRozhraniaHry->dajStav(stav);
+}
