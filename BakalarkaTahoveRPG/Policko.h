@@ -9,7 +9,7 @@ class Policko
 
 public:
 	Policko(bool paPriechodne);
-	virtual ~Policko();
+	~Policko();
 
 	void hracSkok(Hrac* hrac);
 	void interakcia(Hrac* hrac);
