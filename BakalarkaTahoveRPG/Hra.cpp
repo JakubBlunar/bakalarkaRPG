@@ -76,3 +76,4 @@ void Hra::SetHrac(Hrac* paHrac) {
 Hrac* Hra::GetHrac() {
 	return hrac;
 }
+

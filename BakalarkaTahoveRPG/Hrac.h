@@ -29,6 +29,11 @@ public:
 	void update(double delta);
 	void zmenSmerPohladu(SmerPohladu smer);
 
+	int GetoffsetX();
+	int GetoffsetY();
+	int GetpolickoX();
+	int GetpolickoY();
+
 private:
 	Animacia* animaciaDole;
 	Animacia* animaciaHore;
@@ -42,4 +47,10 @@ private:
 	//Statistika statistika;
 	Zameranie* zameranie;
 
+	int polickoX;
+	int polickoY;
+	int offsetX;
+	int offsetY;
+
 };
+

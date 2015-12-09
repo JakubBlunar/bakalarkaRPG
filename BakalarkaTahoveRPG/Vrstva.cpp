@@ -25,7 +25,7 @@ sf::Sprite* Vrstva::Getobrazok() {
 }
 
 
-void Vrstva::Setobrazok(sf::Texture newVal) {
-	obrazok->setTexture(newVal);
+void Vrstva::Setobrazok(sf::Texture* newVal) {
+	obrazok->setTexture(*newVal);
 	obrazok->setTextureRect(sf::IntRect(0, 0, velkost, velkost));
 }

@@ -38,7 +38,7 @@ bool Policko::jePrechodne() {
 	return priechodne;
 }
 
-void Policko::nastavTexturu(sf::Texture paTextura, int poradie) {
+void Policko::nastavTexturu(sf::Texture* paTextura, int poradie) {
 	vrstvy[poradie]->Setobrazok(paTextura);
 }
 

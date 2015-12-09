@@ -11,6 +11,7 @@ Hrac::Hrac(Zameranie* paZameranie) {
 	animaciaVlavo = new Animacia("Data/Grafika/Hrac/Animacia/hrac_vlavo.png", 4, 10, 32);
 	animaciaVpravo = new Animacia("Data/Grafika/Hrac/Animacia/hrac_vpravo.png", 4, 10, 32);
 	smerPohladu = SmerPohladu::dole;
+	
 
 }
 
@@ -49,7 +50,7 @@ void Hrac::render(sf::RenderWindow* paOkno) {
 		obrazok = animaciaVpravo->dajObrazok();
 	}
 
-	obrazok->setPosition(sf::Vector2f(10.f, 10.f));
+	obrazok->setPosition(sf::Vector2f(0, 0));
 
 	paOkno->draw(*obrazok);
 }
@@ -99,4 +100,22 @@ void Hrac::zmenSmerPohladu(SmerPohladu paSmer) {
 	}
 
 	
+}
+
+
+
+int Hrac::GetoffsetX() {
+	return offsetX;
+}
+
+int Hrac::GetoffsetY() {
+	return offsetY;
+}
+
+int Hrac::GetpolickoX() {
+	return polickoX;
+}
+
+int Hrac::GetpolickoY() {
+	return polickoY;
 }

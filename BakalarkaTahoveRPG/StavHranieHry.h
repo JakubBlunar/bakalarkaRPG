@@ -2,6 +2,8 @@
 
 
 #include "Stav.h"
+class Mapa;
+
 
 class StavHranieHry : public Stav
 {
@@ -17,7 +19,10 @@ public:
 	void update(double delta);
 
 private:
-	//Mapa mapa;
+	Mapa* mapa;
+	int posHracaX;
+	int posHracaY;
+
 
 
 };

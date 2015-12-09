@@ -64,7 +64,7 @@
       <Filter>Header Files\Mapa</Filter>
     </ClInclude>
     <ClInclude Include="Mapa.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Mapa</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -108,7 +108,7 @@
       <Filter>Source Files\Mapa</Filter>
     </ClCompile>
     <ClCompile Include="Mapa.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Mapa</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

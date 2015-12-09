@@ -1,10 +1,11 @@
 #include "StavHranieHry.h"
 #include "Hra.h"
 #include "Hrac.h"
+#include "Mapa.h"
 
 StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra)
 {
-
+	mapa = new Mapa();
 }
 
 
@@ -24,6 +25,7 @@ void StavHranieHry::onExit() {
 
 
 void StavHranieHry::render() {
+	mapa->render(okno);
 	hra->GetHrac()->render(okno);
 }
 
@@ -39,19 +41,24 @@ void StavHranieHry::update(double delta) {
 	
 	Hrac* hrac = hra->GetHrac();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+
 		hrac->zmenSmerPohladu(SmerPohladu::vlavo);
+		mapa->posun(1,0);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		hrac->zmenSmerPohladu(SmerPohladu::vpravo);
+		mapa->posun(-1, 0);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		hrac->zmenSmerPohladu(SmerPohladu::hore);
+		mapa->posun(0, 1);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		hrac->zmenSmerPohladu(SmerPohladu::dole);
+		mapa->posun(0, -1);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
