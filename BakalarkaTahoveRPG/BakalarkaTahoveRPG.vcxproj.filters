@@ -60,6 +60,9 @@
     <ClInclude Include="Vrstva.h">
       <Filter>Header Files\Mapa</Filter>
     </ClInclude>
+    <ClInclude Include="Policko.h">
+      <Filter>Header Files\Mapa</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,6 +99,9 @@
       <Filter>Source Files\Stavy</Filter>
     </ClCompile>
     <ClCompile Include="Vrstva.cpp">
+      <Filter>Source Files\Mapa</Filter>
+    </ClCompile>
+    <ClCompile Include="Policko.cpp">
       <Filter>Source Files\Mapa</Filter>
     </ClCompile>
   </ItemGroup>

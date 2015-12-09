@@ -150,6 +150,7 @@
     <ClInclude Include="Animacia.h" />
     <ClInclude Include="Hra.h" />
     <ClInclude Include="Hrac.h" />
+    <ClInclude Include="Policko.h" />
     <ClInclude Include="Stav.h" />
     <ClInclude Include="StavHlavneMenu.h" />
     <ClInclude Include="StavHranieHry.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Hra.cpp" />
     <ClCompile Include="Hrac.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Policko.cpp" />
     <ClCompile Include="Stav.cpp" />
     <ClCompile Include="StavHlavneMenu.cpp" />
     <ClCompile Include="StavHranieHry.cpp" />
