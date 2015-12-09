@@ -4,7 +4,7 @@
 Policko::Policko(bool paPriechodne) {
 	priechodne = paPriechodne;
 
-	for (int i = 0; i < vrstvy.size(); i++) {
+	for (unsigned int i = 0; i < (unsigned int)vrstvy.size(); i++) {
 		vrstvy[i] = new Vrstva(32);
 	}
 }
@@ -12,7 +12,7 @@ Policko::Policko(bool paPriechodne) {
 
 
 Policko::~Policko() {
-	for (int i = 0; i < vrstvy.size(); i++) {
+	for (unsigned int i = 0; i < (unsigned int)vrstvy.size(); i++) {
 		delete(vrstvy[i]);
 	}
 }
