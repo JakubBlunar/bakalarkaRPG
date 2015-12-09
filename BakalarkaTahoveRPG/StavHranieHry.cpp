@@ -28,9 +28,6 @@ void StavHranieHry::onExit() {
 
 void StavHranieHry::render() {
 	mapa->render(okno);
-	hra->GetHrac()->render(okno);
-
-	
 }
 
 /*
@@ -66,8 +63,8 @@ void StavHranieHry::update(double delta) {
 		
 		if (!hrac->GethybeSa() && mapa->Getsmerpohybu() ==0 ) {
 			hrac->zmenSmerPohladu(SmerPohladu::vpravo);
-			if (hrac->GetpolickoX() < 100 - 1) {
-				if (hrac->GetoffsetX() < okno->getSize().x - RAMCEK) {
+			if (hrac->GetpolickoX() < mapa->Getsirka()-1) {
+				if ((signed int)hrac->GetoffsetX() < (signed int)okno->getSize().x - RAMCEK) {
 					hrac->chodVpravo();
 				}
 				else {
@@ -97,7 +94,7 @@ void StavHranieHry::update(double delta) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
 			hrac->zmenSmerPohladu(SmerPohladu::dole);
-			if (hrac->GetpolickoY() < 100- 1) {
+			if (hrac->GetpolickoY() < mapa->Getvyska()-1) {
 				if ((signed int)hrac->GetoffsetY() < (signed int)okno->getSize().y-RAMCEK) {
 					hrac->chodDole();
 				}

@@ -15,6 +15,9 @@ public:
 	//Policko *m_Policko;
 	//Npc *m_Npc;
 	void setHrac(Hrac* paHrac);
+	int Getvyska();
+	int Getsirka();
+
 
 	void posunVpravo();
 	void posunVlavo();
@@ -29,6 +32,7 @@ public:
 private:
 	Hrac* hrac;
 	Policko* mapa[100][100];
+	
 	int sirka;
 	int vyska;
 

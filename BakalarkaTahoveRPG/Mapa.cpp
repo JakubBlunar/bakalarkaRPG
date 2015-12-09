@@ -13,23 +13,32 @@ Mapa::Mapa(Hrac* hrac) {
 
 
 
-	int rozmer = 100;
+	sirka = 35;
+	vyska = 35;
 
-	for (int i = 0; i < rozmer; i++)
+	for (int i = 0; i < sirka; i++)
 	{
-		for (int j = 0; j < rozmer; j++)
+		for (int j = 0; j < vyska; j++)
 		{
 			mapa[i][j] = new Policko(true);
 			mapa[i][j]->nastavTexturu(textura, 0);
 		}
 	}
 
+	mapa[1][0]->nastavTexturu(textura, 2);
 }
 
 
 
 Mapa::~Mapa() {
-	
+	for (int i = 0; i < sirka; i++)
+	{
+		for (int j = 0; j < vyska; j++)
+		{
+			delete mapa[i][j];
+			
+		}
+	}
 }
 
 
@@ -50,10 +59,13 @@ void Mapa::render(sf::RenderWindow* okno) {
 
 	for (int vrstva = 0; vrstva < 4; vrstva++) {
 
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < sirka; i++)
 		{
-			for (int j = 0; j < 100; j++)
+			for (int j = 0; j < vyska; j++)
 			{
+				if (vrstva == 1) {
+					hrac->render(okno);
+				}
 				sprite = mapa[i][j]->dajObrazokVrstvy(vrstva);
 				sprite->setPosition(sf::Vector2f(32.f * i + posunX, 32.f * j+posunY));
 				okno->draw(*sprite);
@@ -150,4 +162,13 @@ void Mapa::posunDole() {
 
 int Mapa::Getsmerpohybu() {
 	return smerPohybu;
+}
+
+int Mapa::Getvyska() {
+	return vyska;
+}
+
+
+int Mapa::Getsirka() {
+	return sirka;
 }

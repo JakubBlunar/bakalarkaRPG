@@ -53,7 +53,7 @@ void Hrac::render(sf::RenderWindow* paOkno) {
 		obrazok = animaciaVpravo->dajObrazok();
 	}
 
-	obrazok->setPosition(sf::Vector2f(offsetX, offsetY));
+	obrazok->setPosition(sf::Vector2f(offsetX+0.f, offsetY+0.f));
 
 	paOkno->draw(*obrazok);
 }
