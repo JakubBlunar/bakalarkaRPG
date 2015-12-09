@@ -2,8 +2,12 @@
 #include "Vrstva.h"
 
 
-Vrstva::Vrstva() {
+Vrstva::Vrstva(sf::Texture paTextura, bool paPriechodna, int paVelkost){
 	obrazok = new sf::Sprite();
+	velkost = paVelkost;
+	priechodna = paPriechodna;
+	obrazok->setTexture(paTextura);
+	obrazok->setTextureRect(sf::IntRect(0, 0, velkost, velkost));
 }
 
 

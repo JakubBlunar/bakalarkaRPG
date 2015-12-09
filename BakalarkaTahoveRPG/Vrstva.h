@@ -5,7 +5,7 @@ class Vrstva
 {
 
 public:
-	Vrstva();
+	Vrstva(sf::Texture paTextura,bool paPriechodna,int paVelkost);
 	virtual ~Vrstva();
 
 	sf::Sprite* Getobrazok();

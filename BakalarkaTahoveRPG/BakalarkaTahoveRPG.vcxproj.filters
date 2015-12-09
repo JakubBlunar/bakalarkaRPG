@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Stavy">
       <UniqueIdentifier>{0d991cd9-acbf-4123-8507-849356c753fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Mapa">
+      <UniqueIdentifier>{35e35e2f-12af-41d5-9f64-7ca9f1dce236}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Mapa">
+      <UniqueIdentifier>{e10837fa-c6f7-4311-a098-bc0b653c3e4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stav.h">
@@ -52,7 +58,7 @@
       <Filter>Header Files\Stavy</Filter>
     </ClInclude>
     <ClInclude Include="Vrstva.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Mapa</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -90,7 +96,7 @@
       <Filter>Source Files\Stavy</Filter>
     </ClCompile>
     <ClCompile Include="Vrstva.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Mapa</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
