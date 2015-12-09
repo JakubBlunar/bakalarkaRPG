@@ -156,6 +156,7 @@
     <ClInclude Include="StavPauza.h" />
     <ClInclude Include="StavRozhrania.h" />
     <ClInclude Include="StavVolbaZamerania.h" />
+    <ClInclude Include="Vrstva.h" />
     <ClInclude Include="Zameranie.h" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +170,7 @@
     <ClCompile Include="StavPauza.cpp" />
     <ClCompile Include="StavRozhrania.cpp" />
     <ClCompile Include="StavVolbaZamerania.cpp" />
+    <ClCompile Include="Vrstva.cpp" />
     <ClCompile Include="Zameranie.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

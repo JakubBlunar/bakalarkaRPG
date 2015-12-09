@@ -51,6 +51,9 @@
     <ClInclude Include="StavPauza.h">
       <Filter>Header Files\Stavy</Filter>
     </ClInclude>
+    <ClInclude Include="Vrstva.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -85,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="StavPauza.cpp">
       <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Vrstva.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
