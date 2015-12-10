@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Mapa">
       <UniqueIdentifier>{e10837fa-c6f7-4311-a098-bc0b653c3e4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Json">
+      <UniqueIdentifier>{f6b5b60f-bf19-4eec-82aa-692561fe35c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Json">
+      <UniqueIdentifier>{86d57cb4-e101-4f5a-a8c2-d04200c0076a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stav.h">
@@ -65,6 +71,12 @@
     </ClInclude>
     <ClInclude Include="Mapa.h">
       <Filter>Header Files\Mapa</Filter>
+    </ClInclude>
+    <ClInclude Include="json.h">
+      <Filter>Header Files\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="json-forwards.h">
+      <Filter>Header Files\Json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="Mapa.cpp">
       <Filter>Source Files\Mapa</Filter>
+    </ClCompile>
+    <ClCompile Include="json.cpp">
+      <Filter>Source Files\Json</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
