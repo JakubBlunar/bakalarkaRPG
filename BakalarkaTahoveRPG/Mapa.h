@@ -19,7 +19,7 @@ public:
 	int Getvyska();
 	int Getsirka();
 
-
+	bool jeMoznyPohyb(int x, int y);
 	void posunVpravo();
 	void posunVlavo();
 	void posunHore();

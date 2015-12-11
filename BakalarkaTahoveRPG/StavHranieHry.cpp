@@ -47,7 +47,7 @@ void StavHranieHry::update(double delta) {
 		
 		if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
 			hrac->zmenSmerPohladu(SmerPohladu::vlavo);
-			if (hrac->GetpolickoX() > 0) {
+			if (mapa->jeMoznyPohyb(hrac->GetpolickoX()-1,hrac->GetpolickoY()) ) {
 				if (hrac->GetoffsetX() > RAMCEK) {
 					hrac->chodVlavo();
 				}
@@ -64,7 +64,7 @@ void StavHranieHry::update(double delta) {
 		
 		if (!hrac->GethybeSa() && mapa->Getsmerpohybu() ==0 ) {
 			hrac->zmenSmerPohladu(SmerPohladu::vpravo);
-			if (hrac->GetpolickoX() < mapa->Getsirka()-1) {
+			if (mapa->jeMoznyPohyb(hrac->GetpolickoX() +1, hrac->GetpolickoY())) {
 				if ((signed int)hrac->GetoffsetX() < (signed int)okno->getSize().x - RAMCEK) {
 					hrac->chodVpravo();
 				}
@@ -81,7 +81,7 @@ void StavHranieHry::update(double delta) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
 			hrac->zmenSmerPohladu(SmerPohladu::hore);
-			if (hrac->GetpolickoY() > 0) {
+			if (mapa->jeMoznyPohyb(hrac->GetpolickoX(),hrac->GetpolickoY() - 1)) {
 				if (hrac->GetoffsetY() > RAMCEK) {
 					hrac->chodHore();
 				}
@@ -95,7 +95,7 @@ void StavHranieHry::update(double delta) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
 			hrac->zmenSmerPohladu(SmerPohladu::dole);
-			if (hrac->GetpolickoY() < mapa->Getvyska()-1) {
+			if (mapa->jeMoznyPohyb(hrac->GetpolickoX(), hrac->GetpolickoY() +1)) {
 				if ((signed int)hrac->GetoffsetY() < (signed int)okno->getSize().y-RAMCEK) {
 					hrac->chodDole();
 				}

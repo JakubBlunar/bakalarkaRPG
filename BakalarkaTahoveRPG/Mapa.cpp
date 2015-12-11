@@ -8,8 +8,9 @@
 
 Mapa::Mapa(Hrac* paHrac) {
 	this->hrac = paHrac;
-
 	nacitajMapu("mapa1");
+
+
 }
 
 
@@ -158,22 +159,20 @@ int Mapa::Getsirka() {
 }
 
 
+bool Mapa::jeMoznyPohyb(int x, int y) {
+	if (x < 0 || x >= sirka || y < 0 || y >= vyska) {
+		return false;
+	}
+
+	return mapa[x][y]->jePrechodne();
+}
+
+
 void Mapa::nacitajMapu(std::string paMeno) {
 
 	std::map<int, sf::Texture*> textury;
 
 	std::string cestaKMapam = "Data/Mapy/";
-
-
-	/*
-	for (int i = 0; i < sirka; i++)
-	{
-	for (int j = 0; j < vyska; j++)
-	{
-	
-	}
-	}*/
-
 
 	bool alive = true;
 	while (alive) {
