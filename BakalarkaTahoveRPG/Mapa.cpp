@@ -2,30 +2,14 @@
 #include "Policko.h"
 #include "Hrac.h"
 #include <iostream>
+#include "json.h"
+#include <fstream>
+#include <map>
 
-Mapa::Mapa(Hrac* hrac) {
-	this->hrac = hrac;
+Mapa::Mapa(Hrac* paHrac) {
+	this->hrac = paHrac;
 
-	sf::Texture* textura = new sf::Texture();
-	if (!textura->loadFromFile("Data/Grafika/Mapa/Textury/trava1.png", sf::IntRect(0, 0, 32, 32))) {
-		std::cout << "Chyba nahravania textury policka" << std::endl;
-	}
-
-
-
-	sirka = 35;
-	vyska = 35;
-
-	for (int i = 0; i < sirka; i++)
-	{
-		for (int j = 0; j < vyska; j++)
-		{
-			mapa[i][j] = new Policko(true);
-			mapa[i][j]->nastavTexturu(textura, 0);
-		}
-	}
-
-	mapa[1][0]->nastavTexturu(textura, 2);
+	nacitajMapu("mapa1");
 }
 
 
@@ -171,4 +155,96 @@ int Mapa::Getvyska() {
 
 int Mapa::Getsirka() {
 	return sirka;
+}
+
+
+void Mapa::nacitajMapu(std::string paMeno) {
+
+	std::map<int, sf::Texture*> textury;
+
+	std::string cestaKMapam = "Data/Mapy/";
+
+
+	/*
+	for (int i = 0; i < sirka; i++)
+	{
+	for (int j = 0; j < vyska; j++)
+	{
+	
+	}
+	}*/
+
+
+	bool alive = true;
+	while (alive) {
+
+		Json::Value root;   // will contains the root value after parsing.
+		Json::Reader reader;
+		std::ifstream test(cestaKMapam+""+paMeno+"/"+paMeno+".json", std::ifstream::binary);
+		std::cout << cestaKMapam + "" + paMeno + "/" + paMeno + ".json" << std::endl;
+		bool parsingSuccessful = reader.parse(test, root, false);
+
+		if (!parsingSuccessful)
+		{
+			std::cout << "chyba pri parsovani Jsonu" << "\n";
+		}
+
+		vyska = root["height"].asInt();
+		sirka = root["width"].asInt();
+
+		Json::Value objekt(Json::objectValue);
+		objekt = root["tiles"];
+
+		for (Json::Value::iterator it = objekt.begin(); it != objekt.end(); ++it)
+
+		{
+
+			Json::Value key = it.key();
+
+			Json::Value value = (*it);
+
+			std::string menoTextury = value["image"].asCString();
+			int id = atoi(key.asCString());
+
+			textury[id+1] = new sf::Texture() ;
+			if (!textury[id+1]->loadFromFile(cestaKMapam+""+paMeno+"/"+menoTextury, sf::IntRect(0, 0, 32, 32))) {
+				std::cout << "Chyba nahravania textury policka" << std::endl;
+			}
+		}
+
+		for (int i = 0; i < vyska; i++) {
+			for (int j = 0; j < sirka; j++)
+			{
+				
+				
+				int idTextury1 = root["Vrstva1"][i*vyska + j].asInt();
+				int idTextury2 = root["Vrstva2"][i*vyska + j].asInt();
+				int idTextury3 = root["Vrstva3"][i*vyska + j].asInt();
+				
+				if (idTextury2 != 0) {
+					mapa[j][i] = new Policko(false);
+				}
+				else {
+
+					mapa[j][i] = new Policko(true);
+				}
+
+
+				if (idTextury1 != 0) {
+					mapa[j][i]->nastavTexturu(textury[idTextury1], 0);
+				}
+				if (idTextury2 != 0) {
+					mapa[j][i]->nastavTexturu(textury[idTextury2], 1);
+				}
+				if(idTextury3!= 0){
+					mapa[j][i]->nastavTexturu(textury[idTextury3], 2);
+				}
+
+			}
+
+		}
+		
+		alive = false;
+	}
+
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
+#include <string>
 
 class Policko;
 class Hrac;
@@ -10,7 +11,7 @@ class Mapa
 {
 
 public:
-	Mapa(Hrac* hrac);
+	Mapa(Hrac* paHrac);
 	~Mapa();
 	//Policko *m_Policko;
 	//Npc *m_Npc;
@@ -28,6 +29,8 @@ public:
 	void posun(int posunX, int posunY);
 	void render(sf::RenderWindow* okno);
 	void update(double delta);
+
+	void nacitajMapu(std::string paCesta);
 
 private:
 	Hrac* hrac;

@@ -3,6 +3,7 @@
 #include "Hrac.h"
 #include "Mapa.h"
 
+
 #define RAMCEK 96
 
 StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra)
