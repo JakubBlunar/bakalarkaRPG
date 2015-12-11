@@ -6,9 +6,9 @@
 #include <fstream>
 #include <map>
 
-Mapa::Mapa(Hrac* paHrac) {
+Mapa::Mapa(std::string menoMapy,Hrac* paHrac) {
 	this->hrac = paHrac;
-	nacitajMapu("mapa1");
+	nacitajMapu(menoMapy);
 
 
 }

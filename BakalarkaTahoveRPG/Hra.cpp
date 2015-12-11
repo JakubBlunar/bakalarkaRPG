@@ -22,7 +22,7 @@ Hra::Hra() {
 	stavRozhraniaHry->pridajStav(stav2);
 
 	std::string nazov3 = "hranieHry";
-	Stav* stav3 = new StavHranieHry(nazov3, okno, this);
+	Stav* stav3 = new StavHranieHry(nazov3, okno, this,nullptr);
 	stavRozhraniaHry->pridajStav(stav3);
 
 	std::string nazov4 = "stavPauza";

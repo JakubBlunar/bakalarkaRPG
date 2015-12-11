@@ -11,7 +11,7 @@ class Mapa
 {
 
 public:
-	Mapa(Hrac* paHrac);
+	Mapa(std::string menoMapy,Hrac* paHrac);
 	~Mapa();
 	//Policko *m_Policko;
 	//Npc *m_Npc;

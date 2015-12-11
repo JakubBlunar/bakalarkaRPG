@@ -6,9 +6,9 @@
 
 #define RAMCEK 96
 
-StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra)
+StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra, Mapa* paMapa) : Stav(paNazov, paOkno, paHra)
 {
-	mapa = new Mapa(hra->GetHrac());
+	mapa = paMapa;
 }
 
 
@@ -31,12 +31,11 @@ void StavHranieHry::render() {
 	mapa->render(okno);
 }
 
-/*
-void StavHranieHry::Setmapa(Mapa newVal) {
+void StavHranieHry::Setmapa(Mapa* newVal) {
 
 	mapa = newVal;
 }
-*/
+
 
 
 void StavHranieHry::update(double delta) {
