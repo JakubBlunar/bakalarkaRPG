@@ -51,6 +51,10 @@ void Hra::hlavnaSlucka() {
 	const sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+	
+	
+	sf::Clock cas;
+	
 
 	while (okno->isOpen())
 	{
@@ -69,6 +73,9 @@ void Hra::hlavnaSlucka() {
 			timeSinceLastUpdate -= TimePerFrame;
 		}
 
+		float Framerate = 1.f / cas.getElapsedTime().asSeconds();
+		cas.restart();
+		std::cout << "FPS= " << Framerate << std::endl;
 
 		stavRozhraniaHry->update(20);
 		okno->clear();

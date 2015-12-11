@@ -43,22 +43,22 @@ void Mapa::render(sf::RenderWindow* okno) {
 	sf::Sprite* sprite;
 
 	//od akeho policka po ake policko sa ma vykreslovat mapa
-	int odX = (int)(hrac->GetpolickoX() - 33 * (1.0*hrac->GetoffsetX() / okno->getSize().x)-1);
+	int odX = (int)(hrac->GetpolickoX() - 34 * (1.0*hrac->GetoffsetX() / okno->getSize().x)-2);
 	if (odX <0) {
 		odX = 0;
 	}
 
-	int doX = (int)(hrac->GetpolickoX() + 33*(1-(1.0*hrac->GetoffsetX()/okno->getSize().x ))+1);
+	int doX = (int)(hrac->GetpolickoX() + 34 *(1-(1.0*hrac->GetoffsetX()/okno->getSize().x ))+2);
 	if (doX >= sirka) {
 		doX = sirka - 1;
 	}
 
-	int odY = (int)(hrac->GetpolickoY() - 25 * (1.0*hrac->GetoffsetY() / okno->getSize().y) - 1);
+	int odY = (int)(hrac->GetpolickoY() - 24 * (1.0*hrac->GetoffsetY() / okno->getSize().y) - 1);
 	if (odY <0) {
 		odY = 0;
 	}
 	
-	int doY = (int)(hrac->GetpolickoY() + 25 * (1 - (1.0*hrac->GetoffsetY() / okno->getSize().y)) + 1);
+	int doY = (int)(hrac->GetpolickoY() + 24 * (1 - (1.0*hrac->GetoffsetY() / okno->getSize().y)) + 1);
 	if (doY >= vyska) {
 		doY = vyska - 1;
 	}
