@@ -7,6 +7,8 @@
 
 #define NAZOV "SUPERRPG"
 
+
+
 Hra::Hra() {
 
 	okno = new sf::RenderWindow(sf::VideoMode(1024, 768), NAZOV);
@@ -46,7 +48,10 @@ void Hra::start() {
 
 
 void Hra::hlavnaSlucka() {
-	
+	const sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
+	sf::Clock clock;
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
 	while (okno->isOpen())
 	{
 		sf::Event event;
@@ -56,6 +61,14 @@ void Hra::hlavnaSlucka() {
 				okno->close();
 				
 		}
+
+		sf::Time elapsedTime = clock.restart();
+		timeSinceLastUpdate += elapsedTime;
+		while (timeSinceLastUpdate > TimePerFrame)
+		{
+			timeSinceLastUpdate -= TimePerFrame;
+		}
+
 
 		stavRozhraniaHry->update(20);
 		okno->clear();
