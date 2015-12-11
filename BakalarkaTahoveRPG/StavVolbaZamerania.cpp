@@ -67,7 +67,7 @@ void StavVolbaZamerania::render() {
 
 
 void StavVolbaZamerania::update(double delta) {
-	
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !stlacenaKlavesa) {
 		stlacenaKlavesa = true;
 		if (oznacene > 1) {
@@ -94,9 +94,8 @@ void StavVolbaZamerania::update(double delta) {
 
 		Hrac* hrac = new Hrac(zameranie);
 		hra->SetHrac(hrac);
-		
 		StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
-		stav->Setmapa(new Mapa("mapa1",hrac));
+		stav->Setmapa(new Mapa("mapa2",hrac));
 		
 		hra->zmenStavRozhrania("hranieHry");
 		

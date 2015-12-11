@@ -5,7 +5,6 @@
 
 class Policko;
 class Hrac;
-//#include "Npc.h"
 
 class Mapa
 {
@@ -13,8 +12,7 @@ class Mapa
 public:
 	Mapa(std::string menoMapy,Hrac* paHrac);
 	~Mapa();
-	//Policko *m_Policko;
-	//Npc *m_Npc;
+
 	void setHrac(Hrac* paHrac);
 	int Getvyska();
 	int Getsirka();
@@ -26,6 +24,7 @@ public:
 	void posunDole();
 	int Getsmerpohybu();
 
+	void posunHracaNaPolicko(int x, int y);
 	void posun(int posunX, int posunY);
 	void render(sf::RenderWindow* okno);
 	void update(double delta);
@@ -35,7 +34,8 @@ public:
 private:
 	Hrac* hrac;
 	Policko* mapa[100][100];
-	
+	std::map<int, sf::Texture*> textury;
+
 	int sirka;
 	int vyska;
 

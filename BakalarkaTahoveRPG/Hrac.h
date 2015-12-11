@@ -40,7 +40,8 @@ public:
 
 	void setPolickoX(int paX);
 	void setPolickoY(int paY);
-	
+	void setOffsetX(int paX);
+	void setOffsetY(int pax);
 
 	int GetoffsetX();
 	int GetoffsetY();

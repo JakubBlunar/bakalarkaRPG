@@ -10,6 +10,7 @@ Mapa::Mapa(std::string menoMapy,Hrac* paHrac) {
 	this->hrac = paHrac;
 	nacitajMapu(menoMapy);
 
+	posunHracaNaPolicko(12, 7);
 
 }
 
@@ -38,15 +39,35 @@ void Mapa::posun(int posunX, int posunY) {
 
 }
 
-
 void Mapa::render(sf::RenderWindow* okno) {
 	sf::Sprite* sprite;
 
+	//od akeho policka po ake policko sa ma vykreslovat mapa
+	int odX = (int)(hrac->GetpolickoX() - 33 * (1.0*hrac->GetoffsetX() / okno->getSize().x)-1);
+	if (odX <0) {
+		odX = 0;
+	}
+
+	int doX = (int)(hrac->GetpolickoX() + 33*(1-(1.0*hrac->GetoffsetX()/okno->getSize().x ))+1);
+	if (doX >= sirka) {
+		doX = sirka - 1;
+	}
+
+	int odY = (int)(hrac->GetpolickoY() - 25 * (1.0*hrac->GetoffsetY() / okno->getSize().y) - 1);
+	if (odY <0) {
+		odY = 0;
+	}
+	
+	int doY = (int)(hrac->GetpolickoY() + 25 * (1 - (1.0*hrac->GetoffsetY() / okno->getSize().y)) + 1);
+	if (doY >= vyska) {
+		doY = vyska - 1;
+	}
+
 	for (int vrstva = 0; vrstva < 4; vrstva++) {
 
-		for (int i = 0; i < sirka; i++)
+		for (int i = odX; i < doX; i++)
 		{
-			for (int j = 0; j < vyska; j++)
+			for (int j = odY; j < doY; j++)
 			{
 				if (vrstva == 1) {
 					hrac->render(okno);
@@ -60,6 +81,29 @@ void Mapa::render(sf::RenderWindow* okno) {
 	
 }
 
+void Mapa::posunHracaNaPolicko(int x, int y) {
+	int offsetHracaX = x*32;
+	int offsetHracaY = y*32;
+	int posunMapyX = 0;
+	int posunMapyY = 0;
+
+	hrac->setPolickoX(x);
+	hrac->setPolickoY(y);
+	if (offsetHracaX > 350) {
+		posunMapyX = offsetHracaX - 350;
+		offsetHracaX = 350;
+	}
+
+	if (offsetHracaY > 350) {
+		posunMapyY = offsetHracaY - 350;
+		offsetHracaY = 350;
+	}
+	hrac->setOffsetX(offsetHracaX);
+	hrac->setOffsetY(offsetHracaY);
+	posunX = -posunMapyX;
+	posunY = -posunMapyY;
+
+}
 
 void Mapa::update(double delta) {
 
@@ -95,7 +139,7 @@ void Mapa::update(double delta) {
 	case 3:
 		if (pohybDelta < 32) {
 			hrac->animaciaTick();
-			pohybDelta++;
+			pohybDelta ++;
 			posun(0, 1);
 		}
 		else {
@@ -169,8 +213,6 @@ bool Mapa::jeMoznyPohyb(int x, int y) {
 
 
 void Mapa::nacitajMapu(std::string paMeno) {
-
-	std::map<int, sf::Texture*> textury;
 
 	std::string cestaKMapam = "Data/Mapy/";
 

@@ -11,6 +11,7 @@ Hra::Hra() {
 
 	okno = new sf::RenderWindow(sf::VideoMode(1024, 768), NAZOV);
 	okno->setFramerateLimit(60);
+	okno->setVerticalSyncEnabled(true);
 
 	std::string nazov = "hlavneMenu";
 	Stav* stav1 = new StavHlavneMenu(nazov,okno,this);

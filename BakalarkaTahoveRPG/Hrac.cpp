@@ -60,7 +60,6 @@ void Hrac::render(sf::RenderWindow* paOkno) {
 
 
 void Hrac::update(double delta) {
-	std::cout << polickoX << "," << polickoY << std::endl;
 		if (smerPohybu == vpravo && hybeSa) {
 			if (pohybDelta < 32) {
 				animaciaVpravo->tick();
@@ -205,4 +204,12 @@ void Hrac::setPolickoX(int paX) {
 
 void Hrac::setPolickoY(int paY) {
 	polickoY = paY;
+}
+
+void Hrac::setOffsetX(int paX) {
+	offsetX = paX;
+}
+
+void Hrac::setOffsetY(int paY) {
+	offsetY = paY;
 }

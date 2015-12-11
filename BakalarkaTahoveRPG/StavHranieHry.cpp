@@ -39,7 +39,6 @@ void StavHranieHry::Setmapa(Mapa* newVal) {
 
 
 void StavHranieHry::update(double delta) {
-
 	
 	Hrac* hrac = hra->GetHrac();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
