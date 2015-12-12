@@ -35,6 +35,7 @@ private:
 	Hrac* hrac;
 	Policko* mapa[100][100];
 	std::map<int, sf::Texture*> textury;
+	std::map<int, std::string> specialnePolicka;
 
 	int sirka;
 	int vyska;

@@ -10,8 +10,6 @@ Mapa::Mapa(std::string menoMapy,Hrac* paHrac) {
 	this->hrac = paHrac;
 	nacitajMapu(menoMapy);
 
-	posunHracaNaPolicko(12, 7);
-
 }
 
 
@@ -207,7 +205,6 @@ bool Mapa::jeMoznyPohyb(int x, int y) {
 	if (x < 0 || x >= sirka || y < 0 || y >= vyska) {
 		return false;
 	}
-
 	return mapa[x][y]->jePrechodne();
 }
 
@@ -247,10 +244,16 @@ void Mapa::nacitajMapu(std::string paMeno) {
 			std::string menoTextury = value["image"].asCString();
 			int id = atoi(key.asCString());
 
-			textury[id+1] = new sf::Texture() ;
-			if (!textury[id+1]->loadFromFile(cestaKMapam+""+paMeno+"/"+menoTextury, sf::IntRect(0, 0, 32, 32))) {
-				std::cout << "Chyba nahravania textury policka" << std::endl;
+			if (menoTextury.find(".") != std::string::npos) {
+				textury[id + 1] = new sf::Texture();
+				if (!textury[id + 1]->loadFromFile(cestaKMapam + "" + paMeno + "/" + menoTextury, sf::IntRect(0, 0, 32, 32))) {
+					std::cout << "Chyba nahravania textury policka" << std::endl;
+				}
 			}
+			else {
+				specialnePolicka[id+1] = menoTextury;
+			}
+			
 		}
 
 		for (int i = 0; i < vyska; i++) {
@@ -283,6 +286,18 @@ void Mapa::nacitajMapu(std::string paMeno) {
 
 			}
 
+		}
+
+		for (int i = 0; i < vyska; i++) {
+			for (int j = 0; j < sirka; j++) {
+
+				int idSpecPolicka = root["akcnePolicka"][i*vyska + j].asInt();
+				
+				if (specialnePolicka[idSpecPolicka] == "start") {
+					posunHracaNaPolicko(j, i);
+				}
+			
+			}
 		}
 		
 		alive = false;
