@@ -95,7 +95,7 @@ void StavVolbaZamerania::update(double delta) {
 		Hrac* hrac = new Hrac(zameranie);
 		hra->SetHrac(hrac);
 		StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
-		stav->Setmapa(new Mapa("mapa2",hrac));
+		stav->Setmapa(new Mapa("mapa2",hrac,1,1,1));
 		
 		hra->zmenStavRozhrania("hranieHry");
 		

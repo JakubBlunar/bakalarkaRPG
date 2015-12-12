@@ -6,9 +6,16 @@
 #include <fstream>
 #include <map>
 
-Mapa::Mapa(std::string menoMapy,Hrac* paHrac) {
+Mapa::Mapa(std::string menoMapy, Hrac* paHrac) {
 	this->hrac = paHrac;
 	nacitajMapu(menoMapy);
+
+}
+
+Mapa::Mapa(std::string menoMapy,Hrac* paHrac,int posHracaX, int posHracaY, int smerPohladu) {
+	this->hrac = paHrac;
+	nacitajMapu(menoMapy);
+	posunHracaNaPolicko(posHracaX, posHracaY,smerPohladu);
 
 }
 
@@ -79,7 +86,7 @@ void Mapa::render(sf::RenderWindow* okno) {
 	
 }
 
-void Mapa::posunHracaNaPolicko(int x, int y) {
+void Mapa::posunHracaNaPolicko(int x, int y,int smerPohladu) {
 	int offsetHracaX = x*32;
 	int offsetHracaY = y*32;
 	int posunMapyX = 0;
@@ -100,6 +107,28 @@ void Mapa::posunHracaNaPolicko(int x, int y) {
 	hrac->setOffsetY(offsetHracaY);
 	posunX = -posunMapyX;
 	posunY = -posunMapyY;
+
+	switch (smerPohladu)
+	{
+	case 0:
+		hrac->zmenSmerPohladu(SmerPohladu::dole);
+		break;
+	case 1:
+		hrac->zmenSmerPohladu(SmerPohladu::vpravo);
+		break;
+	case 2:
+		hrac->zmenSmerPohladu(SmerPohladu::hore);
+		break;
+	case 3:
+		hrac->zmenSmerPohladu(SmerPohladu::vlavo);
+		break;
+	default:
+		hrac->zmenSmerPohladu(SmerPohladu::dole);
+		break;
+	}
+
+
+
 
 }
 
@@ -288,6 +317,8 @@ void Mapa::nacitajMapu(std::string paMeno) {
 
 		}
 
+
+		/*
 		for (int i = 0; i < vyska; i++) {
 			for (int j = 0; j < sirka; j++) {
 
@@ -299,7 +330,7 @@ void Mapa::nacitajMapu(std::string paMeno) {
 			
 			}
 		}
-		
+		*/
 		alive = false;
 	}
 

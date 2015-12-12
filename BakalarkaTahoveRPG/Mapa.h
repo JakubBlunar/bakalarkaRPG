@@ -10,7 +10,8 @@ class Mapa
 {
 
 public:
-	Mapa(std::string menoMapy,Hrac* paHrac);
+	Mapa(std::string menoMapy, Hrac* paHrac);
+	Mapa(std::string menoMapy,Hrac* paHrac,int posHracaX, int posHracaY, int smerPohladu);
 	~Mapa();
 
 	void setHrac(Hrac* paHrac);
@@ -24,7 +25,7 @@ public:
 	void posunDole();
 	int Getsmerpohybu();
 
-	void posunHracaNaPolicko(int x, int y);
+	void posunHracaNaPolicko(int x, int y,int smerPohladu);
 	void posun(int posunX, int posunY);
 	void render(sf::RenderWindow* okno);
 	void update(double delta);
