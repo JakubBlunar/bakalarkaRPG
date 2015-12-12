@@ -6,12 +6,9 @@
 
 #define RAMCEK 96
 
-StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra, Mapa* paMapa) : Stav(paNazov, paOkno, paHra)
+StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra, Mapa* mapa) : Stav(paNazov, paOkno, paHra)
 {
-	mapa = paMapa;
-	font = new sf::Font();
-	font->loadFromFile("Data/Grafika/font.ttf");
-
+	this->mapa = mapa;
 }
 
 
@@ -31,20 +28,6 @@ void StavHranieHry::onExit() {
 
 
 void StavHranieHry::render() {
-	
-
-	if (mapa->GetNacitava()) {
-		sf::Text text;
-
-		// select the font
-		text.setFont(*font);
-		text.setString("Nacitavam");
-		text.setCharacterSize(64);
-		text.setPosition(sf::Vector2f(100, 100));
-		okno->draw(text);
-		return;
-	}
-
 	mapa->render(okno);
 }
 
@@ -56,11 +39,8 @@ void StavHranieHry::Setmapa(Mapa* newVal) {
 
 void StavHranieHry::update(double delta) {
 	
-	if (mapa->GetNacitava()) {
-		return;
-	}
-
 	Hrac* hrac = hra->GetHrac();
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		
 		if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {

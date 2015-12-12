@@ -7,7 +7,7 @@ class Hra;
 class PolickoDvere: public Policko
 {
 public:
-	PolickoDvere(bool paPriechodne,Hra* hra,std::string kam, int posX, int posY, int smerPohladu);
+	PolickoDvere(bool paPriechodne,std::string kam, int posX, int posY, int smerPohladu);
 	~PolickoDvere();
 	
 	void hracSkok(Hrac* paHrac);

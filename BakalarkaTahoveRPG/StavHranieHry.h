@@ -8,7 +8,7 @@ class StavHranieHry : public Stav
 {
 
 public:
-	StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra,Mapa* paMapa);
+	StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra,Mapa* mapa);
 	virtual ~StavHranieHry();
 
 	void onEnter();
@@ -22,10 +22,6 @@ private:
 	Mapa* mapa;
 	int posHracaX;
 	int posHracaY;
-
-	sf::Font* font;
-
-
 
 };
 

@@ -15,7 +15,10 @@ Hrac::Hrac(Zameranie* paZameranie) {
 	animaciaVpravo = new Animacia("Data/Grafika/Hrac/Animacia/hrac_vpravo.png", 4, 10, 32);
 	smerPohladu = SmerPohladu::dole;
 	hybeSa = false;
-	
+	polickoX = 0;
+	polickoY = 0;
+	offsetX = 0;
+	offsetY = 0;
 
 }
 

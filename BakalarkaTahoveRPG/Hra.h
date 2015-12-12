@@ -8,6 +8,7 @@
 class Stav;
 class Hrac;
 class StavRozhrania;
+class Loader;
 
 class Hra
 {
@@ -26,5 +27,9 @@ public:
 	Stav* dajStav(std::string stav);
 private:
 	Hrac* hrac;
+	Loader* loader;
+	sf::Font* font;
+	sf::Text textNacitanie;
+	void init();
 };
 

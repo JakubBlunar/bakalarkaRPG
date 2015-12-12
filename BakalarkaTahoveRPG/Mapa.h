@@ -12,13 +12,13 @@ class Mapa
 
 public:
 	Mapa(std::string menoMapy, Hrac* paHrac,Hra* hra);
-	Mapa(std::string menoMapy,Hrac* paHrac,Hra* hra,int posHracaX, int posHracaY, int smerPohladu);
 	~Mapa();
 	
 
 	void setHrac(Hrac* paHrac);
 	int Getvyska();
 	int Getsirka();
+	void setSirkaVyska(int paSirka, int paVyska);
 
 	void hracSkocilNaPolicko(int x, int y);
 	bool jeMoznyPohyb(int x, int y);
@@ -33,24 +33,22 @@ public:
 	void render(sf::RenderWindow* okno);
 	void update(double delta);
 
-	void nacitajMapu(std::string paMeno);
-	bool GetNacitava();
+	void nastavPolicko(int x, int y, Policko*);
+	//void nacitajMapu(std::string paMeno);
+	
 private:
 	Hra* hra;
 	Hrac* hrac;
 	Policko* mapa[100][100];
 	std::map<int, sf::Texture*> textury;
-	std::map<int, std::string> specialnePolicka;
 
 	int sirka;
 	int vyska;
 
 	int posunX;
 	int posunY;
-	bool hybeSa;
 	int pohybDelta;
 	int smerPohybu;
-	bool hracSkocil;
 
-	bool nacitavam;
+
 };
