@@ -12,20 +12,18 @@
 Mapa::Mapa(std::string menoMapy, Hrac* paHrac,Hra* hra) {
 	this->hrac = paHrac;
 	this->hra = hra;
+	this->meno = menoMapy;
 	smerPohybu = 0;
-	nacitajMapu(menoMapy);
-	
-	
-	
 }
 
 Mapa::Mapa(std::string menoMapy,Hrac* paHrac,Hra* hra,int posHracaX, int posHracaY, int smerPohladu) {
 	this->hrac = paHrac;
 	this->hra = hra;
+	this->meno = menoMapy;
 	smerPohybu = 0;
 
-	nacitajMapu(menoMapy);
 	posunHracaNaPolicko(posHracaX, posHracaY,smerPohladu);
+	
 
 }
 
@@ -262,7 +260,7 @@ bool Mapa::GetNacitava() {
 	return nacitavam;
 }
 
-void Mapa::nacitajMapu(std::string paMeno) {
+void Mapa::nacitajMapu() {
 	nacitavam = true;
 
 	std::string cestaKMapam = "Data/Mapy/";
@@ -279,8 +277,8 @@ void Mapa::nacitajMapu(std::string paMeno) {
 
 		Json::Value root;   // will contains the root value after parsing.
 		Json::Reader reader;
-		std::ifstream test(cestaKMapam+""+paMeno+".json", std::ifstream::binary);
-		std::cout << cestaKMapam +"" + paMeno + ".json" << std::endl;
+		std::ifstream test(cestaKMapam+""+meno+".json", std::ifstream::binary);
+		std::cout << cestaKMapam +"" + meno + ".json" << std::endl;
 		bool parsingSuccessful = reader.parse(test, root, false);
 
 		if (!parsingSuccessful)

@@ -24,9 +24,8 @@ void PolickoDvere::hracSkok(Hrac* paHrac) {
 	
 	StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
 	Mapa* mapa = new Mapa(menoMapy, hra->GetHrac(), hra, poziciaX, poziciaY, smerPohladu);
-	
 	hra->GetHrac()->setMapa(mapa);
-
 	stav->Setmapa(mapa);
+	mapa->nacitajMapu();
 	
 }

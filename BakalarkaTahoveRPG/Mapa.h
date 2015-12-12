@@ -33,11 +33,12 @@ public:
 	void render(sf::RenderWindow* okno);
 	void update(double delta);
 
-	void nacitajMapu(std::string paCesta);
+	void nacitajMapu();
 	bool GetNacitava();
 private:
 	Hra* hra;
 	Hrac* hrac;
+	std::string meno;
 	Policko* mapa[100][100];
 	std::map<int, sf::Texture*> textury;
 	std::map<int, std::string> specialnePolicka;
