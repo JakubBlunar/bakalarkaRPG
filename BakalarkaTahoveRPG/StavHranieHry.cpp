@@ -49,13 +49,13 @@ void StavHranieHry::render() {
 }
 
 void StavHranieHry::Setmapa(Mapa* newVal) {
-	delete mapa;
 	mapa = newVal;
 }
 
 
 
 void StavHranieHry::update(double delta) {
+	
 	if (mapa->GetNacitava()) {
 		return;
 	}
@@ -135,6 +135,7 @@ void StavHranieHry::update(double delta) {
 		stlacenaKlavesa = false;
 	}
 	*/
+
 	mapa->update(delta);
 	hra->GetHrac()->update(delta);
 	

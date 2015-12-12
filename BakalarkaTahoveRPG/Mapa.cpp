@@ -12,16 +12,15 @@
 Mapa::Mapa(std::string menoMapy, Hrac* paHrac,Hra* hra) {
 	this->hrac = paHrac;
 	this->hra = hra;
-	this->meno = menoMapy;
+	nacitajMapu(menoMapy);
 	smerPohybu = 0;
 }
 
 Mapa::Mapa(std::string menoMapy,Hrac* paHrac,Hra* hra,int posHracaX, int posHracaY, int smerPohladu) {
 	this->hrac = paHrac;
 	this->hra = hra;
-	this->meno = menoMapy;
 	smerPohybu = 0;
-
+	nacitajMapu(menoMapy);
 	posunHracaNaPolicko(posHracaX, posHracaY,smerPohladu);
 	
 
@@ -30,14 +29,16 @@ Mapa::Mapa(std::string menoMapy,Hrac* paHrac,Hra* hra,int posHracaX, int posHrac
 
 
 Mapa::~Mapa() {
-	for (int i = 0; i < sirka; i++)
+	
+	for (int i = 0; i < vyska; i++)
 	{
 		for (int j = 0; j < vyska; j++)
 		{
 			delete mapa[i][j];
-			
 		}
 	}
+
+
 }
 
 
@@ -260,11 +261,13 @@ bool Mapa::GetNacitava() {
 	return nacitavam;
 }
 
-void Mapa::nacitajMapu() {
+void Mapa::nacitajMapu(std::string paMeno) {
 	nacitavam = true;
 
 	std::string cestaKMapam = "Data/Mapy/";
 	std::string cestakTexturam = "Data/Grafika/Textury/";
+
+
 	PolickoDvere* polickoDvere[100][100];
 	for (int i = 0; i < 100; i++) {
 		for (int j = 0; j < 100; j++) {
@@ -277,8 +280,8 @@ void Mapa::nacitajMapu() {
 
 		Json::Value root;   // will contains the root value after parsing.
 		Json::Reader reader;
-		std::ifstream test(cestaKMapam+""+meno+".json", std::ifstream::binary);
-		std::cout << cestaKMapam +"" + meno + ".json" << std::endl;
+		std::ifstream test(cestaKMapam+""+ paMeno +".json", std::ifstream::binary);
+		std::cout << cestaKMapam +"" + paMeno + ".json" << std::endl;
 		bool parsingSuccessful = reader.parse(test, root, false);
 
 		if (!parsingSuccessful)

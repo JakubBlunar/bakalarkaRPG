@@ -99,9 +99,7 @@ void StavVolbaZamerania::update(double delta) {
 
 		StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
 		stav->Setmapa(mapa);
-		mapa->nacitajMapu();
 		hra->zmenStavRozhrania("hranieHry");
-		
 	}
 
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {

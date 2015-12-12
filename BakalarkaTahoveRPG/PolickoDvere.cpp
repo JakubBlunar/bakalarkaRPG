@@ -18,6 +18,7 @@ PolickoDvere::PolickoDvere(bool paPriechodne,Hra* hra, std::string kam, int posX
 
 PolickoDvere::~PolickoDvere()
 {
+	
 }
 
 void PolickoDvere::hracSkok(Hrac* paHrac) {
@@ -26,6 +27,5 @@ void PolickoDvere::hracSkok(Hrac* paHrac) {
 	Mapa* mapa = new Mapa(menoMapy, hra->GetHrac(), hra, poziciaX, poziciaY, smerPohladu);
 	hra->GetHrac()->setMapa(mapa);
 	stav->Setmapa(mapa);
-	mapa->nacitajMapu();
 	
 }
