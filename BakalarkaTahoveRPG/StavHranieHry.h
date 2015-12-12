@@ -23,6 +23,8 @@ private:
 	int posHracaX;
 	int posHracaY;
 
+	sf::Font* font;
+
 
 
 };

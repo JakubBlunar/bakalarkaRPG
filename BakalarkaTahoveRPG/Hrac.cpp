@@ -2,6 +2,7 @@
 #include "Zameranie.h"
 #include "Animacia.h"
 #include <iostream>
+#include "Mapa.h"
 
 #define RYCHLOST 2;
 
@@ -23,14 +24,6 @@ Hrac::Hrac(Zameranie* paZameranie) {
 Hrac::~Hrac() {
 	delete(zameranie);
 	std::cout << "Hrac zmazany" << std::endl;
-}
-
-
-
-
-
-void Hrac::posunSa(int kam) {
-
 }
 
 
@@ -66,10 +59,12 @@ void Hrac::update(double delta) {
 				pohybDelta++;
 				posun(1, 0);
 			}else {
+				hybeSa = false;
 				smerPohybu = SmerPohladu::stoji;
+				mapa->hracSkocilNaPolicko(polickoX, polickoY);
 				pohybDelta = 0;
 				polickoX++;
-				hybeSa = false;
+				
 			}
 		}
 
@@ -80,10 +75,11 @@ void Hrac::update(double delta) {
 			posun(0, -1);
 		}
 		else {
+			hybeSa = false;
 			smerPohybu = SmerPohladu::stoji;
+			mapa->hracSkocilNaPolicko(polickoX, polickoY);
 			pohybDelta = 0;
 			polickoY--;
-			hybeSa = false;
 		}
 	}
 
@@ -94,10 +90,11 @@ void Hrac::update(double delta) {
 			posun(0, 1);
 		}
 		else {
+			hybeSa = false;
 			smerPohybu = SmerPohladu::stoji;
+			mapa->hracSkocilNaPolicko(polickoX, polickoY);
 			pohybDelta = 0;
 			polickoY++;
-			hybeSa = false;
 		}
 	}
 
@@ -108,10 +105,11 @@ void Hrac::update(double delta) {
 			posun(-1, 0);
 		}
 		else {
+			hybeSa = false;
 			smerPohybu = SmerPohladu::stoji;
+			mapa->hracSkocilNaPolicko(polickoX, polickoY);
 			pohybDelta = 0;
 			polickoX--;
-			hybeSa = false;
 		}
 	}
 
@@ -212,4 +210,8 @@ void Hrac::setOffsetX(int paX) {
 
 void Hrac::setOffsetY(int paY) {
 	offsetY = paY;
+}
+
+void Hrac::setMapa(Mapa* mapa) {
+	this->mapa = mapa;
 }

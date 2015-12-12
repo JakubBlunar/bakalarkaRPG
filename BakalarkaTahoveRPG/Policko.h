@@ -1,24 +1,25 @@
 #pragma once
-#include "Vrstva.h"
+#include <SFML\Graphics.hpp>
 #include <array>
 
 class Hrac;
+class Vrstva;
 
 class Policko
 {
 
 public:
 	Policko(bool paPriechodne);
-	~Policko();
+	virtual ~Policko();
 
-	void hracSkok(Hrac* hrac);
-	void interakcia(Hrac* hrac);
+	virtual void hracSkok(Hrac* hrac);
+    void interakcia(Hrac* hrac);
 	bool jePrechodne();
 	void nastavTexturu(sf::Texture* textura, int poradie);
 	void Setpriechodne(bool paPriechodne);
 	sf::Sprite* dajObrazokVrstvy(int poradie);
 
-private:
+protected:
 	//Npc* npc;
 	//stack<Predmet> polozenePredmety;
 	bool priechodne;

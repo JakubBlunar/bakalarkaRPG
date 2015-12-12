@@ -154,6 +154,7 @@
     <ClInclude Include="json.h" />
     <ClInclude Include="Mapa.h" />
     <ClInclude Include="Policko.h" />
+    <ClInclude Include="PolickoDvere.h" />
     <ClInclude Include="Stav.h" />
     <ClInclude Include="StavHlavneMenu.h" />
     <ClInclude Include="StavHranieHry.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mapa.cpp" />
     <ClCompile Include="Policko.cpp" />
+    <ClCompile Include="PolickoDvere.cpp" />
     <ClCompile Include="Stav.cpp" />
     <ClCompile Include="StavHlavneMenu.cpp" />
     <ClCompile Include="StavHranieHry.cpp" />

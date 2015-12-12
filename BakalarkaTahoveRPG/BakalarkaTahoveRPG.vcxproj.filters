@@ -31,6 +31,12 @@
     <Filter Include="Header Files\Json">
       <UniqueIdentifier>{86d57cb4-e101-4f5a-a8c2-d04200c0076a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Mapa\Policka">
+      <UniqueIdentifier>{023dd431-28c8-4929-b7bf-583f03ce189a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Mapa\Policka">
+      <UniqueIdentifier>{6da94602-5148-4afd-8bd0-b166d98eeba2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stav.h">
@@ -66,9 +72,6 @@
     <ClInclude Include="Vrstva.h">
       <Filter>Header Files\Mapa</Filter>
     </ClInclude>
-    <ClInclude Include="Policko.h">
-      <Filter>Header Files\Mapa</Filter>
-    </ClInclude>
     <ClInclude Include="Mapa.h">
       <Filter>Header Files\Mapa</Filter>
     </ClInclude>
@@ -77,6 +80,12 @@
     </ClInclude>
     <ClInclude Include="json-forwards.h">
       <Filter>Header Files\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="Policko.h">
+      <Filter>Header Files\Mapa\Policka</Filter>
+    </ClInclude>
+    <ClInclude Include="PolickoDvere.h">
+      <Filter>Header Files\Mapa\Policka</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -116,14 +125,17 @@
     <ClCompile Include="Vrstva.cpp">
       <Filter>Source Files\Mapa</Filter>
     </ClCompile>
-    <ClCompile Include="Policko.cpp">
-      <Filter>Source Files\Mapa</Filter>
-    </ClCompile>
     <ClCompile Include="Mapa.cpp">
       <Filter>Source Files\Mapa</Filter>
     </ClCompile>
     <ClCompile Include="json.cpp">
       <Filter>Source Files\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="Policko.cpp">
+      <Filter>Source Files\Mapa\Policka</Filter>
+    </ClCompile>
+    <ClCompile Include="PolickoDvere.cpp">
+      <Filter>Source Files\Mapa\Policka</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

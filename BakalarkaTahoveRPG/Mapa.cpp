@@ -5,15 +5,25 @@
 #include "json.h"
 #include <fstream>
 #include <map>
+#include <array>
+#include "PolickoDvere.h"
+#include "Hra.h"
 
-Mapa::Mapa(std::string menoMapy, Hrac* paHrac) {
+Mapa::Mapa(std::string menoMapy, Hrac* paHrac,Hra* hra) {
 	this->hrac = paHrac;
+	this->hra = hra;
+	smerPohybu = 0;
 	nacitajMapu(menoMapy);
-
+	
+	
+	
 }
 
-Mapa::Mapa(std::string menoMapy,Hrac* paHrac,int posHracaX, int posHracaY, int smerPohladu) {
+Mapa::Mapa(std::string menoMapy,Hrac* paHrac,Hra* hra,int posHracaX, int posHracaY, int smerPohladu) {
 	this->hrac = paHrac;
+	this->hra = hra;
+	smerPohybu = 0;
+
 	nacitajMapu(menoMapy);
 	posunHracaNaPolicko(posHracaX, posHracaY,smerPohladu);
 
@@ -45,6 +55,7 @@ void Mapa::posun(int posunX, int posunY) {
 }
 
 void Mapa::render(sf::RenderWindow* okno) {
+
 	sf::Sprite* sprite;
 
 	//od akeho policka po ake policko sa ma vykreslovat mapa
@@ -84,6 +95,10 @@ void Mapa::render(sf::RenderWindow* okno) {
 		}
 	}
 	
+}
+
+void Mapa::hracSkocilNaPolicko(int x, int y) {
+	mapa[x][y]->hracSkok(hrac);
 }
 
 void Mapa::posunHracaNaPolicko(int x, int y,int smerPohladu) {
@@ -134,7 +149,6 @@ void Mapa::posunHracaNaPolicko(int x, int y,int smerPohladu) {
 
 void Mapa::update(double delta) {
 
-
 	switch (smerPohybu)
 	{
 	case 0:
@@ -147,6 +161,7 @@ void Mapa::update(double delta) {
 		}
 		else {
 			hrac->setPolickoX(hrac->GetpolickoX() +1);
+			mapa[hrac->GetpolickoX()][hrac->GetpolickoY()]->hracSkok(hrac);
 			smerPohybu = 0;
 			pohybDelta = 0;
 		}
@@ -159,6 +174,7 @@ void Mapa::update(double delta) {
 		}
 		else {
 			hrac->setPolickoX(hrac->GetpolickoX() - 1);
+			mapa[hrac->GetpolickoX()][hrac->GetpolickoY()]->hracSkok(hrac);
 			smerPohybu = 0;
 			pohybDelta = 0;
 		}
@@ -171,6 +187,7 @@ void Mapa::update(double delta) {
 		}
 		else {
 			hrac->setPolickoY(hrac->GetpolickoY() - 1);
+			mapa[hrac->GetpolickoX()][hrac->GetpolickoY()]->hracSkok(hrac);
 			smerPohybu = 0;
 			pohybDelta = 0;
 		}
@@ -183,6 +200,7 @@ void Mapa::update(double delta) {
 		}
 		else {
 			hrac->setPolickoY(hrac->GetpolickoY() +1);
+			mapa[hrac->GetpolickoX()][hrac->GetpolickoY()]->hracSkok(hrac);
 			smerPohybu = 0;
 			pohybDelta = 0;
 		}
@@ -192,6 +210,8 @@ void Mapa::update(double delta) {
 		break;
 	}
 }
+
+
 
 void Mapa::posunVpravo() {
 	pohybDelta = 0;
@@ -238,17 +258,29 @@ bool Mapa::jeMoznyPohyb(int x, int y) {
 }
 
 
+bool Mapa::GetNacitava() {
+	return nacitavam;
+}
+
 void Mapa::nacitajMapu(std::string paMeno) {
+	nacitavam = true;
 
 	std::string cestaKMapam = "Data/Mapy/";
+	std::string cestakTexturam = "Data/Grafika/Textury/";
+	PolickoDvere* polickoDvere[100][100];
+	for (int i = 0; i < 100; i++) {
+		for (int j = 0; j < 100; j++) {
+			polickoDvere[i][j] = nullptr;
+		}
+	}
 
 	bool alive = true;
 	while (alive) {
 
 		Json::Value root;   // will contains the root value after parsing.
 		Json::Reader reader;
-		std::ifstream test(cestaKMapam+""+paMeno+"/"+paMeno+".json", std::ifstream::binary);
-		std::cout << cestaKMapam + "" + paMeno + "/" + paMeno + ".json" << std::endl;
+		std::ifstream test(cestaKMapam+""+paMeno+".json", std::ifstream::binary);
+		std::cout << cestaKMapam +"" + paMeno + ".json" << std::endl;
 		bool parsingSuccessful = reader.parse(test, root, false);
 
 		if (!parsingSuccessful)
@@ -258,6 +290,22 @@ void Mapa::nacitajMapu(std::string paMeno) {
 
 		vyska = root["height"].asInt();
 		sirka = root["width"].asInt();
+
+
+		Json::Value dvere(Json::objectValue);
+		dvere = root["dvere"];
+		int i = 0;
+		for (Json::Value::iterator it = dvere.begin(); it != dvere.end(); ++it) {
+			Json::Value value = (*it);
+			int x = value["x"].asInt();
+			int y = value["y"].asInt();
+			int posX = value["poziciaX"].asInt();
+			int posY = value["poziciaY"].asInt();
+			int smerPohladu = value["smerPohladu"].asInt();
+			std::string kam = value["kam"].asCString();
+
+			polickoDvere[x][y]= new PolickoDvere(true,hra,kam, posX, posY, smerPohladu);
+		}
 
 		Json::Value objekt(Json::objectValue);
 		objekt = root["tiles"];
@@ -275,7 +323,7 @@ void Mapa::nacitajMapu(std::string paMeno) {
 
 			if (menoTextury.find(".") != std::string::npos) {
 				textury[id + 1] = new sf::Texture();
-				if (!textury[id + 1]->loadFromFile(cestaKMapam + "" + paMeno + "/" + menoTextury, sf::IntRect(0, 0, 32, 32))) {
+				if (!textury[id + 1]->loadFromFile(cestakTexturam+"" + menoTextury, sf::IntRect(0, 0, 32, 32))) {
 					std::cout << "Chyba nahravania textury policka" << std::endl;
 				}
 			}
@@ -294,14 +342,19 @@ void Mapa::nacitajMapu(std::string paMeno) {
 				int idTextury2 = root["Vrstva2"][i*vyska + j].asInt();
 				int idTextury3 = root["Vrstva3"][i*vyska + j].asInt();
 				
-				if (idTextury2 != 0) {
-					mapa[j][i] = new Policko(false);
+				if (polickoDvere[i][j] != nullptr) {
+					mapa[j][i] = polickoDvere[i][j];
 				}
 				else {
 
-					mapa[j][i] = new Policko(true);
-				}
+					if (idTextury2 != 0) {
+						mapa[j][i] = new Policko(false);
+					}
+					else {
 
+						mapa[j][i] = new Policko(true);
+					}
+				}
 
 				if (idTextury1 != 0) {
 					mapa[j][i]->nastavTexturu(textury[idTextury1], 0);
@@ -333,5 +386,5 @@ void Mapa::nacitajMapu(std::string paMeno) {
 		*/
 		alive = false;
 	}
-
+	nacitavam = false;
 }

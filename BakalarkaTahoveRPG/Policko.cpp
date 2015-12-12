@@ -1,5 +1,6 @@
 #include "Policko.h"
 #include "Vrstva.h"
+#include <iostream>
 
 Policko::Policko(bool paPriechodne) {
 	priechodne = paPriechodne;
@@ -22,7 +23,7 @@ sf::Sprite* Policko::dajObrazokVrstvy(int poradie) {
 }
 
 void Policko::hracSkok(Hrac* hrac) {
-
+	//std::cout << "hrac skocil na policko" << std::endl;
 }
 
 
@@ -41,4 +42,3 @@ bool Policko::jePrechodne() {
 void Policko::nastavTexturu(sf::Texture* paTextura, int poradie) {
 	vrstvy[poradie]->Setobrazok(paTextura);
 }
-

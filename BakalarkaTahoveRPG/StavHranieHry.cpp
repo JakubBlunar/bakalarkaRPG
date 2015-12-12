@@ -9,6 +9,9 @@
 StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra, Mapa* paMapa) : Stav(paNazov, paOkno, paHra)
 {
 	mapa = paMapa;
+	font = new sf::Font();
+	font->loadFromFile("Data/Grafika/font.ttf");
+
 }
 
 
@@ -28,18 +31,35 @@ void StavHranieHry::onExit() {
 
 
 void StavHranieHry::render() {
+	
+
+	if (mapa->GetNacitava()) {
+		sf::Text text;
+
+		// select the font
+		text.setFont(*font);
+		text.setString("Nacitavam");
+		text.setCharacterSize(64);
+		text.setPosition(sf::Vector2f(100, 100));
+		okno->draw(text);
+		return;
+	}
+
 	mapa->render(okno);
 }
 
 void StavHranieHry::Setmapa(Mapa* newVal) {
-
+	delete mapa;
 	mapa = newVal;
 }
 
 
 
 void StavHranieHry::update(double delta) {
-	
+	if (mapa->GetNacitava()) {
+		return;
+	}
+
 	Hrac* hrac = hra->GetHrac();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		
@@ -76,7 +96,7 @@ void StavHranieHry::update(double delta) {
 
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {		
 		if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
 			hrac->zmenSmerPohladu(SmerPohladu::hore);
 			if (mapa->jeMoznyPohyb(hrac->GetpolickoX(),hrac->GetpolickoY() - 1)) {

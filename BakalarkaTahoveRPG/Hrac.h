@@ -3,9 +3,8 @@
 #include <SFML\Graphics.hpp>
 //#include "Statistika.h"
 //#include "Inventar.h"
-//#include "Animacia.h"
-//#include "Zameranie.h"
 
+class Mapa;
 class Zameranie;
 class Animacia;
 
@@ -25,7 +24,6 @@ public:
 	Hrac(Zameranie* paZameranie);
 	virtual ~Hrac();
 
-	void posunSa(int kam);
 	void render(sf::RenderWindow* paOkno);
 	void update(double delta);
 	void zmenSmerPohladu(SmerPohladu smer);
@@ -47,6 +45,8 @@ public:
 	int GetoffsetY();
 	int GetpolickoX();
 	int GetpolickoY();
+
+	void setMapa(Mapa*);
 
 private:
 	Animacia* animaciaDole;
@@ -70,5 +70,6 @@ private:
 	bool hybeSa;
 	int pohybDelta;
 
+	Mapa* mapa;
 };
 

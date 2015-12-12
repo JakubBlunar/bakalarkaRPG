@@ -5,19 +5,22 @@
 
 class Policko;
 class Hrac;
+class Hra;
 
 class Mapa
 {
 
 public:
-	Mapa(std::string menoMapy, Hrac* paHrac);
-	Mapa(std::string menoMapy,Hrac* paHrac,int posHracaX, int posHracaY, int smerPohladu);
+	Mapa(std::string menoMapy, Hrac* paHrac,Hra* hra);
+	Mapa(std::string menoMapy,Hrac* paHrac,Hra* hra,int posHracaX, int posHracaY, int smerPohladu);
 	~Mapa();
+	
 
 	void setHrac(Hrac* paHrac);
 	int Getvyska();
 	int Getsirka();
 
+	void hracSkocilNaPolicko(int x, int y);
 	bool jeMoznyPohyb(int x, int y);
 	void posunVpravo();
 	void posunVlavo();
@@ -31,8 +34,9 @@ public:
 	void update(double delta);
 
 	void nacitajMapu(std::string paCesta);
-
+	bool GetNacitava();
 private:
+	Hra* hra;
 	Hrac* hrac;
 	Policko* mapa[100][100];
 	std::map<int, sf::Texture*> textury;
@@ -46,5 +50,7 @@ private:
 	bool hybeSa;
 	int pohybDelta;
 	int smerPohybu;
+	bool hracSkocil;
 
+	bool nacitavam;
 };
