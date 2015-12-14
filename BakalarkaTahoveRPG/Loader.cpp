@@ -40,10 +40,11 @@ Hra* Loader::Gethra() {
 }
 
 void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
-	nacitava = true;
+	//nacitava = true;
 	hra->zmenStavRozhrania("stavLoading");
+	
 	Mapa* novaMapa = new Mapa(paMeno, this->hra->GetHrac(), this->hra);
-
+	
 	std::string cestaKMapam = "Data/Mapy/";
 	std::string cestakTexturam = "Data/Grafika/Textury/";
 
@@ -173,6 +174,6 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	}
 
 	
-	nacitava = false;
-	hra->zmenStavRozhrania("hranieHry");
+	//nacitava = false;
+	//hra->zmenStavRozhrania("hranieHry");
 }

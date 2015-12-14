@@ -23,5 +23,6 @@ private:
 	int posHracaX;
 	int posHracaY;
 
+	bool stlacenaKlavesa;
 };
 

@@ -18,6 +18,9 @@ StavHranieHry::~StavHranieHry()
 
 
 void StavHranieHry::onEnter() {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+		stlacenaKlavesa = true;
+	}
 	Stav::onEnter();
 }
 
@@ -102,11 +105,18 @@ void StavHranieHry::update(double delta) {
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !stlacenaKlavesa) {
 		hra->zmenStavRozhrania("stavPauza");
 	}
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && !stlacenaKlavesa) {
+		hra->zmenStavRozhrania("stavInfoHraca");
+	}
 	
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+		stlacenaKlavesa = false;
+	}
+
 
 	/*
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {

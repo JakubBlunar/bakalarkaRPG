@@ -93,6 +93,12 @@
     <ClInclude Include="StavLoading.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Statistika.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StavInfoHraca.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -147,6 +153,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StavLoading.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Statistika.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StavInfoHraca.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

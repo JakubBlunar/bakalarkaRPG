@@ -7,6 +7,7 @@
 #include "StavHranieHry.h"
 #include "StavPauza.h"
 #include "StavLoading.h"
+#include "StavInfoHraca.h"
 
 #define NAZOV "SUPERRPG"
 
@@ -36,6 +37,10 @@ Hra::Hra() {
 	std::string nazov5 = "stavLoading";
 	Stav* stav5 = new StavLoading(nazov5, okno, this);
 	stavRozhraniaHry->pridajStav(stav5);
+
+	std::string nazov6 = "stavInfoHraca";
+	Stav* stav6 = new StavInfoHraca(nazov6, okno, this);
+	stavRozhraniaHry->pridajStav(stav6);
 	
 }
 

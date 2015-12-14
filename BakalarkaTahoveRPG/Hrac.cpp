@@ -3,8 +3,7 @@
 #include "Animacia.h"
 #include <iostream>
 #include "Mapa.h"
-
-#define RYCHLOST 2;
+#include "Statistika.h"
 
 Hrac::Hrac(Zameranie* paZameranie) {
 	zameranie = paZameranie;
@@ -19,13 +18,14 @@ Hrac::Hrac(Zameranie* paZameranie) {
 	polickoY = 0;
 	offsetX = 0;
 	offsetY = 0;
-
+	statistika = new Statistika();
 }
 
 
 
 Hrac::~Hrac() {
-	delete(zameranie);
+	delete statistika;
+	delete zameranie;
 	std::cout << "Hrac zmazany" << std::endl;
 }
 
@@ -217,4 +217,16 @@ void Hrac::setOffsetY(int paY) {
 
 void Hrac::setMapa(Mapa* mapa) {
 	this->mapa = mapa;
+}
+
+void Hrac::Setstatistika(Statistika* paStatistika) {
+	statistika = paStatistika;
+}
+
+Statistika* Hrac::Getstatistika() {
+	return statistika;
+}
+
+Zameranie* Hrac::GetZameranie() {
+	return zameranie;
 }

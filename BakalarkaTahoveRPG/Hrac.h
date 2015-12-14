@@ -7,6 +7,7 @@
 class Mapa;
 class Zameranie;
 class Animacia;
+class Statistika;
 
 enum SmerPohladu
 {
@@ -48,6 +49,9 @@ public:
 
 	void setMapa(Mapa*);
 
+	Statistika* Getstatistika();
+	void Setstatistika(Statistika* paStatistika);
+	Zameranie* GetZameranie();
 private:
 	Animacia* animaciaDole;
 	Animacia* animaciaHore;
@@ -58,7 +62,7 @@ private:
 	//std::Map<string, Predmet> oblecene;
 	//vector<Quest> questy;
 	SmerPohladu smerPohladu;
-	//Statistika statistika;
+	Statistika* statistika;
 	Zameranie* zameranie;
 
 	int polickoX;
