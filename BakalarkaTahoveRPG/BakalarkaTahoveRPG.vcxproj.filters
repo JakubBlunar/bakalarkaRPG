@@ -90,14 +90,14 @@
     <ClInclude Include="Loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StavLoading.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="StavInfoHraca.h">
+      <Filter>Header Files\Stavy</Filter>
     </ClInclude>
     <ClInclude Include="Statistika.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StavInfoHraca.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="StavLoading.h">
+      <Filter>Header Files\Stavy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -149,16 +149,16 @@
     <ClCompile Include="PolickoDvere.cpp">
       <Filter>Source Files\Mapa\Policka</Filter>
     </ClCompile>
-    <ClCompile Include="Loader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StavLoading.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Statistika.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StavInfoHraca.cpp">
+      <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="StavLoading.cpp">
+      <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

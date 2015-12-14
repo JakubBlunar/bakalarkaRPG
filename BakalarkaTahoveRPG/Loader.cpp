@@ -43,6 +43,25 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	//nacitava = true;
 	hra->zmenStavRozhrania("stavLoading");
 	
+	if (nacitaneMapy.find(paMeno) != nacitaneMapy.end()) {
+
+		Mapa* novaMapa = nacitaneMapy.at(paMeno);
+		hra->GetHrac()->setMapa(novaMapa);
+		novaMapa->setHrac(hra->GetHrac());
+
+		StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
+		//Mapa* staraMapa = stav->getMapa();
+		stav->Setmapa(novaMapa);
+
+		if (posX == -1 || posY == -1 || smer == -1) {
+			novaMapa->posunHracaNaPolicko(0, 0, 0);
+		}
+		else {
+			novaMapa->posunHracaNaPolicko(posX, posY, smer);
+		}
+		return;
+	}
+	
 	Mapa* novaMapa = new Mapa(paMeno, this->hra->GetHrac(), this->hra);
 	
 	std::string cestaKMapam = "Data/Mapy/";
@@ -153,12 +172,21 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 		alive = false;
 	}
 
+	if (nacitaneMapy.size() > 10) {
+		for (std::map<std::string, Mapa*>::iterator it = nacitaneMapy.begin(); it != nacitaneMapy.end(); ++it)
+		{
+			delete it->second;
+		}
+		nacitaneMapy.clear();
+	}
+
+	nacitaneMapy.insert(std::pair<std::string, Mapa*>(paMeno, novaMapa));
 
 	hra->GetHrac()->setMapa(novaMapa);
 	novaMapa->setHrac(hra->GetHrac());
 
 	StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
-	Mapa* staraMapa = stav->getMapa();
+	//Mapa* staraMapa = stav->getMapa();
 	stav->Setmapa(novaMapa);
 
 
@@ -169,10 +197,11 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 		novaMapa->posunHracaNaPolicko(posX, posY, smer);
 	}
 
+	/*
 	if (staraMapa != nullptr) {
-		delete staraMapa;
+		//delete staraMapa;
 	}
-
+	*/
 	
 	//nacitava = false;
 	//hra->zmenStavRozhrania("hranieHry");

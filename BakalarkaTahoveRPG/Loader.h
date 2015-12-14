@@ -5,6 +5,7 @@
 #include <string>
 
 class Hra;
+class Mapa;
 
 class Loader {
 public:
@@ -25,7 +26,7 @@ private:
 
 	Hra* hra;
 	std::map<int, sf::Texture*> textury;
-
+	std::map<std::string, Mapa*> nacitaneMapy;
 
 };
 
