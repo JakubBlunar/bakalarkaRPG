@@ -5,7 +5,6 @@
 #include "Zameranie.h"
 
 StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
-
 	font = new sf::Font();
 	font->loadFromFile("Data/Grafika/font2.otf");
 }

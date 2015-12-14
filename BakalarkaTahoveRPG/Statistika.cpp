@@ -127,14 +127,13 @@ void Statistika::Setsila(int novaHodnota) {
 
 
 void Statistika::Setskusenosti(int novaHodnota) {
-
 	skusenosti = novaHodnota;
 }
 
 
 int Statistika::xpNaLevel(int level) {
 
-	return (int)round((4 * (level * level * level)) / 5);
+	return (int)round((5 * (level * level * level)) / 6);
 }
 
 void Statistika::pridajXp(int pocet) {

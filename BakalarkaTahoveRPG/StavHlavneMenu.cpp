@@ -9,7 +9,7 @@ StavHlavneMenu::StavHlavneMenu(std::string paNazov, sf::RenderWindow* paOkno,Hra
 	oznacene = 0;
 	
 	font = new sf::Font();
-	font->loadFromFile("Data/Grafika/font.ttf");
+	font->loadFromFile("Data/Grafika/font2.otf");
 
 }
 
