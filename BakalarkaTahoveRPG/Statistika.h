@@ -36,9 +36,9 @@ public:
 	void Setrychlost(int novaHodnota);
 	void Setsila(int novaHodnota);
 	void Setskusenosti(int novaHodnota);
-	int xpNaLevel(int level);
 	void zvysStat(int kolko, std::string paCo);
 	void pridajXp(int pocet);
+	void setUroven(int paUroven);
 
 private:
 	int hp;

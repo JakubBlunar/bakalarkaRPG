@@ -230,3 +230,23 @@ Statistika* Hrac::Getstatistika() {
 Zameranie* Hrac::GetZameranie() {
 	return zameranie;
 }
+
+void Hrac::pridajSkusenosti(int pocet) {
+	statistika->pridajXp(pocet);
+	int xpnalevel = zameranie->xpNaLevel(statistika->dajUroven() + 1);
+
+	int skusenosti = statistika->Getskusenosti();
+	std::map<std::string, int> bonusy = zameranie->lvlUpBonusy();
+	if (skusenosti >= xpnalevel) {
+		statistika->setUroven(statistika->dajUroven() + 1);
+		for (std::map<std::string, int>::iterator it = bonusy.begin(); it != bonusy.end(); ++it)
+		{
+			statistika->zvysStat(it->second, it->first);
+			statistika->Sethp(statistika->GethpMax());
+			statistika->Setmp(statistika->GetmpMax());
+		}
+		
+
+	}
+	
+}

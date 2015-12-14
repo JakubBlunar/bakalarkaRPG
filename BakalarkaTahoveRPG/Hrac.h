@@ -52,6 +52,8 @@ public:
 	Statistika* Getstatistika();
 	void Setstatistika(Statistika* paStatistika);
 	Zameranie* GetZameranie();
+
+	void pridajSkusenosti(int pocet);
 private:
 	Animacia* animaciaDole;
 	Animacia* animaciaHore;

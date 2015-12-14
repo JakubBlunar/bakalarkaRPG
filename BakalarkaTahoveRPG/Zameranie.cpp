@@ -1,5 +1,5 @@
 #include "Zameranie.h"
-
+#include <map>
 
 Zameranie::Zameranie(std::string nazov, double paRastHp, double paRastMp, double paRastSila, double paRastRychlost, double paRastIntel) {
 	this->nazov = nazov;
@@ -49,6 +49,23 @@ double Zameranie::GetrastSila() {
 
 	return rastSila;
 }
+
+
+int Zameranie::xpNaLevel(int level) {
+
+	return (int)round((5 * (level * level * level)) / 6);
+}
+
+std::map<std::string, int> Zameranie::lvlUpBonusy(){
+	std::map<std::string, int> bonusy;
+	bonusy.insert(std::pair<std::string, int>("hpMax", (int)rastHp));
+	bonusy.insert(std::pair<std::string, int>("mpMax", (int)rastMp));
+	bonusy.insert(std::pair<std::string, int>("sila", (int)rastSila));
+	bonusy.insert(std::pair<std::string, int>("intel", (int)rastIntel));
+	bonusy.insert(std::pair<std::string, int>("rychlost", (int)rastRychlost));
+	return bonusy;
+}
+
 
 /*
 map<Akcie, int>  Zameranie::Getspelly() {

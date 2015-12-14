@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <map>
 
 class Zameranie
 {
@@ -14,6 +15,8 @@ public:
 	double GetrastIntel();
 	double GetrastRychlost();
 	double GetrastSila();
+	int xpNaLevel(int level);
+	std::map<std::string, int> lvlUpBonusy();
 	//map<Akcie, int>  Getspelly();
 
 private:

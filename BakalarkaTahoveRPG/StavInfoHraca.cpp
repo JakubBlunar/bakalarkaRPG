@@ -49,8 +49,8 @@ void StavInfoHraca::render() {
 		text.setPosition(sf::Vector2f(38.f, 91.f));
 		okno->draw(text);
 
-		int xpTeraz = hrac->Getstatistika()->xpNaLevel(lvl);
-		int xpNaDalsi = hrac->Getstatistika()->xpNaLevel(lvl+1);
+		int xpTeraz = hrac->Getstatistika()->Getskusenosti();
+		int xpNaDalsi = hrac->GetZameranie()->xpNaLevel(lvl+1);
 		text.setCharacterSize(15U);
 		text.setString(" Skusenosti: " + std::to_string(xpTeraz) + " / " + std::to_string(xpNaDalsi));
 		text.setPosition(sf::Vector2f(15.f, 135.f));

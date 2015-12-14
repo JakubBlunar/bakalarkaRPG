@@ -112,8 +112,13 @@ void StavHranieHry::update(double delta) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && !stlacenaKlavesa) {
 		hra->zmenStavRozhrania("stavInfoHraca");
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !stlacenaKlavesa) {
+		stlacenaKlavesa = true;
+		hrac->pridajSkusenosti(10);
+	}
 	
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::C) && !sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
 		stlacenaKlavesa = false;
 	}
 

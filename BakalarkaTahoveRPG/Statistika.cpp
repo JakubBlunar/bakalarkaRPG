@@ -12,6 +12,7 @@ Statistika::Statistika() {
 	obrana = 5;
 	rychlost = 5;
 	obrana = 0;
+	skusenosti = 0;
 }
 
 
@@ -130,18 +131,8 @@ void Statistika::Setskusenosti(int novaHodnota) {
 	skusenosti = novaHodnota;
 }
 
-
-int Statistika::xpNaLevel(int level) {
-
-	return (int)round((5 * (level * level * level)) / 6);
-}
-
 void Statistika::pridajXp(int pocet) {
-	int xpnalevel = xpNaLevel(uroven + 1);
 	skusenosti += pocet;
-	if (skusenosti >= xpnalevel) {
-		uroven++;
-	}
 }
 
 void Statistika::zvysStat(int kolko, std::string paCo) {
@@ -186,4 +177,8 @@ void Statistika::zvysStat(int kolko, std::string paCo) {
 		obrana += kolko;
 	}
 	
+}
+
+void Statistika::setUroven(int paUroven) {
+	uroven = paUroven;
 }

@@ -91,7 +91,7 @@ void StavVolbaZamerania::update(double delta) {
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
 		stlacenaKlavesa = true;
-		Zameranie* zameranie = new Zameranie("Warrior", 1.2, 1.1, 1.3, 1.1, 1.1);
+		Zameranie* zameranie = new Zameranie("Warrior", 10, 3, 3, 2, 1);
 		zamerania.push_back(zameranie);
 
 		Hrac* hrac = new Hrac(zameranie);
