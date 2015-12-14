@@ -11,7 +11,6 @@ public:
 	static Loader* Instance();
 	void setHra(Hra* paHra);
 	void nacitajMapu(std::string paMeno,int paX,int paY,int smer);
-
 	bool Getnacitava();
 	Hra* Gethra();
 private:
@@ -26,7 +25,6 @@ private:
 
 	Hra* hra;
 	std::map<int, sf::Texture*> textury;
-
 
 
 };

@@ -72,8 +72,6 @@ void StavHranieHry::update(double delta) {
 			}
 		}
 
-
-
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {		

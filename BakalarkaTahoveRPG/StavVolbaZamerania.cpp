@@ -98,7 +98,7 @@ void StavVolbaZamerania::update(double delta) {
 		hra->SetHrac(hrac);
 
 		Loader* loader = Loader::Instance();
-		loader->nacitajMapu("mapa2",1,1,2);
+		loader->nacitajMapu("mapa2",1,1,3);
 		hra->zmenStavRozhrania("hranieHry");
 		
 	}

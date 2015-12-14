@@ -4,6 +4,8 @@
 #include <fstream>
 #include <array>
 #include <map>
+#include <thread>
+
 #include "Loader.h"
 #include "Hra.h"
 #include "json.h"
@@ -13,6 +15,7 @@
 #include "StavHranieHry.h"
 #include "Hrac.h"
 #include "Vrstva.h"
+
 
 
 Loader* Loader::instancia = NULL;
@@ -38,7 +41,7 @@ Hra* Loader::Gethra() {
 
 void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	nacitava = true;
-
+	hra->zmenStavRozhrania("stavLoading");
 	Mapa* novaMapa = new Mapa(paMeno, this->hra->GetHrac(), this->hra);
 
 	std::string cestaKMapam = "Data/Mapy/";
@@ -54,7 +57,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	bool alive = true;
 	while (alive) {
 
-		Json::Value root; 
+		Json::Value root;
 		Json::Reader reader;
 		std::ifstream test(cestaKMapam + "" + paMeno + ".json", std::ifstream::binary);
 		std::cout << cestaKMapam + "" + paMeno + ".json" << std::endl;
@@ -98,18 +101,18 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 			std::string menoTextury = value["image"].asCString();
 			int id = atoi(key.asCString());
 			textury[id + 1] = new sf::Texture();
-				if (!textury[id + 1]->loadFromFile(cestakTexturam + "" + menoTextury, sf::IntRect(0, 0, 32, 32))) {
-					std::cout << "Chyba nahravania textury policka" << std::endl;
-				}
-				else {
-					//std::cout << "textura " + menoTextury + " nacitana" << std::endl;
-				}
-			
+			if (!textury[id + 1]->loadFromFile(cestakTexturam + "" + menoTextury, sf::IntRect(0, 0, 32, 32))) {
+				std::cout << "Chyba nahravania textury policka" << std::endl;
+			}
+			else {
+				//std::cout << "textura " + menoTextury + " nacitana" << std::endl;
+			}
+
 
 		}
 
 		for (int i = 0; i < vyska; i++) {
-			for (int j = 0; j < sirka; j++){
+			for (int j = 0; j < sirka; j++) {
 
 				int idTextury1 = root["Vrstva1"][i*vyska + j].asInt();
 				int idTextury2 = root["Vrstva2"][i*vyska + j].asInt();
@@ -119,7 +122,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 
 				if (polickoDvere[j][i] != nullptr) {
 					policko = polickoDvere[i][j];
-					
+
 				}
 				else {
 					if (idTextury2 != 0) {
@@ -148,8 +151,8 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 
 		alive = false;
 	}
-	
-	
+
+
 	hra->GetHrac()->setMapa(novaMapa);
 	novaMapa->setHrac(hra->GetHrac());
 
@@ -158,17 +161,18 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	stav->Setmapa(novaMapa);
 
 
-	if (posX == -1 || posY == -1 || smer ==-1) {
+	if (posX == -1 || posY == -1 || smer == -1) {
 		novaMapa->posunHracaNaPolicko(0, 0, 0);
 	}
 	else {
 		novaMapa->posunHracaNaPolicko(posX, posY, smer);
 	}
-	
+
 	if (staraMapa != nullptr) {
 		delete staraMapa;
 	}
 
-	nacitava = false;
 	
+	nacitava = false;
+	hra->zmenStavRozhrania("hranieHry");
 }

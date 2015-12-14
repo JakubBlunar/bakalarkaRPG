@@ -6,6 +6,7 @@
 #include "StavHlavneMenu.h"
 #include "StavHranieHry.h"
 #include "StavPauza.h"
+#include "StavLoading.h"
 
 #define NAZOV "SUPERRPG"
 
@@ -31,6 +32,10 @@ Hra::Hra() {
 	std::string nazov4 = "stavPauza";
 	Stav* stav4 = new StavPauza(nazov4, okno, this);
 	stavRozhraniaHry->pridajStav(stav4);
+
+	std::string nazov5 = "stavLoading";
+	Stav* stav5 = new StavLoading(nazov5, okno, this);
+	stavRozhraniaHry->pridajStav(stav5);
 	
 }
 
@@ -60,7 +65,6 @@ void Hra::hlavnaSlucka() {
 
 		}
 
-		if (!loader->Getnacitava()) {	
 			sf::Time uplynulyCas = clock.restart();
 			casOdPoslednehoUpdate += uplynulyCas;
 			while (casOdPoslednehoUpdate > ObnovovaciCas)
@@ -72,12 +76,6 @@ void Hra::hlavnaSlucka() {
 			okno->clear();
 			stavRozhraniaHry->render();
 			okno->display();
-		}
-		else {
-			okno->clear();
-			okno->draw(textNacitanie);
-			okno->display();
-		}
 	}
 
 }

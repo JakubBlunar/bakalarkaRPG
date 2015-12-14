@@ -90,6 +90,9 @@
     <ClInclude Include="Loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StavLoading.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -141,6 +144,9 @@
       <Filter>Source Files\Mapa\Policka</Filter>
     </ClCompile>
     <ClCompile Include="Loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StavLoading.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
