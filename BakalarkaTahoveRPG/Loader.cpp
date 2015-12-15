@@ -42,7 +42,6 @@ Hra* Loader::Gethra() {
 void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	//nacitava = true;
 	hra->zmenStavRozhrania("stavLoading");
-	
 	if (nacitaneMapy.find(paMeno) != nacitaneMapy.end()) {
 
 		Mapa* novaMapa = nacitaneMapy.at(paMeno);
@@ -141,7 +140,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 				Policko* policko = nullptr;
 
 				if (polickoDvere[j][i] != nullptr) {
-					policko = polickoDvere[i][j];
+					policko = polickoDvere[j][i];
 
 				}
 				else {
@@ -178,9 +177,11 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 			delete it->second;
 		}
 		nacitaneMapy.clear();
+		//std::cout <<"Mapy zmazane" << nacitaneMapy.size() << std::endl;
 	}
 
 	nacitaneMapy.insert(std::pair<std::string, Mapa*>(paMeno, novaMapa));
+	//std::cout << "Mapa nacitana" << nacitaneMapy.size() << std::endl;
 
 	hra->GetHrac()->setMapa(novaMapa);
 	novaMapa->setHrac(hra->GetHrac());

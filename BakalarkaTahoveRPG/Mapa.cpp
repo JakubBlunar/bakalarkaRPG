@@ -66,9 +66,9 @@ void Mapa::render(sf::RenderWindow* okno) {
 	
 	for (int vrstva = 0; vrstva < 4; vrstva++) {
 
-		for (int i = odX; i < doX; i++)
+		for (int i = odX; i <= doX; i++)
 		{
-			for (int j = odY; j < doY; j++)
+			for (int j = odY; j <= doY; j++)
 			{
 				if (vrstva == 1) {
 					hrac->render(okno);
