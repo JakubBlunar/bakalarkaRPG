@@ -8,10 +8,10 @@
 Hrac::Hrac(Zameranie* paZameranie) {
 	zameranie = paZameranie;
 	std::cout << "Hrac vytvoreny" << std::endl;
-	animaciaDole = new Animacia("Data/Grafika/Hrac/Animacia/hrac_dole.png", 4, 10,32);
-	animaciaHore = new Animacia("Data/Grafika/Hrac/Animacia/hrac_hore.png", 4, 10, 32);
-	animaciaVlavo = new Animacia("Data/Grafika/Hrac/Animacia/hrac_vlavo.png", 4, 10, 32);
-	animaciaVpravo = new Animacia("Data/Grafika/Hrac/Animacia/hrac_vpravo.png", 4, 10, 32);
+	animaciaDole = new Animacia("Data/Grafika/Hrac/Animacia/warrior_dole.png", 4, 15,32,48);
+	animaciaHore = new Animacia("Data/Grafika/Hrac/Animacia/warrior_hore.png", 4, 15, 32,48);
+	animaciaVlavo = new Animacia("Data/Grafika/Hrac/Animacia/warrior_vlavo.png", 4, 15, 32,48);
+	animaciaVpravo = new Animacia("Data/Grafika/Hrac/Animacia/warrior_vpravo.png", 4, 15, 32,48);
 	smerPohladu = SmerPohladu::dole;
 	hybeSa = false;
 	polickoX = 0;
@@ -49,7 +49,7 @@ void Hrac::render(sf::RenderWindow* paOkno) {
 		obrazok = animaciaVpravo->dajObrazok();
 	}
 
-	obrazok->setPosition(sf::Vector2f(offsetX+0.f, offsetY+0.f));
+	obrazok->setPosition(sf::Vector2f(offsetX+0.f, 32 - animaciaDole->GetvelkostY() +offsetY+0.f));
 
 	paOkno->draw(*obrazok);
 }
@@ -64,9 +64,9 @@ void Hrac::update(double delta) {
 			}else {
 				hybeSa = false;
 				smerPohybu = SmerPohladu::stoji;
-				mapa->hracSkocilNaPolicko(polickoX, polickoY);
 				pohybDelta = 0;
 				polickoX++;
+				mapa->hracSkocilNaPolicko(polickoX, polickoY);
 				
 			}
 		}
@@ -80,9 +80,9 @@ void Hrac::update(double delta) {
 		else {
 			hybeSa = false;
 			smerPohybu = SmerPohladu::stoji;
-			mapa->hracSkocilNaPolicko(polickoX, polickoY);
 			pohybDelta = 0;
 			polickoY--;
+			mapa->hracSkocilNaPolicko(polickoX, polickoY);
 		}
 	}
 
@@ -95,9 +95,9 @@ void Hrac::update(double delta) {
 		else {
 			hybeSa = false;
 			smerPohybu = SmerPohladu::stoji;
-			mapa->hracSkocilNaPolicko(polickoX, polickoY);
 			pohybDelta = 0;
 			polickoY++;
+			mapa->hracSkocilNaPolicko(polickoX, polickoY);
 		}
 	}
 
@@ -110,9 +110,9 @@ void Hrac::update(double delta) {
 		else {
 			hybeSa = false;
 			smerPohybu = SmerPohladu::stoji;
-			mapa->hracSkocilNaPolicko(polickoX, polickoY);
 			pohybDelta = 0;
 			polickoX--;
+			mapa->hracSkocilNaPolicko(polickoX, polickoY);
 		}
 	}
 

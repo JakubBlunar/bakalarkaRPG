@@ -2,14 +2,15 @@
 #include <string>
 #include <iostream>
 
-Animacia::Animacia(std::string cesta, int pocetObrazkov, int trvanie, int velkost) {
+Animacia::Animacia(std::string cesta, int pocetObrazkov, int trvanie, int velkostX, int velkostY) {
 	aktObrazok = 0;
 	this->pocetObrazkov = pocetObrazkov;
 	this->trvanie = trvanie;
-	this->velkostTextury = velkost;
+	this->velkostTexturyX = velkostX;
+	this->velkostTexturyY = velkostY;
 
 	
-	if (!textura.loadFromFile(cesta, sf::IntRect(0, 0, velkost*pocetObrazkov, velkost)))
+	if (!textura.loadFromFile(cesta, sf::IntRect(0, 0, velkostX*pocetObrazkov, velkostY)))
 	{
 		std::cout << "Chyba nacitavania textury " << cesta << std::endl;
 		exit(1);
@@ -17,7 +18,7 @@ Animacia::Animacia(std::string cesta, int pocetObrazkov, int trvanie, int velkos
 
 	obrazok = new sf::Sprite();
 	obrazok->setTexture(textura);
-	obrazok->setTextureRect(sf::IntRect(aktObrazok*velkost, 0, velkost, velkost));
+	obrazok->setTextureRect(sf::IntRect(aktObrazok*velkostX, 0, velkostX, velkostY));
 
 }
 
@@ -26,7 +27,7 @@ Animacia::~Animacia() {
 }
 
 sf::Sprite* Animacia::dajObrazok() {
-	obrazok->setTextureRect(sf::IntRect(aktObrazok*velkostTextury, 0, velkostTextury, velkostTextury));
+	obrazok->setTextureRect(sf::IntRect(aktObrazok*velkostTexturyX, 0, velkostTexturyX, velkostTexturyY));
 	return obrazok;
 }
 
@@ -46,4 +47,12 @@ void Animacia::tick() {
 		}
 		trvanieCounter = 0;
 	}
+}
+
+int Animacia::GetvelkostX() {
+	return velkostTexturyX;
+}
+
+int Animacia::GetvelkostY() {
+	return velkostTexturyY;
 }
