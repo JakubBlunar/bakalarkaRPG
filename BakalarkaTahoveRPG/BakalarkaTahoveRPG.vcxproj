@@ -150,6 +150,7 @@
     <ClInclude Include="Animacia.h" />
     <ClInclude Include="Hra.h" />
     <ClInclude Include="Hrac.h" />
+    <ClInclude Include="Inventar.h" />
     <ClInclude Include="json-forwards.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="Loader.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Animacia.cpp" />
     <ClCompile Include="Hra.cpp" />
     <ClCompile Include="Hrac.cpp" />
+    <ClCompile Include="Inventar.cpp" />
     <ClCompile Include="json.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="main.cpp" />
