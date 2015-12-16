@@ -37,6 +37,12 @@
     <Filter Include="Header Files\Mapa\Policka">
       <UniqueIdentifier>{6da94602-5148-4afd-8bd0-b166d98eeba2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Inventar">
+      <UniqueIdentifier>{4d707b66-db27-40af-b570-c4c7291aab75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inventar">
+      <UniqueIdentifier>{4df75059-f5c0-43d1-8144-756b53be6d2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stav.h">
@@ -99,6 +105,9 @@
     <ClInclude Include="StavLoading.h">
       <Filter>Header Files\Stavy</Filter>
     </ClInclude>
+    <ClInclude Include="Predmet.h">
+      <Filter>Header Files\Inventar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -160,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="Loader.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Predmet.cpp">
+      <Filter>Source Files\Inventar</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
