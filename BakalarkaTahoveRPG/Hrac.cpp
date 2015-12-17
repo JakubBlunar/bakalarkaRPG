@@ -4,10 +4,11 @@
 #include <iostream>
 #include "Mapa.h"
 #include "Statistika.h"
+#include "Inventar.h"
 
 Hrac::Hrac(Zameranie* paZameranie) {
 	zameranie = paZameranie;
-	std::cout << "Hrac vytvoreny" << std::endl;
+
 	animaciaDole = new Animacia("Data/Grafika/Hrac/Animacia/warrior_dole.png", 4, 15,32,48);
 	animaciaHore = new Animacia("Data/Grafika/Hrac/Animacia/warrior_hore.png", 4, 15, 32,48);
 	animaciaVlavo = new Animacia("Data/Grafika/Hrac/Animacia/warrior_vlavo.png", 4, 15, 32,48);
@@ -19,6 +20,7 @@ Hrac::Hrac(Zameranie* paZameranie) {
 	offsetX = 0;
 	offsetY = 0;
 	statistika = new Statistika();
+	inventar = new Inventar();
 }
 
 
@@ -229,6 +231,10 @@ Statistika* Hrac::Getstatistika() {
 
 Zameranie* Hrac::GetZameranie() {
 	return zameranie;
+}
+
+Inventar* Hrac::Getinventar() {
+	return inventar;
 }
 
 void Hrac::pridajSkusenosti(int pocet) {

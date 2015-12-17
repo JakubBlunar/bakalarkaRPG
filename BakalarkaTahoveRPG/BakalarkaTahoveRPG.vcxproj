@@ -163,6 +163,7 @@
     <ClInclude Include="StavHlavneMenu.h" />
     <ClInclude Include="StavHranieHry.h" />
     <ClInclude Include="StavInfoHraca.h" />
+    <ClInclude Include="StavInventar.h" />
     <ClInclude Include="StavLoading.h" />
     <ClInclude Include="StavPauza.h" />
     <ClInclude Include="StavRozhrania.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="StavHlavneMenu.cpp" />
     <ClCompile Include="StavHranieHry.cpp" />
     <ClCompile Include="StavInfoHraca.cpp" />
+    <ClCompile Include="StavInventar.cpp" />
     <ClCompile Include="StavLoading.cpp" />
     <ClCompile Include="StavPauza.cpp" />
     <ClCompile Include="StavRozhrania.cpp" />

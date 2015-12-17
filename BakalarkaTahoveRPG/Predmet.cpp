@@ -1,19 +1,39 @@
+#include <iostream>
+
 #include "Predmet.h"
 
 
-Predmet::Predmet() {
 
+Predmet::Predmet(std::string meno, int typ, std::string paObrazok, int cena) {
+	
+	const std::string predmety_cesta = "Data/Grafika/Predmety/";
+	
+	this->meno = meno;
+	this->typ = typ;
+	this->cena = cena;
+	obrazok = new sf::Sprite();
+	
+	textura = new sf::Texture();
+	if (!textura->loadFromFile(predmety_cesta + "" + paObrazok+".png", sf::IntRect(0, 0, 32, 32))) {
+		
+	}
+	textura->setSmooth(true);
+	obrazok->setTexture(*textura);
+	
 }
 
 
 
 Predmet::~Predmet() {
-
+	delete obrazok;
+	delete textura;
 }
 
 
 
-
+int Predmet::Gettyp() {
+	return typ;
+}
 
 int Predmet::Getcena() {
 
@@ -27,7 +47,7 @@ std::string Predmet::Getmeno() {
 }
 
 
-sf::Image* Predmet::Getobrazok() {
+sf::Sprite* Predmet::Getobrazok() {
 
 	return obrazok;
 }
@@ -50,7 +70,11 @@ void Predmet::Setmeno(std::string newVal) {
 }
 
 
-void Predmet::Setobrazok(sf::Image* newVal) {
+void Predmet::Setobrazok(sf::Sprite* newVal) {
 
 	obrazok = newVal;
+}
+
+void Predmet::Settyp(int newVal) {
+	typ = newVal;
 }

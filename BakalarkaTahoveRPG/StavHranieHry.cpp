@@ -18,10 +18,10 @@ StavHranieHry::~StavHranieHry()
 
 
 void StavHranieHry::onEnter() {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+	Stav::onEnter();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
 		stlacenaKlavesa = true;
 	}
-	Stav::onEnter();
 }
 
 
@@ -113,12 +113,16 @@ void StavHranieHry::update(double delta) {
 		hra->zmenStavRozhrania("stavInfoHraca");
 	}
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && !stlacenaKlavesa) {
+		hra->zmenStavRozhrania("stavInventar");
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !stlacenaKlavesa) {
 		stlacenaKlavesa = true;
 		hrac->pridajSkusenosti(10);
 	}
 	
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::C) && !sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::C) && !sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
 		stlacenaKlavesa = false;
 	}
 

@@ -111,6 +111,9 @@
     <ClInclude Include="Inventar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StavInventar.h">
+      <Filter>Header Files\Stavy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -178,6 +181,9 @@
     </ClCompile>
     <ClCompile Include="Inventar.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StavInventar.cpp">
+      <Filter>Source Files\Stavy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
