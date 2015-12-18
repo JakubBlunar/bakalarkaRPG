@@ -19,11 +19,13 @@ public:
 	int Gettyp();
 	std::string Getmeno();
 	sf::Sprite* Getobrazok();
+	std::string Getstringovytyp();
 	void pouzi(Hrac* hrac);
 	void Settyp(int newVal);
 	void Setcena(int newVal);
 	void Setmeno(std::string newVal);
 	void Setobrazok(sf::Sprite* newVal);
+	
 
 private:
 	int typ;

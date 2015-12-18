@@ -5,6 +5,7 @@
 
 class Hrac;
 class Inventar;
+class Predmet;
 
 class StavInventar : public Stav
 {
@@ -19,12 +20,15 @@ public:
 	void update(double delta);
 
 private:
+
+	void vykresliOknoPredmetu(Predmet* predmet, int x, int y, sf::RenderWindow* okno);
 	sf::Font* font;
 	bool stlacenaKlavesa;
 	
 
 	int oznacene;
 	sf::Sprite* ukazovatel;
+	int nasirku;
 
 	Inventar* inventar;
 	Hrac* hrac;

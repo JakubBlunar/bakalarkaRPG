@@ -109,3 +109,4 @@ void StavInfoHraca::update(double delta) {
 		stlacenaKlavesa = false;
 	}
 }
+

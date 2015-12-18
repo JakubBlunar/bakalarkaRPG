@@ -9,10 +9,10 @@
 Hrac::Hrac(Zameranie* paZameranie) {
 	zameranie = paZameranie;
 
-	animaciaDole = new Animacia("Data/Grafika/Hrac/Animacia/warrior_dole.png", 4, 15,32,48);
-	animaciaHore = new Animacia("Data/Grafika/Hrac/Animacia/warrior_hore.png", 4, 15, 32,48);
-	animaciaVlavo = new Animacia("Data/Grafika/Hrac/Animacia/warrior_vlavo.png", 4, 15, 32,48);
-	animaciaVpravo = new Animacia("Data/Grafika/Hrac/Animacia/warrior_vpravo.png", 4, 15, 32,48);
+	animaciaDole = new Animacia("Data/Grafika/Hrac/Animacia/warrior_dole.png", 4, 10,32,48);
+	animaciaHore = new Animacia("Data/Grafika/Hrac/Animacia/warrior_hore.png", 4, 10, 32,48);
+	animaciaVlavo = new Animacia("Data/Grafika/Hrac/Animacia/warrior_vlavo.png", 4, 10, 32,48);
+	animaciaVpravo = new Animacia("Data/Grafika/Hrac/Animacia/warrior_vpravo.png", 4, 10, 32,48);
 	smerPohladu = SmerPohladu::dole;
 	hybeSa = false;
 	polickoX = 0;

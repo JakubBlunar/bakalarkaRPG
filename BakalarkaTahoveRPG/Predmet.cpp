@@ -78,3 +78,20 @@ void Predmet::Setobrazok(sf::Sprite* newVal) {
 void Predmet::Settyp(int newVal) {
 	typ = newVal;
 }
+
+std::string Predmet::Getstringovytyp() {
+	switch (typ)
+	{
+	case (1) :
+		return "Zbran (1h)";
+	case (2) :
+		return "Zbran (2h)";
+	case (3) :
+		return "Stit";
+	case (4) :
+		return "Brnenie";
+	default:
+		return "ine";
+		break;
+	}
+}
