@@ -9,8 +9,6 @@ class Pouzitelny : public Predmet
 {
 
 public:
-	virtual bool jePouzitelny() { return true; }
-
 	int Getarmor();
 	double GetarmorMult();
 	int Gethp();

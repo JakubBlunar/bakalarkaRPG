@@ -16,7 +16,6 @@ public:
 	virtual ~Predmet();
 
 	virtual void pouzi(Hrac* hrac);
-	virtual bool jePouzitelny() { return false; }
 
 	int Geturoven();
 	int Getcena();

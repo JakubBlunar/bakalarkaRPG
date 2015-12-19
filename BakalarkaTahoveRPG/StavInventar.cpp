@@ -175,7 +175,8 @@ void StavInventar::update(double delta) {
 
 
 void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::RenderWindow* okno) {
-
+	
+	// vykreslenie obdlznika na ktorom sa bude vypisovat info predmetu 
 	sf::RectangleShape obdlznik;
 	obdlznik.setSize(sf::Vector2f(180.f, 200.f));// vyska a sirka okienka
 	obdlznik.setOutlineColor(sf::Color::Red);
@@ -195,7 +196,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	}
 	okno->draw(obdlznik);
 
-
+	// tu už je samotny vypis infa
 	sf::Text text(predmet->Getmeno(), *font, 15U);
 
 	text.setColor(sf::Color::Black);
@@ -217,7 +218,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	okno->draw(text);
 
 	
-	if (predmet->jePouzitelny()) {
+	if (dynamic_cast<Zbran*>(predmet) != NULL) {
 		text.setColor(sf::Color::Black);
 		text.setCharacterSize(13U);
 		Pouzitelny* pouzitelny = (Pouzitelny*)predmet;
@@ -313,12 +314,5 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 		okno->draw(text);
 
 	}
-
-	/*
-	int lvl = hrac->Getstatistika()->dajUroven();
-	text.setCharacterSize(30U);
-	text.setString(" Level: " + std::to_string(lvl));
-	text.setPosition(sf::Vector2f(38.f, 91.f));
-	okno->draw(text);*/
 
 }
