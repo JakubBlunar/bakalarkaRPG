@@ -7,7 +7,7 @@
 #include "Inventar.h"
 #include "Statistika.h"
 
-Oblecenie::Oblecenie(std::string meno, int typ, std::string paObrazok, int cena):Pouzitelny(meno, typ, paObrazok, cena) {
+Oblecenie::Oblecenie(std::string meno, int typ, std::string paObrazok, int cena, int paUroven):Pouzitelny(meno, typ, paObrazok, cena,paUroven) {
 
 }
 
@@ -19,6 +19,8 @@ Oblecenie::~Oblecenie() {
 
 
 void Oblecenie::pouzi(Hrac* hrac) {
+
+	if (hrac->Getstatistika()->dajUroven() < this->Geturoven()) return;
 
 	std::map<int, Predmet*>* oblecene = hrac->Getstatistika()->Getoblecene();
 	Predmet* docasny;

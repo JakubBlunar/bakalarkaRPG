@@ -9,6 +9,7 @@ class Pouzitelny : public Predmet
 {
 
 public:
+	virtual bool jePouzitelny() { return true; }
 
 	int Getarmor();
 	double GetarmorMult();
@@ -41,7 +42,7 @@ public:
 	void Setsila(int newVal);
 	void SetsilaMult(double newVal);
 protected:
-	Pouzitelny(std::string meno, int typ, std::string paObrazok, int cena);
+	Pouzitelny(std::string meno, int typ, std::string paObrazok, int cena, int paUroven);
 	virtual ~Pouzitelny();
 
 private:

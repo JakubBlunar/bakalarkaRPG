@@ -12,7 +12,7 @@ class Oblecenie : public Pouzitelny
 {
 
 public:
-	Oblecenie(std::string meno, int typ, std::string paObrazok, int cena);
+	Oblecenie(std::string meno, int typ, std::string paObrazok, int cena, int paUroven);
 	virtual ~Oblecenie();
 
 	void pouzi(Hrac* hrac);

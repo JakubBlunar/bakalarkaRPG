@@ -4,10 +4,11 @@
 
 
 
-Predmet::Predmet(std::string meno, int typ, std::string paObrazok, int cena) {
+Predmet::Predmet(std::string meno, int typ, std::string paObrazok, int cenam,int paUroven) {
 	
 	const std::string predmety_cesta = "Data/Grafika/Predmety/";
 	
+	this->uroven = paUroven;
 	this->meno = meno;
 	this->typ = typ;
 	this->cena = cena;
@@ -30,6 +31,9 @@ Predmet::~Predmet() {
 }
 
 
+int Predmet::Geturoven() {
+	return uroven;
+}
 
 int Predmet::Gettyp() {
 	return typ;

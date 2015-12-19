@@ -12,11 +12,13 @@ class Predmet
 {
 
 public:
-	Predmet(std::string meno, int typ, std::string obrazok, int cena);
+	Predmet(std::string meno, int typ, std::string obrazok, int cena, int paUroven);
 	virtual ~Predmet();
 
 	virtual void pouzi(Hrac* hrac);
+	virtual bool jePouzitelny() { return false; }
 
+	int Geturoven();
 	int Getcena();
 	int Gettyp();
 	std::string Getmeno();
@@ -29,6 +31,7 @@ public:
 	
 
 private:
+	int uroven;
 	int typ;
 	int cena;
 	std::string meno;

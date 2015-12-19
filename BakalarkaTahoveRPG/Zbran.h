@@ -8,8 +8,11 @@ class Zbran : public Pouzitelny
 {
 
 public:
-	Zbran(std::string meno, int typ, std::string paObrazok, int cena, int paMinPoskodenie, int paMaxPoskodnie);
+	Zbran(std::string meno, int typ, std::string paObrazok, int cena, int paUroven,int paMinPoskodenie, int paMaxPoskodnie);
 	virtual ~Zbran();
+
+	int Getminposkodenie();
+	int Getmaxposkodenie();
 
 	void pouzi(Hrac* hrac);
 

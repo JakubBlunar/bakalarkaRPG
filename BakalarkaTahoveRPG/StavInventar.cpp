@@ -1,9 +1,15 @@
 #include "StavInventar.h"
+
+#include <math.h>
+#include <typeinfo>
+
 #include "Hra.h"
 #include "Hrac.h"
 #include "Statistika.h"
 #include "Zameranie.h"
 #include "Inventar.h"
+#include "Pouzitelny.h"
+#include "Zbran.h"
 
 
 
@@ -189,15 +195,124 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	}
 	okno->draw(obdlznik);
 
+
 	sf::Text text(predmet->Getmeno(), *font, 15U);
+
 	text.setColor(sf::Color::Black);
+	
+	if (hrac->Getstatistika()->dajUroven() < predmet->Geturoven()) text.setColor(sf::Color::Red);
+
 	text.setPosition(sf::Vector2f(posX+10.f, posY+5.f));
 	okno->draw(text);
+
 	
 	text.setCharacterSize(10U);
 	text.setString(predmet->Getstringovytyp());
 	text.setPosition(sf::Vector2f(posX+5.f, posY+23.f));
 	okno->draw(text);
+
+
+	text.setString("Potrebna uroven: " +std::to_string( predmet->Geturoven()));
+	text.setPosition(sf::Vector2f(posX + 5.f, posY + 35.f));
+	okno->draw(text);
+
+	
+	if (predmet->jePouzitelny()) {
+		text.setColor(sf::Color::Black);
+		text.setCharacterSize(13U);
+		Pouzitelny* pouzitelny = (Pouzitelny*)predmet;
+		std::string bonusy = "";
+
+		if (dynamic_cast<Zbran*>(predmet) != NULL)
+		{
+			Zbran* pom = (Zbran*)predmet;
+			if (pom->Gettyp() != 3) {
+				bonusy += "DMG: ";
+				bonusy += std::to_string(pom->Getminposkodenie()) + " - ";
+				bonusy += std::to_string(pom->Getmaxposkodenie());
+				bonusy += "\n";
+			}
+		}
+
+
+		if (pouzitelny->Getarmor() != 0) {
+			bonusy += "Obrana: ";
+			bonusy += std::to_string(pouzitelny->Getarmor());
+			bonusy += "\n";
+		}
+
+		if (pouzitelny->Gethp()!=0) {
+			bonusy += "Hp: ";
+			bonusy += std::to_string(pouzitelny->Gethp());
+			bonusy += "\n";
+		}
+
+		if (pouzitelny->Getmp() != 0) {
+			bonusy += "Mp: ";
+			bonusy += std::to_string(pouzitelny->Getmp());
+			bonusy += "\n";
+		}
+
+		if (pouzitelny->Getsila() != 0) {
+			bonusy += "Sila: ";
+			bonusy += std::to_string(pouzitelny->Getsila());
+			bonusy += "\n";
+		}
+
+		if (pouzitelny->Getrychlost() != 0) {
+			bonusy += "Rychlost: ";
+			bonusy += std::to_string(pouzitelny->Getrychlost());
+			bonusy += "\n";
+		}
+
+		if (pouzitelny->Getinteligencia() != 0) {
+			bonusy += "Intelekt: ";
+			bonusy += std::to_string(pouzitelny->Getinteligencia());
+			bonusy += "\n";
+		}
+
+		if (pouzitelny->GetarmorMult() != 0) {
+			bonusy += "Obrana: ";
+			bonusy += std::to_string((int)round(pouzitelny->GetarmorMult() * 100));
+			bonusy += " %\n";
+		}
+
+		if (pouzitelny->GethpMult() != 0) {
+			bonusy += "Hp: ";
+			bonusy += std::to_string((int)round(pouzitelny->GethpMult() * 100));
+			bonusy += " %\n";
+		}
+
+		if (pouzitelny->GetmpMult() != 0) {
+			bonusy += "Mp: ";
+			bonusy += std::to_string((int)round(pouzitelny->GetmpMult()*100));
+			bonusy += " %\n";
+		}
+
+		if (pouzitelny->GetsilaMult() != 0) {
+			bonusy += "Sila: ";
+			bonusy += std::to_string((int)round(pouzitelny->GetsilaMult() * 100));
+			bonusy += " %\n";
+		}
+
+		if (pouzitelny->GetrychlostMult() != 0) {
+			bonusy += "Rychlost: ";
+			bonusy += std::to_string((int)round(pouzitelny->GetrychlostMult() * 100));
+			bonusy += " %\n";
+		}
+
+		if (pouzitelny->GetinteligenciaMult() != 0) {
+			bonusy += "Intelekt: ";
+			bonusy += std::to_string((int)round(pouzitelny->GetinteligenciaMult() * 100));
+			bonusy += " %\n";
+		}
+
+
+		text.setPosition(sf::Vector2f(posX + 5.f, posY + 48.f));
+		text.setString(bonusy);
+		okno->draw(text);
+
+	}
 
 	/*
 	int lvl = hrac->Getstatistika()->dajUroven();

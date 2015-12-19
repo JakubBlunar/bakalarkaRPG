@@ -1,7 +1,7 @@
 #include "Pouzitelny.h"
 
 
-Pouzitelny::Pouzitelny(std::string meno, int typ, std::string paObrazok, int cena) :Predmet(meno,typ,paObrazok,cena){
+Pouzitelny::Pouzitelny(std::string meno, int typ, std::string paObrazok, int cena, int paUroven) :Predmet(meno,typ,paObrazok,cena,paUroven){
 	obleceny = false;
 	hp = 0;
 	hpMult = 0;
