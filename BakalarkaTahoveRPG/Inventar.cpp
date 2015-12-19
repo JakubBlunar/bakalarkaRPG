@@ -2,13 +2,15 @@
 
 #include "Inventar.h"
 #include "Predmet.h"
+#include "Pouzitelny.h"
+#include "Oblecenie.h"
 
 Inventar::Inventar() {
 	kapacita = 36;
 	try {
-		pridajPredmet(new Predmet("Sword 1", 1, "zbran1", 100));
-		pridajPredmet(new Predmet("Sword 2", 1, "zbran1", 1000));
-		pridajPredmet(new Predmet("Sword 3", 2, "zbran1", 10000));
+		pridajPredmet(new Oblecenie("Sword 1", 1, "zbran1", 100));
+		pridajPredmet(new Oblecenie("Sword 2", 1, "zbran1", 1000));
+		pridajPredmet(new Oblecenie("Sword 3", 2, "zbran1", 10000));
 		pridajPredmet(new Predmet("Brnenie1", 4, "brnenie1", 3));
 	}
 	catch (int ex) {
@@ -44,7 +46,15 @@ bool Inventar::maDostatokZlata(int potrebne) {
 
 
 int Inventar::pocetPredmetov(std::string meno) {
-	return predmety.size();
+	int counter = 0;
+	for (auto &predmet : predmety) // access by reference to avoid copying
+	{
+		if (predmet->Getmeno() == meno)
+		{
+			counter++;
+		}
+	}
+	return counter;
 }
 
 int Inventar::pocetPredmetov() {

@@ -15,12 +15,13 @@ public:
 	Predmet(std::string meno, int typ, std::string obrazok, int cena);
 	virtual ~Predmet();
 
+	virtual void pouzi(Hrac* hrac);
+
 	int Getcena();
 	int Gettyp();
 	std::string Getmeno();
 	sf::Sprite* Getobrazok();
 	std::string Getstringovytyp();
-	void pouzi(Hrac* hrac);
 	void Settyp(int newVal);
 	void Setcena(int newVal);
 	void Setmeno(std::string newVal);

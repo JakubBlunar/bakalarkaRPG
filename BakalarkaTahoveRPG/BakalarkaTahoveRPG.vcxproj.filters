@@ -108,11 +108,17 @@
     <ClInclude Include="Predmet.h">
       <Filter>Header Files\Inventar</Filter>
     </ClInclude>
-    <ClInclude Include="Inventar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StavInventar.h">
       <Filter>Header Files\Stavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventar.h">
+      <Filter>Header Files\Inventar</Filter>
+    </ClInclude>
+    <ClInclude Include="Pouzitelny.h">
+      <Filter>Header Files\Inventar</Filter>
+    </ClInclude>
+    <ClInclude Include="Oblecenie.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -179,11 +185,17 @@
     <ClCompile Include="Predmet.cpp">
       <Filter>Source Files\Inventar</Filter>
     </ClCompile>
-    <ClCompile Include="Inventar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StavInventar.cpp">
       <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventar.cpp">
+      <Filter>Source Files\Inventar</Filter>
+    </ClCompile>
+    <ClCompile Include="Pouzitelny.cpp">
+      <Filter>Source Files\Inventar</Filter>
+    </ClCompile>
+    <ClCompile Include="Oblecenie.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

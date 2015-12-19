@@ -142,6 +142,14 @@ void StavInventar::update(double delta) {
 		}
 
 
+		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+			stlacenaKlavesa = true;
+			if (oznacene>=0 && oznacene < inventar->pocetPredmetov()) {
+				Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
+				p->pouzi(hrac);
+			}
+		}
+
 		if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::I))) {
 			hra->zmenStavRozhrania("hranieHry");
 		}
@@ -152,6 +160,7 @@ void StavInventar::update(double delta) {
 			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
 			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
 			) {
 			stlacenaKlavesa = false;
 		}

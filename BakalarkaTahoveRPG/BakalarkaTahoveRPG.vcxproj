@@ -155,8 +155,10 @@
     <ClInclude Include="json.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Mapa.h" />
+    <ClInclude Include="Oblecenie.h" />
     <ClInclude Include="Policko.h" />
     <ClInclude Include="PolickoDvere.h" />
+    <ClInclude Include="Pouzitelny.h" />
     <ClInclude Include="Predmet.h" />
     <ClInclude Include="Statistika.h" />
     <ClInclude Include="Stav.h" />
@@ -180,8 +182,10 @@
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mapa.cpp" />
+    <ClCompile Include="Oblecenie.cpp" />
     <ClCompile Include="Policko.cpp" />
     <ClCompile Include="PolickoDvere.cpp" />
+    <ClCompile Include="Pouzitelny.cpp" />
     <ClCompile Include="Predmet.cpp" />
     <ClCompile Include="Statistika.cpp" />
     <ClCompile Include="Stav.cpp" />
