@@ -17,7 +17,9 @@ Zbran::~Zbran() {
 
 
 
-
+/*
+	hnusné riešenie a nepaèi sa mi :D
+*/
 
 void Zbran::pouzi(Hrac* hrac) {
 	std::map<int, Predmet*>* oblecene = hrac->Getstatistika()->Getoblecene();
@@ -27,11 +29,11 @@ void Zbran::pouzi(Hrac* hrac) {
 	if (!Pouzitelny::Isobleceny()) {
 		int typ = Gettyp();
 
-		if (typ == 1) {
+		if (typ == 1) { // je to jednoruèná zbran
 			
-			if (oblecene->count(1)) {
+			if (oblecene->count(1)) { // u je zbran na prvom slote
 
-				if (oblecene->count(2)) {
+				if (oblecene->count(2)) { // je zbran na druhom slote tak vymení zbrane v prvom , druhu necha tak
 					docasny1 =(Pouzitelny*)oblecene->at(1);
 					oblecene->erase(1);
 					oblecene->insert(std::pair<int, Predmet*>(1, this));
@@ -44,12 +46,12 @@ void Zbran::pouzi(Hrac* hrac) {
 				}
 				else {// na slote 2 nie je iadna zbran
 					docasny1 = (Pouzitelny*)oblecene->at(1);
-					if (docasny1->Gettyp() != 2) {//nie je obojrucna
+					if (docasny1->Gettyp() != 2) {//na slote 1 nie je obojrucna zbran
 						Pouzitelny::Setobleceny(true);
 						oblecene->insert(std::pair<int, Predmet*>(2, this));
 						hrac->Getinventar()->zmazPredmet(this);
 					}
-					else { // ak je obojruèna tak moe dra len tu
+					else { // ak je obojruèna tak moe dra len tu , vrati zbran zo slotu 1 do inventu
 						oblecene->erase(1);
 						docasny1->Setobleceny(false);
 						hrac->Getinventar()->pridajPredmet(docasny1);
@@ -62,7 +64,7 @@ void Zbran::pouzi(Hrac* hrac) {
 
 
 			}
-			else {
+			else {// nie je niè oblecene tak ho oblecie
 				Pouzitelny::Setobleceny(true);
 				oblecene->insert(std::pair<int, Predmet*>(1, this));
 				hrac->Getinventar()->zmazPredmet(this);
@@ -71,7 +73,7 @@ void Zbran::pouzi(Hrac* hrac) {
 		}
 		else if (typ == 2) { // je to obojruèna
 			if (oblecene->count(1)) {
-				if (oblecene->count(2)) {
+				if (oblecene->count(2)) {// na slote 2 je nejakı predmet tak ho aj so branou na prvom slote vlozi do inventara
 
 					docasny1 = (Pouzitelny*)oblecene->at(1);
 					docasny2 = (Pouzitelny*)oblecene->at(2);
@@ -89,7 +91,7 @@ void Zbran::pouzi(Hrac* hrac) {
 
 					Pouzitelny::Setobleceny(true);
 				}
-				else {
+				else {  // na slote 2 niè nie je ... iba da zbran do slotu 1 a zbran z 1 do inventu
 					docasny1 = (Pouzitelny*)oblecene->at(1);
 					oblecene->erase(1);
 					oblecene->insert(std::pair<int, Predmet*>(1, this));
@@ -102,7 +104,7 @@ void Zbran::pouzi(Hrac* hrac) {
 
 			}
 			else {
-				if (oblecene->count(2)) {
+				if (oblecene->count(2)) {  // na 2. slote je zbran alebo stit tak ju da dole
 					docasny1 = (Pouzitelny*)oblecene->at(2);
 					oblecene->erase(2);
 					docasny1->Setobleceny(false);
@@ -112,7 +114,7 @@ void Zbran::pouzi(Hrac* hrac) {
 					oblecene->insert(std::pair<int, Predmet*>(1, this));
 					hrac->Getinventar()->zmazPredmet(this);
 				}
-				else {
+				else {// na druhom slote nie je nic a ani na prvom tak len nasadí zbran
 					Pouzitelny::Setobleceny(true);
 					oblecene->insert(std::pair<int, Predmet*>(1, this));
 					hrac->Getinventar()->zmazPredmet(this);
@@ -135,15 +137,22 @@ void Zbran::pouzi(Hrac* hrac) {
 
 			}
 			else {
-				docasny1 = (Pouzitelny*)oblecene->at(1);
-				if (docasny1->Gettyp() == 2) { // ma obojrucnu zbran
-					oblecene->erase(1);
-					docasny1->Setobleceny(false);
-					hrac->Getinventar()->pridajPredmet(docasny1);
+				if (oblecene->count(1)) {
+					docasny1 = (Pouzitelny*)oblecene->at(1);
+					if (docasny1->Gettyp() == 2) { // ma obojrucnu zbran
+						oblecene->erase(1);
+						docasny1->Setobleceny(false);
+						hrac->Getinventar()->pridajPredmet(docasny1);
 
-					Pouzitelny::Setobleceny(true);
-					oblecene->insert(std::pair<int, Predmet*>(2, this));
-					hrac->Getinventar()->zmazPredmet(this);
+						Pouzitelny::Setobleceny(true);
+						oblecene->insert(std::pair<int, Predmet*>(2, this));
+						hrac->Getinventar()->zmazPredmet(this);
+					}
+					else {
+						Pouzitelny::Setobleceny(true);
+						oblecene->insert(std::pair<int, Predmet*>(2, this));
+						hrac->Getinventar()->zmazPredmet(this);
+					}
 				}
 				else {
 					Pouzitelny::Setobleceny(true);

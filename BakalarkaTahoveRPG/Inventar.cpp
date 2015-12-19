@@ -10,7 +10,7 @@ Inventar::Inventar() {
 	kapacita = 36;
 	Pouzitelny* o = new Zbran("Sword 1", 1, "zbran1", 100,1,5);
 	Pouzitelny* brnenie = new Oblecenie("Brnenie1", 4, "brnenie1", 3);
-	Pouzitelny* stit = new Zbran("Stit", 3, "brnenie1", 3,0,0);
+	Pouzitelny* stit = new Zbran("Stit", 3, "stit", 3,0,0);
 	
 	brnenie->Setarmor(15);
 	brnenie->Sethp(5);
@@ -19,6 +19,7 @@ Inventar::Inventar() {
 		pridajPredmet(new Zbran("Sword 2", 1, "zbran1", 1000,2,6));
 		pridajPredmet(new Zbran("Sword 3", 2, "zbran1", 10000,3,7));
 		pridajPredmet(brnenie);
+		pridajPredmet(stit);
 	}
 	catch (int ex) {
 		if (ex == 1) {
