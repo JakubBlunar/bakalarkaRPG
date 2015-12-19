@@ -5,9 +5,10 @@
 #define statistika_h
 
 #include <string>
-
+#include <map>
 //#include "Akcia.h"
 
+class Predmet;
 
 
 class Statistika
@@ -17,6 +18,8 @@ public:
 	Statistika();
 	virtual ~Statistika();
 	//Akcia *m_Akcia;
+
+	std::map<int, Predmet*>* Getoblecene();
 
 	int dajUroven();
 	int Gethp();
@@ -52,6 +55,6 @@ private:
 	int skusenosti;
 	int uroven;
 	//std::Map<string, Akcia*> kuzla;
-
+	std::map<int, Predmet*>* oblecene;
 };
 #endif 

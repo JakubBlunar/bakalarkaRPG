@@ -1,12 +1,14 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
+#include <map>
 
 class Mapa;
 class Zameranie;
 class Animacia;
 class Statistika;
 class Inventar;
+class Predmet;
 
 enum SmerPohladu
 {
@@ -52,6 +54,7 @@ public:
 	void Setstatistika(Statistika* paStatistika);
 	Zameranie* GetZameranie();
 	Inventar* Getinventar();
+	
 
 	void pridajSkusenosti(int pocet);
 private:
@@ -61,7 +64,7 @@ private:
 	Animacia* animaciaVpravo;
 	//vector<Quest> dokonceneQuesty;
 	Inventar* inventar;
-	//std::Map<int, Predmet*> oblecene;
+	
 	//vector<Quest> questy;
 	SmerPohladu smerPohladu;
 	Statistika* statistika;

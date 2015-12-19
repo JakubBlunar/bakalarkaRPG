@@ -3,6 +3,19 @@
 
 Pouzitelny::Pouzitelny(std::string meno, int typ, std::string paObrazok, int cena) :Predmet(meno,typ,paObrazok,cena){
 	obleceny = false;
+	hp = 0;
+	hpMult = 0;
+	mp = 0;
+	mpMult = 0;
+	sila = 0;
+	silaMult = 0;
+	rychlost = 0;
+	rychlostMult = 0;
+	inteligencia = 0;
+	inteligenciaMult = 0;
+	armor = 0;
+	armorMult = 0;
+
 }
 
 

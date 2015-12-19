@@ -1,7 +1,9 @@
+#include <iostream>
+#include <map>
+
 #include "Hrac.h"
 #include "Zameranie.h"
 #include "Animacia.h"
-#include <iostream>
 #include "Mapa.h"
 #include "Statistika.h"
 #include "Inventar.h"
@@ -9,10 +11,10 @@
 Hrac::Hrac(Zameranie* paZameranie) {
 	zameranie = paZameranie;
 
-	animaciaDole = new Animacia("Data/Grafika/Hrac/Animacia/warrior_dole.png", 4, 10,32,48);
-	animaciaHore = new Animacia("Data/Grafika/Hrac/Animacia/warrior_hore.png", 4, 10, 32,48);
-	animaciaVlavo = new Animacia("Data/Grafika/Hrac/Animacia/warrior_vlavo.png", 4, 10, 32,48);
-	animaciaVpravo = new Animacia("Data/Grafika/Hrac/Animacia/warrior_vpravo.png", 4, 10, 32,48);
+	animaciaDole = new Animacia("Data/Grafika/Hrac/Animacia/warrior_dole.png", 4, 10, 32, 48);
+	animaciaHore = new Animacia("Data/Grafika/Hrac/Animacia/warrior_hore.png", 4, 10, 32, 48);
+	animaciaVlavo = new Animacia("Data/Grafika/Hrac/Animacia/warrior_vlavo.png", 4, 10, 32, 48);
+	animaciaVpravo = new Animacia("Data/Grafika/Hrac/Animacia/warrior_vpravo.png", 4, 10, 32, 48);
 	smerPohladu = SmerPohladu::dole;
 	hybeSa = false;
 	polickoX = 0;
@@ -21,9 +23,9 @@ Hrac::Hrac(Zameranie* paZameranie) {
 	offsetY = 0;
 	statistika = new Statistika();
 	inventar = new Inventar();
+	
+
 }
-
-
 
 Hrac::~Hrac() {
 	delete statistika;
@@ -174,7 +176,6 @@ void Hrac::zmenSmerPohladu(SmerPohladu paSmer) {
 		animaciaVpravo->reset();
 	}
 
-	
 }
 
 void Hrac::animaciaTick() {

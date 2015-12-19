@@ -7,10 +7,12 @@
 
 Inventar::Inventar() {
 	kapacita = 36;
+	Oblecenie* o = new Oblecenie("Sword 1", 1, "zbran1", 100);
+	o->SetsilaMult(1);
 	try {
-		pridajPredmet(new Oblecenie("Sword 1", 1, "zbran1", 100));
+		pridajPredmet(o);
 		pridajPredmet(new Oblecenie("Sword 2", 1, "zbran1", 1000));
-		pridajPredmet(new Oblecenie("Sword 3", 2, "zbran1", 10000));
+		pridajPredmet(new Oblecenie("Sword 3", 1, "zbran1", 10000));
 		pridajPredmet(new Predmet("Brnenie1", 4, "brnenie1", 3));
 	}
 	catch (int ex) {

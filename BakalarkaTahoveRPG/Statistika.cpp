@@ -1,5 +1,8 @@
 #include "Statistika.h"
-
+#include <map>
+#include <math.h>
+#include "Predmet.h"
+#include "Pouzitelny.h"
 
 Statistika::Statistika() {
 	uroven = 1;
@@ -13,12 +16,13 @@ Statistika::Statistika() {
 	rychlost = 5;
 	obrana = 0;
 	skusenosti = 0;
+	oblecene = new std::map<int, Predmet*>();
 }
 
 
 
 Statistika::~Statistika() {
-
+	delete oblecene;
 }
 
 
@@ -32,20 +36,40 @@ int Statistika::dajUroven() {
 
 
 int Statistika::Gethp() {
-
 	return hp;
 }
 
 
 int Statistika::GethpMax() {
+	int bonus = 0;
+	double mult = 0;
 
-	return hpMax;
+	typedef std::map<int, Predmet*>::iterator it_t;
+
+	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
+	{
+		Pouzitelny* p = (Pouzitelny*)it->second;
+		bonus += p->Gethp();
+		mult += p->GethpMult();
+	}
+	return (int)round((hpMax+bonus)*(1+mult));
 }
 
 
 int Statistika::Getintelekt() {
 
-	return intelekt;
+	int bonus = 0;
+	double mult = 0;
+
+	typedef std::map<int, Predmet*>::iterator it_t;
+
+	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
+	{
+		Pouzitelny* p = (Pouzitelny*)it->second;
+		bonus += p->Getinteligencia();
+		mult += p->GetinteligenciaMult();
+	}
+	return (int)round((intelekt + bonus)*(1 + mult));
 }
 
 
@@ -56,26 +80,70 @@ int Statistika::Getmp() {
 
 int Statistika::GetmpMax() {
 
-	return mpMax;
+	int bonus = 0;
+	double mult = 0;
+
+	typedef std::map<int, Predmet*>::iterator it_t;
+
+	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
+	{
+		Pouzitelny* p = (Pouzitelny*)it->second;
+		bonus += p->Getmp();
+		mult += p->GetmpMult();
+	}
+	return (int)round((mpMax + bonus)*(1 + mult));
 }
 
 
 
 int Statistika::Getobrana() {
 
-	return obrana;
+	int bonus = 0;
+	double mult = 0;
+
+	typedef std::map<int, Predmet*>::iterator it_t;
+
+	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
+	{
+		Pouzitelny* p = (Pouzitelny*)it->second;
+		bonus += p->Getarmor();
+		mult += p->GetarmorMult();
+	}
+	return (int)round((obrana + bonus)*(1 + mult));
 }
 
 
 int Statistika::Getrychlost() {
 
-	return rychlost;
+	int bonus = 0;
+	double mult = 0;
+
+	typedef std::map<int, Predmet*>::iterator it_t;
+
+	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
+	{
+		Pouzitelny* p = (Pouzitelny*)it->second;
+		bonus += p->Getrychlost();
+		mult += p->GetrychlostMult();
+	}
+	return (int)round((sila + bonus)*(1 + mult));
 }
 
 
 int Statistika::Getsila() {
 
-	return sila;
+	int bonus = 0;
+	double mult = 0;
+
+	typedef std::map<int, Predmet*>::iterator it_t;
+
+	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
+	{
+		Pouzitelny* p = (Pouzitelny*)it->second;
+		bonus += p->Getsila();
+		mult += p->GetsilaMult();
+	}
+	return (int)round((sila + bonus)*(1 + mult));
 }
 
 
@@ -181,4 +249,8 @@ void Statistika::zvysStat(int kolko, std::string paCo) {
 
 void Statistika::setUroven(int paUroven) {
 	uroven = paUroven;
+}
+
+std::map<int, Predmet*>* Statistika::Getoblecene() {
+	return oblecene;
 }
