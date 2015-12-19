@@ -172,6 +172,7 @@
     <ClInclude Include="StavVolbaZamerania.h" />
     <ClInclude Include="Vrstva.h" />
     <ClInclude Include="Zameranie.h" />
+    <ClInclude Include="Zbran.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animacia.cpp" />
@@ -199,6 +200,7 @@
     <ClCompile Include="StavVolbaZamerania.cpp" />
     <ClCompile Include="Vrstva.cpp" />
     <ClCompile Include="Zameranie.cpp" />
+    <ClCompile Include="Zbran.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

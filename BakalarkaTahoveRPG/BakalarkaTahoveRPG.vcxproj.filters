@@ -118,6 +118,9 @@
       <Filter>Header Files\Inventar</Filter>
     </ClInclude>
     <ClInclude Include="Oblecenie.h">
+      <Filter>Header Files\Inventar</Filter>
+    </ClInclude>
+    <ClInclude Include="Zbran.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -195,6 +198,9 @@
       <Filter>Source Files\Inventar</Filter>
     </ClCompile>
     <ClCompile Include="Oblecenie.cpp">
+      <Filter>Source Files\Inventar</Filter>
+    </ClCompile>
+    <ClCompile Include="Zbran.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

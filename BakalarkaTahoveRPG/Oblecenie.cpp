@@ -35,6 +35,7 @@ void Oblecenie::pouzi(Hrac* hrac) {
 			oblecene->insert(std::pair<int, Predmet*>(typ, this));
 		}
 		hrac->Getinventar()->zmazPredmet(this);
+		Pouzitelny::Setobleceny(true);
 	}
 	else {
 
