@@ -103,6 +103,11 @@ void StavInfoHraca::render() {
 		text.setPosition(sf::Vector2f(15.f, 238.f));
 		okno->draw(text);
 
+		int pMin = hrac->Getstatistika()->Getminposkodenie();
+		int pMax = hrac->Getstatistika()->Getmaxposkodenie();
+		text.setString(" Poskodenie: " + std::to_string(pMin) + " / " + std::to_string(pMax));
+		text.setPosition(sf::Vector2f(15.f, 255.f));
+		okno->draw(text);
 
 		// vykreslovanie oblecenych veci
 
@@ -216,7 +221,7 @@ void StavInfoHraca::render() {
 			okno->draw(*predmetObrazok);
 		}
 
-
+		// oznacenie a info predmetu
 		switch (oznacene)
 		{
 		case (1) :
@@ -325,11 +330,11 @@ void StavInfoHraca::update(double delta) {
 }
 
 
-void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::RenderWindow* okno) {
+void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::RenderWindow* okno) {
 
 	// vykreslenie obdlznika na ktorom sa bude vypisovat info predmetu 
 	sf::RectangleShape obdlznik;
-	obdlznik.setSize(sf::Vector2f(180.f, 200.f));// vyska a sirka okienka
+	obdlznik.setSize(sf::Vector2f(230.f, 200.f));// vyska a sirka okienka
 	obdlznik.setOutlineColor(sf::Color::Red);
 	obdlznik.setOutlineThickness(2);
 
@@ -338,17 +343,12 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rend
 	posX = x - 5.f+48;
 	posY = y - 5.f+48;
 
-	if ((signed int)posX < (signed int)okno->getSize().x - 200) {
-		obdlznik.setPosition(posX, posY);
-	}
-	else {
-		posX -= 180;
-		obdlznik.setPosition(posX, posY);
-	}
+	
+	obdlznik.setPosition(posX, posY);
 	okno->draw(obdlznik);
 
 	// tu už je samotny vypis infa
-	sf::Text text(predmet->Getmeno(), *font, 15U);
+	sf::Text text(predmet->Getmeno(), *font, 14U);
 
 	text.setColor(sf::Color::Black);
 
@@ -368,8 +368,6 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rend
 	text.setPosition(sf::Vector2f(posX + 5.f, posY + 35.f));
 	okno->draw(text);
 
-
-	if (dynamic_cast<Pouzitelny*>(predmet) != NULL) {
 		text.setColor(sf::Color::Black);
 		text.setCharacterSize(13U);
 		Pouzitelny* pouzitelny = (Pouzitelny*)predmet;
@@ -464,5 +462,5 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rend
 		text.setString(bonusy);
 		okno->draw(text);
 
-	}
+	
 }

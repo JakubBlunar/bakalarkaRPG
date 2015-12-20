@@ -19,7 +19,7 @@ public:
 	void update(double delta);
 
 private:
-	void vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::RenderWindow* okno);
+	void vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::RenderWindow* okno);
 	
 	sf::Font* font;
 	bool stlacenaKlavesa;

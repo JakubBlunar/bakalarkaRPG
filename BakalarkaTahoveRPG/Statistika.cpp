@@ -3,20 +3,23 @@
 #include <math.h>
 #include "Predmet.h"
 #include "Pouzitelny.h"
+#include "Zbran.h"
 
 Statistika::Statistika() {
 	uroven = 1;
-	hp = 10;
-	hpMax = 10;
+	hp = 20;
+	hpMax = 20;
 	mp = 10;
 	mpMax = 10;
-	sila = 5;
-	intelekt = 5;
-	obrana = 5;
+	sila = 1;
+	intelekt = 1;
+	obrana = 1;
 	rychlost = 5;
 	obrana = 0;
 	skusenosti = 0;
 	oblecene = new std::map<int, Predmet*>();
+	prepocitajPoskodenia();
+	
 }
 
 
@@ -253,4 +256,34 @@ void Statistika::setUroven(int paUroven) {
 
 std::map<int, Predmet*>* Statistika::Getoblecene() {
 	return oblecene;
+}
+
+void Statistika::prepocitajPoskodenia() {
+	if (oblecene->count(9)) {
+		Zbran* zbran1 =(Zbran*)oblecene->at(9);
+		if (oblecene->count(10)) {
+			Zbran* zbran2 = (Zbran*)oblecene->at(10);
+			double sucet = zbran1->Getminposkodenie() + 0.75*zbran2->Getmaxposkodenie();
+			minPoskodenie = (int)round(sucet + sucet*(0.1 * sila / uroven));
+
+			sucet = zbran1->Getmaxposkodenie() + 0.75*zbran2->Getmaxposkodenie();
+			maxPoskodenie = (int)round(sucet + sucet*(0.1 * sila / uroven));
+		}
+		else {
+			minPoskodenie = (int)round(zbran1->Getminposkodenie() + zbran1->Getminposkodenie()*(0.1 * sila / uroven));
+			maxPoskodenie = (int)round(zbran1->Getmaxposkodenie() + zbran1->Getmaxposkodenie()*(0.1 * sila / uroven));
+		}
+	}
+	else {
+		minPoskodenie = (int)ceil((sila / (double)uroven));
+		maxPoskodenie = (int)ceil((sila / (double)uroven));
+	}
+
+}
+
+int Statistika::Getminposkodenie() {
+	return minPoskodenie;
+}
+int Statistika::Getmaxposkodenie() {
+	return maxPoskodenie;
 }

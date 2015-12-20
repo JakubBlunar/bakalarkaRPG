@@ -191,6 +191,7 @@ void Zbran::pouzi(Hrac* hrac) {
 			}
 		}
 
+		
 				
 	}
 	else { // predmet je oblecený tak sa vyzlecie
@@ -206,4 +207,6 @@ void Zbran::pouzi(Hrac* hrac) {
 		}
 
 	}
+
+	hrac->Getstatistika()->prepocitajPoskodenia();
 }

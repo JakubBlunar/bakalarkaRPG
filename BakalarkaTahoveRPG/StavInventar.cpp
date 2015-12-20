@@ -178,7 +178,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	
 	// vykreslenie obdlznika na ktorom sa bude vypisovat info predmetu 
 	sf::RectangleShape obdlznik;
-	obdlznik.setSize(sf::Vector2f(180.f, 200.f));// vyska a sirka okienka
+	obdlznik.setSize(sf::Vector2f(230.f, 200.f));// vyska a sirka okienka
 	obdlznik.setOutlineColor(sf::Color::Red);
 	obdlznik.setOutlineThickness(2);
 
@@ -187,7 +187,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	posX = x -5.f;
 	posY = y -5.f;
 
-	if ((signed int)posX < (signed int)okno->getSize().x - 200) {
+	if ((signed int)posX < (signed int)okno->getSize().x - 230) {
 		obdlznik.setPosition(posX, posY);
 	}
 	else {
@@ -197,13 +197,13 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	okno->draw(obdlznik);
 
 	// tu už je samotny vypis infa
-	sf::Text text(predmet->Getmeno(), *font, 15U);
+	sf::Text text(predmet->Getmeno(), *font, 14U);
 
 	text.setColor(sf::Color::Black);
 	
 	if (hrac->Getstatistika()->dajUroven() < predmet->Geturoven()) text.setColor(sf::Color::Red);
 
-	text.setPosition(sf::Vector2f(posX+10.f, posY+5.f));
+	text.setPosition(sf::Vector2f(posX+5.f, posY+5.f));
 	okno->draw(text);
 
 	

@@ -43,6 +43,9 @@ public:
 	void pridajXp(int pocet);
 	void setUroven(int paUroven);
 
+	void prepocitajPoskodenia();
+	int Getminposkodenie();
+	int Getmaxposkodenie();
 private:
 	int hp;
 	int hpMax;
@@ -54,6 +57,8 @@ private:
 	int sila;
 	int skusenosti;
 	int uroven;
+	int minPoskodenie;
+	int maxPoskodenie;
 	//std::Map<string, Akcia*> kuzla;
 	std::map<int, Predmet*>* oblecene;
 };
