@@ -12,6 +12,7 @@ Zbran::Zbran(std::string meno, int typ, std::string paObrazok, int cena, int paU
 
 
 Zbran::~Zbran() {
+	Pouzitelny::~Pouzitelny();
 }
 
 
@@ -40,39 +41,39 @@ void Zbran::pouzi(Hrac* hrac) {
 	if (!Pouzitelny::Isobleceny()) {
 		
 		int moznost = 0;;
-		if (oblecene->count(1)) {
+		if (oblecene->count(9)) {
 			moznost +=1;
 		}
 
-		if (oblecene->count(2)) {
+		if (oblecene->count(10)) {
 			moznost += 2;
 		}
 
 		if (moznost == 0) {
-			if (typ == 1) {
+			if (typ == 9) {
 				Pouzitelny::Setobleceny(true);
-				oblecene->insert(std::pair<int, Predmet*>(1, this));
+				oblecene->insert(std::pair<int, Predmet*>(9, this));
 				hrac->Getinventar()->zmazPredmet(this);
 			}
-			else if (typ == 2) {
+			else if (typ == 10) {
 				Pouzitelny::Setobleceny(true);
-				oblecene->insert(std::pair<int, Predmet*>(1, this));
+				oblecene->insert(std::pair<int, Predmet*>(9, this));
 				hrac->Getinventar()->zmazPredmet(this);
 			}
 			else {
 				Pouzitelny::Setobleceny(true);
-				oblecene->insert(std::pair<int, Predmet*>(2, this));
+				oblecene->insert(std::pair<int, Predmet*>(10, this));
 				hrac->Getinventar()->zmazPredmet(this);
 			}
 		}
 
 		if (moznost == 1) { // daèo je na prvom slote
 
-			if(typ == 1){
-				docasny1 = (Pouzitelny*)oblecene->at(1);
-				if (docasny1->Gettyp() == 2) {
-					oblecene->erase(1);
-					oblecene->insert(std::pair<int, Predmet*>(1, this));
+			if(typ == 9){
+				docasny1 = (Pouzitelny*)oblecene->at(9);
+				if (docasny1->Gettyp() == 10) {
+					oblecene->erase(9);
+					oblecene->insert(std::pair<int, Predmet*>(9, this));
 					hrac->Getinventar()->zmazPredmet(this);
 
 					docasny1->Setobleceny(false);
@@ -81,14 +82,14 @@ void Zbran::pouzi(Hrac* hrac) {
 				}
 				else {
 					Pouzitelny::Setobleceny(true);
-					oblecene->insert(std::pair<int, Predmet*>(2, this));
+					oblecene->insert(std::pair<int, Predmet*>(10, this));
 					hrac->Getinventar()->zmazPredmet(this);
 				}
 			}
-			else if (typ == 2) {
-				docasny1 = (Pouzitelny*)oblecene->at(1);
-				oblecene->erase(1);
-				oblecene->insert(std::pair<int, Predmet*>(1, this));
+			else if (typ == 10) {
+				docasny1 = (Pouzitelny*)oblecene->at(9);
+				oblecene->erase(9);
+				oblecene->insert(std::pair<int, Predmet*>(9, this));
 				hrac->Getinventar()->zmazPredmet(this);
 
 				docasny1->Setobleceny(false);
@@ -96,23 +97,37 @@ void Zbran::pouzi(Hrac* hrac) {
 				Pouzitelny::Setobleceny(true);
 			}
 			else {
-				Pouzitelny::Setobleceny(true);
-				oblecene->insert(std::pair<int, Predmet*>(2, this));
-				hrac->Getinventar()->zmazPredmet(this);
+				docasny1 = (Pouzitelny*)oblecene->at(9);
+				if (docasny1->Gettyp() == 10) {
+					oblecene->erase(9);
+					oblecene->insert(std::pair<int, Predmet*>(10, this));
+					hrac->Getinventar()->zmazPredmet(this);
+
+					docasny1->Setobleceny(false);
+					hrac->Getinventar()->pridajPredmet(docasny1);
+					Pouzitelny::Setobleceny(true);
+
+				}
+				else {
+					Pouzitelny::Setobleceny(true);
+					oblecene->insert(std::pair<int, Predmet*>(10, this));
+					hrac->Getinventar()->zmazPredmet(this);
+				}
 			}	
 		}
 
+
 		if (moznost == 2) { // daèo je na druhom slote
 
-			if (typ == 1) {
+			if (typ == 9) {
 				Pouzitelny::Setobleceny(true);
-				oblecene->insert(std::pair<int, Predmet*>(1, this));
+				oblecene->insert(std::pair<int, Predmet*>(9, this));
 				hrac->Getinventar()->zmazPredmet(this);
 			}
-			else if (typ == 2) {
-				docasny1 = (Pouzitelny*)oblecene->at(2);
-				oblecene->erase(2);
-				oblecene->insert(std::pair<int, Predmet*>(1, this));
+			else if (typ == 10) {
+				docasny1 = (Pouzitelny*)oblecene->at(10);
+				oblecene->erase(10);
+				oblecene->insert(std::pair<int, Predmet*>(9, this));
 				hrac->Getinventar()->zmazPredmet(this);
 
 				docasny1->Setobleceny(false);
@@ -121,39 +136,9 @@ void Zbran::pouzi(Hrac* hrac) {
 			}
 			else {
 
-				docasny1 = (Pouzitelny*)oblecene->at(2);
-				oblecene->erase(2);
-				oblecene->insert(std::pair<int, Predmet*>(2, this));
-				hrac->Getinventar()->zmazPredmet(this);
-
-				docasny1->Setobleceny(false);
-				hrac->Getinventar()->pridajPredmet(docasny1);
-				Pouzitelny::Setobleceny(true);
-			}
-		}
-
-		if (moznost == 2) { // daèo je na druhom slote
-
-			if (typ == 1) {
-				Pouzitelny::Setobleceny(true);
-				oblecene->insert(std::pair<int, Predmet*>(1, this));
-				hrac->Getinventar()->zmazPredmet(this);
-			}
-			else if (typ == 2) {
-				docasny1 = (Pouzitelny*)oblecene->at(2);
-				oblecene->erase(2);
-				oblecene->insert(std::pair<int, Predmet*>(1, this));
-				hrac->Getinventar()->zmazPredmet(this);
-
-				docasny1->Setobleceny(false);
-				hrac->Getinventar()->pridajPredmet(docasny1);
-				Pouzitelny::Setobleceny(true);
-			}
-			else {
-
-				docasny1 = (Pouzitelny*)oblecene->at(2);
-				oblecene->erase(2);
-				oblecene->insert(std::pair<int, Predmet*>(2, this));
+				docasny1 = (Pouzitelny*)oblecene->at(10);
+				oblecene->erase(10);
+				oblecene->insert(std::pair<int, Predmet*>(10, this));
 				hrac->Getinventar()->zmazPredmet(this);
 
 				docasny1->Setobleceny(false);
@@ -165,25 +150,25 @@ void Zbran::pouzi(Hrac* hrac) {
 
 		if (moznost == 3) { // daèo je na prvom a druhom slote 
 
-			if (typ == 1) {
-				docasny1 = (Pouzitelny*)oblecene->at(1);
-				oblecene->erase(1);
-				oblecene->insert(std::pair<int, Predmet*>(1, this));
+			if (typ == 9) {
+				docasny1 = (Pouzitelny*)oblecene->at(9);
+				oblecene->erase(9);
+				oblecene->insert(std::pair<int, Predmet*>(9, this));
 				hrac->Getinventar()->zmazPredmet(this);
 
 				docasny1->Setobleceny(false);
 				hrac->Getinventar()->pridajPredmet(docasny1);
 				Pouzitelny::Setobleceny(true);
 			}
-			else if (typ == 2) {
+			else if (typ == 10) {
 				
-				docasny1 = (Pouzitelny*)oblecene->at(1);
-				docasny2 = (Pouzitelny*)oblecene->at(2);
+				docasny1 = (Pouzitelny*)oblecene->at(9);
+				docasny2 = (Pouzitelny*)oblecene->at(10);
 
-				oblecene->erase(1);
-				oblecene->erase(2);
+				oblecene->erase(9);
+				oblecene->erase(10);
 
-				oblecene->insert(std::pair<int, Predmet*>(1, this));
+				oblecene->insert(std::pair<int, Predmet*>(9, this));
 				hrac->Getinventar()->zmazPredmet(this);
 
 				docasny2->Setobleceny(false);
@@ -195,9 +180,9 @@ void Zbran::pouzi(Hrac* hrac) {
 			}
 			else {
 
-				docasny1 = (Pouzitelny*)oblecene->at(2);
-				oblecene->erase(2);
-				oblecene->insert(std::pair<int, Predmet*>(2, this));
+				docasny1 = (Pouzitelny*)oblecene->at(10);
+				oblecene->erase(10);
+				oblecene->insert(std::pair<int, Predmet*>(10, this));
 				hrac->Getinventar()->zmazPredmet(this);
 
 				docasny1->Setobleceny(false);
@@ -209,11 +194,14 @@ void Zbran::pouzi(Hrac* hrac) {
 				
 	}
 	else { // predmet je oblecenı tak sa vyzlecie
-		for (int i = 1; i <= 2; i++) {
-			if (oblecene->at(i) == this) {
-				hrac->Getinventar()->pridajPredmet(this);
-				oblecene->erase(i);
-				Pouzitelny::Setobleceny(false);
+		for (int i = 9; i <= 10; i++) {
+			if (oblecene->count(i)) {
+				if (oblecene->at(i) == this) {
+					Pouzitelny::Setobleceny(false);
+					hrac->Getinventar()->pridajPredmet(this);
+					oblecene->erase(i);
+
+				}
 			}
 		}
 

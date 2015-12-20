@@ -87,13 +87,25 @@ std::string Predmet::Getstringovytyp() {
 	switch (typ)
 	{
 	case (1) :
-		return "Zbran (1h)";
+		return "Helma";
 	case (2) :
-		return "Zbran (2h)";
+		return "Ramena";
 	case (3) :
-		return "Stit";
-	case (4) :
 		return "Brnenie";
+	case (4) :
+		return "Topanky";
+	case (5) :
+		return "Nahrdelnik";
+	case (6) :
+		return "Prsten";
+	case (8) :
+		return "Nohavice";
+	case (9) :
+		return "Zbran (1h)";
+	case (10) :
+		return "Zbran (2h)";
+	case (11) :
+		return "Stit";
 	default:
 		return "ine";
 		break;

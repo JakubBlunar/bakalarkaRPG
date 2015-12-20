@@ -8,9 +8,9 @@
 
 Inventar::Inventar() {
 	kapacita = 36;
-	Pouzitelny* o = new Zbran("Gladius", 1, "zbran1", 100,10,1,5);
-	Pouzitelny* brnenie = new Oblecenie("Brnenie1", 4, "brnenie1", 3,1);
-	Pouzitelny* stit = new Zbran("Stit", 3, "stit", 3,1,0,0);
+	Pouzitelny* o = new Zbran("Gladius", 9, "zbran1", 100,10,1,5);
+	Pouzitelny* brnenie = new Oblecenie("Brnenie1", 3, "brnenie1", 3,1);
+	Pouzitelny* stit = new Zbran("Stit", 3, "stit", 11,1,0,0);
 	
 	stit->Setarmor(25);
 
@@ -25,8 +25,8 @@ Inventar::Inventar() {
 	brnenie->Sethp(5);
 	try {
 		pridajPredmet(o);
-		pridajPredmet(new Zbran("Sword 2", 1, "zbran1", 1000,1,2,6));
-		pridajPredmet(new Zbran("Sword 3", 2, "zbran1", 10000,1,3,7));
+		pridajPredmet(new Zbran("Sword 2", 9, "zbran1", 1000,1,2,6));
+		pridajPredmet(new Zbran("Sword 3", 10, "zbran1", 10000,1,3,7));
 		pridajPredmet(brnenie);
 		pridajPredmet(stit);
 	}

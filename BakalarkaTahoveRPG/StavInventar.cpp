@@ -218,7 +218,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	okno->draw(text);
 
 	
-	if (dynamic_cast<Zbran*>(predmet) != NULL) {
+	if (dynamic_cast<Pouzitelny*>(predmet) != NULL) {
 		text.setColor(sf::Color::Black);
 		text.setCharacterSize(13U);
 		Pouzitelny* pouzitelny = (Pouzitelny*)predmet;

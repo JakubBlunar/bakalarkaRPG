@@ -4,6 +4,7 @@
 #include "Stav.h"
 
 class Hrac;
+class Predmet;
 
 class StavInfoHraca : public Stav
 {
@@ -18,8 +19,14 @@ public:
 	void update(double delta);
 
 private:
+	void vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::RenderWindow* okno);
+	
 	sf::Font* font;
 	bool stlacenaKlavesa;
 
+	int oznacene;
+	sf::Sprite* ukazovatel;
+
 	Hrac* hrac;
+	std::map<int, Predmet*>* oblecene;
 };

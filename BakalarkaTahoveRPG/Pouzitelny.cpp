@@ -21,7 +21,7 @@ Pouzitelny::Pouzitelny(std::string meno, int typ, std::string paObrazok, int cen
 
 
 Pouzitelny::~Pouzitelny() {
-
+	Predmet::~Predmet();
 }
 
 
