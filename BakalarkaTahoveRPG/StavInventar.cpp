@@ -24,7 +24,7 @@ StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* p
 	ukazovatel = new sf::Sprite();
 	ukazovatel->setTexture(texture);
 	ukazovatel->setTextureRect(sf::IntRect(0, 0, 48, 48));
-	ukazovatel->setColor(sf::Color(0, 0, 255, 128));
+	ukazovatel->setColor(sf::Color(255, 0, 0, 128));
 	oznacene = -10;
 	nasirku =18;
 }

@@ -8,16 +8,20 @@
 
 Inventar::Inventar() {
 	kapacita = 36;
-	Pouzitelny* o = new Zbran("Gladius", 9, "zbran1", 100,1,1,5);
-	Pouzitelny* brnenie = new Oblecenie("Zlate brnenie", 3, "zlate_brnenie", 3,1);
-	Pouzitelny* stit = new Zbran("Stit", 3, "stit", 11,1,0,0);
-	Pouzitelny* ramena = new Oblecenie("Merciles ramena", 2, "ramena", 3, 1);
-	Pouzitelny* helma = new Oblecenie("Helma bojovnika", 1, "zlata_helma", 3, 1);
-	Pouzitelny* nohavice = new Oblecenie("Zlate nohavice", 8, "zlate_nohavice", 3, 1);
+	Pouzitelny* zbran = new Zbran("Katana", 9, "wp1", 100,1,1,5);
+	Pouzitelny* brnenie = new Oblecenie("Ruth brnenie", 3, "ch1", 3,1);
+	Pouzitelny* stit = new Zbran("Tower stit", 11, "st1", 11,1,0,0);
+	Pouzitelny* ramena = new Oblecenie("Ruth ramena", 2, "sh1", 3, 1);
+	Pouzitelny* helma = new Oblecenie("Ruthless helm", 1, "hm1", 3, 1);
+	Pouzitelny* nohavice = new Oblecenie("Zlate nohavice", 8, "lg1", 3, 1);
+	Pouzitelny* rukavice = new Oblecenie("Platove rukavice", 7, "gt1", 3, 1);
+	Pouzitelny* topanky = new Oblecenie("Platovane topanky", 4, "bt1", 3, 1);
+	Pouzitelny* nahrdelnik = new Oblecenie("Zlaty nahrdelnik", 5, "nc1", 3, 1);
+	Pouzitelny* prsten = new Oblecenie("Prsten sily", 6, "pr1", 3, 1);
 	stit->Setarmor(25);
 
-	o->Setsila(3);
-	o->SetsilaMult(0.05);
+	zbran->Setsila(3);
+	zbran->SetsilaMult(0.05);
 	
 
 	brnenie->Setarmor(15);
@@ -26,12 +30,16 @@ Inventar::Inventar() {
 	brnenie->SetinteligenciaMult(0.01);
 	brnenie->Sethp(5);
 	try {
-		pridajPredmet(o);
+		pridajPredmet(zbran);
 		pridajPredmet(brnenie);
 		pridajPredmet(stit);
 		pridajPredmet(ramena);
 		pridajPredmet(helma);
 		pridajPredmet(nohavice);
+		pridajPredmet(topanky);
+		pridajPredmet(nahrdelnik);
+		pridajPredmet(prsten);
+		pridajPredmet(rukavice);
 	}
 	catch (int ex) {
 		if (ex == 1) {

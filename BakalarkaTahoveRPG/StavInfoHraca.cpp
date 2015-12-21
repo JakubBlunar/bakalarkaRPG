@@ -172,7 +172,7 @@ void StavInfoHraca::render() {
 			okno->draw(*predmetObrazok);
 		}
 
-		//prsten1
+		//prsten
 		rectangle.setPosition(x + 200.f, y+60.f);
 		okno->draw(rectangle);
 		if (oblecene->count(6)) {
@@ -182,7 +182,7 @@ void StavInfoHraca::render() {
 			okno->draw(*predmetObrazok);
 		}
 
-		//prsten2
+		//rukavice
 		rectangle.setPosition(x + 200.f, y + 120.f);
 		okno->draw(rectangle);
 		if (oblecene->count(7)) {

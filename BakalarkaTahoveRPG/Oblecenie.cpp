@@ -27,25 +27,6 @@ void Oblecenie::pouzi(Hrac* hrac) {
 
 	if (!Pouzitelny::Isobleceny()) {
 		int typ = Gettyp();
-		if (typ == 6) { // len prsten
-			if (oblecene->count(6)) {
-				if (oblecene->count(7)) {
-					docasny = (Pouzitelny*)oblecene->at(6);
-					oblecene->erase(6);
-					oblecene->insert(std::pair<int, Predmet*>(6, this));
-
-					docasny->Setobleceny(false);
-					hrac->Getinventar()->pridajPredmet(docasny);
-				}
-				else {
-					oblecene->insert(std::pair<int, Predmet*>(7, this));
-				}
-			}
-			else {
-				oblecene->insert(std::pair<int, Predmet*>(6, this));
-			}
-		}
-		else {// ostatne veci
 			if (oblecene->count(typ)) {
 				docasny = (Pouzitelny*)oblecene->at(typ);
 				oblecene->erase(typ);
@@ -59,7 +40,6 @@ void Oblecenie::pouzi(Hrac* hrac) {
 			}
 			hrac->Getinventar()->zmazPredmet(this);
 			Pouzitelny::Setobleceny(true);
-		}
 	}
 	else {
 		Pouzitelny::Setobleceny(false);

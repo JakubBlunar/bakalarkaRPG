@@ -98,6 +98,8 @@ std::string Predmet::Getstringovytyp() {
 		return "Nahrdelnik";
 	case (6) :
 		return "Prsten";
+	case (7) :
+		return "Rukavice";
 	case (8) :
 		return "Nohavice";
 	case (9) :
