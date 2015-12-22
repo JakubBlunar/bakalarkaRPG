@@ -121,8 +121,17 @@ void StavHranieHry::update(double delta) {
 		stlacenaKlavesa = true;
 		hrac->pridajSkusenosti(10);
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !stlacenaKlavesa) {
+		stlacenaKlavesa = true;
+		mapa->hracInterakcia();
+	}
 	
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::C) && !sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) 
+		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::C) 
+		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::X) 
+		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::I)
+		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
 		stlacenaKlavesa = false;
 	}
 

@@ -257,3 +257,7 @@ void Hrac::pridajSkusenosti(int pocet) {
 	}
 	
 }
+
+SmerPohladu Hrac::GetSmerPohladu() {
+	return smerPohladu;
+}

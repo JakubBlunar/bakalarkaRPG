@@ -15,7 +15,8 @@
 #include "StavHranieHry.h"
 #include "Hrac.h"
 #include "Vrstva.h"
-
+#include "Npc.h"
+#include "Animacia.h"
 
 
 Loader* Loader::instancia = NULL;
@@ -190,13 +191,19 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	//Mapa* staraMapa = stav->getMapa();
 	stav->Setmapa(novaMapa);
 
-
+	Npc* npc = new Npc("Kubo");
+	Animacia* animacia = new Animacia("Data/Grafika/Hrac/Animacia/warrior_dole.png", 4, 10, 32, 48);
+	npc->Setanimacia(animacia);
+	novaMapa->GetPolicko(0, 1)->Setnpc(npc);
+	
 	if (posX == -1 || posY == -1 || smer == -1) {
 		novaMapa->posunHracaNaPolicko(0, 0, 0);
 	}
 	else {
 		novaMapa->posunHracaNaPolicko(posX, posY, smer);
 	}
+
+
 
 	/*
 	if (staraMapa != nullptr) {

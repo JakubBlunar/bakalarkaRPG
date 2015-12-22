@@ -26,6 +26,8 @@ public:
 	Hrac(Zameranie* paZameranie);
 	virtual ~Hrac();
 
+	SmerPohladu GetSmerPohladu();
+
 	void render(sf::RenderWindow* paOkno);
 	void update(double delta);
 	void zmenSmerPohladu(SmerPohladu smer);

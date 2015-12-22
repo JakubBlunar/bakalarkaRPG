@@ -14,6 +14,7 @@ public:
 	Mapa(std::string menoMapy, Hrac* paHrac,Hra* hra);
 	~Mapa();
 	
+	void hracInterakcia();
 
 	void setHrac(Hrac* paHrac);
 	int Getvyska();
@@ -33,6 +34,7 @@ public:
 	void render(sf::RenderWindow* okno);
 	void update(double delta);
 
+	Policko* GetPolicko(int x, int y);
 	void nastavPolicko(int x, int y, Policko*);
 	//void nacitajMapu(std::string paMeno);
 	

@@ -93,7 +93,7 @@ std::string Predmet::Getstringovytyp() {
 	case (3) :
 		return "Brnenie";
 	case (4) :
-		return "Topanky";
+		return "Nohavice";
 	case (5) :
 		return "Nahrdelnik";
 	case (6) :
@@ -101,7 +101,7 @@ std::string Predmet::Getstringovytyp() {
 	case (7) :
 		return "Rukavice";
 	case (8) :
-		return "Nohavice";
+		return "Topanky";
 	case (9) :
 		return "Zbran (1h)";
 	case (10) :

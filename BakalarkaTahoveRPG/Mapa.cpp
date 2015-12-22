@@ -4,6 +4,7 @@
 #include <iostream>
 #include "PolickoDvere.h"
 #include "Hra.h"
+#include "Npc.h"
 
 Mapa::Mapa(std::string menoMapy, Hrac* paHrac,Hra* hra) {
 	this->hrac = paHrac;
@@ -70,12 +71,32 @@ void Mapa::render(sf::RenderWindow* okno) {
 		{
 			for (int j = odY; j <= doY; j++)
 			{
-				if (vrstva == 1) {
-					hrac->render(okno);
-				}
+				
 				sprite = mapa[i][j]->dajObrazokVrstvy(vrstva);
-				sprite->setPosition(sf::Vector2f(32.f * i + posunX, 32.f * j+posunY));
+				sprite->setPosition(sf::Vector2f(32.f * i + posunX, 32.f * j + posunY));
 				okno->draw(*sprite);
+
+				if (vrstva == 2 && hrac->GetpolickoY() < j) {
+					if (mapa[i][j]->Getnpc() != nullptr) {
+						sf::Sprite* npcObrazok = mapa[i][j]->Getnpc()->dajObrazok();
+						npcObrazok->setPosition(sf::Vector2f(32.f * i + posunX, 32 - 48.f + 32.f* j + posunY));
+						okno->draw(*npcObrazok);
+					}
+				}
+
+				if (vrstva == 1) {
+					hrac->render(okno);		
+				}
+
+				if (vrstva == 1 && hrac->GetpolickoY() >= j) {
+					if (mapa[i][j]->Getnpc() != nullptr) {
+						sf::Sprite* npcObrazok = mapa[i][j]->Getnpc()->dajObrazok();
+						npcObrazok->setPosition(sf::Vector2f(32.f * i + posunX, 32 - 48.f + 32.f* j + posunY));
+						okno->draw(*npcObrazok);
+					}
+				}
+				
+				
 			}
 		}
 	}
@@ -229,7 +250,17 @@ bool Mapa::jeMoznyPohyb(int x, int y) {
 	if (x < 0 || x >= sirka || y < 0 || y >= vyska) {
 		return false;
 	}
-	return mapa[x][y]->jePrechodne();
+
+	bool priechodne = true;
+
+	if (mapa[x][y]->Getnpc() != nullptr) {
+		priechodne = false;
+	}
+
+	if (!mapa[x][y]->jePrechodne()) {
+		priechodne = false;
+	}
+	return priechodne;
 }
 
 void Mapa::setSirkaVyska(int paSirka, int paVyska) {
@@ -239,4 +270,46 @@ void Mapa::setSirkaVyska(int paSirka, int paVyska) {
 
 void Mapa::nastavPolicko(int paX, int paY, Policko* paPolicko) {
 	mapa[paX][paY] = paPolicko;
+}
+
+Policko* Mapa::GetPolicko(int x, int y) {
+	return mapa[x][y];
+}
+
+void Mapa::hracInterakcia() {
+	if (hrac->GethybeSa() || smerPohybu != 0) return;
+
+	int x = hrac->GetpolickoX();
+	int y = hrac->GetpolickoY();
+
+	if (hrac->GetSmerPohladu() == SmerPohladu::hore) {
+		y--;
+	}
+	if (hrac->GetSmerPohladu() == SmerPohladu::dole) {
+		y++;
+	}
+
+	if (hrac->GetSmerPohladu() == SmerPohladu::vpravo) {
+		x++;
+	}
+
+	if (hrac->GetSmerPohladu() == SmerPohladu::vlavo) {
+		x--;
+	}
+
+	if (x < 0 || x >= sirka || y < 0 || y >= vyska) {
+		return;
+	}
+
+	if (mapa[x][y]->Getnpc() != nullptr) {
+		mapa[x][y]->Getnpc()->dialog(hrac);
+	}
+	else {
+		mapa[x][y]->interakcia(hrac);
+	}
+
+	
+
+
+
 }

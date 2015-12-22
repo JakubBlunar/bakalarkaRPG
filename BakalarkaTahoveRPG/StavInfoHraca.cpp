@@ -16,7 +16,7 @@ StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 	ukazovatel = new sf::Sprite();
 	ukazovatel->setTexture(texture);
 	ukazovatel->setTextureRect(sf::IntRect(0, 0, 48, 48));
-	ukazovatel->setColor(sf::Color(0, 0, 255, 128));
+	ukazovatel->setColor(sf::Color(255, 0, 0, 128));
 	oznacene = 1;
 
 }
@@ -151,7 +151,7 @@ void StavInfoHraca::render() {
 			okno->draw(*predmetObrazok);
 		}
 
-		//topanky
+		//nohavice
 		rectangle.setPosition(x+0.f, y + 180.f);
 		okno->draw(rectangle);
 		
@@ -192,7 +192,7 @@ void StavInfoHraca::render() {
 			okno->draw(*predmetObrazok);
 		}
 
-		//nohavice
+		//topanky
 		rectangle.setPosition(x + 200.f, y + 180.f);
 		okno->draw(rectangle);
 		if (oblecene->count(8)) {

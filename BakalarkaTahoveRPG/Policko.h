@@ -4,6 +4,7 @@
 
 class Hrac;
 class Vrstva;
+class Npc;
 
 class Policko
 {
@@ -18,9 +19,10 @@ public:
 	void nastavTexturu(sf::Texture* textura, int poradie);
 	void Setpriechodne(bool paPriechodne);
 	sf::Sprite* dajObrazokVrstvy(int poradie);
-
+	void Setnpc(Npc* paNpc);
+	Npc* Getnpc();
 protected:
-	//Npc* npc;
+	Npc* npc;
 	//stack<Predmet> polozenePredmety;
 	bool priechodne;
 	std::array<Vrstva*, 4> vrstvy;
