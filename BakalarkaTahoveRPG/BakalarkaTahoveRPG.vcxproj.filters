@@ -126,6 +126,9 @@
     <ClInclude Include="Npc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DialogovyStrom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -207,6 +210,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Npc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogovyStrom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

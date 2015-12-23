@@ -192,7 +192,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	stav->Setmapa(novaMapa);
 
 	Npc* npc = new Npc("Kubo");
-	Animacia* animacia = new Animacia("Data/Grafika/Hrac/Animacia/warrior_dole.png", 4, 10, 32, 48);
+	Animacia* animacia = new Animacia("Data/Grafika/Npc/npc1_dole.png", 4, 10, 32, 48);
 	npc->Setanimacia(animacia);
 	novaMapa->GetPolicko(0, 1)->Setnpc(npc);
 	
