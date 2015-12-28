@@ -50,19 +50,19 @@ void StavDialog::render() {
 
 	if (dialog != nullptr) {
 
-		sf::Text text(npc->Getmeno() +"(npc): " + dialog->Getaktualnapolozka()->text, *font, 25U);
+		sf::Text text(npc->Getmeno() +"(npc): " + dialog->Getaktualnapolozka()->Gettext(), *font, 25U);
 		text.setPosition(sf::Vector2f(10.f, 10.f));
 		okno->draw(text);
 
 		text.setCharacterSize(20U);
-		for (int i = 0; i < dialog->Getaktualnapolozka()->dialogoveMoznosti.size(); i++) {
+		for (int i = 0; i < dialog->Getaktualnapolozka()->pocetMoznosti(); i++) {
 			if (oznacene == i) {
 				text.setColor(sf::Color::Blue);
 			}
 			else {
 				text.setColor(sf::Color::White);
 			}
-			text.setString(std::to_string(i)+ ". " +dialog->Getaktualnapolozka()->dialogoveMoznosti[i].text);
+			text.setString(std::to_string(i)+ ". " + dialog->Getaktualnapolozka()->Getvolba(i)->text);
 			text.setPosition(sf::Vector2f(32.f, i*25 +40.f));
 			okno->draw(text);
 		}
@@ -82,7 +82,7 @@ void StavDialog::update(double delta) {
 
 		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 			stlacenaKlavesa = true;
-			if (oznacene < dialog->Getaktualnapolozka()->dialogoveMoznosti.size()) {
+			if (oznacene < dialog->Getaktualnapolozka()->pocetMoznosti()) {
 				oznacene++;
 			}
 		}

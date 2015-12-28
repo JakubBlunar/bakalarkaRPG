@@ -4,14 +4,17 @@
 #include <map>
 #include <string>
 
+
 class Hra;
 class Mapa;
+class DialogovyStrom;
 
 class Loader {
 public:
 	static Loader* Instance();
 	void setHra(Hra* paHra);
 	void nacitajMapu(std::string paMeno,int paX,int paY,int smer);
+	DialogovyStrom* nacitajDialog(std::string paMeno);
 	bool Getnacitava();
 	Hra* Gethra();
 private:

@@ -9,7 +9,7 @@
 
 Npc::Npc(std::string paMeno) {
 	meno = paMeno;
-	dialogStrom = new DialogovyStrom();	
+	dialogStrom = Loader::Instance()->nacitajDialog("asd");	
 }
 
 

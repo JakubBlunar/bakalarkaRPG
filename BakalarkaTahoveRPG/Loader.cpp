@@ -17,6 +17,7 @@
 #include "Vrstva.h"
 #include "Npc.h"
 #include "Animacia.h"
+#include "DialogovyStrom.h"
 
 
 Loader* Loader::instancia = NULL;
@@ -39,6 +40,46 @@ bool Loader::Getnacitava() {
 Hra* Loader::Gethra() {
 	return hra;
 }
+
+DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
+	DialogovyStrom* dialog = new DialogovyStrom();
+
+	DialogPolozka *node0 = new DialogPolozka("Ahoj udatny bojovnik.");
+	DialogPolozka *node1 = new DialogPolozka("Nechcem sa s tebou rozpravat");
+	DialogPolozka *node2 = new DialogPolozka("Mam pre teba quest.");
+	DialogPolozka *node3 = new DialogPolozka("Dostanes 5 goldov.");
+	DialogPolozka *node4 = new DialogPolozka("Pozbieraj 10 konarov.");
+
+	//node 0
+	node0->pridajMoznost(new DialogVolba("Tin tang kungpao...", 1));
+	node0->pridajMoznost(new DialogVolba("Ahoj.", 2));
+	dialog->vlozPolozku(node0);
+
+	//node 1
+	node1->pridajMoznost(new DialogVolba("Dobre :(", -1));
+	dialog->vlozPolozku(node1);
+
+	//node2
+	node2->pridajMoznost(new DialogVolba("Nechce sa mi.", -1));
+	node2->pridajMoznost(new DialogVolba("Co treba spravit ?", 4));
+	node2->pridajMoznost(new DialogVolba("Co za to ziskam? ", 3));
+	dialog->vlozPolozku(node2);
+
+	//node3
+	node3->pridajMoznost(new DialogVolba("Ok co teda treba spravit?", 4));
+	node3->pridajMoznost(new DialogVolba("To sa mi nechce.", -1));
+	dialog->vlozPolozku(node3);
+
+	//node4
+	node4->pridajMoznost(new DialogVolba("Ok idem na to.", -1));
+	node4->pridajMoznost(new DialogVolba("Nie.", -1));
+	dialog->vlozPolozku(node4);
+
+
+
+	return dialog;
+}
+
 
 void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	//nacitava = true;

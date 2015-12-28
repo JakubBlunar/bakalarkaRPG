@@ -20,8 +20,14 @@ public:
 class DialogPolozka {
 public:
 	DialogPolozka(string paText);
+	~DialogPolozka();
+	int pocetMoznosti();
+	void pridajMoznost(DialogVolba* paVolba);
+	string Gettext();
+	DialogVolba* Getvolba(int paIndex);
+private:
 	string text;
-	vector<DialogVolba> dialogoveMoznosti;
+	vector<DialogVolba*> dialogoveMoznosti;
 
 };
 
@@ -32,9 +38,9 @@ public:
 	DialogovyStrom();
 
 	void init();
-	void destroyTree();
 	DialogStav Getstav();
 	DialogPolozka* Getaktualnapolozka();
+	void vlozPolozku(DialogPolozka* paPolozka);
 	int zacniDialog();
 	int zmenPolozku(int moznost);
 	~DialogovyStrom();
