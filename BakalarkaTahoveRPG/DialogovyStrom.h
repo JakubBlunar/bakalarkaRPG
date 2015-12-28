@@ -5,15 +5,15 @@
 
 using namespace std;
 
+enum DialogStav {VYTVORENY,INIT, BEZI, SKONCIL };
+
 class DialogPolozka;
 
 class DialogVolba {
 public:
-
-	DialogVolba(string paText, int paNavratovaHodnota, DialogPolozka *paNextNode);
+	DialogVolba(string paText, int dalsia);
 	string text;
-	int navratovaHodnota;
-	DialogPolozka *dalsiaPolozka;
+	int dalsia;
 };
 
 
@@ -33,10 +33,13 @@ public:
 
 	void init();
 	void destroyTree();
-
+	DialogStav Getstav();
+	DialogPolozka* Getaktualnapolozka();
 	int zacniDialog();
-
+	int zmenPolozku(int moznost);
 	~DialogovyStrom();
 private:
+	DialogStav stav;
+	DialogPolozka *aktualnaPolozka;
 	vector<DialogPolozka *> castiDialogu;
 };

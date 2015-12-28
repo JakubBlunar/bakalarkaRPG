@@ -10,6 +10,7 @@
 //#include "Animacia.h"
 class Animacia;
 class Hrac;
+class DialogovyStrom;
 
 class Npc
 {
@@ -17,7 +18,9 @@ class Npc
 public:
 	Npc(std::string meno);
 	virtual ~Npc();
+	std::string Getmeno();
 
+	DialogovyStrom* Getdialog();
 	sf::Sprite* dajObrazok();
 	virtual void dialog(Hrac* hrac);
 	void update();
@@ -25,7 +28,7 @@ public:
 	void Setanimacia(Animacia* animacia);
 private:
 	Animacia *animacia;
-	//DialogovyStrom* dialogStrom;
+	DialogovyStrom* dialogStrom;
 	std::string meno;
 
 };

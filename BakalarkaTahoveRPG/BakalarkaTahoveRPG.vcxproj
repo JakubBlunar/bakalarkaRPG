@@ -164,6 +164,7 @@
     <ClInclude Include="Predmet.h" />
     <ClInclude Include="Statistika.h" />
     <ClInclude Include="Stav.h" />
+    <ClInclude Include="StavDialog.h" />
     <ClInclude Include="StavHlavneMenu.h" />
     <ClInclude Include="StavHranieHry.h" />
     <ClInclude Include="StavInfoHraca.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Predmet.cpp" />
     <ClCompile Include="Statistika.cpp" />
     <ClCompile Include="Stav.cpp" />
+    <ClCompile Include="StavDialog.cpp" />
     <ClCompile Include="StavHlavneMenu.cpp" />
     <ClCompile Include="StavHranieHry.cpp" />
     <ClCompile Include="StavInfoHraca.cpp" />
