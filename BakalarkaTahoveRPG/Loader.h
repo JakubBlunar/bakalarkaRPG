@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-
+class Npc;
 class Hra;
 class Mapa;
 class DialogovyStrom;
@@ -30,6 +30,8 @@ private:
 	Hra* hra;
 	std::map<int, sf::Texture*> textury;
 	std::map<std::string, Mapa*> nacitaneMapy;
+	
+	void nacitajNpc(std::string menoMapy, Mapa* mapa);
 
 };
 

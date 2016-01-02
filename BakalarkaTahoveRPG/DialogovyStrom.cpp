@@ -71,7 +71,7 @@ void DialogovyStrom::init() {
 
 int DialogovyStrom::zmenPolozku(int moznost) {
 
-	if (moznost >= 0 && aktualnaPolozka->pocetMoznosti()) {
+	if (moznost >= 0 && moznost< aktualnaPolozka->pocetMoznosti()) {
 		Loader* loader = Loader::Instance();
 		aktualnaPolozka->Getvolba(moznost)->akcia(loader->Gethra()->GetHrac());
 		if (aktualnaPolozka->Getvolba(moznost)->dalsia == -1) {

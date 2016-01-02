@@ -16,7 +16,7 @@ class Npc
 {
 
 public:
-	Npc(std::string meno);
+	Npc(std::string meno, DialogovyStrom* dialog);
 	virtual ~Npc();
 	std::string Getmeno();
 

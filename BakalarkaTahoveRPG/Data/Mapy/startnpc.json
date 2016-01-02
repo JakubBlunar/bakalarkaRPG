@@ -1,0 +1,32 @@
+{
+	"npc": {
+		"0": {
+			"animacia": {
+				"aniX": 32,
+				"aniY": 48,
+				"nazov": "npc1_dole",
+        "pocet": 4,
+        "trvanie": 10
+			},
+			"dialog": "dsad",
+			"meno": "Npc1",
+			"posX": 2,
+			"posY": 1
+		},
+
+		"1": {
+			"animacia": {
+				"aniX": 32,
+				"aniY": 48,
+				"nazov": "npc1_dole",
+				"pocet": 4
+			},
+			"dialog": "null",
+			"meno": "Npc2",
+			"posX": 10,
+			"posY": 0
+		}
+
+
+	}
+}

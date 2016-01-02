@@ -7,9 +7,9 @@
 #include "Hra.h"
 #include "StavDialog.h"
 
-Npc::Npc(std::string paMeno) {
+Npc::Npc(std::string paMeno,DialogovyStrom* dialog) {
 	meno = paMeno;
-	dialogStrom = Loader::Instance()->nacitajDialog("asd");	
+	dialogStrom = dialog;
 }
 
 

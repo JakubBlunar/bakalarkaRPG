@@ -82,7 +82,7 @@ void StavDialog::update(double delta) {
 
 		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 			stlacenaKlavesa = true;
-			if (oznacene < dialog->Getaktualnapolozka()->pocetMoznosti()) {
+			if (oznacene < dialog->Getaktualnapolozka()->pocetMoznosti()-1) {
 				oznacene++;
 			}
 		}

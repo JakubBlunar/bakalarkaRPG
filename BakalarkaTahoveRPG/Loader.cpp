@@ -19,7 +19,7 @@
 #include "Animacia.h"
 #include "DialogovyStrom.h"
 #include "VolbaPridanieQuestu.h"
-
+#include "Npc.h"
 
 Loader* Loader::instancia = NULL;
 
@@ -232,12 +232,14 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
 	//Mapa* staraMapa = stav->getMapa();
 	stav->Setmapa(novaMapa);
-
-	Npc* npc = new Npc("Kubo");
+	/*
+	Npc* npc = new Npc("Kubo",);
 	Animacia* animacia = new Animacia("Data/Grafika/Npc/npc1_dole.png", 4, 10, 32, 48);
 	npc->Setanimacia(animacia);
 	novaMapa->GetPolicko(0, 1)->Setnpc(npc);
-	
+	*/
+	nacitajNpc(paMeno, novaMapa);
+
 	if (posX == -1 || posY == -1 || smer == -1) {
 		novaMapa->posunHracaNaPolicko(0, 0, 0);
 	}
@@ -255,4 +257,80 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	
 	//nacitava = false;
 	//hra->zmenStavRozhrania("hranieHry");
+}
+
+
+void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
+	std::string cestaKMapam = "Data/Mapy/";
+	std::string cestaNpcAnimacie = "Data/Grafika/Npc/";
+	bool alive = true;
+	while (alive) {
+
+		Json::Value root;
+		Json::Reader reader;
+		std::ifstream json(cestaKMapam + "" + menoMapy + "npc.json", std::ifstream::binary);
+		//std::cout << cestaKMapam + "" + menoMapy + "npc.json" << std::endl;
+		
+		bool parsingSuccessful = reader.parse(json, root, false);
+
+		if (!parsingSuccessful)
+		{
+			std::cout << "chyba pri parsovani Jsonu" << "\n";
+		}
+
+		Json::Value objekt(Json::objectValue);
+		objekt = root["npc"];
+		
+		for (Json::Value::iterator it = objekt.begin(); it != objekt.end(); ++it)
+
+		{
+
+			
+
+			Json::Value key = it.key();
+
+			Json::Value value = (*it);
+
+			std::string meno = value["meno"].asCString();
+			int posX = value["posX"].asInt();
+			int posY = value["posY"].asInt();
+			std::string nazovDialogu = value["dialog"].asCString();
+			
+			Json::Value animacia(Json::objectValue);
+			animacia = value["animacia"];
+			std::string animaciaMeno = animacia["nazov"].asCString();
+			int animaciaX = animacia["aniX"].asInt();
+			int animaciaY = animacia["aniY"].asInt();
+			int pocetSnimkov = animacia["pocet"].asInt();
+			int trvanieAnimacie = animacia["trvanie"].asInt();
+
+			
+			
+			DialogovyStrom* dialog;
+			
+			if (nazovDialogu == "null") {
+				dialog = new DialogovyStrom();
+				DialogPolozka *node0 = new DialogPolozka("Ahoj udatny bojovnik.");
+				node0->pridajMoznost(new DialogVolba("Ahoj.", -1));
+				dialog->vlozPolozku(node0);
+				
+			}
+			else {
+				dialog = nacitajDialog(nazovDialogu);
+			}
+
+
+			Npc* npc = new Npc(meno,dialog);
+
+			Animacia* npcAnimacia = new Animacia(cestaNpcAnimacie + "" + animaciaMeno + ".png", pocetSnimkov, trvanieAnimacie, animaciaX, animaciaY);
+			npc->Setanimacia(npcAnimacia);
+
+			mapa->GetPolicko(posX, posY)->Setnpc(npc);
+
+
+		}
+
+
+		alive = false;
+	}
 }
