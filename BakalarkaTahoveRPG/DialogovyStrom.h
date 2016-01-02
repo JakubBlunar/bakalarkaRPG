@@ -5,15 +5,18 @@
 
 using namespace std;
 
-enum DialogStav {VYTVORENY,INIT, BEZI, SKONCIL };
+class Hrac;
+enum DialogStav { VYTVORENY, INIT, BEZI, SKONCIL };
 
 class DialogPolozka;
 
 class DialogVolba {
 public:
+	bool pouzita;
 	DialogVolba(string paText, int dalsia);
 	string text;
 	int dalsia;
+	virtual void akcia(Hrac* hrac);
 };
 
 

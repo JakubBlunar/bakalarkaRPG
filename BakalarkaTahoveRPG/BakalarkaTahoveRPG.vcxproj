@@ -173,6 +173,7 @@
     <ClInclude Include="StavPauza.h" />
     <ClInclude Include="StavRozhrania.h" />
     <ClInclude Include="StavVolbaZamerania.h" />
+    <ClInclude Include="VolbaPridanieQuestu.h" />
     <ClInclude Include="Vrstva.h" />
     <ClInclude Include="Zameranie.h" />
     <ClInclude Include="Zbran.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="StavPauza.cpp" />
     <ClCompile Include="StavRozhrania.cpp" />
     <ClCompile Include="StavVolbaZamerania.cpp" />
+    <ClCompile Include="VolbaPridanieQuestu.cpp" />
     <ClCompile Include="Vrstva.cpp" />
     <ClCompile Include="Zameranie.cpp" />
     <ClCompile Include="Zbran.cpp" />

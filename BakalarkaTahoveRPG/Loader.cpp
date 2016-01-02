@@ -18,6 +18,7 @@
 #include "Npc.h"
 #include "Animacia.h"
 #include "DialogovyStrom.h"
+#include "VolbaPridanieQuestu.h"
 
 
 Loader* Loader::instancia = NULL;
@@ -71,7 +72,7 @@ DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
 	dialog->vlozPolozku(node3);
 
 	//node4
-	node4->pridajMoznost(new DialogVolba("Ok idem na to.", -1));
+	node4->pridajMoznost(new VolbaPridanieQuestu("Ok idem na to.", -1));
 	node4->pridajMoznost(new DialogVolba("Nie.", -1));
 	dialog->vlozPolozku(node4);
 

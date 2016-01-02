@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Inventar">
       <UniqueIdentifier>{4df75059-f5c0-43d1-8144-756b53be6d2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dialog">
+      <UniqueIdentifier>{af1f628e-2a5b-4685-b2d9-2d28ae93aed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dialog">
+      <UniqueIdentifier>{066c92de-bc04-4c87-b777-47b1b8b50336}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stav.h">
@@ -126,11 +132,14 @@
     <ClInclude Include="Npc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DialogovyStrom.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StavDialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Stavy</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogovyStrom.h">
+      <Filter>Header Files\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="VolbaPridanieQuestu.h">
+      <Filter>Header Files\Dialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -215,11 +224,14 @@
     <ClCompile Include="Npc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DialogovyStrom.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StavDialog.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogovyStrom.cpp">
+      <Filter>Source Files\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="VolbaPridanieQuestu.cpp">
+      <Filter>Source Files\Dialog</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

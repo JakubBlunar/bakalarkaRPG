@@ -1,5 +1,9 @@
 #include "DialogovyStrom.h"
 
+#include <iostream>
+#include "Loader.h"
+#include "Hra.h"
+
 DialogPolozka::DialogPolozka(string paText) {
 	text = paText;
 }
@@ -14,7 +18,6 @@ DialogPolozka::~DialogPolozka() {
 void DialogPolozka::pridajMoznost(DialogVolba* paVolba) {
 	dialogoveMoznosti.push_back(paVolba);
 }
-
 
 string DialogPolozka::Gettext() {
 	return text;
@@ -31,6 +34,9 @@ DialogVolba* DialogPolozka::Getvolba(int paIndex) {
 	return nullptr;
 }
 
+void DialogVolba::akcia(Hrac* hrac) {
+	cout << "Ziadna akcia - obycajna volba" << endl;
+}
 
 DialogVolba::DialogVolba(string paText, int dalsia) {
 	text = paText;
@@ -66,6 +72,8 @@ void DialogovyStrom::init() {
 int DialogovyStrom::zmenPolozku(int moznost) {
 
 	if (moznost >= 0 && aktualnaPolozka->pocetMoznosti()) {
+		Loader* loader = Loader::Instance();
+		aktualnaPolozka->Getvolba(moznost)->akcia(loader->Gethra()->GetHrac());
 		if (aktualnaPolozka->Getvolba(moznost)->dalsia == -1) {
 			stav = DialogStav::SKONCIL;
 			return 0;
