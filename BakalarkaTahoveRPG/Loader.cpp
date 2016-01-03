@@ -43,41 +43,59 @@ Hra* Loader::Gethra() {
 }
 
 DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
+	std::string cestaDialogy = "Data/Npc/Dialogy/";
+
+	Json::Value root;
+	Json::Reader reader;
+	std::ifstream json(cestaDialogy + "" + paMeno + ".json", std::ifstream::binary);
+	//std::cout << cestaKMapam + "" + menoMapy + "npc.json" << std::endl;
+
+	bool parsingSuccessful = reader.parse(json, root, false);
+
+	if (!parsingSuccessful)
+	{
+		DialogovyStrom* dialog;
+		dialog = new DialogovyStrom();
+		DialogPolozka *node0 = new DialogPolozka("Ahoj udatny bojovnik.");
+		node0->pridajMoznost(new DialogVolba("Ahoj.", -1));
+		dialog->vlozPolozku(node0);
+		return dialog;
+	}
+
+	Json::Value objekt(Json::objectValue);
+	objekt = root["polozky"];
+
 	DialogovyStrom* dialog = new DialogovyStrom();
 
-	DialogPolozka *node0 = new DialogPolozka("Ahoj udatny bojovnik.");
-	DialogPolozka *node1 = new DialogPolozka("Nechcem sa s tebou rozpravat");
-	DialogPolozka *node2 = new DialogPolozka("Mam pre teba quest.");
-	DialogPolozka *node3 = new DialogPolozka("Dostanes 5 goldov.");
-	DialogPolozka *node4 = new DialogPolozka("Pozbieraj 10 konarov.");
+	for (Json::Value::iterator it = objekt.begin(); it != objekt.end(); ++it){
+		Json::Value key = it.key();
+		Json::Value value = (*it);
 
-	//node 0
-	node0->pridajMoznost(new DialogVolba("Tin tang kungpao...", 1));
-	node0->pridajMoznost(new DialogVolba("Ahoj.", 2));
-	dialog->vlozPolozku(node0);
+		std::string textPolozky = value["text"].asCString();
+		DialogPolozka* polozka = new DialogPolozka(textPolozky);
 
-	//node 1
-	node1->pridajMoznost(new DialogVolba("Dobre :(", -1));
-	dialog->vlozPolozku(node1);
+		Json::Value volby(Json::objectValue);
+		volby = value["volby"];
 
-	//node2
-	node2->pridajMoznost(new DialogVolba("Nechce sa mi.", -1));
-	node2->pridajMoznost(new DialogVolba("Co treba spravit ?", 4));
-	node2->pridajMoznost(new DialogVolba("Co za to ziskam? ", 3));
-	dialog->vlozPolozku(node2);
-
-	//node3
-	node3->pridajMoznost(new DialogVolba("Ok co teda treba spravit?", 4));
-	node3->pridajMoznost(new DialogVolba("To sa mi nechce.", -1));
-	dialog->vlozPolozku(node3);
-
-	//node4
-	node4->pridajMoznost(new VolbaPridanieQuestu("Ok idem na to.", -1));
-	node4->pridajMoznost(new DialogVolba("Nie.", -1));
-	dialog->vlozPolozku(node4);
+		for (Json::Value::iterator it = volby.begin(); it != volby.end(); ++it) {
+			Json::Value volbaID = it.key();
+			Json::Value volbaData = (*it);
+			int dalsia = volbaData["kam"].asInt();
+			std::string volbaText = volbaData["text"].asCString();
+			std::string typ = volbaData["typ"].asCString();
+			if (typ == "") {
+				polozka->pridajMoznost(new DialogVolba(volbaText, dalsia));
+			}
+			else if(typ == "pridanieQuestu") {
+				polozka->pridajMoznost(new VolbaPridanieQuestu(volbaText, dalsia));
+			}
 
 
+		}
 
+		dialog->vlozPolozku(polozka);
+
+	}
 	return dialog;
 }
 
@@ -214,6 +232,8 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 		alive = false;
 	}
 
+	nacitajNpc(paMeno, novaMapa);
+
 	if (nacitaneMapy.size() > 10) {
 		for (std::map<std::string, Mapa*>::iterator it = nacitaneMapy.begin(); it != nacitaneMapy.end(); ++it)
 		{
@@ -231,14 +251,8 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 
 	StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
 	//Mapa* staraMapa = stav->getMapa();
+	
 	stav->Setmapa(novaMapa);
-	/*
-	Npc* npc = new Npc("Kubo",);
-	Animacia* animacia = new Animacia("Data/Grafika/Npc/npc1_dole.png", 4, 10, 32, 48);
-	npc->Setanimacia(animacia);
-	novaMapa->GetPolicko(0, 1)->Setnpc(npc);
-	*/
-	nacitajNpc(paMeno, novaMapa);
 
 	if (posX == -1 || posY == -1 || smer == -1) {
 		novaMapa->posunHracaNaPolicko(0, 0, 0);
@@ -261,14 +275,15 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 
 
 void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
-	std::string cestaKMapam = "Data/Mapy/";
+	std::string cestaKNpc= "Data/Npc/";
 	std::string cestaNpcAnimacie = "Data/Grafika/Npc/";
+	
 	bool alive = true;
 	while (alive) {
 
 		Json::Value root;
 		Json::Reader reader;
-		std::ifstream json(cestaKMapam + "" + menoMapy + "npc.json", std::ifstream::binary);
+		std::ifstream json(cestaKNpc + "" + menoMapy + "npc.json", std::ifstream::binary);
 		//std::cout << cestaKMapam + "" + menoMapy + "npc.json" << std::endl;
 		
 		bool parsingSuccessful = reader.parse(json, root, false);
@@ -329,8 +344,8 @@ void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
 
 
 		}
-
-
 		alive = false;
 	}
+
+
 }

@@ -1,0 +1,80 @@
+{
+  "polozky": {
+    "0": {
+      "text": "Ahoj udatny bojovnik.",
+      "volby": {
+        "1": {
+          "kam": 1,
+          "text": "Tin tang kungpao...",
+          "typ": ""
+        },
+        "2": {
+          "kam": 2,
+          "text": "Ahoj",
+          "typ": ""
+        }
+      }
+    },
+    "1": {
+      "text": "Nechcem sa s tebou rozpravat!",
+      "volby": {
+        "1": {
+          "kam": -1,
+          "text": "Dobre :(",
+          "typ": ""
+        }
+      }
+    },
+    "2": {
+      "text": "Mám pre teba quest.",
+      "volby": {
+        "1": {
+          "kam": -1,
+          "text": "Nechce sa mi.",
+          "typ": ""
+        },
+        "2": {
+          "kam": 4,
+          "text": "Co treba spravit?",
+          "typ": ""
+        },
+        "3": {
+          "kam": 3,
+          "text": "Co za to ziskam?",
+          "typ": ""
+        }
+      }
+    },
+    "3": {
+      "text": "Dostanes 5 goldov",
+      "volby": {
+        "1": {
+          "kam": -1,
+          "text": "To sa mi nechce.",
+          "typ": ""
+        },
+        "2": {
+          "kam": 4,
+          "text": "Ok, co treba spravit?",
+          "typ": ""
+        }
+      }
+    },
+     "4": {
+      "text": "Zabi 10 priser.",
+      "volby": {
+        "1": {
+          "kam": -1,
+          "text": "Nie!",
+          "typ": ""
+        },
+        "2": {
+          "kam": -1,
+          "text": "Ok idem na to.",
+          "typ": "pridanieQuestu"
+        }
+      }
+    }
+
+  }
+}
