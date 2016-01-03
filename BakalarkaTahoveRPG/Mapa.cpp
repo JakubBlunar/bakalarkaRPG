@@ -6,27 +6,44 @@
 #include "Hra.h"
 #include "Npc.h"
 
-Mapa::Mapa(std::string menoMapy, Hrac* paHrac,Hra* hra) {
+Mapa::Mapa(std::string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSirka) {
 	this->hrac = paHrac;
 	this->hra = hra;
 	smerPohybu = 0;
 	posunX = 0;
 	posunY = 0;
-	vyska = 0;
-	sirka = 0;
+	vyska = paVyska;
+	sirka = paSirka;
 	pohybDelta = 0;
 	smerPohybu = 0;
+
+	mapa = new Policko**[sirka];
+	for (int i = 0; i < sirka; ++i) {
+		mapa[i] = new Policko*[vyska];
+	}
+
+	for (int i = 0; i < sirka; ++i) {
+		for (int j = 0; j < vyska; ++j) {
+			mapa[i][j] = nullptr;
+		}
+	}
 
 }
 
 Mapa::~Mapa() {
-	for (int i = 0; i < vyska; i++)
+	for (int i = 0; i < sirka; i++)
 	{
 		for (int j = 0; j < vyska; j++)
 		{
 			delete mapa[i][j];
 		}
 	}
+
+	for (int i = 0; i < sirka; ++i) {
+		delete[] mapa[i];
+	}
+
+	delete[] mapa;
 }
 
 

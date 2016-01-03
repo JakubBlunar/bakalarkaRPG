@@ -122,7 +122,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 		return;
 	}
 	
-	Mapa* novaMapa = new Mapa(paMeno, this->hra->GetHrac(), this->hra);
+	Mapa* novaMapa;
 	
 	std::string cestaKMapam = "Data/Mapy/";
 	std::string cestakTexturam = "Data/Grafika/Textury/";
@@ -150,7 +150,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 
 		int vyska = root["height"].asInt();
 		int sirka = root["width"].asInt();
-		novaMapa->setSirkaVyska(sirka, vyska);
+		novaMapa = new Mapa(paMeno, this->hra->GetHrac(), this->hra,sirka,vyska);
 
 		Json::Value dvere(Json::objectValue);
 		dvere = root["dvere"];

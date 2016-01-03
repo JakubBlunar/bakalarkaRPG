@@ -11,7 +11,7 @@ class Mapa
 {
 
 public:
-	Mapa(std::string menoMapy, Hrac* paHrac,Hra* hra);
+	Mapa(std::string menoMapy, Hrac* paHrac,Hra* hram,int paVyska , int paSirka);
 	~Mapa();
 	
 	void hracInterakcia();
@@ -41,7 +41,9 @@ public:
 private:
 	Hra* hra;
 	Hrac* hrac;
-	Policko* mapa[100][100];
+	// Create 2D array of pointers:
+	Policko*** mapa;
+	//Policko* mapa[100][100];
 	std::map<int, sf::Texture*> textury;
 
 	int sirka;
