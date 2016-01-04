@@ -104,7 +104,6 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	//nacitava = true;
 	hra->zmenStavRozhrania("stavLoading");
 	if (nacitaneMapy.find(paMeno) != nacitaneMapy.end()) {
-
 		Mapa* novaMapa = nacitaneMapy.at(paMeno);
 		hra->GetHrac()->setMapa(novaMapa);
 		novaMapa->setHrac(hra->GetHrac());
@@ -127,12 +126,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	std::string cestaKMapam = "Data/Mapy/";
 	std::string cestakTexturam = "Data/Grafika/Textury/";
 
-	PolickoDvere* polickoDvere[100][100];
-	for (int i = 0; i < 100; i++) {
-		for (int j = 0; j < 100; j++) {
-			polickoDvere[i][j] = nullptr;
-		}
-	}
+	PolickoDvere*** polickoDvere;
 
 	bool alive = true;
 	while (alive) {
@@ -151,6 +145,19 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 		int vyska = root["height"].asInt();
 		int sirka = root["width"].asInt();
 		novaMapa = new Mapa(paMeno, this->hra->GetHrac(), this->hra,sirka,vyska);
+
+		// inicializacia mapy dveri
+		polickoDvere = new PolickoDvere**[sirka];
+		for (int i = 0; i < sirka; i++) {
+			polickoDvere[i] = new PolickoDvere*[vyska];
+		}
+
+		for (int i = 0; i < sirka; ++i) {
+			for (int j = 0; j < vyska; ++j) {
+				polickoDvere[i][j] = nullptr;
+			}
+		}
+
 
 		Json::Value dvere(Json::objectValue);
 		dvere = root["dvere"];
@@ -173,9 +180,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 		for (Json::Value::iterator it = objekt.begin(); it != objekt.end(); ++it)
 
 		{
-
 			Json::Value key = it.key();
-
 			Json::Value value = (*it);
 
 			std::string menoTextury = value["image"].asCString();
@@ -184,11 +189,6 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 			if (!textury[id + 1]->loadFromFile(cestakTexturam + "" + menoTextury, sf::IntRect(0, 0, 32, 32))) {
 				std::cout << "Chyba nahravania textury policka" << std::endl;
 			}
-			else {
-				//std::cout << "textura " + menoTextury + " nacitana" << std::endl;
-			}
-
-
 		}
 
 		for (int i = 0; i < vyska; i++) {
@@ -240,18 +240,14 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 			delete it->second;
 		}
 		nacitaneMapy.clear();
-		//std::cout <<"Mapy zmazane" << nacitaneMapy.size() << std::endl;
 	}
 
 	nacitaneMapy.insert(std::pair<std::string, Mapa*>(paMeno, novaMapa));
-	//std::cout << "Mapa nacitana" << nacitaneMapy.size() << std::endl;
 
 	hra->GetHrac()->setMapa(novaMapa);
 	novaMapa->setHrac(hra->GetHrac());
 
 	StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
-	//Mapa* staraMapa = stav->getMapa();
-	
 	stav->Setmapa(novaMapa);
 
 	if (posX == -1 || posY == -1 || smer == -1) {
@@ -261,16 +257,13 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 		novaMapa->posunHracaNaPolicko(posX, posY, smer);
 	}
 
-
-
-	/*
-	if (staraMapa != nullptr) {
-		//delete staraMapa;
+	// zmazanie policiek dveri ktoré boli ako pomocná premenná
+	for (int i = 0; i < novaMapa->Getsirka(); ++i) {
+		delete[] polickoDvere[i];
 	}
-	*/
-	
-	//nacitava = false;
-	//hra->zmenStavRozhrania("hranieHry");
+
+	delete[] polickoDvere;
+
 }
 
 
@@ -299,9 +292,6 @@ void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
 		for (Json::Value::iterator it = objekt.begin(); it != objekt.end(); ++it)
 
 		{
-
-			
-
 			Json::Value key = it.key();
 
 			Json::Value value = (*it);
