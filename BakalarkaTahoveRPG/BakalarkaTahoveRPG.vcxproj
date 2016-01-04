@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="Animacia.h" />
     <ClInclude Include="DialogovyStrom.h" />
+    <ClInclude Include="Elixir.h" />
     <ClInclude Include="Hra.h" />
     <ClInclude Include="Hrac.h" />
     <ClInclude Include="Inventar.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Npc.h" />
     <ClInclude Include="Oblecenie.h" />
     <ClInclude Include="Policko.h" />
+    <ClInclude Include="PolickoBoj.h" />
     <ClInclude Include="PolickoDvere.h" />
     <ClInclude Include="Pouzitelny.h" />
     <ClInclude Include="Predmet.h" />
@@ -181,6 +183,7 @@
   <ItemGroup>
     <ClCompile Include="Animacia.cpp" />
     <ClCompile Include="DialogovyStrom.cpp" />
+    <ClCompile Include="Elixir.cpp" />
     <ClCompile Include="Hra.cpp" />
     <ClCompile Include="Hrac.cpp" />
     <ClCompile Include="Inventar.cpp" />
@@ -191,6 +194,7 @@
     <ClCompile Include="Npc.cpp" />
     <ClCompile Include="Oblecenie.cpp" />
     <ClCompile Include="Policko.cpp" />
+    <ClCompile Include="PolickoBoj.cpp" />
     <ClCompile Include="PolickoDvere.cpp" />
     <ClCompile Include="Pouzitelny.cpp" />
     <ClCompile Include="Predmet.cpp" />

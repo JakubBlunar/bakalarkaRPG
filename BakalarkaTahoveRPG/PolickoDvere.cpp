@@ -9,7 +9,6 @@
 
 PolickoDvere::PolickoDvere(bool paPriechodne, std::string kam, int posX,int posY,int smerPohladu):Policko(paPriechodne)
 {
-	this->hra = hra;
 	this->menoMapy = kam;
 	this->poziciaX = posX;
 	this->poziciaY = posY;

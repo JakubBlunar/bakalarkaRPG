@@ -2,7 +2,6 @@
 #include "Policko.h"
 
 class Hrac;
-class Hra;
 
 class PolickoDvere: public Policko
 {
@@ -13,7 +12,6 @@ public:
 	void hracSkok(Hrac* paHrac);
 
 private:
-	Hra* hra;
 	std::string menoMapy;
 	int poziciaX;
 	int poziciaY;

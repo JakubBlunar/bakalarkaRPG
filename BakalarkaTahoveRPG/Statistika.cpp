@@ -210,7 +210,13 @@ void Statistika::zvysStat(int kolko, std::string paCo) {
 
 	//hp
 	if (paCo == "hp") {
-		hp += kolko;
+		if (hp + kolko > hpMax) {
+			hp = hpMax;
+		}
+		else {
+			hp += kolko;
+		}
+		
 	}
 
 	//hpMax
@@ -220,7 +226,12 @@ void Statistika::zvysStat(int kolko, std::string paCo) {
 
 	//mp
 	if (paCo == "mp") {
-		mp += kolko;
+		if (mp + kolko > mpMax) {
+			mp = mpMax;
+		}
+		else {
+			mp += kolko;
+		}
 	}
 
 	//mpMax
