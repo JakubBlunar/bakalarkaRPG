@@ -16,8 +16,8 @@ class Statistika
 
 public:
 	Statistika();
+	Statistika(int paUroven, int paHp, int paHpMax, int paMp, int mpMax,int paSila, int paIntelekt, int paRychlost, int paObrana,std::map<int, Predmet*>* paObleceneVeci);
 	virtual ~Statistika();
-	//Akcia *m_Akcia;
 
 	std::map<int, Predmet*>* Getoblecene();
 

@@ -14,7 +14,7 @@ Statistika::Statistika() {
 	sila = 1;
 	intelekt = 1;
 	obrana = 1;
-	rychlost = 5;
+	rychlost = 1;
 	obrana = 0;
 	skusenosti = 0;
 	oblecene = new std::map<int, Predmet*>();
@@ -22,14 +22,25 @@ Statistika::Statistika() {
 	
 }
 
+Statistika::Statistika(int paUroven, int paHp, int paHpMax, int paMp, int paMpMax, int paSila, int paIntelekt, int paRychlost, int paObrana,std::map<int, Predmet*>* paObleceneVeci) {
+	skusenosti = 0;
+	uroven = paUroven;
+	hp = paHp;
+	hpMax = paHpMax;
+	mp = paMp;
+	mpMax = paMpMax;
+	sila = paSila;
+	intelekt = paIntelekt;
+	rychlost = paRychlost;
+	obrana = paObrana;
+	oblecene = paObleceneVeci;
+	this->prepocitajPoskodenia();
+}
 
 
 Statistika::~Statistika() {
 	delete oblecene;
 }
-
-
-
 
 
 int Statistika::dajUroven() {

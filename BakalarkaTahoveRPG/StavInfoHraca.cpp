@@ -47,7 +47,7 @@ void StavInfoHraca::onExit() {
 
 
 void StavInfoHraca::render() {
-
+		ukazovatel->setColor(sf::Color(255, 0, 0, 128));
 		sf::Text text("Hrac Info",*font, 45U);
 		text.setPosition(sf::Vector2f(10.f, 10.f));
 		okno->draw(text);
