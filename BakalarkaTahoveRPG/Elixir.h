@@ -16,6 +16,7 @@ public:
 	virtual ~Elixir();
 
 	void pouzi(Hrac* hrac);
+	std::string dajInfo();
 private:
 	std::string stat;
 	int oKolko;

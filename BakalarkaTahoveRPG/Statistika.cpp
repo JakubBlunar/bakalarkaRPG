@@ -8,7 +8,7 @@
 Statistika::Statistika() {
 	uroven = 1;
 	hp = 20;
-	hpMax = 20;
+	hpMax = 80;
 	mp = 10;
 	mpMax = 10;
 	sila = 1;
@@ -140,7 +140,7 @@ int Statistika::Getrychlost() {
 		bonus += p->Getrychlost();
 		mult += p->GetrychlostMult();
 	}
-	return (int)round((sila + bonus)*(1 + mult));
+	return (int)round((rychlost + bonus)*(1 + mult));
 }
 
 

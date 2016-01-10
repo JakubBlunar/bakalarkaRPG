@@ -10,7 +10,7 @@
 #include "Inventar.h"
 #include "Pouzitelny.h"
 #include "Zbran.h"
-
+#include "Elixir.h"
 
 
 StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
@@ -197,7 +197,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	okno->draw(obdlznik);
 
 	// tu už je samotny vypis infa
-	sf::Text text(predmet->Getmeno(), *font, 14U);
+	sf::Text text(predmet->Getmeno(), *font, 14U);//vypisanie mena
 
 	text.setColor(sf::Color::Black);
 	
@@ -217,101 +217,121 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	text.setPosition(sf::Vector2f(posX + 5.f, posY + 35.f));
 	okno->draw(text);
 
+	if (dynamic_cast<Elixir*>(predmet) != NULL) {
+		text.setColor(sf::Color::Black);
+		text.setCharacterSize(13U);
+
+		Elixir* elixir = (Elixir*)predmet;
+
+		std::string info = elixir->dajInfo();
+		info += "\n\nCena: " + std::to_string(elixir->Getcena());
+
+		text.setPosition(sf::Vector2f(posX + 5.f, posY + 48.f));
+		text.setString(info);
+		okno->draw(text);
+		return;
+
+	}
+
+
 	
 	if (dynamic_cast<Pouzitelny*>(predmet) != NULL) {
 		text.setColor(sf::Color::Black);
 		text.setCharacterSize(13U);
 		Pouzitelny* pouzitelny = (Pouzitelny*)predmet;
-		std::string bonusy = "";
+		std::string info = "";
 
 		if (dynamic_cast<Zbran*>(predmet) != NULL)
 		{
 			Zbran* pom = (Zbran*)predmet;
-			if (pom->Gettyp() != 3) {
-				bonusy += "DMG: ";
-				bonusy += std::to_string(pom->Getminposkodenie()) + " - ";
-				bonusy += std::to_string(pom->Getmaxposkodenie());
-				bonusy += "\n";
+			if (pom->Gettyp() != 11) {
+				info += "DMG: ";
+				info += std::to_string(pom->Getminposkodenie()) + " - ";
+				info += std::to_string(pom->Getmaxposkodenie());
+				info += "\n";
 			}
 		}
 
 
 		if (pouzitelny->Getarmor() != 0) {
-			bonusy += "Obrana: ";
-			bonusy += std::to_string(pouzitelny->Getarmor());
-			bonusy += "\n";
+			info += "Obrana: ";
+			info += std::to_string(pouzitelny->Getarmor());
+			info += "\n";
 		}
 
 		if (pouzitelny->Gethp()!=0) {
-			bonusy += "Hp: ";
-			bonusy += std::to_string(pouzitelny->Gethp());
-			bonusy += "\n";
+			info += "Hp: ";
+			info += std::to_string(pouzitelny->Gethp());
+			info += "\n";
 		}
 
 		if (pouzitelny->Getmp() != 0) {
-			bonusy += "Mp: ";
-			bonusy += std::to_string(pouzitelny->Getmp());
-			bonusy += "\n";
+			info += "Mp: ";
+			info += std::to_string(pouzitelny->Getmp());
+			info += "\n";
 		}
 
 		if (pouzitelny->Getsila() != 0) {
-			bonusy += "Sila: ";
-			bonusy += std::to_string(pouzitelny->Getsila());
-			bonusy += "\n";
+			info += "Sila: ";
+			info += std::to_string(pouzitelny->Getsila());
+			info += "\n";
 		}
 
 		if (pouzitelny->Getrychlost() != 0) {
-			bonusy += "Rychlost: ";
-			bonusy += std::to_string(pouzitelny->Getrychlost());
-			bonusy += "\n";
+			info += "Rychlost: ";
+			info += std::to_string(pouzitelny->Getrychlost());
+			info += "\n";
 		}
 
 		if (pouzitelny->Getinteligencia() != 0) {
-			bonusy += "Intelekt: ";
-			bonusy += std::to_string(pouzitelny->Getinteligencia());
-			bonusy += "\n";
+			info += "Intelekt: ";
+			info += std::to_string(pouzitelny->Getinteligencia());
+			info += "\n";
 		}
 
 		if (pouzitelny->GetarmorMult() != 0) {
-			bonusy += "Obrana: ";
-			bonusy += std::to_string((int)round(pouzitelny->GetarmorMult() * 100));
-			bonusy += " %\n";
+			info += "Obrana: ";
+			info += std::to_string((int)round(pouzitelny->GetarmorMult() * 100));
+			info += " %\n";
 		}
 
 		if (pouzitelny->GethpMult() != 0) {
-			bonusy += "Hp: ";
-			bonusy += std::to_string((int)round(pouzitelny->GethpMult() * 100));
-			bonusy += " %\n";
+			info += "Hp: ";
+			info += std::to_string((int)round(pouzitelny->GethpMult() * 100));
+			info += " %\n";
 		}
 
 		if (pouzitelny->GetmpMult() != 0) {
-			bonusy += "Mp: ";
-			bonusy += std::to_string((int)round(pouzitelny->GetmpMult()*100));
-			bonusy += " %\n";
+			info += "Mp: ";
+			info += std::to_string((int)round(pouzitelny->GetmpMult()*100));
+			info += " %\n";
 		}
 
 		if (pouzitelny->GetsilaMult() != 0) {
-			bonusy += "Sila: ";
-			bonusy += std::to_string((int)round(pouzitelny->GetsilaMult() * 100));
-			bonusy += " %\n";
+			info += "Sila: ";
+			info += std::to_string((int)round(pouzitelny->GetsilaMult() * 100));
+			info += " %\n";
 		}
 
 		if (pouzitelny->GetrychlostMult() != 0) {
-			bonusy += "Rychlost: ";
-			bonusy += std::to_string((int)round(pouzitelny->GetrychlostMult() * 100));
-			bonusy += " %\n";
+			info += "Rychlost: ";
+			info += std::to_string((int)round(pouzitelny->GetrychlostMult() * 100));
+			info += " %\n";
 		}
 
 		if (pouzitelny->GetinteligenciaMult() != 0) {
-			bonusy += "Intelekt: ";
-			bonusy += std::to_string((int)round(pouzitelny->GetinteligenciaMult() * 100));
-			bonusy += " %\n";
+			info += "Intelekt: ";
+			info += std::to_string((int)round(pouzitelny->GetinteligenciaMult() * 100));
+			info += " %\n";
 		}
 
+		info += "\n\nCena: " + std::to_string(pouzitelny->Getcena());
 
 		text.setPosition(sf::Vector2f(posX + 5.f, posY + 48.f));
-		text.setString(bonusy);
+		text.setString(info);
 		okno->draw(text);
+
+		
 
 	}
 

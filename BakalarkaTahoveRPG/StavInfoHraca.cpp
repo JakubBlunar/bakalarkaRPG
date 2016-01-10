@@ -13,6 +13,7 @@ StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 
 	sf::Texture texture;
 	texture.create(200, 200);
+	texture.setSmooth(true);
 	ukazovatel = new sf::Sprite();
 	ukazovatel->setTexture(texture);
 	ukazovatel->setTextureRect(sf::IntRect(0, 0, 48, 48));
@@ -30,14 +31,14 @@ StavInfoHraca::~StavInfoHraca() {
 
 
 void StavInfoHraca::onEnter() {
-	
+	Stav::onEnter();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
 		stlacenaKlavesa = true;
 	}
-
+	oznacene = 1;
 	hrac = hra->GetHrac();
 	oblecene = hrac->Getstatistika()->Getoblecene();
-	Stav::onEnter();
+	
 }
 
 
@@ -221,6 +222,7 @@ void StavInfoHraca::render() {
 			okno->draw(*predmetObrazok);
 		}
 
+		
 		// oznacenie a info predmetu
 		switch (oznacene)
 		{
@@ -376,7 +378,7 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 		if (dynamic_cast<Zbran*>(predmet) != NULL)
 		{
 			Zbran* pom = (Zbran*)predmet;
-			if (pom->Gettyp() != 3) {
+			if (pom->Gettyp() != 11) {
 				bonusy += "DMG: ";
 				bonusy += std::to_string(pom->Getminposkodenie()) + " - ";
 				bonusy += std::to_string(pom->Getmaxposkodenie());

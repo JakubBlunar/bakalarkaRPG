@@ -4,7 +4,7 @@
 
 
 
-Predmet::Predmet(std::string meno, int typ, std::string paObrazok, int cenam,int paUroven) {
+Predmet::Predmet(std::string meno, int typ, std::string paObrazok, int cena,int paUroven) {
 	
 	const std::string predmety_cesta = "Data/Grafika/Predmety/";
 	
@@ -108,6 +108,9 @@ std::string Predmet::Getstringovytyp() {
 		return "Zbran (2h)";
 	case (11) :
 		return "Stit";
+	case(12) :
+		return "Elixir";
+		break;
 	default:
 		return "ine";
 		break;

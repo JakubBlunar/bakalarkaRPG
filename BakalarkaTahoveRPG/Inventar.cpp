@@ -5,6 +5,7 @@
 #include "Pouzitelny.h"
 #include "Oblecenie.h"
 #include "Zbran.h"
+#include "Elixir.h"
 
 Inventar::Inventar() {
 	kapacita = 36;
@@ -20,6 +21,7 @@ Inventar::Inventar() {
 	Pouzitelny* prsten = new Oblecenie("Prsten sily", 6, "pr1", 3, 1);
 	stit->Setarmor(25);
 
+	Pouzitelny* elixir = new Elixir("Maly Hp elixir", 12, "pr1", 5000, 1, "hp", 50);
 	zbran->Setsila(3);
 	zbran->SetsilaMult(0.05);
 	
@@ -40,6 +42,7 @@ Inventar::Inventar() {
 		pridajPredmet(nahrdelnik);
 		pridajPredmet(prsten);
 		pridajPredmet(rukavice);
+		pridajPredmet(elixir);
 	}
 	catch (int ex) {
 		if (ex == 1) {
