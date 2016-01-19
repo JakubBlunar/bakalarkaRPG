@@ -147,6 +147,9 @@
     <ClInclude Include="Zbran.h">
       <Filter>Header Files\Inventar</Filter>
     </ClInclude>
+    <ClInclude Include="Tlacidlo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -244,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="Zbran.cpp">
       <Filter>Source Files\Inventar</Filter>
+    </ClCompile>
+    <ClCompile Include="Tlacidlo.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

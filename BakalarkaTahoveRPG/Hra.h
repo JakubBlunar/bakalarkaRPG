@@ -25,11 +25,16 @@ public:
 	void SetHrac(Hrac* paHrac);
 	Hrac* GetHrac();
 	Stav* dajStav(std::string stav);
+	bool maFocus();
+
 private:
 	Hrac* hrac;
 	Loader* loader;
 	sf::Font* font;
 	sf::Text textNacitanie;
 	void init();
+
+	bool focus;
+
 };
 

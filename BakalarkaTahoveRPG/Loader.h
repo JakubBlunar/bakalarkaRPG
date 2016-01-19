@@ -14,6 +14,7 @@ public:
 	static Loader* Instance();
 	void setHra(Hra* paHra);
 	void nacitajMapu(std::string paMeno,int paX,int paY,int smer);
+	sf::Font* nacitajFont(std::string menoFontu);
 	DialogovyStrom* nacitajDialog(std::string paMeno);
 	bool Getnacitava();
 	Hra* Gethra();
@@ -32,7 +33,9 @@ private:
 	std::map<std::string, Mapa*> nacitaneMapy;
 	
 	void nacitajNpc(std::string menoMapy, Mapa* mapa);
-
+	
+	std::map<std::string, sf::Font*> nacitaneFonty;
+	
 };
 
 #endif // LOADER.H

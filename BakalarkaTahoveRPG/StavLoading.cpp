@@ -1,17 +1,15 @@
 
 #include "StavLoading.h"
+#include "Loader.h"
 #include "Hra.h"
 
-StavLoading::StavLoading(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
-	font = new sf::Font();
-	font->loadFromFile("Data/Grafika/font.ttf");
-	
 
+StavLoading::StavLoading(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
+	font = Loader::Instance()->nacitajFont("font2.otf");
 }
 
 
 StavLoading::~StavLoading() {
-	delete(font);
 }
 
 

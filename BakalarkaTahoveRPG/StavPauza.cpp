@@ -1,4 +1,5 @@
 #include "StavPauza.h"
+#include "Loader.h"
 #include "Hra.h"
 
 StavPauza::StavPauza(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
@@ -8,8 +9,7 @@ StavPauza::StavPauza(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) 
 
 	oznacene = 0;
 
-	font = new sf::Font();
-	font->loadFromFile("Data/Grafika/font2.otf");
+	font = Loader::Instance()->nacitajFont("font2.otf");
 
 }
 
@@ -17,7 +17,6 @@ StavPauza::StavPauza(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) 
 
 StavPauza::~StavPauza() {
 	moznosti.clear();
-	delete(font);
 }
 
 
@@ -53,35 +52,36 @@ void StavPauza::render() {
 
 
 void StavPauza::update(double delta) {
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !stlacenaKlavesa) {
-		stlacenaKlavesa = true;
-		if (oznacene > 0) {
-			oznacene--;
+	if (hra->maFocus()) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !stlacenaKlavesa) {
+			stlacenaKlavesa = true;
+			if (oznacene > 0) {
+				oznacene--;
+			}
 		}
-	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !stlacenaKlavesa) {
-		stlacenaKlavesa = true;
-		if (oznacene < (signed int)moznosti.size() - 1) {
-			oznacene++;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !stlacenaKlavesa) {
+			stlacenaKlavesa = true;
+			if (oznacene < (signed int)moznosti.size() - 1) {
+				oznacene++;
+			}
 		}
-	}
-
-	
-
-	if (oznacene == 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
-		stlacenaKlavesa = true;
-		hra->zmenStavRozhrania("hranieHry");
-	}
-
-	if (oznacene == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
-		stlacenaKlavesa = true;
-		okno->close();
-	}
 
 
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		stlacenaKlavesa = false;
+
+		if (oznacene == 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
+			stlacenaKlavesa = true;
+			hra->zmenStavRozhrania("hranieHry");
+		}
+
+		if (oznacene == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
+			stlacenaKlavesa = true;
+			okno->close();
+		}
+
+
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			stlacenaKlavesa = false;
+		}
 	}
 }

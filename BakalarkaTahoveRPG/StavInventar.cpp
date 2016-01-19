@@ -3,6 +3,7 @@
 #include <math.h>
 #include <typeinfo>
 
+#include "Loader.h"
 #include "Hra.h"
 #include "Hrac.h"
 #include "Statistika.h"
@@ -14,8 +15,7 @@
 
 
 StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
-	font = new sf::Font();
-	font->loadFromFile("Data/Grafika/font2.otf");
+	font = Loader::Instance()->nacitajFont("font2.otf");
 	
 	
 	sf::Texture texture;
@@ -31,7 +31,6 @@ StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* p
 
 
 StavInventar::~StavInventar() {
-	delete(font);
 	delete(ukazovatel);
 }
 
@@ -111,27 +110,27 @@ void StavInventar::render() {
 
 
 void StavInventar::update(double delta) {
+	if (hra->maFocus()) {
+		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			stlacenaKlavesa = true;
 
-	if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		stlacenaKlavesa = true;
+			if (oznacene + nasirku < inventar->pocetPredmetov()) {
+				oznacene += nasirku;
+			}
+			else {
+				oznacene = inventar->pocetPredmetov() - 1;
+			}
+		}
 
-		if (oznacene+nasirku < inventar->pocetPredmetov()) {
-			oznacene += nasirku;
+		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			stlacenaKlavesa = true;
+			if (oznacene >= nasirku) {
+				oznacene -= nasirku;
+			}
+			else {
+				oznacene = 0;
+			}
 		}
-		else {
-			oznacene = inventar->pocetPredmetov() - 1;
-		}
-	}
-
-	if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		stlacenaKlavesa = true;
-		if (oznacene >= nasirku) {
-			oznacene -= nasirku;
-		}
-		else {
-			oznacene = 0;
-		}
-   }
 
 		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			stlacenaKlavesa = true;
@@ -150,7 +149,7 @@ void StavInventar::update(double delta) {
 
 		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
 			stlacenaKlavesa = true;
-			if (oznacene>=0 && oznacene < inventar->pocetPredmetov()) {
+			if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
 				Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
 				p->pouzi(hrac);
 			}
@@ -160,8 +159,8 @@ void StavInventar::update(double delta) {
 			hra->zmenStavRozhrania("hranieHry");
 		}
 
-		if (stlacenaKlavesa && !sf::Keyboard::isKeyPressed(sf::Keyboard::I) 
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) 
+		if (stlacenaKlavesa && !sf::Keyboard::isKeyPressed(sf::Keyboard::I)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
 			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
 			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
 			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
@@ -170,7 +169,7 @@ void StavInventar::update(double delta) {
 			) {
 			stlacenaKlavesa = false;
 		}
-		
+	}
 }
 
 

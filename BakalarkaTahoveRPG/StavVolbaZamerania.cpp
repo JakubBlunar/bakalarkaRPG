@@ -8,8 +8,7 @@
 
 
 StavVolbaZamerania::StavVolbaZamerania(std::string paNazov, sf::RenderWindow* paOkno,Hra* paHra) : Stav(paNazov,paOkno,paHra) {
-	font = new sf::Font();
-	font->loadFromFile("Data/Grafika/font.ttf");
+	font = Loader::Instance()->nacitajFont("font2.otf");
 	oznacene = 1;
 	std::cout << "Volba zamerania vytvorena" << std::endl;
 }
@@ -17,7 +16,6 @@ StavVolbaZamerania::StavVolbaZamerania(std::string paNazov, sf::RenderWindow* pa
 
 
 StavVolbaZamerania::~StavVolbaZamerania() {
-	delete(font);
 	std::cout << "Volba zamerania zmazana" << std::endl;
 }
 
@@ -69,42 +67,42 @@ void StavVolbaZamerania::render() {
 
 
 void StavVolbaZamerania::update(double delta) {
+	if (hra->maFocus()) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !stlacenaKlavesa) {
+			stlacenaKlavesa = true;
+			if (oznacene > 1) {
+				oznacene--;
+			}
+		}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !stlacenaKlavesa) {
-		stlacenaKlavesa = true;
-		if (oznacene > 1) {
-			oznacene--;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !stlacenaKlavesa) {
+			stlacenaKlavesa = true;
+			if (oznacene < 3) {
+				oznacene++;
+			}
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !stlacenaKlavesa) {
+			stlacenaKlavesa = true;
+			hra->zmenStavRozhrania("hlavneMenu");
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
+			stlacenaKlavesa = true;
+			Zameranie* zameranie = new Zameranie("Warrior", 10, 3, 3, 2, 1);
+			zamerania.push_back(zameranie);
+
+			Hrac* hrac = new Hrac(zameranie);
+			hra->SetHrac(hrac);
+
+			Loader* loader = Loader::Instance();
+			loader->nacitajMapu("start", 0, 2, 2);
+			hra->zmenStavRozhrania("hranieHry");
+
+		}
+
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+			stlacenaKlavesa = false;
 		}
 	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !stlacenaKlavesa) {
-		stlacenaKlavesa = true;
-		if (oznacene < 3) {
-			oznacene++;
-		}
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !stlacenaKlavesa) {
-		stlacenaKlavesa = true;
-		hra->zmenStavRozhrania("hlavneMenu");
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
-		stlacenaKlavesa = true;
-		Zameranie* zameranie = new Zameranie("Warrior", 10, 3, 3, 2, 1);
-		zamerania.push_back(zameranie);
-
-		Hrac* hrac = new Hrac(zameranie);
-		hra->SetHrac(hrac);
-
-		Loader* loader = Loader::Instance();
-		loader->nacitajMapu("start",0,2,2);
-		hra->zmenStavRozhrania("hranieHry");
-		
-	}
-
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-		stlacenaKlavesa = false;
-	}
-
 }

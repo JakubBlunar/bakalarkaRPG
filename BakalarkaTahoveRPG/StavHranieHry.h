@@ -4,6 +4,7 @@
 #include "Stav.h"
 class Mapa;
 
+class Hrac;
 class StavHranieHry : public Stav
 {
 
@@ -20,9 +21,9 @@ public:
 
 private:
 	Mapa* mapa;
+	Hrac* hrac;
 	int posHracaX;
 	int posHracaY;
-
 	bool stlacenaKlavesa;
 };
 

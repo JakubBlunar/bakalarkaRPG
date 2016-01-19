@@ -1,5 +1,5 @@
 #include "StavDialog.h"
-
+#include "Loader.h"
 #include "Hra.h"
 #include "Hrac.h"
 #include "DialogovyStrom.h"
@@ -8,8 +8,7 @@
 
 
 StavDialog::StavDialog(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
-	font = new sf::Font();
-	font->loadFromFile("Data/Grafika/font2.otf");
+	font = Loader::Instance()->nacitajFont("font2.otf");
 	dialog = nullptr;
 	npc = nullptr;
 	oznacene = 0;
@@ -17,7 +16,6 @@ StavDialog::StavDialog(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra
 
 
 StavDialog::~StavDialog() {
-	delete(font);
 }
 
 
@@ -74,43 +72,44 @@ void StavDialog::render() {
 
 void StavDialog::update(double delta) {
 
-	if (dialog == nullptr) {
-		hra->zmenStavRozhrania("hranieHry");
-	}
+	if (hra->maFocus()) {
+		if (dialog == nullptr) {
+			hra->zmenStavRozhrania("hranieHry");
+		}
 
-	if (dialog->Getstav() == DialogStav::BEZI) {
+		if (dialog->Getstav() == DialogStav::BEZI) {
 
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			stlacenaKlavesa = true;
-			if (oznacene < dialog->Getaktualnapolozka()->pocetMoznosti()-1) {
-				oznacene++;
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+				stlacenaKlavesa = true;
+				if (oznacene < dialog->Getaktualnapolozka()->pocetMoznosti() - 1) {
+					oznacene++;
+				}
+			}
+
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+				stlacenaKlavesa = true;
+				if (oznacene > 0) oznacene--;
+			}
+
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+				stlacenaKlavesa = true;
+				dialog->zmenPolozku(oznacene);
+				oznacene = 0;
 			}
 		}
-
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-			stlacenaKlavesa = true;
-			if (oznacene > 0) oznacene--;
-		}
-
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-			stlacenaKlavesa = true;
-			dialog->zmenPolozku(oznacene);
-			oznacene = 0;
-		}
-	}
-	else {
+		else {
 			stlacenaKlavesa = true;
 			hra->zmenStavRozhrania("hranieHry");
-	}
+		}
 
-	if (stlacenaKlavesa
-		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
-		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
-		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
-		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
-		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
-		) {
-		stlacenaKlavesa = false;
+		if (stlacenaKlavesa
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+			) {
+			stlacenaKlavesa = false;
+		}
 	}
-
 }

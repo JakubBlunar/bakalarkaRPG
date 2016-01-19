@@ -1,4 +1,5 @@
 #include "StavInfoHraca.h"
+#include "Loader.h"
 #include "Hra.h"
 #include "Hrac.h"
 #include "Statistika.h"
@@ -7,9 +8,7 @@
 #include "Zbran.h"
 
 StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
-	font = new sf::Font();
-	font->loadFromFile("Data/Grafika/font2.otf");
-
+	font = Loader::Instance()->nacitajFont("font2.otf");
 
 	sf::Texture texture;
 	texture.create(200, 200);
@@ -24,7 +23,6 @@ StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 
 
 StavInfoHraca::~StavInfoHraca() {
-	delete font;
 	delete ukazovatel;
 }
 
@@ -286,48 +284,50 @@ void StavInfoHraca::render() {
 
 void StavInfoHraca::update(double delta) {
 
-	if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		stlacenaKlavesa = true;
-		if(oznacene < 10){
-		oznacene++;
+	if (hra->maFocus()) {
+		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			stlacenaKlavesa = true;
+			if (oznacene < 10) {
+				oznacene++;
+			}
+			else {
+				oznacene = 1;
+			}
+
 		}
-		else {
-			oznacene = 1;
+
+		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			stlacenaKlavesa = true;
+			if (oznacene > 1) {
+				oznacene--;
+			}
+			else {
+				oznacene = 10;
+			}
 		}
-		
-	}
 
-	if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		stlacenaKlavesa = true;
-		if (oznacene >1) {
-			oznacene--;
+		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+			stlacenaKlavesa = true;
+			if (oblecene->count(oznacene)) {
+				oblecene->at(oznacene)->pouzi(hrac);
+			}
 		}
-		else {
-			oznacene = 10;
+
+
+
+		if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::C))) {
+			hra->zmenStavRozhrania("hranieHry");
 		}
-	}
 
-	if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-		stlacenaKlavesa = true;
-		if (oblecene->count(oznacene)) {
-			oblecene->at(oznacene)->pouzi(hrac);
+		if (stlacenaKlavesa
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::C)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			stlacenaKlavesa = false;
 		}
-	}
-
-
-
-	if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::C))) {
-		hra->zmenStavRozhrania("hranieHry");
-	}
-
-	if (stlacenaKlavesa 
-		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::C) 
-		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
-		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
-		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
-		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
-		&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		stlacenaKlavesa = false;
 	}
 }
 

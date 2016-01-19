@@ -175,6 +175,7 @@
     <ClInclude Include="StavPauza.h" />
     <ClInclude Include="StavRozhrania.h" />
     <ClInclude Include="StavVolbaZamerania.h" />
+    <ClInclude Include="Tlacidlo.h" />
     <ClInclude Include="VolbaPridanieQuestu.h" />
     <ClInclude Include="Vrstva.h" />
     <ClInclude Include="Zameranie.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="StavPauza.cpp" />
     <ClCompile Include="StavRozhrania.cpp" />
     <ClCompile Include="StavVolbaZamerania.cpp" />
+    <ClCompile Include="Tlacidlo.cpp" />
     <ClCompile Include="VolbaPridanieQuestu.cpp" />
     <ClCompile Include="Vrstva.cpp" />
     <ClCompile Include="Zameranie.cpp" />

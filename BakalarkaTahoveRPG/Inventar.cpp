@@ -21,7 +21,7 @@ Inventar::Inventar() {
 	Pouzitelny* prsten = new Oblecenie("Prsten sily", 6, "pr1", 3, 1);
 	stit->Setarmor(25);
 
-	Pouzitelny* elixir = new Elixir("Maly Hp elixir", 12, "pr1", 5000, 1, "hp", 50);
+	Pouzitelny* elixir = new Elixir("Maly Hp elixir", 12, "elixir", 5000, 1, "hp", 50);
 	zbran->Setsila(3);
 	zbran->SetsilaMult(0.05);
 	

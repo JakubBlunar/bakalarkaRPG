@@ -339,3 +339,21 @@ void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
 
 
 }
+
+sf::Font* Loader::nacitajFont(std::string menoFontu) {
+	
+	if (nacitaneFonty.find(menoFontu) == nacitaneFonty.end()) {
+
+		sf::Font* font = new sf::Font();
+		if (!font->loadFromFile("Data/Grafika/"+menoFontu)) {
+			exit(1);
+		};
+
+		nacitaneFonty.insert(std::pair<std::string, sf::Font*>(menoFontu,font));
+		return font;
+	}
+	else {
+		return nacitaneFonty.at(menoFontu);
+	}
+
+}

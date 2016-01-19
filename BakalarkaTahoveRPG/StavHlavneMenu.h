@@ -1,10 +1,13 @@
 #pragma once
 #include <string>
+#include <vector>
 #include "Stav.h"
 
 /**
 * - nova hra, koniec, pokracovat
 */
+
+class Tlacidlo;
 class StavHlavneMenu : public Stav
 {
 
@@ -19,8 +22,9 @@ public:
 
 private:
 	sf::Font* font;
-	std::vector<std::string> moznosti;
+	std::vector<Tlacidlo*> tlacidla;
 	signed int oznacene;
 	bool stlacenaKlavesa;
+	bool stlacenaMys;
 };
 

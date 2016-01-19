@@ -76,6 +76,10 @@ void Hra::hlavnaSlucka() {
 		{
 			if (event.type == sf::Event::Closed)
 				okno->close();
+			if (event.type == sf::Event::GainedFocus) 
+				focus = true;
+			if (event.type == sf::Event::LostFocus) 
+				focus = false;
 
 		}
 
@@ -87,8 +91,11 @@ void Hra::hlavnaSlucka() {
 				stavRozhraniaHry->update(20);
 			}
 			
-			okno->clear();
-			stavRozhraniaHry->render();
+			
+			if (focus) {
+				okno->clear();
+				stavRozhraniaHry->render();
+			}
 			okno->display();
 	}
 
@@ -102,6 +109,9 @@ void Hra::SetHrac(Hrac* paHrac) {
 	hrac = paHrac;
 }
 
+bool Hra::maFocus() {
+	return focus;
+}
 
 Hrac* Hra::GetHrac() {
 	return hrac;
@@ -112,21 +122,12 @@ Stav* Hra::dajStav(std::string stav) {
 }
 
 void Hra::init() {
+	loader = Loader::Instance();
 
-	font = new sf::Font();
-	if (!font->loadFromFile("Data/Grafika/font.ttf")) {
-		exit(1);
-	};
-
-	textNacitanie.setFont(*font);
-	textNacitanie.setString("Nacitavam");
-	textNacitanie.setCharacterSize(128);
-	textNacitanie.setPosition(sf::Vector2f(100, 100));
-
+	font = loader->nacitajFont("font.ttf");
+	focus = true;
 
 	okno = new sf::RenderWindow(sf::VideoMode(1024, 768), NAZOV);
 	okno->setFramerateLimit(60);
 	okno->setVerticalSyncEnabled(true);
-
-	loader = Loader::Instance();
 }
