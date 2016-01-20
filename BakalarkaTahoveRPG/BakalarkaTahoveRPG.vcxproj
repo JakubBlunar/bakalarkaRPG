@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Akcia.h" />
     <ClInclude Include="Animacia.h" />
     <ClInclude Include="DialogovyStrom.h" />
     <ClInclude Include="Elixir.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Zbran.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Akcia.cpp" />
     <ClCompile Include="Animacia.cpp" />
     <ClCompile Include="DialogovyStrom.cpp" />
     <ClCompile Include="Elixir.cpp" />

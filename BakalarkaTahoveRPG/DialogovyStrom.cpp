@@ -9,7 +9,7 @@ DialogPolozka::DialogPolozka(string paText) {
 }
 
 DialogPolozka::~DialogPolozka() {
-	for (int i = 0; i < dialogoveMoznosti.size(); i++)
+	for (unsigned int i = 0; i < dialogoveMoznosti.size(); i++)
 	{
 		delete dialogoveMoznosti[i];
 	}
@@ -28,7 +28,7 @@ int DialogPolozka::pocetMoznosti() {
 }
 
 DialogVolba* DialogPolozka::Getvolba(int paIndex) {
-	if (paIndex >= 0 && paIndex< dialogoveMoznosti.size()) {
+	if (paIndex >= 0 && (unsigned int)paIndex< (unsigned int)dialogoveMoznosti.size()) {
 		return dialogoveMoznosti[paIndex];
 	}
 	return nullptr;
@@ -52,7 +52,7 @@ DialogovyStrom::DialogovyStrom()
 
 DialogovyStrom::~DialogovyStrom()
 {
-	for (int i = 0; i < castiDialogu.size(); i++) {
+	for (unsigned int i = 0; i < castiDialogu.size(); i++) {
 		delete castiDialogu[i];
 	}
 	castiDialogu.clear();

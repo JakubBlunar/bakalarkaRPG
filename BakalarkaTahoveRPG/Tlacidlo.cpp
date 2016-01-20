@@ -40,7 +40,7 @@ bool Tlacidlo::Getzakliknute() {
 }
 sf::Sprite* Tlacidlo::Getsprite() {
 	aktualne->setPosition(pozicia);
-	aktualne->setTextureRect(sf::IntRect(0, 0, velkost.x, velkost.y));
+	aktualne->setTextureRect(sf::IntRect(0, 0,(int) velkost.x,(int) velkost.y));
 	return aktualne;
 }
 

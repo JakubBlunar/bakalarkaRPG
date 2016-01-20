@@ -6,6 +6,7 @@
 #include "Zbran.h"
 
 Statistika::Statistika() {
+	akcie = new std::map<std::string, Akcia*>();
 	uroven = 1;
 	hp = 20;
 	hpMax = 80;
@@ -34,6 +35,7 @@ Statistika::Statistika(int paUroven, int paHp, int paHpMax, int paMp, int paMpMa
 	rychlost = paRychlost;
 	obrana = paObrana;
 	oblecene = paObleceneVeci;
+	akcie = new std::map<std::string, Akcia*>();
 	this->prepocitajPoskodenia();
 }
 
@@ -278,6 +280,10 @@ void Statistika::setUroven(int paUroven) {
 
 std::map<int, Predmet*>* Statistika::Getoblecene() {
 	return oblecene;
+}
+
+std::map<std::string, Akcia*>* Statistika::Getakcie() {
+	return akcie;
 }
 
 void Statistika::prepocitajPoskodenia() {

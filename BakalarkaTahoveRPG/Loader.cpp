@@ -43,7 +43,7 @@ Hra* Loader::Gethra() {
 }
 
 DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
-	std::string cestaDialogy = "Data/Npc/Dialogy/";
+	std::string cestaDialogy = "./Data/Npc/Dialogy/";
 
 	Json::Value root;
 	Json::Reader reader;
@@ -123,8 +123,8 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	
 	Mapa* novaMapa;
 	
-	std::string cestaKMapam = "Data/Mapy/";
-	std::string cestakTexturam = "Data/Grafika/Textury/";
+	std::string cestaKMapam = "./Data/Mapy/";
+	std::string cestakTexturam = "./Data/Grafika/Textury/";
 
 	PolickoDvere*** polickoDvere;
 
@@ -268,8 +268,8 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 
 
 void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
-	std::string cestaKNpc= "Data/Npc/";
-	std::string cestaNpcAnimacie = "Data/Grafika/Npc/";
+	std::string cestaKNpc= "./Data/Npc/";
+	std::string cestaNpcAnimacie = "./Data/Grafika/Npc/";
 	
 	bool alive = true;
 	while (alive) {
@@ -345,7 +345,7 @@ sf::Font* Loader::nacitajFont(std::string menoFontu) {
 	if (nacitaneFonty.find(menoFontu) == nacitaneFonty.end()) {
 
 		sf::Font* font = new sf::Font();
-		if (!font->loadFromFile("Data/Grafika/"+menoFontu)) {
+		if (!font->loadFromFile("./Data/Grafika/"+menoFontu)) {
 			exit(1);
 		};
 

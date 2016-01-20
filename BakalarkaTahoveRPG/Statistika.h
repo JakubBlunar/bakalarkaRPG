@@ -6,10 +6,9 @@
 
 #include <string>
 #include <map>
-//#include "Akcia.h"
 
 class Predmet;
-
+class Akcia;
 
 class Statistika
 {
@@ -20,6 +19,7 @@ public:
 	virtual ~Statistika();
 
 	std::map<int, Predmet*>* Getoblecene();
+	std::map<std::string, Akcia*>* Getakcie();
 
 	int dajUroven();
 	int Gethp();
@@ -59,7 +59,8 @@ private:
 	int uroven;
 	int minPoskodenie;
 	int maxPoskodenie;
-	//std::Map<string, Akcia*> kuzla;
+
+	std::map<std::string, Akcia*>* akcie;
 	std::map<int, Predmet*>* oblecene;
 };
 #endif 

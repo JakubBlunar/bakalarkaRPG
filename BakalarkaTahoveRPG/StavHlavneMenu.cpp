@@ -74,14 +74,14 @@ void StavHlavneMenu::update(double delta) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
 		{
 			sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
-			for (int i = 0; i < tlacidla.size(); i++)
+			for (unsigned int i = 0; i < tlacidla.size(); i++)
 			{
 				tlacidla[i]->skontrolujKlik(pozicia);
 			}
 		}
 
 		if (stlacenaMys == false) {
-			for (int i = 0; i < tlacidla.size(); i++)
+			for (unsigned int i = 0; i < tlacidla.size(); i++)
 			{
 				if (tlacidla[i]->Getzakliknute()) {
 					stlacenaMys = true;
@@ -100,7 +100,7 @@ void StavHlavneMenu::update(double delta) {
 
 		if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == true) {
 			stlacenaMys = false;
-			for (int i = 0; i < tlacidla.size(); i++)
+			for (unsigned int i = 0; i < tlacidla.size(); i++)
 			{
 				if (tlacidla[i]->Getzakliknute()) {
 					tlacidla[i]->Setzakliknute(false);

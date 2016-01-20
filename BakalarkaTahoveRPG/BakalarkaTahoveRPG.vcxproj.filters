@@ -49,6 +49,12 @@
     <Filter Include="Header Files\Dialog">
       <UniqueIdentifier>{066c92de-bc04-4c87-b777-47b1b8b50336}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Akcie">
+      <UniqueIdentifier>{a4324041-8c3c-4b4b-bcd6-5b12bc354da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Akcie">
+      <UniqueIdentifier>{3de62b65-fd86-4fb1-a40f-ef79cda26851}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stav.h">
@@ -150,6 +156,9 @@
     <ClInclude Include="Tlacidlo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Akcia.h">
+      <Filter>Header Files\Akcie</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -250,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="Tlacidlo.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Akcia.cpp">
+      <Filter>Source Files\Akcie</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
