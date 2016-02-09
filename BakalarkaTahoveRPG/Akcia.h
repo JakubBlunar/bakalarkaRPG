@@ -8,7 +8,7 @@ class Akcia
 {
 
 public:
-	Akcia(std::string meno, std::string obrazok, int casCastenia,int cooldown, int trvanie, int popis);
+	Akcia(std::string meno, std::string obrazok, int casCastenia,int cooldown, int trvanie, std::string popis);
 	virtual ~Akcia();
 
 	std::string dajPopis();
@@ -29,4 +29,4 @@ private:
 	sf::Texture* textura;
 
 };
-#endif // !defined(EA_3587F8A3_C915_4cd2_A3DA_F6761BEDF2D6__INCLUDED_)
+#endif

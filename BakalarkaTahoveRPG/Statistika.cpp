@@ -4,6 +4,7 @@
 #include "Predmet.h"
 #include "Pouzitelny.h"
 #include "Zbran.h"
+#include "Akcia.h"
 
 Statistika::Statistika() {
 	akcie = new std::map<std::string, Akcia*>();
@@ -314,4 +315,12 @@ int Statistika::Getminposkodenie() {
 }
 int Statistika::Getmaxposkodenie() {
 	return maxPoskodenie;
+}
+
+void Statistika::vlozAkciu(Akcia* paAkcia) {
+	
+	if (akcie->count(paAkcia->Getmeno()) == 0) {
+		akcie->insert(std::pair<std::string, Akcia*>(paAkcia->Getmeno(), paAkcia));
+	}
+		
 }

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Akcia::Akcia(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, int popis) {
+Akcia::Akcia(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis) {
 	const std::string akcie_cesta = "./Data/Grafika/Akcie/";
 
 	this->meno = meno;

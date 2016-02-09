@@ -1,5 +1,6 @@
 #include "Zameranie.h"
 #include <map>
+#include "Akcia.h"
 
 Zameranie::Zameranie(std::string nazov, double paRastHp, double paRastMp, double paRastSila, double paRastRychlost, double paRastIntel) {
 	this->nazov = nazov;
@@ -13,7 +14,7 @@ Zameranie::Zameranie(std::string nazov, double paRastHp, double paRastMp, double
 
 
 Zameranie::~Zameranie() {
-
+	
 }
 
 
@@ -67,10 +68,10 @@ std::map<std::string, int> Zameranie::lvlUpBonusy(){
 }
 
 
-/*
-map<Akcie, int>  Zameranie::Getspelly() {
-
-	return spelly;
+void Zameranie::vlozAkciu(Akcia* paAkcia, int paUroven) {
+	spelly.insert_or_assign(paAkcia, paUroven);
 }
 
-*/
+std::map<Akcia*, int>  Zameranie::Getspelly() {
+	return spelly;
+}

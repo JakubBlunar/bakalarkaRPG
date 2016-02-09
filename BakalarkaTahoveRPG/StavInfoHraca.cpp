@@ -278,6 +278,18 @@ void StavInfoHraca::render() {
 			break;
 		}
 
+
+
+		sf::RectangleShape pozadieSpellov;
+		pozadieSpellov.setSize(sf::Vector2f(500, 300));
+		pozadieSpellov.setFillColor(sf::Color::White);
+
+		pozadieSpellov.setPosition(sf::Vector2f(300, 100));
+
+		okno->draw(pozadieSpellov);
+
+
+		//std::cout << hrac->Getstatistika()->Getakcie()->size() << std::endl;
 	//std::cout << oznacene << std::endl;
 }
 

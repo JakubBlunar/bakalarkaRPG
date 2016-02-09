@@ -1,10 +1,13 @@
 #include "StavVolbaZamerania.h"
+#include <string>
 #include "Loader.h"
 #include "Hra.h"
 #include "Hrac.h"
 #include "Zameranie.h"
 #include "StavHranieHry.h"
 #include "Mapa.h"
+#include "Akcia.h"
+
 
 
 StavVolbaZamerania::StavVolbaZamerania(std::string paNazov, sf::RenderWindow* paOkno,Hra* paHra) : Stav(paNazov,paOkno,paHra) {
@@ -90,7 +93,9 @@ void StavVolbaZamerania::update(double delta) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
 			stlacenaKlavesa = true;
 			Zameranie* zameranie = new Zameranie("Warrior", 10, 3, 3, 2, 1);
-			zamerania.push_back(zameranie);
+
+			Akcia* akcia = new Akcia("Utok", "attack", 0, 1000, 0, "Bezny utok zbranou");
+			zameranie->vlozAkciu(akcia, 1);
 
 			Hrac* hrac = new Hrac(zameranie);
 			hra->SetHrac(hrac);

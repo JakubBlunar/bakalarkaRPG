@@ -7,6 +7,7 @@
 #include "Mapa.h"
 #include "Statistika.h"
 #include "Inventar.h"
+#include "Akcia.h"
 
 Hrac::Hrac(Zameranie* paZameranie) {
 	zameranie = paZameranie;
@@ -24,6 +25,13 @@ Hrac::Hrac(Zameranie* paZameranie) {
 	statistika = new Statistika();
 	inventar = new Inventar();
 	
+	for (std::map<Akcia*, int>::iterator it = paZameranie->Getspelly().begin(); it != paZameranie->Getspelly().end(); ++it)
+	{
+		if (statistika->dajUroven() == it->second) {
+			statistika->vlozAkciu(it->first);
+		}
+	}
+
 
 }
 
@@ -253,6 +261,12 @@ void Hrac::pridajSkusenosti(int pocet) {
 			statistika->Setmp(statistika->GetmpMax());
 		}
 		
+		for (std::map<Akcia*, int>::iterator it = zameranie->Getspelly().begin(); it != zameranie->Getspelly().end(); ++it)
+		{
+			if (statistika->dajUroven() == it->second) {
+				statistika->vlozAkciu(it->first);
+			}
+		}
 
 	}
 	

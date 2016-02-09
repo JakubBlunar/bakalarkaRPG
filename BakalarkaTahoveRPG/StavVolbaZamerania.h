@@ -21,5 +21,4 @@ private:
 	sf::Font* font;
 	signed int oznacene;
 	bool stlacenaKlavesa;
-	std::vector<Zameranie*> zamerania;
 };

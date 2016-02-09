@@ -20,6 +20,8 @@ public:
 
 	std::map<int, Predmet*>* Getoblecene();
 	std::map<std::string, Akcia*>* Getakcie();
+	void vlozAkciu(Akcia* paAkcia);
+
 
 	int dajUroven();
 	int Gethp();

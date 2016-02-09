@@ -2,6 +2,8 @@
 #include <string>
 #include <map>
 
+class Akcia;
+
 class Zameranie
 {
 
@@ -16,8 +18,9 @@ public:
 	double GetrastRychlost();
 	double GetrastSila();
 	int xpNaLevel(int level);
+	void vlozAkciu(Akcia* paAkcia, int paUroven);
 	std::map<std::string, int> lvlUpBonusy();
-	//map<Akcie, int>  Getspelly();
+	std::map<Akcia*, int>  Getspelly();
 
 private:
 	std::string nazov;
@@ -26,7 +29,7 @@ private:
 	double rastIntel;
 	double rastRychlost;
 	double rastSila;
-	//map<Akcie, int>  spelly;
+	std::map<Akcia*, int>  spelly;
 
 };
 
