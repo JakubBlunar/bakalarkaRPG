@@ -5,6 +5,8 @@
 
 class Hrac;
 class Predmet;
+class Akcia;
+class Tlacidlo;
 
 class StavInfoHraca : public Stav
 {
@@ -23,10 +25,16 @@ private:
 	
 	sf::Font* font;
 	bool stlacenaKlavesa;
+	bool stlacenaMys;
 
 	int oznacene;
 	sf::Sprite* ukazovatel;
 
 	Hrac* hrac;
 	std::map<int, Predmet*>* oblecene;
+	std::vector<Akcia*> hracoveAkcie;
+
+	std::vector<Tlacidlo*> tlacidlaAkcie;
+
+	Akcia* akciaInfo;
 };

@@ -6,6 +6,8 @@
 #include "Zameranie.h"
 #include "Pouzitelny.h"
 #include "Zbran.h"
+#include "Akcia.h"
+#include "Tlacidlo.h"
 
 StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
 	font = Loader::Instance()->nacitajFont("font2.otf");
@@ -18,6 +20,15 @@ StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 	ukazovatel->setTextureRect(sf::IntRect(0, 0, 48, 48));
 	ukazovatel->setColor(sf::Color(255, 0, 0, 128));
 	oznacene = 1;
+
+	sf::Sprite* sprite = new sf::Sprite();
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 8; j++) {
+			tlacidlaAkcie.push_back(new Tlacidlo(sprite, sprite, "",sf::Vector2f(300.f+ j*55 + 3, 100.f+ i*55+3),sf::Vector2f(48,48),font,35U));
+		}
+	}
+	
+
 
 }
 
@@ -33,9 +44,21 @@ void StavInfoHraca::onEnter() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
 		stlacenaKlavesa = true;
 	}
+	stlacenaMys = true;
+
 	oznacene = 1;
 	hrac = hra->GetHrac();
 	oblecene = hrac->Getstatistika()->Getoblecene();
+
+	akciaInfo = nullptr;
+
+	if (hracoveAkcie.size() != hrac->Getstatistika()->Getakcie()->size()) {
+		hracoveAkcie.erase(hracoveAkcie.begin(), hracoveAkcie.end());
+		for (std::map<std::string, Akcia*>::iterator it = hrac->Getstatistika()->Getakcie()->begin(); it != hrac->Getstatistika()->Getakcie()->end(); ++it)
+		{
+			hracoveAkcie.push_back(it->second);
+		}
+	}
 	
 }
 
@@ -278,18 +301,57 @@ void StavInfoHraca::render() {
 			break;
 		}
 
+	
+		//vykreslenie akcii , ktoré hráè može robi pri boji		
+
+		float kuzlaStartX = 300;
+		float kuzlaStartY = 100;
+		int nasirku = 8;
+		int riadok = 0;
+		
+		text.setString("Zrucnosti:");
+		text.setCharacterSize(30);
+
+		text.setPosition(sf::Vector2f(kuzlaStartX, kuzlaStartY - 40));
+		okno->draw(text);
 
 
 		sf::RectangleShape pozadieSpellov;
-		pozadieSpellov.setSize(sf::Vector2f(500, 300));
+		pozadieSpellov.setSize(sf::Vector2f(nasirku*55.f, 165.f + 3));
 		pozadieSpellov.setFillColor(sf::Color::White);
-
-		pozadieSpellov.setPosition(sf::Vector2f(300, 100));
-
+		pozadieSpellov.setPosition(sf::Vector2f(kuzlaStartX,kuzlaStartY));
 		okno->draw(pozadieSpellov);
 
+	
+		for (unsigned int i = 0; i < (unsigned int)hracoveAkcie.size(); i++)
+		{
+			if (i >= (unsigned int)(riadok + 1)*nasirku) {
+				riadok++;
+			}
+			Akcia* akcia = hracoveAkcie.at(i);
+			sf::Sprite* obrazok = akcia->Getobrazok();
+			obrazok->setScale(sf::Vector2f(1.5f, 1.5f));
+			obrazok->setPosition(sf::Vector2f(kuzlaStartX+ (i- riadok*nasirku) * 55 + 3, kuzlaStartY+ riadok*55 +3));
+			okno->draw(*obrazok);
+		}
 
-		//std::cout << hrac->Getstatistika()->Getakcie()->size() << std::endl;
+		sf::RectangleShape pozadieInfo;
+		pozadieInfo.setSize(sf::Vector2f(nasirku * 55.f, 200.f));
+		pozadieInfo.setFillColor(sf::Color::White);
+		pozadieInfo.setPosition(sf::Vector2f(kuzlaStartX, kuzlaStartY+200));
+		okno->draw(pozadieInfo);
+
+		if (akciaInfo != nullptr) {
+			text.setColor(sf::Color::Black);
+			std::string info = akciaInfo->Getmeno();
+			info += "\n" + akciaInfo->dajPopis();
+			text.setCharacterSize(15);
+			text.setString(info);
+			text.setPosition(sf::Vector2f(kuzlaStartX + 5, kuzlaStartY+205));
+			okno->draw(text);
+		}
+
+	//std::cout << hrac->Getstatistika()->Getakcie()->at("Utok")->dajPopis() << std::endl;
 	//std::cout << oznacene << std::endl;
 }
 
@@ -297,6 +359,47 @@ void StavInfoHraca::render() {
 void StavInfoHraca::update(double delta) {
 
 	if (hra->maFocus()) {
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
+		{
+			sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+			for (unsigned int i = 0; i < tlacidlaAkcie.size(); i++)
+			{
+				tlacidlaAkcie[i]->skontrolujKlik(pozicia);
+			}
+		}
+
+		if (stlacenaMys == false) {
+			for (unsigned int i = 0; i < tlacidlaAkcie.size(); i++)
+			{
+				if (tlacidlaAkcie[i]->Getzakliknute()) {
+					stlacenaMys = true;
+					if(i < hracoveAkcie.size()){
+						akciaInfo = hracoveAkcie.at(i);
+					}
+					else {
+						akciaInfo = nullptr;
+					}
+				
+
+				}
+			}
+		}
+
+
+		if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == true) {
+			stlacenaMys = false;
+			for (unsigned int i = 0; i < tlacidlaAkcie.size(); i++)
+			{
+				if (tlacidlaAkcie[i]->Getzakliknute()) {
+					tlacidlaAkcie[i]->Setzakliknute(false);
+				}
+			}
+
+		}
+
+
+
 		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 			stlacenaKlavesa = true;
 			if (oznacene < 10) {

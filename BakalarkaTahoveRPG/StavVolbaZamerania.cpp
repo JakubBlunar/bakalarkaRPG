@@ -94,8 +94,8 @@ void StavVolbaZamerania::update(double delta) {
 			stlacenaKlavesa = true;
 			Zameranie* zameranie = new Zameranie("Warrior", 10, 3, 3, 2, 1);
 
-			Akcia* akcia = new Akcia("Utok", "attack", 0, 1000, 0, "Bezny utok zbranou");
-			zameranie->vlozAkciu(akcia, 1);
+			zameranie->vlozAkciu(new Akcia("Liecenie", "healing1", 0, 1000, 0, "Vylieci ta!"), 2);
+			zameranie->vlozAkciu(new Akcia("Utok", "attack", 0, 1000, 0, "Bezny utok zbranou"), 1);
 
 			Hrac* hrac = new Hrac(zameranie);
 			hra->SetHrac(hrac);

@@ -2,19 +2,22 @@
 #include <map>
 #include "Akcia.h"
 
-Zameranie::Zameranie(std::string nazov, double paRastHp, double paRastMp, double paRastSila, double paRastRychlost, double paRastIntel) {
+#include <iostream>
+
+Zameranie::Zameranie(std::string nazov, int paRastHp, int paRastMp, int paRastSila, int paRastRychlost, int paRastIntel) {
 	this->nazov = nazov;
 	rastHp = paRastHp;
 	rastMp = paRastMp;
 	rastSila = paRastSila;
 	rastRychlost = paRastRychlost;
 	rastIntel = paRastIntel;
+	spelly = new std::map<Akcia*, int>();
 }
 
 
 
 Zameranie::~Zameranie() {
-	
+	delete spelly;
 }
 
 
@@ -24,29 +27,29 @@ std::string Zameranie::Getnazov() {
 }
 
 
-double Zameranie::GetrastHp() {
+int Zameranie::GetrastHp() {
 
 	return rastHp;
 }
 
-double Zameranie::GetrastMp() {
+int Zameranie::GetrastMp() {
 
 	return rastMp;
 }
 
-double Zameranie::GetrastIntel() {
+int Zameranie::GetrastIntel() {
 
 	return rastIntel;
 }
 
 
-double Zameranie::GetrastRychlost() {
+int Zameranie::GetrastRychlost() {
 
 	return rastRychlost;
 }
 
 
-double Zameranie::GetrastSila() {
+int Zameranie::GetrastSila() {
 
 	return rastSila;
 }
@@ -69,9 +72,9 @@ std::map<std::string, int> Zameranie::lvlUpBonusy(){
 
 
 void Zameranie::vlozAkciu(Akcia* paAkcia, int paUroven) {
-	spelly.insert_or_assign(paAkcia, paUroven);
+	spelly->insert(std::pair <Akcia*, int>(paAkcia, paUroven));
 }
 
-std::map<Akcia*, int>  Zameranie::Getspelly() {
+std::map<Akcia*, int>*  Zameranie::Getspelly() {
 	return spelly;
 }
