@@ -63,7 +63,7 @@ void StavHlavneMenu::render() {
 		okno->draw(text);
 	}
 	
-
+	Stav::render();
 	//std::cout << oznacene << std::endl;
 }
 
@@ -71,74 +71,80 @@ void StavHlavneMenu::render() {
 void StavHlavneMenu::update(double delta) {
 	
 	if (hra->maFocus()) {
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
-		{
-			sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
-			for (unsigned int i = 0; i < tlacidla.size(); i++)
+
+		Stav::update(delta);
+
+		if (stav == StavAkcia::NORMAL) {
+
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
 			{
-				tlacidla[i]->skontrolujKlik(pozicia);
-			}
-		}
-
-		if (stlacenaMys == false) {
-			for (unsigned int i = 0; i < tlacidla.size(); i++)
-			{
-				if (tlacidla[i]->Getzakliknute()) {
-					stlacenaMys = true;
-					if (i == 0) {
-						hra->zmenStavRozhrania("volbaZamerania");
-					}
-					if (i == 2) {
-						stlacenaKlavesa = true;
-						okno->close();
-					}
-
-				}
-			}
-		}
-
-
-		if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == true) {
-			stlacenaMys = false;
-			for (unsigned int i = 0; i < tlacidla.size(); i++)
-			{
-				if (tlacidla[i]->Getzakliknute()) {
-					tlacidla[i]->Setzakliknute(false);
+				sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+				for (unsigned int i = 0; i < tlacidla.size(); i++)
+				{
+					tlacidla[i]->skontrolujKlik(pozicia);
 				}
 			}
 
-		}
+			if (stlacenaMys == false) {
+				for (unsigned int i = 0; i < tlacidla.size(); i++)
+				{
+					if (tlacidla[i]->Getzakliknute()) {
+						stlacenaMys = true;
+						if (i == 0) {
+							hra->zmenStavRozhrania("volbaZamerania");
+						}
+						if (i == 2) {
+							stlacenaKlavesa = true;
+							okno->close();
+						}
 
-
-
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !stlacenaKlavesa) {
-			stlacenaKlavesa = true;
-			if (oznacene > 0) {
-				oznacene--;
+					}
+				}
 			}
-		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !stlacenaKlavesa) {
-			stlacenaKlavesa = true;
-			if (oznacene < (signed int)tlacidla.size() - 1) {
-				oznacene++;
+
+			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == true) {
+				stlacenaMys = false;
+				for (unsigned int i = 0; i < tlacidla.size(); i++)
+				{
+					if (tlacidla[i]->Getzakliknute()) {
+						tlacidla[i]->Setzakliknute(false);
+					}
+				}
+
 			}
-		}
-
-		if (oznacene == 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
-			stlacenaKlavesa = true;
-			hra->zmenStavRozhrania("volbaZamerania");
-		}
-
-		if (oznacene == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
-			stlacenaKlavesa = true;
-			okno->close();
-		}
 
 
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			stlacenaKlavesa = false;
+
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				if (oznacene > 0) {
+					oznacene--;
+				}
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				if (oznacene < (signed int)tlacidla.size() - 1) {
+					oznacene++;
+				}
+			}
+
+			if (oznacene == 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				hra->zmenStavRozhrania("volbaZamerania");
+			}
+
+			if (oznacene == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				okno->close();
+			}
+
+
+			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+				stlacenaKlavesa = false;
+			}
 		}
 	}
 

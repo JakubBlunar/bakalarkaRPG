@@ -18,6 +18,6 @@ public:
 	void update(double delta);
 
 private:
-	sf::Font* font;
+	
 };
 

@@ -9,8 +9,6 @@ Tlacidlo::Tlacidlo(sf::Sprite* normalne, sf::Sprite* kliknute, std::string paTex
 	this->velkost = velkost;
 
 	this->zakliknute = false;
-	this->normalne->setPosition(pozicia);
-	this->kliknute->setPosition(pozicia);
 	text.setFont(*font);
 	text.setString(paText);
 	text.setCharacterSize(velkostPisma);

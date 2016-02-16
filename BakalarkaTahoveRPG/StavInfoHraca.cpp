@@ -11,20 +11,22 @@
 
 StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
 	font = Loader::Instance()->nacitajFont("font2.otf");
-
-	sf::Texture texture;
-	texture.create(200, 200);
-	texture.setSmooth(true);
-	ukazovatel = new sf::Sprite();
-	ukazovatel->setTexture(texture);
-	ukazovatel->setTextureRect(sf::IntRect(0, 0, 48, 48));
-	ukazovatel->setColor(sf::Color(255, 0, 0, 128));
+	
+	ukazovatel.setSize(sf::Vector2f(48, 48));
+	ukazovatel.setFillColor(sf::Color(255, 0, 0, 128));
 	oznacene = 1;
 
-	sf::Sprite* sprite = new sf::Sprite();
+
+	sf::Texture textura;
+	textura.create(50,50);
+	sf::Sprite* normalne = new sf::Sprite();
+	sf::Sprite* zakliknute = new sf::Sprite(textura);
+	zakliknute->setTextureRect(sf::IntRect(0, 0, 48, 48));
+	zakliknute->setColor(sf::Color(255, 0, 0, 128));
+
 	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 8; j++) {
-			tlacidlaAkcie.push_back(new Tlacidlo(sprite, sprite, "",sf::Vector2f(300.f+ j*55 + 3, 100.f+ i*55+3),sf::Vector2f(48,48),font,35U));
+		for (int j = 0; j < 9; j++) {
+			tlacidlaAkcie.push_back(new Tlacidlo(normalne, zakliknute, "",sf::Vector2f(500.f+ j*55 + 3, 100.f+ i*55+3),sf::Vector2f(48,48),font,35U));
 		}
 	}
 	
@@ -34,13 +36,14 @@ StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 
 
 StavInfoHraca::~StavInfoHraca() {
-	delete ukazovatel;
 }
 
 
 
 void StavInfoHraca::onEnter() {
 	Stav::onEnter();
+
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
 		stlacenaKlavesa = true;
 	}
@@ -49,8 +52,6 @@ void StavInfoHraca::onEnter() {
 	oznacene = 1;
 	hrac = hra->GetHrac();
 	oblecene = hrac->Getstatistika()->Getoblecene();
-
-	akciaInfo = nullptr;
 
 	if (hracoveAkcie.size() != hrac->Getstatistika()->Getakcie()->size()) {
 		hracoveAkcie.erase(hracoveAkcie.begin(), hracoveAkcie.end());
@@ -69,7 +70,7 @@ void StavInfoHraca::onExit() {
 
 
 void StavInfoHraca::render() {
-		ukazovatel->setColor(sf::Color(255, 0, 0, 128));
+		
 		sf::Text text("Hrac Info",*font, 45U);
 		text.setPosition(sf::Vector2f(10.f, 10.f));
 		okno->draw(text);
@@ -243,59 +244,59 @@ void StavInfoHraca::render() {
 			okno->draw(*predmetObrazok);
 		}
 
-		
+
 		// oznacenie a info predmetu
 		switch (oznacene)
 		{
 		case (1) :
-			ukazovatel->setPosition(x + 0.f, y + 0.f);
-			okno->draw(*ukazovatel);
-			if(oblecene->count(1))  vykresliOknoPredmetu(oblecene->at(1), ukazovatel->getPosition().x, ukazovatel->getPosition().y, okno);
+			ukazovatel.setPosition(x + 0.f, y + 0.f);
+			okno->draw(ukazovatel);
+			if(oblecene->count(1))  vykresliOknoPredmetu(oblecene->at(1), ukazovatel.getPosition().x, ukazovatel.getPosition().y, okno);
 			break;
 		case (2) :
-			ukazovatel->setPosition(x + 0.f, y + 60.f);
-			okno->draw(*ukazovatel);
-			if (oblecene->count(2)) vykresliOknoPredmetu(oblecene->at(2), ukazovatel->getPosition().x, ukazovatel->getPosition().y, okno);
+			ukazovatel.setPosition(x + 0.f, y + 60.f);
+			okno->draw(ukazovatel);
+			if (oblecene->count(2)) vykresliOknoPredmetu(oblecene->at(2), ukazovatel.getPosition().x, ukazovatel.getPosition().y, okno);
 			break;
 		case (3) :
-			ukazovatel->setPosition(x + 0.f, y + 120.f);
-			okno->draw(*ukazovatel);
-			if (oblecene->count(3)) vykresliOknoPredmetu(oblecene->at(3), ukazovatel->getPosition().x, ukazovatel->getPosition().y, okno);
+			ukazovatel.setPosition(x + 0.f, y + 120.f);
+			okno->draw(ukazovatel);
+			if (oblecene->count(3)) vykresliOknoPredmetu(oblecene->at(3), ukazovatel.getPosition().x, ukazovatel.getPosition().y, okno);
 			break;
 		case (4) :
-			ukazovatel->setPosition(x + 0.f, y + 180.f);
-			okno->draw(*ukazovatel);
-			if (oblecene->count(4)) vykresliOknoPredmetu(oblecene->at(4), ukazovatel->getPosition().x, ukazovatel->getPosition().y, okno);
+			ukazovatel.setPosition(x + 0.f, y + 180.f);
+			okno->draw(ukazovatel);
+			if (oblecene->count(4)) vykresliOknoPredmetu(oblecene->at(4), ukazovatel.getPosition().x, ukazovatel.getPosition().y, okno);
 			break;
 		case (5) :
-			ukazovatel->setPosition(x + 200.f, y + 0.f);
-			okno->draw(*ukazovatel);
-			if (oblecene->count(5)) vykresliOknoPredmetu(oblecene->at(5), ukazovatel->getPosition().x, ukazovatel->getPosition().y, okno);
+			ukazovatel.setPosition(x + 200.f, y + 0.f);
+			okno->draw(ukazovatel);
+			if (oblecene->count(5)) vykresliOknoPredmetu(oblecene->at(5), ukazovatel.getPosition().x, ukazovatel.getPosition().y, okno);
 			break;
 		case (6) :
-			ukazovatel->setPosition(x + 200.f, y + 60.f);
-			okno->draw(*ukazovatel);
-			if (oblecene->count(6)) vykresliOknoPredmetu(oblecene->at(6), ukazovatel->getPosition().x, ukazovatel->getPosition().y, okno);
+			ukazovatel.setPosition(x + 200.f, y + 60.f);
+			okno->draw(ukazovatel);
+			if (oblecene->count(6)) vykresliOknoPredmetu(oblecene->at(6), ukazovatel.getPosition().x, ukazovatel.getPosition().y, okno);
 			break;
 		case (7) :
-			ukazovatel->setPosition(x + 200.f, y + 120.f);
-			okno->draw(*ukazovatel);
-			if (oblecene->count(7)) vykresliOknoPredmetu(oblecene->at(7), ukazovatel->getPosition().x, ukazovatel->getPosition().y, okno);
+			ukazovatel.setPosition(x + 200.f, y + 120.f);
+			okno->draw(ukazovatel);
+			if (oblecene->count(7)) vykresliOknoPredmetu(oblecene->at(7), ukazovatel.getPosition().x, ukazovatel.getPosition().y, okno);
 			break;
 		case (8) :
-			ukazovatel->setPosition(x + 200.f, y + 180.f);
-			okno->draw(*ukazovatel);
-			if (oblecene->count(8)) vykresliOknoPredmetu(oblecene->at(8), ukazovatel->getPosition().x, ukazovatel->getPosition().y, okno);
+			ukazovatel.setPosition(x + 200.f, y + 180.f);
+			okno->draw(ukazovatel);
+			if (oblecene->count(8)) vykresliOknoPredmetu(oblecene->at(8), ukazovatel.getPosition().x, ukazovatel.getPosition().y, okno);
 			break;
 		case (9) :
-			ukazovatel->setPosition(x + 70.f, y + 180.f);
-			okno->draw(*ukazovatel);
-			if (oblecene->count(9)) vykresliOknoPredmetu(oblecene->at(9), ukazovatel->getPosition().x, ukazovatel->getPosition().y, okno);
+			ukazovatel.setPosition(x + 70.f, y + 180.f);
+			okno->draw(ukazovatel);
+			if (oblecene->count(9)) vykresliOknoPredmetu(oblecene->at(9), ukazovatel.getPosition().x, ukazovatel.getPosition().y, okno);
 			break;
 		case (10) :
-			ukazovatel->setPosition(x + 130.f, y + 180.f);
-			okno->draw(*ukazovatel);
-			if (oblecene->count(10)) vykresliOknoPredmetu(oblecene->at(10), ukazovatel->getPosition().x, ukazovatel->getPosition().y, okno);
+			ukazovatel.setPosition(x + 130.f, y + 180.f);
+			okno->draw(ukazovatel);
+			if (oblecene->count(10)) vykresliOknoPredmetu(oblecene->at(10), ukazovatel.getPosition().x, ukazovatel.getPosition().y, okno);
 			break;
 		default:
 			break;
@@ -304,9 +305,9 @@ void StavInfoHraca::render() {
 	
 		//vykreslenie akcii , ktoré hráè može robi pri boji		
 
-		float kuzlaStartX = 300;
+		float kuzlaStartX = 500;
 		float kuzlaStartY = 100;
-		int nasirku = 8;
+		int nasirku = 9;
 		int riadok = 0;
 		
 		text.setString("Zrucnosti:");
@@ -333,6 +334,9 @@ void StavInfoHraca::render() {
 			obrazok->setScale(sf::Vector2f(1.5f, 1.5f));
 			obrazok->setPosition(sf::Vector2f(kuzlaStartX+ (i- riadok*nasirku) * 55 + 3, kuzlaStartY+ riadok*55 +3));
 			okno->draw(*obrazok);
+
+			okno->draw(*tlacidlaAkcie.at(i)->Getsprite());
+			
 		}
 
 		sf::RectangleShape pozadieInfo;
@@ -341,16 +345,31 @@ void StavInfoHraca::render() {
 		pozadieInfo.setPosition(sf::Vector2f(kuzlaStartX, kuzlaStartY+200));
 		okno->draw(pozadieInfo);
 
-		if (akciaInfo != nullptr) {
-			text.setColor(sf::Color::Black);
-			std::string info = akciaInfo->Getmeno();
-			info += "\n" + akciaInfo->dajPopis();
-			text.setCharacterSize(15);
-			text.setString(info);
-			text.setPosition(sf::Vector2f(kuzlaStartX + 5, kuzlaStartY+205));
-			okno->draw(text);
+		for (unsigned int i = 0; i < (unsigned int) hracoveAkcie.size(); i++)
+		{
+			if (tlacidlaAkcie.at(i)->Getzakliknute()) {
+				
+				sf::Sprite* obrazok = hracoveAkcie.at(i)->Getobrazok();
+				obrazok->setScale(sf::Vector2f(1.0f, 1.0f));
+				obrazok->setPosition(sf::Vector2f(pozadieInfo.getPosition().x + pozadieInfo.getSize().x - obrazok->getTextureRect().width -5 , pozadieInfo.getPosition().y + 5));
+				okno->draw(*obrazok);
+
+				text.setColor(sf::Color::Black);
+				std::string info = hracoveAkcie.at(i)->Getmeno();
+				info += "\n" + hracoveAkcie.at(i)->dajPopis();
+
+				if (hracoveAkcie.at(i)->Getcenamany() != 0) {
+					info += "\nPotrebne mnozstvo many: " + std::to_string(hracoveAkcie.at(i)->Getcenamany());
+				}
+
+				text.setCharacterSize(13);
+				text.setString(info);
+				text.setPosition(sf::Vector2f(kuzlaStartX + 5, kuzlaStartY + 205));
+				okno->draw(text);
+			}
 		}
 
+		Stav::render();
 	//std::cout << hrac->Getstatistika()->Getakcie()->at("Utok")->dajPopis() << std::endl;
 	//std::cout << oznacene << std::endl;
 }
@@ -360,89 +379,79 @@ void StavInfoHraca::update(double delta) {
 
 	if (hra->maFocus()) {
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
-		{
-			sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
-			for (unsigned int i = 0; i < tlacidlaAkcie.size(); i++)
-			{
-				tlacidlaAkcie[i]->skontrolujKlik(pozicia);
-			}
-		}
+		Stav::update(delta);
+		if (stav == StavAkcia::NORMAL) {
 
-		if (stlacenaMys == false) {
-			for (unsigned int i = 0; i < tlacidlaAkcie.size(); i++)
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
 			{
-				if (tlacidlaAkcie[i]->Getzakliknute()) {
-					stlacenaMys = true;
-					if(i < hracoveAkcie.size()){
-						akciaInfo = hracoveAkcie.at(i);
+				sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+				for (unsigned int i = 0; i < hracoveAkcie.size(); i++)
+				{
+					tlacidlaAkcie[i]->skontrolujKlik(pozicia);
+					//zrusenie zakliknutia ostatnych
+					if (tlacidlaAkcie[i]->Getzakliknute()) {
+						for (unsigned int j = 0; j < (unsigned int)hracoveAkcie.size(); j++)
+						{
+							if (i != j) {
+								tlacidlaAkcie.at(j)->Setzakliknute(false);
+							}
+						}
 					}
-					else {
-						akciaInfo = nullptr;
-					}
-				
 
 				}
+				stlacenaMys = true;
 			}
-		}
+
+			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == true) {
+				stlacenaMys = false;
+			}
 
 
-		if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == true) {
-			stlacenaMys = false;
-			for (unsigned int i = 0; i < tlacidlaAkcie.size(); i++)
-			{
-				if (tlacidlaAkcie[i]->Getzakliknute()) {
-					tlacidlaAkcie[i]->Setzakliknute(false);
+
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+				stlacenaKlavesa = true;
+				if (oznacene < 10) {
+					oznacene++;
+				}
+				else {
+					oznacene = 1;
+				}
+
+			}
+
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+				stlacenaKlavesa = true;
+				if (oznacene > 1) {
+					oznacene--;
+				}
+				else {
+					oznacene = 10;
 				}
 			}
 
-		}
-
-
-
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			stlacenaKlavesa = true;
-			if (oznacene < 10) {
-				oznacene++;
-			}
-			else {
-				oznacene = 1;
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+				stlacenaKlavesa = true;
+				if (oblecene->count(oznacene)) {
+					oblecene->at(oznacene)->pouzi(hrac);
+				}
 			}
 
-		}
-
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-			stlacenaKlavesa = true;
-			if (oznacene > 1) {
-				oznacene--;
+			if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::C))) {
+				hra->zmenStavRozhrania("hranieHry");
 			}
-			else {
-				oznacene = 10;
-			}
-		}
 
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-			stlacenaKlavesa = true;
-			if (oblecene->count(oznacene)) {
-				oblecene->at(oznacene)->pouzi(hrac);
+			if (stlacenaKlavesa
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::C)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+				stlacenaKlavesa = false;
 			}
 		}
-
-
-
-		if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::C))) {
-			hra->zmenStavRozhrania("hranieHry");
-		}
-
-		if (stlacenaKlavesa
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::C)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			stlacenaKlavesa = false;
-		}
+		
 	}
 }
 

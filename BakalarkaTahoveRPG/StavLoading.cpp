@@ -25,7 +25,7 @@ void StavLoading::onExit() {
 
 
 void StavLoading::render() {
-
+	Stav::render();
 		//okno->draw(text);
 
 

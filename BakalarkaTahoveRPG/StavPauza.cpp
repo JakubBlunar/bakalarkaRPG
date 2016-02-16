@@ -48,40 +48,46 @@ void StavPauza::render() {
 
 		okno->draw(text);
 	}
+
+	Stav::render();
 }
 
 
 void StavPauza::update(double delta) {
 	if (hra->maFocus()) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !stlacenaKlavesa) {
-			stlacenaKlavesa = true;
-			if (oznacene > 0) {
-				oznacene--;
+
+		Stav::update(delta);
+
+		if (stav == StavAkcia::NORMAL) {
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				if (oznacene > 0) {
+					oznacene--;
+				}
 			}
-		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !stlacenaKlavesa) {
-			stlacenaKlavesa = true;
-			if (oznacene < (signed int)moznosti.size() - 1) {
-				oznacene++;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				if (oznacene < (signed int)moznosti.size() - 1) {
+					oznacene++;
+				}
 			}
-		}
+
+			if (oznacene == 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				hra->zmenStavRozhrania("hranieHry");
+			}
+
+			if (oznacene == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				okno->close();
+			}
 
 
-
-		if (oznacene == 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
-			stlacenaKlavesa = true;
-			hra->zmenStavRozhrania("hranieHry");
-		}
-
-		if (oznacene == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
-			stlacenaKlavesa = true;
-			okno->close();
-		}
-
-
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			stlacenaKlavesa = false;
+			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+				stlacenaKlavesa = false;
+			}
 		}
 	}
 }

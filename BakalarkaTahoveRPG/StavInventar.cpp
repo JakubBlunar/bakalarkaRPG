@@ -17,21 +17,14 @@
 StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
 	font = Loader::Instance()->nacitajFont("font2.otf");
 	
-	
-	sf::Texture texture;
-	texture.create(200, 200);
-	
-	ukazovatel = new sf::Sprite();
-	ukazovatel->setTexture(texture);
-	ukazovatel->setTextureRect(sf::IntRect(0, 0, 48, 48));
-	ukazovatel->setColor(sf::Color(255, 0, 0, 128));
+	ukazovatel.setSize(sf::Vector2f(48, 48));
+	ukazovatel.setFillColor(sf::Color(255, 0, 0, 128));
 	oznacene = -10;
 	nasirku =18;
 }
 
 
 StavInventar::~StavInventar() {
-	delete(ukazovatel);
 }
 
 
@@ -95,8 +88,8 @@ void StavInventar::render() {
 
 
 		if (i == oznacene) {
-			ukazovatel->setPosition(sf::Vector2f((float)startX + (i%nasirku) * 55, (float)startY + (i / nasirku) * 55));
-			okno->draw(*ukazovatel);
+			ukazovatel.setPosition(sf::Vector2f((float)startX + (i%nasirku) * 55, (float)startY + (i / nasirku) * 55));
+			okno->draw(ukazovatel);
 			
 		}
 	}
@@ -105,69 +98,75 @@ void StavInventar::render() {
 		vykresliOknoPredmetu(inventar->dajPredmetNaIndexe(oznacene), startX + (oznacene%nasirku) * 55 + 48, startY + (oznacene / nasirku) * 55 + 48, okno);
 	}
 
+	Stav::render();
 	//std::cout << oznacene << std::endl;
 }
 
 
 void StavInventar::update(double delta) {
 	if (hra->maFocus()) {
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			stlacenaKlavesa = true;
+		Stav::update(delta);
 
-			if (oznacene + nasirku < inventar->pocetPredmetov()) {
-				oznacene += nasirku;
+		if (stav == StavAkcia::NORMAL) {
+
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+				stlacenaKlavesa = true;
+
+				if (oznacene + nasirku < inventar->pocetPredmetov()) {
+					oznacene += nasirku;
+				}
+				else {
+					oznacene = inventar->pocetPredmetov() - 1;
+				}
 			}
-			else {
-				oznacene = inventar->pocetPredmetov() - 1;
+
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+				stlacenaKlavesa = true;
+				if (oznacene >= nasirku) {
+					oznacene -= nasirku;
+				}
+				else {
+					oznacene = 0;
+				}
 			}
-		}
 
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-			stlacenaKlavesa = true;
-			if (oznacene >= nasirku) {
-				oznacene -= nasirku;
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+				stlacenaKlavesa = true;
+				if (oznacene > 0) {
+					oznacene--;
+				}
 			}
-			else {
-				oznacene = 0;
+
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+				stlacenaKlavesa = true;
+				if (oznacene < inventar->pocetPredmetov() - 1) {
+					oznacene++;
+				}
 			}
-		}
 
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			stlacenaKlavesa = true;
-			if (oznacene > 0) {
-				oznacene--;
+
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+				stlacenaKlavesa = true;
+				if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
+					Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
+					p->pouzi(hrac);
+				}
 			}
-		}
 
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			stlacenaKlavesa = true;
-			if (oznacene < inventar->pocetPredmetov() - 1) {
-				oznacene++;
+			if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::I))) {
+				hra->zmenStavRozhrania("hranieHry");
 			}
-		}
 
-
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-			stlacenaKlavesa = true;
-			if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
-				Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
-				p->pouzi(hrac);
+			if (stlacenaKlavesa && !sf::Keyboard::isKeyPressed(sf::Keyboard::I)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+				) {
+				stlacenaKlavesa = false;
 			}
-		}
-
-		if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::I))) {
-			hra->zmenStavRozhrania("hranieHry");
-		}
-
-		if (stlacenaKlavesa && !sf::Keyboard::isKeyPressed(sf::Keyboard::I)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
-			) {
-			stlacenaKlavesa = false;
 		}
 	}
 }

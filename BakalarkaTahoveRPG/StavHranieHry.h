@@ -24,6 +24,5 @@ private:
 	Hrac* hrac;
 	int posHracaX;
 	int posHracaY;
-	bool stlacenaKlavesa;
 };
 

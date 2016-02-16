@@ -22,12 +22,9 @@ public:
 private:
 
 	void vykresliOknoPredmetu(Predmet* predmet, int x, int y, sf::RenderWindow* okno);
-	sf::Font* font;
-	bool stlacenaKlavesa;
-	
 
 	int oznacene;
-	sf::Sprite* ukazovatel;
+	sf::RectangleShape ukazovatel;
 	int nasirku;
 
 	Inventar* inventar;

@@ -21,10 +21,7 @@ public:
 	void update(double delta);
 
 private:
-	sf::Font* font;
 	std::vector<Tlacidlo*> tlacidla;
 	signed int oznacene;
-	bool stlacenaKlavesa;
-	bool stlacenaMys;
 };
 

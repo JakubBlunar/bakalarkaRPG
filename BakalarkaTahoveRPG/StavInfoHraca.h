@@ -22,19 +22,13 @@ public:
 
 private:
 	void vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::RenderWindow* okno);
-	
-	sf::Font* font;
-	bool stlacenaKlavesa;
-	bool stlacenaMys;
 
 	int oznacene;
-	sf::Sprite* ukazovatel;
+	sf::RectangleShape ukazovatel;
 
 	Hrac* hrac;
 	std::map<int, Predmet*>* oblecene;
 	std::vector<Akcia*> hracoveAkcie;
 
 	std::vector<Tlacidlo*> tlacidlaAkcie;
-
-	Akcia* akciaInfo;
 };

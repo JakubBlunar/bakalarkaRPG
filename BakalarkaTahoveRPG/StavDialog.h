@@ -23,10 +23,7 @@ public:
 	void Setdialog(Npc* paNpc);
 
 private:
-
 	Npc* npc;
 	DialogovyStrom* dialog;
 	int oznacene;
-	sf::Font* font;
-	bool stlacenaKlavesa;
 };

@@ -14,8 +14,6 @@ public:
 	void update(double delta);
 
 private:
-	sf::Font* font;
 	std::vector<std::string> moznosti;
 	signed int oznacene;
-	bool stlacenaKlavesa;
 };

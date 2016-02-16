@@ -2,9 +2,9 @@
 
 #include <iostream>
 
-Akcia::Akcia(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis) {
+Akcia::Akcia(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis,int mana) {
 	const std::string akcie_cesta = "./Data/Grafika/Akcie/";
-
+	this->cenaMany = mana;
 	this->meno = meno;
 	this->casCastenia = casCastenia;
 	this->cooldown = cooldown;
@@ -14,7 +14,7 @@ Akcia::Akcia(std::string meno, std::string obrazok, int casCastenia, int cooldow
 	this->obrazok = new sf::Sprite();
 	this->textura = new sf::Texture();
 	if (!textura->loadFromFile(akcie_cesta + "" + obrazok + ".png", sf::IntRect(0, 0, 32, 32))) {
-
+		
 	}
 	this->textura->setSmooth(true);
 	this->obrazok->setTexture(*textura);
@@ -61,6 +61,9 @@ int Akcia::Gettrvanie() {
 	return trvanie;
 }
 
+int Akcia::Getcenamany() {
+	return cenaMany;
+}
 
 bool Akcia::vykonajSa(Statistika* statNeprietel, Statistika* statHrac) {
 	std::cout << "Vykonanie akcie: " << meno << std::endl;

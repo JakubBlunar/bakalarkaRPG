@@ -73,43 +73,49 @@ void StavDialog::render() {
 void StavDialog::update(double delta) {
 
 	if (hra->maFocus()) {
-		if (dialog == nullptr) {
-			hra->zmenStavRozhrania("hranieHry");
-		}
 
-		if (dialog->Getstav() == DialogStav::BEZI) {
+		Stav::update(delta);
 
-			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-				stlacenaKlavesa = true;
-				if (oznacene < dialog->Getaktualnapolozka()->pocetMoznosti() - 1) {
-					oznacene++;
+		if (stav == StavAkcia::NORMAL) {
+
+			if (dialog == nullptr) {
+				hra->zmenStavRozhrania("hranieHry");
+			}
+
+			if (dialog->Getstav() == DialogStav::BEZI) {
+
+				if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+					stlacenaKlavesa = true;
+					if (oznacene < dialog->Getaktualnapolozka()->pocetMoznosti() - 1) {
+						oznacene++;
+					}
+				}
+
+				if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+					stlacenaKlavesa = true;
+					if (oznacene > 0) oznacene--;
+				}
+
+				if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+					stlacenaKlavesa = true;
+					dialog->zmenPolozku(oznacene);
+					oznacene = 0;
 				}
 			}
-
-			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			else {
 				stlacenaKlavesa = true;
-				if (oznacene > 0) oznacene--;
+				hra->zmenStavRozhrania("hranieHry");
 			}
 
-			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-				stlacenaKlavesa = true;
-				dialog->zmenPolozku(oznacene);
-				oznacene = 0;
+			if (stlacenaKlavesa
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+				) {
+				stlacenaKlavesa = false;
 			}
-		}
-		else {
-			stlacenaKlavesa = true;
-			hra->zmenStavRozhrania("hranieHry");
-		}
-
-		if (stlacenaKlavesa
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
-			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
-			) {
-			stlacenaKlavesa = false;
 		}
 	}
 }

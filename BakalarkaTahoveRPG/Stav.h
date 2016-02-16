@@ -6,6 +6,12 @@
 
 class Hra;
 
+enum StavAkcia {
+	NORMAL,
+	ZOBRAZUJE_POPUP
+};
+
+
 class Stav
 {
 
@@ -18,8 +24,17 @@ public:
 	virtual void onExit();
 	std::string Getnazov();
 	void Setnazov(std::string paNazov);
+	void zobrazPopup(std::string paCo);
 protected:
+	StavAkcia stav;
+	sf::Font* font;
+
 	std::string nazov;
 	sf::RenderWindow* okno;
 	Hra* hra;
+
+	std::string popupText;
+
+	bool stlacenaKlavesa;
+	bool stlacenaMys;
 };

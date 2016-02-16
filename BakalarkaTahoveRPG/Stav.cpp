@@ -5,7 +5,10 @@ Stav::Stav(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) {
 	nazov = paNazov;
 	okno = paOkno;
 	hra = paHra;
-	
+	stav = StavAkcia::NORMAL;
+
+	stlacenaMys = true;
+	stlacenaKlavesa = true;
 }
 
 
@@ -16,23 +19,49 @@ Stav::~Stav() {
 
 
 void Stav::update(double delta) {
-	std::cout << "Stav " << nazov << " update" << delta <<  std::endl;
+
+	if (stav == StavAkcia::ZOBRAZUJE_POPUP) {
+		if (stlacenaKlavesa && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) stlacenaKlavesa = false;
+		
+		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+			stlacenaKlavesa = true;
+			stav = StavAkcia::NORMAL;
+		}
+	}
+
 }
 
 
 void Stav::render() {
-	
-	std::cout << "Stav " << nazov << " render" << std::endl;
+
+	if (stav == StavAkcia::ZOBRAZUJE_POPUP) {
+
+		sf::RectangleShape pozadie;
+		sf::Text text(popupText, *font, 17U);
+		
+
+		pozadie.setSize(sf::Vector2f(okno->getSize().x-100.f, text.getGlobalBounds().height + 20.f));
+		pozadie.setOutlineColor(sf::Color::Red);
+		pozadie.setOutlineThickness(2);
+		pozadie.setPosition(sf::Vector2f(48, okno->getSize().y - pozadie.getSize().y- 50));
+		okno->draw(pozadie);
+
+		text.setColor(sf::Color::Black);
+		text.setPosition(sf::Vector2f(pozadie.getGlobalBounds().left + 5, pozadie.getGlobalBounds().top + 5));
+		okno->draw(text);
+
+		//std::cout << "tu je ten popup" << std::endl;
+	}
 }
 
 
 void Stav::onEnter() {
-	std::cout << "Stav " << nazov << " on enter." << std::endl;
+	
 }
 
 
 void Stav::onExit() {
-	std::cout << "Stav " << nazov << " in exit." << std::endl;
+	
 }
 
 std::string Stav::Getnazov() {
@@ -41,4 +70,9 @@ std::string Stav::Getnazov() {
 
 void Stav::Setnazov(std::string paNazov) {
 	nazov = paNazov;
+}
+
+void Stav::zobrazPopup(std::string paCo) {
+	popupText = paCo;
+	stav = StavAkcia::ZOBRAZUJE_POPUP;
 }

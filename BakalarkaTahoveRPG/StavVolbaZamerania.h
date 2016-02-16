@@ -18,7 +18,5 @@ public:
 	void render();
 	void update(double delta);
 private:
-	sf::Font* font;
 	signed int oznacene;
-	bool stlacenaKlavesa;
 };
