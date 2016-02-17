@@ -163,6 +163,7 @@
     <ClInclude Include="Policko.h" />
     <ClInclude Include="PolickoBoj.h" />
     <ClInclude Include="PolickoDvere.h" />
+    <ClInclude Include="PopupOkno.h" />
     <ClInclude Include="Pouzitelny.h" />
     <ClInclude Include="Predmet.h" />
     <ClInclude Include="Statistika.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="Policko.cpp" />
     <ClCompile Include="PolickoBoj.cpp" />
     <ClCompile Include="PolickoDvere.cpp" />
+    <ClCompile Include="PopupOkno.cpp" />
     <ClCompile Include="Pouzitelny.cpp" />
     <ClCompile Include="Predmet.cpp" />
     <ClCompile Include="Statistika.cpp" />

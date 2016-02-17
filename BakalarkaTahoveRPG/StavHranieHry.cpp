@@ -3,7 +3,7 @@
 #include "Hrac.h"
 #include "Mapa.h"
 #include "Loader.h"
-
+#include "PopupOkno.h"
 
 #define RAMCEK 96
 
@@ -11,8 +11,11 @@ StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 {
 	this->mapa = mapa;
 	font = Loader::Instance()->nacitajFont("font2.otf");
-
-	Stav::zobrazPopup("Vitaj v mojej hre... \n\n asdadasd");
+	/*
+	PopupOkno* popup = new PopupOkno("Vitaj v mojej hre asdasdasd... \n\n asdadasd\n\n\n\n\n\n\n dalsi");
+	popup->pridajStranku("Toto je dalsia stranka");
+	popup->pridajStranku("Tretia");
+	Stav::zobrazPopup(popup);*/
 }
 
 
@@ -45,24 +48,20 @@ void StavHranieHry::Setmapa(Mapa* newVal) {
 	mapa = newVal;
 }
 
-
-
 void StavHranieHry::update(double delta) {
-	
+
 	if (hra->maFocus()) {
 		Stav::update(delta);
 
 		if (stav == StavAkcia::NORMAL) {
-
+			std::cout << hrac->GetpolickoX() << " ---- " << hrac->GetpolickoY() << " ---- " << std::endl;
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 
 				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
 					hrac->zmenSmerPohladu(SmerPohladu::vlavo);
 					if (mapa->jeMoznyPohyb(hrac->GetpolickoX() - 1, hrac->GetpolickoY())) {
-						if (hrac->GetoffsetX() > RAMCEK) {
-							hrac->chodVlavo();
-						}
-						else {
+						hrac->chodVlavo();
+						if (hrac->GetoffsetX() - mapa->Getzobrazenaoblast().left - RAMCEK < 0) {
 							mapa->posunVlavo();
 						}
 					}
@@ -76,11 +75,9 @@ void StavHranieHry::update(double delta) {
 				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
 					hrac->zmenSmerPohladu(SmerPohladu::vpravo);
 					if (mapa->jeMoznyPohyb(hrac->GetpolickoX() + 1, hrac->GetpolickoY())) {
-						if ((signed int)hrac->GetoffsetX() < (signed int)okno->getSize().x - RAMCEK) {
-							hrac->chodVpravo();
-						}
-						else {
-							mapa->posunVpravo();
+						hrac->chodVpravo();
+						if (hrac->GetoffsetX() - mapa->Getzobrazenaoblast().left >= okno->getSize().x-RAMCEK) { 
+							mapa->posunVpravo(); 
 						}
 					}
 				}
@@ -91,12 +88,8 @@ void StavHranieHry::update(double delta) {
 				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
 					hrac->zmenSmerPohladu(SmerPohladu::hore);
 					if (mapa->jeMoznyPohyb(hrac->GetpolickoX(), hrac->GetpolickoY() - 1)) {
-						if (hrac->GetoffsetY() > RAMCEK) {
-							hrac->chodHore();
-						}
-						else {
-							mapa->posunHore();
-						}
+						hrac->chodHore();
+						if (hrac->GetoffsetY() - mapa->Getzobrazenaoblast().top - RAMCEK < 0) mapa->posunHore();
 					}
 				}
 			}
@@ -105,12 +98,8 @@ void StavHranieHry::update(double delta) {
 				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
 					hrac->zmenSmerPohladu(SmerPohladu::dole);
 					if (mapa->jeMoznyPohyb(hrac->GetpolickoX(), hrac->GetpolickoY() + 1)) {
-						if ((signed int)hrac->GetoffsetY() < (signed int)okno->getSize().y - RAMCEK) {
-							hrac->chodDole();
-						}
-						else {
-							mapa->posunDole();
-						}
+						hrac->chodDole();
+						if (hrac->GetoffsetY() - mapa->Getzobrazenaoblast().top >= okno->getSize().y-RAMCEK) { mapa->posunDole(); };
 					}
 				}
 			}
@@ -147,15 +136,9 @@ void StavHranieHry::update(double delta) {
 		}
 	}
 
-		/*
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-			stlacenaKlavesa = false;
-		}
-		*/
+	mapa->update(delta);
+	hra->GetHrac()->update(delta);
 
-		mapa->update(delta);
-		hra->GetHrac()->update(delta);
-	
 }
 
 Mapa* StavHranieHry::getMapa() {

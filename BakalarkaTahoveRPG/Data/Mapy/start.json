@@ -37,10 +37,10 @@
   "1": {
     "x": 0,
     "y": 0,
-    "kam": "start",
-    "poziciaX": 0,
-    "poziciaY": 2,
-    "smerPohladu": 0
+    "kam": "les",
+    "poziciaX": 33,
+    "poziciaY": 50,
+    "smerPohladu": 3
   },
   "2": {
       "x": 3,

@@ -5,6 +5,7 @@
 #include <iostream>
 
 class Hra;
+class PopupOkno;
 
 enum StavAkcia {
 	NORMAL,
@@ -24,7 +25,7 @@ public:
 	virtual void onExit();
 	std::string Getnazov();
 	void Setnazov(std::string paNazov);
-	void zobrazPopup(std::string paCo);
+	void zobrazPopup(PopupOkno* paCo);
 protected:
 	StavAkcia stav;
 	sf::Font* font;
@@ -33,7 +34,7 @@ protected:
 	sf::RenderWindow* okno;
 	Hra* hra;
 
-	std::string popupText;
+	PopupOkno* popupText;
 
 	bool stlacenaKlavesa;
 	bool stlacenaMys;

@@ -159,6 +159,9 @@
     <ClInclude Include="Akcia.h">
       <Filter>Header Files\Akcie</Filter>
     </ClInclude>
+    <ClInclude Include="PopupOkno.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -262,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="Akcia.cpp">
       <Filter>Source Files\Akcie</Filter>
+    </ClCompile>
+    <ClCompile Include="PopupOkno.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

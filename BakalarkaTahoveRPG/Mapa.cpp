@@ -59,72 +59,114 @@ void Mapa::posun(int posunX, int posunY) {
 }
 
 void Mapa::render(sf::RenderWindow* okno) {
+	view.reset(sf::FloatRect(posunX, posunY, okno->getSize().x, okno->getSize().y));
+	okno->setView(view);
+	
 	sf::Sprite* sprite;
-	
-	//od akeho policka po ake policko sa ma vykreslovat mapa
-	int odX = (int)(hrac->GetpolickoX() - 34 * (1.0*hrac->GetoffsetX() / okno->getSize().x)-2);
-	if (odX <0) {
-		odX = 0;
-	}
-
-	int doX = (int)(hrac->GetpolickoX() + 34 *(1-(1.0*hrac->GetoffsetX()/okno->getSize().x ))+2);
-	if (doX >= sirka) {
-		doX = sirka - 1;
-	}
-
-	int odY = (int)(hrac->GetpolickoY() - 24 * (1.0*hrac->GetoffsetY() / okno->getSize().y) - 1);
-	if (odY <0) {
-		odY = 0;
-	}
-	
-	int doY = (int)(hrac->GetpolickoY() + 24 * (1 - (1.0*hrac->GetoffsetY() / okno->getSize().y)) + 1);
-	if (doY >= vyska) {
-		doY = vyska - 1;
-	}
-	
 	for (int vrstva = 0; vrstva < 4; vrstva++) {
 
-		for (int i = odX; i <= doX; i++)
+		for (int i = 0; i < sirka; i++)
 		{
-			for (int j = odY; j <= doY; j++)
+			for (int j = 0; j < vyska; j++)
 			{
-				
+
 				sprite = mapa[i][j]->dajObrazokVrstvy(vrstva);
-				sprite->setPosition(sf::Vector2f(32.f * i + posunX, 32.f * j + posunY));
+				sprite->setPosition(sf::Vector2f(32.f * i, 32.f * j));
 				okno->draw(*sprite);
 
 				if (vrstva == 2 && hrac->GetpolickoY() < j) {
 					if (mapa[i][j]->Getnpc() != nullptr) {
 						sf::Sprite* npcObrazok = mapa[i][j]->Getnpc()->dajObrazok();
-						npcObrazok->setPosition(sf::Vector2f(32.f * i + posunX, 32 - 48.f + 32.f* j + posunY));
+						npcObrazok->setPosition(sf::Vector2f(32.f * i, 32 - 48.f + 32.f* j));
 						okno->draw(*npcObrazok);
 					}
 				}
 
 				if (vrstva == 1) {
-					hrac->render(okno);		
+					hrac->render(okno);
 				}
 
 				if (vrstva == 1 && hrac->GetpolickoY() >= j) {
 					if (mapa[i][j]->Getnpc() != nullptr) {
 						sf::Sprite* npcObrazok = mapa[i][j]->Getnpc()->dajObrazok();
-						npcObrazok->setPosition(sf::Vector2f(32.f * i + posunX, 32 - 48.f + 32.f* j + posunY));
+						npcObrazok->setPosition(sf::Vector2f(32.f * i, 32 - 48.f + 32.f* j));
 						okno->draw(*npcObrazok);
 					}
 				}
-				
-				
+
+
 			}
 		}
 	}
-	
+	okno->setView(okno->getDefaultView());
 }
+
+
+sf::FloatRect Mapa::Getzobrazenaoblast() {
+	return sf::FloatRect(posunX,posunY,view.getSize().x,view.getSize().y);
+}
+
+void Mapa::update(double delta) {
+
+	switch (smerPohybu)
+	{
+	case 0:
+		break;
+	case 1:
+		if (pohybDelta < 32) {
+			pohybDelta++;
+			posun(1, 0);
+		}
+		else {
+			smerPohybu = 0;
+			pohybDelta = 0;
+		}
+		break;
+	case 2:
+		if (pohybDelta < 32) {
+			pohybDelta++;
+			posun(-1, 0);
+		}
+		else {
+			smerPohybu = 0;
+			pohybDelta = 0;
+		}
+		break;
+	case 3:
+		if (pohybDelta < 32) {
+			hrac->animaciaTick();
+			pohybDelta++;
+			posun(0, -1);
+		}
+		else {
+			smerPohybu = 0;
+			pohybDelta = 0;
+		}
+		break;
+	case 4:
+		if (pohybDelta < 32) {
+			pohybDelta++;
+			posun(0, 1);
+		}
+		else {
+			smerPohybu = 0;
+			pohybDelta = 0;
+		}
+		break;
+
+	default:
+		break;
+	}
+}
+
 
 void Mapa::hracSkocilNaPolicko(int x, int y) {
 	mapa[x][y]->hracSkok(hrac);
 }
 
 void Mapa::posunHracaNaPolicko(int x, int y,int smerPohladu) {
+	
+	
 	int offsetHracaX = x*32;
 	int offsetHracaY = y*32;
 	int posunMapyX = 0;
@@ -133,18 +175,16 @@ void Mapa::posunHracaNaPolicko(int x, int y,int smerPohladu) {
 	hrac->setPolickoX(x);
 	hrac->setPolickoY(y);
 	if (offsetHracaX > 350) {
-		posunMapyX = offsetHracaX - 350;
-		offsetHracaX = 350;
+		posunMapyX = offsetHracaX-6*32;
 	}
 
 	if (offsetHracaY > 350) {
-		posunMapyY = offsetHracaY - 350;
-		offsetHracaY = 350;
+		posunMapyY = offsetHracaY - 5*32;
 	}
 	hrac->setOffsetX(offsetHracaX);
 	hrac->setOffsetY(offsetHracaY);
-	posunX = -posunMapyX;
-	posunY = -posunMapyY;
+	posunX = posunMapyX;
+	posunY = posunMapyY;
 
 	switch (smerPohladu)
 	{
@@ -165,70 +205,6 @@ void Mapa::posunHracaNaPolicko(int x, int y,int smerPohladu) {
 		break;
 	}
 
-}
-
-void Mapa::update(double delta) {
-
-	switch (smerPohybu)
-	{
-	case 0:
-		break;
-	case 1:
-		if (pohybDelta < 32) {
-			hrac->animaciaTick();
-			pohybDelta++;
-			posun(-1, 0);
-		}
-		else {
-			hrac->setPolickoX(hrac->GetpolickoX() +1);
-			mapa[hrac->GetpolickoX()][hrac->GetpolickoY()]->hracSkok(hrac);
-			smerPohybu = 0;
-			pohybDelta = 0;
-		}
-		break;
-	case 2:
-		if (pohybDelta < 32) {
-			hrac->animaciaTick();
-			pohybDelta++;
-			posun(+1, 0);
-		}
-		else {
-			hrac->setPolickoX(hrac->GetpolickoX() - 1);
-			mapa[hrac->GetpolickoX()][hrac->GetpolickoY()]->hracSkok(hrac);
-			smerPohybu = 0;
-			pohybDelta = 0;
-		}
-		break;
-	case 3:
-		if (pohybDelta < 32) {
-			hrac->animaciaTick();
-			pohybDelta ++;
-			posun(0, 1);
-		}
-		else {
-			hrac->setPolickoY(hrac->GetpolickoY() - 1);
-			mapa[hrac->GetpolickoX()][hrac->GetpolickoY()]->hracSkok(hrac);
-			smerPohybu = 0;
-			pohybDelta = 0;
-		}
-		break;
-	case 4:
-		if (pohybDelta < 32) {
-			hrac->animaciaTick();
-			pohybDelta++;
-			posun(0, -1);
-		}
-		else {
-			hrac->setPolickoY(hrac->GetpolickoY() +1);
-			mapa[hrac->GetpolickoX()][hrac->GetpolickoY()]->hracSkok(hrac);
-			smerPohybu = 0;
-			pohybDelta = 0;
-		}
-		break;
-
-	default:
-		break;
-	}
 }
 
 void Mapa::posunVpravo() {

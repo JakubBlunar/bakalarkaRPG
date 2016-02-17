@@ -36,14 +36,13 @@ public:
 
 	Policko* GetPolicko(int x, int y);
 	void nastavPolicko(int x, int y, Policko*);
-	//void nacitajMapu(std::string paMeno);
+
+	sf::FloatRect Getzobrazenaoblast();
 	
 private:
 	Hra* hra;
 	Hrac* hrac;
-	// Create 2D array of pointers:
 	Policko*** mapa;
-	//Policko* mapa[100][100];
 	std::map<int, sf::Texture*> textury;
 
 	int sirka;
@@ -54,5 +53,5 @@ private:
 	int pohybDelta;
 	int smerPohybu;
 
-
+	sf::View view;
 };

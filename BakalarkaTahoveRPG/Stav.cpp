@@ -1,6 +1,8 @@
 
 #include "Stav.h"
 #include "Hra.h"
+#include "PopupOkno.h"
+
 Stav::Stav(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) {
 	nazov = paNazov;
 	okno = paOkno;
@@ -21,11 +23,19 @@ Stav::~Stav() {
 void Stav::update(double delta) {
 
 	if (stav == StavAkcia::ZOBRAZUJE_POPUP) {
-		if (stlacenaKlavesa && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) stlacenaKlavesa = false;
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) stlacenaKlavesa = false;
 		
 		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-			stlacenaKlavesa = true;
-			stav = StavAkcia::NORMAL;
+			
+			if (popupText->skoncil()) {
+				delete popupText;
+				popupText = nullptr;
+				stav = StavAkcia::NORMAL;
+			}
+			else {
+				stlacenaKlavesa = true;
+				popupText->dajDalsi();
+			}
 		}
 	}
 
@@ -37,20 +47,31 @@ void Stav::render() {
 	if (stav == StavAkcia::ZOBRAZUJE_POPUP) {
 
 		sf::RectangleShape pozadie;
-		sf::Text text(popupText, *font, 17U);
+		sf::Text text("", *font, 17);
+		if (!popupText->skoncil()) {
+			text.setString(popupText->aktualnaStrana() + "\n>>>");
+		}
+		else {
+			text.setString(popupText->aktualnaStrana());
+		}
 		
 
-		pozadie.setSize(sf::Vector2f(okno->getSize().x-100.f, text.getGlobalBounds().height + 20.f));
+		pozadie.setSize(sf::Vector2f(okno->getSize().x-50.f, text.getGlobalBounds().height + 10.f));
 		pozadie.setOutlineColor(sf::Color::Red);
 		pozadie.setOutlineThickness(2);
-		pozadie.setPosition(sf::Vector2f(48, okno->getSize().y - pozadie.getSize().y- 50));
-		okno->draw(pozadie);
+		pozadie.setPosition(sf::Vector2f(23, okno->getSize().y - pozadie.getSize().y - 50));
+		
+		//ak sa text nezmesti na širku tak sa zmenší ve¾kos
+		if (text.getGlobalBounds().width > pozadie.getGlobalBounds().width-20) {
+			text.setScale(sf::Vector2f((pozadie.getGlobalBounds().width-20) / text.getGlobalBounds().width, (pozadie.getGlobalBounds().width-20) / text.getGlobalBounds().width));
+			pozadie.setSize(sf::Vector2f(okno->getSize().x - 50.f, text.getGlobalBounds().height+10.f));
+			pozadie.setPosition(sf::Vector2f(23, okno->getSize().y - pozadie.getSize().y - 25));
+		}
 
+		okno->draw(pozadie);
 		text.setColor(sf::Color::Black);
 		text.setPosition(sf::Vector2f(pozadie.getGlobalBounds().left + 5, pozadie.getGlobalBounds().top + 5));
 		okno->draw(text);
-
-		//std::cout << "tu je ten popup" << std::endl;
 	}
 }
 
@@ -72,7 +93,7 @@ void Stav::Setnazov(std::string paNazov) {
 	nazov = paNazov;
 }
 
-void Stav::zobrazPopup(std::string paCo) {
+void Stav::zobrazPopup(PopupOkno* paCo) {
 	popupText = paCo;
 	stav = StavAkcia::ZOBRAZUJE_POPUP;
 }

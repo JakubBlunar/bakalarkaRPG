@@ -28,6 +28,7 @@ public:
 	bool maFocus();
 
 private:
+	void renderingThread(sf::RenderWindow* paOkno);
 	Hrac* hrac;
 	Loader* loader;
 	sf::Font* font;

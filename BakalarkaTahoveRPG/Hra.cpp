@@ -65,7 +65,7 @@ void Hra::start() {
 
 
 void Hra::hlavnaSlucka() {
-	const sf::Time ObnovovaciCas = sf::seconds(1.f / 70.f);
+	const sf::Time ObnovovaciCas = sf::seconds(1.f / 250.f);
 	sf::Clock clock;
 	sf::Time casOdPoslednehoUpdate = sf::Time::Zero;
 
@@ -127,7 +127,7 @@ void Hra::init() {
 	font = loader->nacitajFont("font.ttf");
 	focus = true;
 
-	okno = new sf::RenderWindow(sf::VideoMode(1024, 768), NAZOV);
+	okno = new sf::RenderWindow(sf::VideoMode(1024, 768), NAZOV,sf::Style::Titlebar|sf::Style::Close);
 	okno->setFramerateLimit(60);
 	okno->setVerticalSyncEnabled(true);
 }
