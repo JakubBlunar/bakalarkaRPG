@@ -59,7 +59,7 @@ void Mapa::posun(int posunX, int posunY) {
 }
 
 void Mapa::render(sf::RenderWindow* okno) {
-	view.reset(sf::FloatRect(posunX, posunY, okno->getSize().x, okno->getSize().y));
+	view.reset(sf::FloatRect(posunX+0.f, posunY + 0.f, okno->getSize().x + 0.f, okno->getSize().y + 0.f));
 	okno->setView(view);
 	
 	sf::Sprite* sprite;
@@ -103,7 +103,7 @@ void Mapa::render(sf::RenderWindow* okno) {
 
 
 sf::FloatRect Mapa::Getzobrazenaoblast() {
-	return sf::FloatRect(posunX,posunY,view.getSize().x,view.getSize().y);
+	return sf::FloatRect(posunX + 0.f,posunY + 0.f,view.getSize().x + 0.f,view.getSize().y + 0.f);
 }
 
 void Mapa::update(double delta) {

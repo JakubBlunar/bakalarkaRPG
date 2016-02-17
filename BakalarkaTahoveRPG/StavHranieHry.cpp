@@ -54,7 +54,6 @@ void StavHranieHry::update(double delta) {
 		Stav::update(delta);
 
 		if (stav == StavAkcia::NORMAL) {
-			std::cout << hrac->GetpolickoX() << " ---- " << hrac->GetpolickoY() << " ---- " << std::endl;
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 
 				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
