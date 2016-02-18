@@ -56,7 +56,7 @@ public:
 	void Setstatistika(Statistika* paStatistika);
 	Zameranie* GetZameranie();
 	Inventar* Getinventar();
-	
+	void vyhodPredmet(Predmet* predemet);
 
 	void pridajSkusenosti(int pocet);
 private:

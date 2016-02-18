@@ -5,17 +5,22 @@
 #include "PolickoDvere.h"
 #include "Hra.h"
 #include "Npc.h"
+#include "StavHranieHry.h"
 
 Mapa::Mapa(std::string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSirka) {
 	this->hrac = paHrac;
 	this->hra = hra;
-	smerPohybu = 0;
 	posunX = 0;
 	posunY = 0;
 	vyska = paVyska;
 	sirka = paSirka;
 	pohybDelta = 0;
-	smerPohybu = 0;
+	smerPohybu = PohybMapy::STOJI;
+
+	if (!batohTextura.loadFromFile("./Data/Grafika/Predmety/batoh.png", sf::IntRect(0, 0, 32, 32))) {
+		std::cout << "Chyba nahravania textury batohu" << std::endl;
+	}
+	batoh.setTexture(batohTextura);
 
 	mapa = new Policko**[sirka];
 	for (int i = 0; i < sirka; ++i) {
@@ -74,6 +79,13 @@ void Mapa::render(sf::RenderWindow* okno) {
 				sprite->setPosition(sf::Vector2f(32.f * i, 32.f * j));
 				okno->draw(*sprite);
 
+				if (vrstva == 0) {
+					if (mapa[i][j]->polozenyPredmet()) {
+						batoh.setPosition(sf::Vector2f(32.f * i, 32.f * j));
+						okno->draw(batoh);
+					}
+				}
+
 				if (vrstva == 2 && hrac->GetpolickoY() < j) {
 					if (mapa[i][j]->Getnpc() != nullptr) {
 						sf::Sprite* npcObrazok = mapa[i][j]->Getnpc()->dajObrazok();
@@ -108,48 +120,59 @@ sf::FloatRect Mapa::Getzobrazenaoblast() {
 
 void Mapa::update(double delta) {
 
+	for (int i = 0; i < sirka; i++)
+	{
+		for (int j = 0; j < vyska; j++)
+		{
+			if (mapa[i][j]->kedyZmazatPredmety() != -1 && mapa[i][j]->kedyZmazatPredmety() < casovac.getElapsedTime().asSeconds()) {
+				mapa[i][j]->zmazPolozenePredmety();
+			}
+		}
+
+	}
+
 	switch (smerPohybu)
 	{
-	case 0:
+	case PohybMapy::STOJI:
 		break;
-	case 1:
+	case PohybMapy::VPRAVO:
 		if (pohybDelta < 32) {
 			pohybDelta++;
 			posun(1, 0);
 		}
 		else {
-			smerPohybu = 0;
+			smerPohybu = PohybMapy::STOJI;
 			pohybDelta = 0;
 		}
 		break;
-	case 2:
+	case PohybMapy::VLAVO:
 		if (pohybDelta < 32) {
 			pohybDelta++;
 			posun(-1, 0);
 		}
 		else {
-			smerPohybu = 0;
+			smerPohybu = PohybMapy::STOJI;
 			pohybDelta = 0;
 		}
 		break;
-	case 3:
+	case PohybMapy::HORE:
 		if (pohybDelta < 32) {
 			hrac->animaciaTick();
 			pohybDelta++;
 			posun(0, -1);
 		}
 		else {
-			smerPohybu = 0;
+			smerPohybu = PohybMapy::STOJI;
 			pohybDelta = 0;
 		}
 		break;
-	case 4:
+	case PohybMapy::DOLE:
 		if (pohybDelta < 32) {
 			pohybDelta++;
 			posun(0, 1);
 		}
 		else {
-			smerPohybu = 0;
+			smerPohybu = PohybMapy::STOJI;
 			pohybDelta = 0;
 		}
 		break;
@@ -209,25 +232,25 @@ void Mapa::posunHracaNaPolicko(int x, int y,int smerPohladu) {
 
 void Mapa::posunVpravo() {
 	pohybDelta = 0;
-	smerPohybu = 1;
+	smerPohybu = PohybMapy::VPRAVO;
 }
 
 void Mapa::posunVlavo() {
 	pohybDelta = 0;
-	smerPohybu = 2;
+	smerPohybu = PohybMapy::VLAVO;
 }
 
 void Mapa::posunHore() {
 	pohybDelta = 0;
-	smerPohybu = 3;
+	smerPohybu = PohybMapy::HORE;
 }
 
 void Mapa::posunDole() {
 	pohybDelta = 0;
-	smerPohybu = 4;
+	smerPohybu = PohybMapy::DOLE;
 }
 
-int Mapa::Getsmerpohybu() {
+PohybMapy Mapa::Getsmerpohybu() {
 	return smerPohybu;
 }
 
@@ -269,11 +292,16 @@ Policko* Mapa::GetPolicko(int x, int y) {
 	return mapa[x][y];
 }
 
-void Mapa::hracInterakcia() {
+void Mapa::hracInterakcia(StavHranieHry* paStav, void(StavHranieHry::*callbackFunkcia)()) {
 	if (hrac->GethybeSa() || smerPohybu != 0) return;
 
 	int x = hrac->GetpolickoX();
 	int y = hrac->GetpolickoY();
+
+	if (mapa[x][y]->polozenyPredmet()) {
+		(paStav->*callbackFunkcia)();// volanie metody paStav
+		return;
+	}
 
 	if (hrac->GetSmerPohladu() == SmerPohladu::hore) {
 		y--;
@@ -301,8 +329,9 @@ void Mapa::hracInterakcia() {
 		mapa[x][y]->interakcia(hrac);
 	}
 
-	
 
+}
 
-
+sf::Time Mapa::aktCas() {
+	return casovac.getElapsedTime();
 }

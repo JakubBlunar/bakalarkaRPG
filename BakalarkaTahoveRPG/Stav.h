@@ -9,7 +9,8 @@ class PopupOkno;
 
 enum StavAkcia {
 	NORMAL,
-	ZOBRAZUJE_POPUP
+	ZOBRAZUJE_POPUP,
+	ZOBRAZUJE_LOOT
 };
 
 

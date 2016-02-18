@@ -25,8 +25,6 @@ public:
 	int pocetPredmetov();
 	void pridajPredmet(Predmet* predmet);
 	void zmazPredmet(Predmet* predmet);
-	void vyberPredmet(Predmet* predmet);
-	void zdviholPredemt(Predmet* paPredmet);
 	Predmet* dajPredmetNaIndexe(int i);
 
 private:

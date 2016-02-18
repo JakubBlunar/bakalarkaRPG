@@ -4,6 +4,8 @@
 #include "Mapa.h"
 #include "Loader.h"
 #include "PopupOkno.h"
+#include "Inventar.h"
+#include "Policko.h"
 
 #define RAMCEK 96
 
@@ -11,6 +13,7 @@ StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 {
 	this->mapa = mapa;
 	font = Loader::Instance()->nacitajFont("font2.otf");
+	loot = nullptr;
 	/*
 	PopupOkno* popup = new PopupOkno("Vitaj v mojej hre asdasdasd... \n\n asdadasd\n\n\n\n\n\n\n dalsi");
 	popup->pridajStranku("Toto je dalsia stranka");
@@ -27,6 +30,7 @@ StavHranieHry::~StavHranieHry()
 void StavHranieHry::onEnter() {
 	Stav::onEnter();
 	hrac = hra->GetHrac();
+	loot = nullptr;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
 		stlacenaKlavesa = true;
@@ -41,6 +45,62 @@ void StavHranieHry::onExit() {
 
 void StavHranieHry::render() {
 	mapa->render(okno);
+	
+	
+	if (loot == nullptr) {
+		lootIndex = 0;
+		stav = StavAkcia::NORMAL;
+	}
+
+	if (stav == StavAkcia::ZOBRAZUJE_LOOT) {
+		sf::RectangleShape rect;
+		
+		int oknoLootX, oknoLootY;
+		oknoLootX = 100;
+		oknoLootY = 100;
+
+		rect.setSize(sf::Vector2f(48+12, 48*4+24+6));
+		rect.setFillColor(sf::Color::White);
+		rect.setPosition(sf::Vector2f(oknoLootX,oknoLootY));
+		okno->draw(rect);
+
+		int pocet = loot->size();
+		if (pocet > 4) {
+			pocet = 4;
+		}
+
+
+		for (int i = 0; i < pocet; i++) {
+			int index = lootIndex + i;
+			
+			if (index >= loot->size()) {
+				index -= loot->size();
+			}
+
+			sf::Text meno("",*font,20);
+			meno.setString(loot->at(index)->Getmeno());
+			meno.setColor(sf::Color::Black);
+			rect.setSize(sf::Vector2f(meno.getLocalBounds().width + 10, 28));
+			
+			
+			sf::Sprite* sprite = loot->at(index)->Getobrazok();
+			sprite->setScale(1.5, 1.5);
+			sprite->setPosition(oknoLootX + 6, oknoLootY + 6 + i*sprite->getGlobalBounds().height+ i*6);
+			rect.setPosition(oknoLootX + 6 + 48, oknoLootY + 6 + i*sprite->getGlobalBounds().height + i * 6);
+			meno.setPosition(oknoLootX + 6+3 + 48, 3+oknoLootY + 6 + i*sprite->getGlobalBounds().height + i * 6);
+			okno->draw(*sprite);
+			okno->draw(rect);
+			okno->draw(meno);
+
+		}
+			
+		rect.setSize(sf::Vector2f(48, 48));
+		rect.setFillColor(sf::Color(255, 0, 0, 128));
+		rect.setPosition(oknoLootX + 6, oknoLootY + 6);
+		okno->draw(rect);
+	}
+
+
 	Stav::render();
 }
 
@@ -53,10 +113,79 @@ void StavHranieHry::update(double delta) {
 	if (hra->maFocus()) {
 		Stav::update(delta);
 
+		if (stav == StavAkcia::ZOBRAZUJE_LOOT) {
+			
+			if (loot == nullptr) {
+				lootIndex = 0;
+				stav = StavAkcia::NORMAL;
+			}
+
+
+			if (stlacenaKlavesa && !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+				stlacenaKlavesa = false;
+			}
+
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+				stlacenaKlavesa = true;
+				loot = nullptr;
+				lootIndex = 0;
+				stav = StavAkcia::NORMAL;
+			}
+
+			if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) || sf::Keyboard::isKeyPressed(sf::Keyboard::E))) {
+				stlacenaKlavesa = true;
+				Predmet* predmet = loot->at(lootIndex);
+				try {
+					hrac->Getinventar()->pridajPredmet(predmet);
+					loot->erase(std::remove(loot->begin(), loot->end(), predmet), loot->end());
+				}
+				catch (int ex) {
+					if (ex == 1) {
+						zobrazPopup(new PopupOkno("Inventar je plný !"));
+					}
+				}
+
+
+				if (loot->size() == 0) {
+					loot = nullptr;
+					lootIndex = 0;
+					stav = StavAkcia::NORMAL;
+				}
+			}
+
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+				stlacenaKlavesa = true;
+				
+				if (lootIndex == 0) {
+					lootIndex = loot->size()-1;
+				}
+				else {
+					lootIndex--;
+				}
+			}
+
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+				stlacenaKlavesa = true;
+				if (lootIndex >= loot->size()-1) {
+					lootIndex = 0;
+				}
+				else {
+					lootIndex++;
+				}
+				
+			}
+		}
+
+
+
 		if (stav == StavAkcia::NORMAL) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 
-				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
+				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == PohybMapy::STOJI) {
 					hrac->zmenSmerPohladu(SmerPohladu::vlavo);
 					if (mapa->jeMoznyPohyb(hrac->GetpolickoX() - 1, hrac->GetpolickoY())) {
 						hrac->chodVlavo();
@@ -71,7 +200,7 @@ void StavHranieHry::update(double delta) {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 
-				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
+				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == PohybMapy::STOJI) {
 					hrac->zmenSmerPohladu(SmerPohladu::vpravo);
 					if (mapa->jeMoznyPohyb(hrac->GetpolickoX() + 1, hrac->GetpolickoY())) {
 						hrac->chodVpravo();
@@ -84,7 +213,7 @@ void StavHranieHry::update(double delta) {
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
+				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == PohybMapy::STOJI) {
 					hrac->zmenSmerPohladu(SmerPohladu::hore);
 					if (mapa->jeMoznyPohyb(hrac->GetpolickoX(), hrac->GetpolickoY() - 1)) {
 						hrac->chodHore();
@@ -94,7 +223,7 @@ void StavHranieHry::update(double delta) {
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == 0) {
+				if (!hrac->GethybeSa() && mapa->Getsmerpohybu() == PohybMapy::STOJI) {
 					hrac->zmenSmerPohladu(SmerPohladu::dole);
 					if (mapa->jeMoznyPohyb(hrac->GetpolickoX(), hrac->GetpolickoY() + 1)) {
 						hrac->chodDole();
@@ -118,11 +247,15 @@ void StavHranieHry::update(double delta) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
 				hrac->pridajSkusenosti(10);
+				hrac->Getinventar()->pridajZlato(1000);
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
-				mapa->hracInterakcia();
+				void(StavHranieHry::*callbackFunkcia)();
+				callbackFunkcia = &StavHranieHry::zobrazLoot;
+				mapa->hracInterakcia(this, callbackFunkcia);
+
 			}
 
 			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
@@ -132,6 +265,7 @@ void StavHranieHry::update(double delta) {
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
 				stlacenaKlavesa = false;
 			}
+			
 		}
 	}
 
@@ -142,4 +276,10 @@ void StavHranieHry::update(double delta) {
 
 Mapa* StavHranieHry::getMapa() {
 	return mapa;
+}
+
+void StavHranieHry::zobrazLoot() {
+	stav = StavAkcia::ZOBRAZUJE_LOOT;
+	lootIndex = 0;
+	loot = mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->dajPolozenePredmety();
 }

@@ -8,6 +8,7 @@
 #include "Statistika.h"
 #include "Inventar.h"
 #include "Akcia.h"
+#include "Policko.h"
 
 Hrac::Hrac(Zameranie* paZameranie) {
 	zameranie = paZameranie;
@@ -274,4 +275,10 @@ void Hrac::pridajSkusenosti(int pocet) {
 
 SmerPohladu Hrac::GetSmerPohladu() {
 	return smerPohladu;
+}
+
+void Hrac::vyhodPredmet(Predmet* paPredmet) {
+	Policko* policko = mapa->GetPolicko(polickoX, polickoY);
+	inventar->zmazPredmet(paPredmet);
+	policko->polozPredmet(paPredmet,mapa->aktCas());
 }

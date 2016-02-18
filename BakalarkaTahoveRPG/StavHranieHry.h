@@ -1,10 +1,11 @@
 #pragma once
-
-
 #include "Stav.h"
-class Mapa;
+#include <vector>
 
+class Mapa;
 class Hrac;
+class Predmet;
+
 class StavHranieHry : public Stav
 {
 
@@ -20,9 +21,13 @@ public:
 	Mapa* getMapa();
 
 private:
+	void zobrazLoot();
 	Mapa* mapa;
 	Hrac* hrac;
 	int posHracaX;
 	int posHracaY;
+
+	std::vector<Predmet*>* loot;
+	int lootIndex;
 };
 

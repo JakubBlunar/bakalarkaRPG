@@ -1,4 +1,3 @@
-
 #if !defined(PopupOkno_h)
 #define PopupOkno_h
 
@@ -17,7 +16,5 @@ private:
 	std::queue<std::string> texty;
 	bool koniec;
 };
-
-
 #endif
 

@@ -1,4 +1,5 @@
-#pragma once
+#if !defined(Mapa_h)
+#define Mapa_h
 
 #include <SFML\Graphics.hpp>
 #include <string>
@@ -6,6 +7,15 @@
 class Policko;
 class Hrac;
 class Hra;
+class StavHranieHry;
+
+enum PohybMapy {
+	STOJI = 0,
+	VPRAVO = 1,
+	VLAVO = 2,
+	HORE = 3,
+	DOLE = 4
+};
 
 class Mapa
 {
@@ -14,7 +24,7 @@ public:
 	Mapa(std::string menoMapy, Hrac* paHrac,Hra* hram,int paVyska , int paSirka);
 	~Mapa();
 	
-	void hracInterakcia();
+	void hracInterakcia(StavHranieHry* paStav, void(StavHranieHry::*callbackFunkcia)());
 
 	void setHrac(Hrac* paHrac);
 	int Getvyska();
@@ -27,7 +37,7 @@ public:
 	void posunVlavo();
 	void posunHore();
 	void posunDole();
-	int Getsmerpohybu();
+	PohybMapy Getsmerpohybu();
 
 	void posunHracaNaPolicko(int x, int y,int smerPohladu);
 	void posun(int posunX, int posunY);
@@ -36,14 +46,13 @@ public:
 
 	Policko* GetPolicko(int x, int y);
 	void nastavPolicko(int x, int y, Policko*);
-
 	sf::FloatRect Getzobrazenaoblast();
+	sf::Time aktCas();
 	
 private:
 	Hra* hra;
 	Hrac* hrac;
 	Policko*** mapa;
-	std::map<int, sf::Texture*> textury;
 
 	int sirka;
 	int vyska;
@@ -51,7 +60,15 @@ private:
 	int posunX;
 	int posunY;
 	int pohybDelta;
-	int smerPohybu;
+	PohybMapy smerPohybu;
 
 	sf::View view;
+
+	//snima cas ktorý prešiel od vytvorenia
+	sf::Clock casovac;
+	//textura ktorá sa vykresli ak je na policku nejaký predmet
+	sf::Texture batohTextura;
+	sf::Sprite batoh;
 };
+
+#endif

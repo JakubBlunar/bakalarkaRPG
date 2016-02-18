@@ -139,7 +139,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 
 		if (!parsingSuccessful)
 		{
-			std::cout << "chyba pri parsovani Jsonu" << "\n";
+			std::cout << "chyba pri parsovani Jsonu mapy" << "\n";
 		}
 
 		int vyska = root["height"].asInt();
@@ -283,7 +283,7 @@ void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
 
 		if (!parsingSuccessful)
 		{
-			std::cout << "chyba pri parsovani Jsonu" << "\n";
+			std::cout << "chyba pri parsovani Jsonu npc " << "\n";
 		}
 
 		Json::Value objekt(Json::objectValue);

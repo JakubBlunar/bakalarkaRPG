@@ -62,10 +62,12 @@ void StavInventar::render() {
 	text.setPosition(sf::Vector2f(10.f, 10.f));
 	okno->draw(text);
 
-	//text.setCharacterSize(35U);
-	//text.setString(hrac->GetZameranie()->Getnazov());
-	//text.setPosition(sf::Vector2f(32.f, 56.f));
-	//okno->draw(text);
+
+	text.setString("Pocet Zlata:  " + std::to_string(inventar->Getzlato()));
+	text.setPosition(500, 30);
+	text.setColor(sf::Color::Yellow);
+	text.setCharacterSize(20);
+	okno->draw(text);
 
 	sf::RectangleShape rectangle;
 	rectangle.setSize(sf::Vector2f(48, 48));
@@ -97,6 +99,12 @@ void StavInventar::render() {
 	if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
 		vykresliOknoPredmetu(inventar->dajPredmetNaIndexe(oznacene), startX + (oznacene%nasirku) * 55 + 48, startY + (oznacene / nasirku) * 55 + 48, okno);
 	}
+
+	text.setString("Enter - pouzi oznaceny predmet\nX - vyhod predmet");
+	text.setPosition(20.f, okno->getSize().y - 55.f);
+	text.setColor(sf::Color::Yellow);
+	text.setCharacterSize(20);
+	okno->draw(text);
 
 	Stav::render();
 	//std::cout << oznacene << std::endl;
@@ -153,6 +161,13 @@ void StavInventar::update(double delta) {
 				}
 			}
 
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
+				stlacenaKlavesa = true;
+				if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
+					hrac->vyhodPredmet(inventar->dajPredmetNaIndexe(oznacene));
+				}
+			}
+
 			if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::I))) {
 				hra->zmenStavRozhrania("hranieHry");
 			}
@@ -164,6 +179,7 @@ void StavInventar::update(double delta) {
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::X)
 				) {
 				stlacenaKlavesa = false;
 			}

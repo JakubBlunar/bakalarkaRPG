@@ -8,6 +8,8 @@
 #include "Elixir.h"
 
 Inventar::Inventar() {
+	pocetZlata = 0;
+
 	kapacita = 36;
 	Pouzitelny* zbran = new Zbran("Katana", 9, "wp1", 100,1,1,5);
 	Pouzitelny* brnenie = new Oblecenie("Ruth brnenie", 3, "ch1", 3,1);
@@ -78,7 +80,7 @@ bool Inventar::maDostatokZlata(int potrebne) {
 
 int Inventar::pocetPredmetov(std::string meno) {
 	int counter = 0;
-	for (auto &predmet : predmety) // access by reference to avoid copying
+	for (auto &predmet : predmety)
 	{
 		if (predmet->Getmeno() == meno)
 		{
@@ -104,17 +106,6 @@ void Inventar::pridajPredmet(Predmet* predmet){
 
 void Inventar::zmazPredmet(Predmet* predmet) {
 	predmety.erase(std::remove(predmety.begin(), predmety.end(), predmet), predmety.end());
-}
-
-void Inventar::vyberPredmet(Predmet* predmet) {
-	//predmety.erase(std::remove(predmety.begin(), predmety.end(), predmet), predmety.end());
-
-	// ešte polozit na mapu atd atd
-}
-
-
-void Inventar::zdviholPredemt(Predmet* paPredmet) {
-
 }
 
 Predmet* Inventar::dajPredmetNaIndexe(int i) {
