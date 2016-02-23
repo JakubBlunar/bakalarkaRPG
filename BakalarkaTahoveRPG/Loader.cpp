@@ -20,6 +20,7 @@
 #include "DialogovyStrom.h"
 #include "VolbaPridanieQuestu.h"
 #include "Npc.h"
+#include "PolickoBoj.h"
 
 Loader* Loader::instancia = NULL;
 
@@ -209,7 +210,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 						policko = new Policko(false);
 					}
 					else {
-						policko = new Policko(true);
+						policko = new PolickoBoj(true);
 					}
 				}
 

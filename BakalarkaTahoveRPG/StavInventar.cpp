@@ -263,6 +263,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 				info += std::to_string(pom->Getminposkodenie()) + " - ";
 				info += std::to_string(pom->Getmaxposkodenie());
 				info += "\n";
+				info += "Rychlost utoku: " + std::to_string(pom->GetrychlostUtoku()) + " ms\n";
 			}
 		}
 

@@ -4,9 +4,10 @@
 #include "Statistika.h"
 #include "Inventar.h"
 
-Zbran::Zbran(std::string meno, int typ, std::string paObrazok, int cena, int paUroven, int paMinPoskodenie, int paMaxPoskodnie) :Pouzitelny(meno, typ, paObrazok, cena, paUroven) {
+Zbran::Zbran(std::string meno, int typ, std::string paObrazok, int cena, int paUroven, int paMinPoskodenie, int paMaxPoskodnie,int rychlostUtoku) :Pouzitelny(meno, typ, paObrazok, cena, paUroven) {
 	minPoskodenie = paMinPoskodenie;
 	maxPoskodenie = paMaxPoskodnie;
+	this->rychlostUtoku = rychlostUtoku;
 }
 
 
@@ -209,4 +210,8 @@ void Zbran::pouzi(Hrac* hrac) {
 	}
 
 	hrac->Getstatistika()->prepocitajPoskodenia();
+}
+
+int Zbran::GetrychlostUtoku() {
+	return rychlostUtoku;
 }

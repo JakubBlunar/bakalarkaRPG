@@ -148,7 +148,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Akcia.h" />
+    <ClInclude Include="AkciaDmg.h" />
+    <ClInclude Include="AkciaLiecenie.h" />
+    <ClInclude Include="AkciaPoskodenieZbranou.h" />
     <ClInclude Include="Animacia.h" />
+    <ClInclude Include="Boj.h" />
     <ClInclude Include="DialogovyStrom.h" />
     <ClInclude Include="Elixir.h" />
     <ClInclude Include="Hra.h" />
@@ -158,6 +162,7 @@
     <ClInclude Include="json.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Mapa.h" />
+    <ClInclude Include="Nepriatel.h" />
     <ClInclude Include="Npc.h" />
     <ClInclude Include="Oblecenie.h" />
     <ClInclude Include="Policko.h" />
@@ -168,6 +173,7 @@
     <ClInclude Include="Predmet.h" />
     <ClInclude Include="Statistika.h" />
     <ClInclude Include="Stav.h" />
+    <ClInclude Include="StavBoj.h" />
     <ClInclude Include="StavDialog.h" />
     <ClInclude Include="StavHlavneMenu.h" />
     <ClInclude Include="StavHranieHry.h" />
@@ -177,6 +183,7 @@
     <ClInclude Include="StavPauza.h" />
     <ClInclude Include="StavRozhrania.h" />
     <ClInclude Include="StavVolbaZamerania.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Tlacidlo.h" />
     <ClInclude Include="VolbaPridanieQuestu.h" />
     <ClInclude Include="Vrstva.h" />
@@ -185,7 +192,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Akcia.cpp" />
+    <ClCompile Include="AkciaDmg.cpp" />
+    <ClCompile Include="AkciaLiecenie.cpp" />
+    <ClCompile Include="AkciaPoskodenieZbranou.cpp" />
     <ClCompile Include="Animacia.cpp" />
+    <ClCompile Include="Boj.cpp" />
     <ClCompile Include="DialogovyStrom.cpp" />
     <ClCompile Include="Elixir.cpp" />
     <ClCompile Include="Hra.cpp" />
@@ -195,6 +206,7 @@
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mapa.cpp" />
+    <ClCompile Include="Nepriatel.cpp" />
     <ClCompile Include="Npc.cpp" />
     <ClCompile Include="Oblecenie.cpp" />
     <ClCompile Include="Policko.cpp" />
@@ -205,6 +217,7 @@
     <ClCompile Include="Predmet.cpp" />
     <ClCompile Include="Statistika.cpp" />
     <ClCompile Include="Stav.cpp" />
+    <ClCompile Include="StavBoj.cpp" />
     <ClCompile Include="StavDialog.cpp" />
     <ClCompile Include="StavHlavneMenu.cpp" />
     <ClCompile Include="StavHranieHry.cpp" />
@@ -214,6 +227,7 @@
     <ClCompile Include="StavPauza.cpp" />
     <ClCompile Include="StavRozhrania.cpp" />
     <ClCompile Include="StavVolbaZamerania.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Tlacidlo.cpp" />
     <ClCompile Include="VolbaPridanieQuestu.cpp" />
     <ClCompile Include="Vrstva.cpp" />

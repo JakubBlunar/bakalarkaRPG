@@ -14,6 +14,8 @@ StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 	this->mapa = mapa;
 	font = Loader::Instance()->nacitajFont("font2.otf");
 	loot = nullptr;
+	
+	
 	/*
 	PopupOkno* popup = new PopupOkno("Vitaj v mojej hre asdasdasd... \n\n asdadasd\n\n\n\n\n\n\n dalsi");
 	popup->pridajStranku("Toto je dalsia stranka");
@@ -31,7 +33,7 @@ void StavHranieHry::onEnter() {
 	Stav::onEnter();
 	hrac = hra->GetHrac();
 	loot = nullptr;
-
+	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
 		stlacenaKlavesa = true;
 	}
@@ -46,8 +48,7 @@ void StavHranieHry::onExit() {
 void StavHranieHry::render() {
 	mapa->render(okno);
 	
-	
-	if (loot == nullptr) {
+	if (loot == nullptr && !GetzobrazujePopup()) {
 		lootIndex = 0;
 		stav = StavAkcia::NORMAL;
 	}
@@ -56,12 +57,12 @@ void StavHranieHry::render() {
 		sf::RectangleShape rect;
 		
 		int oknoLootX, oknoLootY;
-		oknoLootX = 100;
-		oknoLootY = 100;
+		oknoLootX = 50;
+		oknoLootY = 50;
 
 		rect.setSize(sf::Vector2f(48+12, 48*4+24+6));
 		rect.setFillColor(sf::Color::White);
-		rect.setPosition(sf::Vector2f(oknoLootX,oknoLootY));
+		rect.setPosition(sf::Vector2f(oknoLootX+0.f,oknoLootY + 0.f));
 		okno->draw(rect);
 
 		int pocet = loot->size();
@@ -71,7 +72,7 @@ void StavHranieHry::render() {
 
 
 		for (int i = 0; i < pocet; i++) {
-			int index = lootIndex + i;
+			unsigned int index = lootIndex + i;
 			
 			if (index >= loot->size()) {
 				index -= loot->size();
@@ -85,9 +86,9 @@ void StavHranieHry::render() {
 			
 			sf::Sprite* sprite = loot->at(index)->Getobrazok();
 			sprite->setScale(1.5, 1.5);
-			sprite->setPosition(oknoLootX + 6, oknoLootY + 6 + i*sprite->getGlobalBounds().height+ i*6);
-			rect.setPosition(oknoLootX + 6 + 48, oknoLootY + 6 + i*sprite->getGlobalBounds().height + i * 6);
-			meno.setPosition(oknoLootX + 6+3 + 48, 3+oknoLootY + 6 + i*sprite->getGlobalBounds().height + i * 6);
+			sprite->setPosition(oknoLootX + 6.f, oknoLootY + 6 + i*sprite->getGlobalBounds().height+ i*6.f);
+			rect.setPosition(oknoLootX + 6 + 48.f, oknoLootY + 6 + i*sprite->getGlobalBounds().height + i * 6.f);
+			meno.setPosition(oknoLootX + 6+3.f + 48, 3+oknoLootY + 6 + i*sprite->getGlobalBounds().height + i * 6.f);
 			okno->draw(*sprite);
 			okno->draw(rect);
 			okno->draw(meno);
@@ -96,7 +97,7 @@ void StavHranieHry::render() {
 			
 		rect.setSize(sf::Vector2f(48, 48));
 		rect.setFillColor(sf::Color(255, 0, 0, 128));
-		rect.setPosition(oknoLootX + 6, oknoLootY + 6);
+		rect.setPosition(oknoLootX + 6.f, oknoLootY + 6.f);
 		okno->draw(rect);
 	}
 
@@ -141,7 +142,10 @@ void StavHranieHry::update(double delta) {
 				Predmet* predmet = loot->at(lootIndex);
 				try {
 					hrac->Getinventar()->pridajPredmet(predmet);
-					loot->erase(std::remove(loot->begin(), loot->end(), predmet), loot->end());
+					loot->erase(loot->begin() + lootIndex);
+					if ((unsigned int)lootIndex >= loot->size()) {
+						lootIndex = 0;
+					}
 				}
 				catch (int ex) {
 					if (ex == 1) {
@@ -170,7 +174,7 @@ void StavHranieHry::update(double delta) {
 
 			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 				stlacenaKlavesa = true;
-				if (lootIndex >= loot->size()-1) {
+				if ((unsigned int)lootIndex >= loot->size()-1) {
 					lootIndex = 0;
 				}
 				else {

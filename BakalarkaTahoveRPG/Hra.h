@@ -28,11 +28,9 @@ public:
 	bool maFocus();
 
 private:
-	void renderingThread(sf::RenderWindow* paOkno);
 	Hrac* hrac;
 	Loader* loader;
-	sf::Font* font;
-	sf::Text textNacitanie;
+	sf::Clock clock;
 	void init();
 
 	bool focus;

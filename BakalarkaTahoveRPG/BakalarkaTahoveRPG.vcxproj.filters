@@ -162,6 +162,27 @@
     <ClInclude Include="PopupOkno.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Nepriatel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Boj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StavBoj.h">
+      <Filter>Header Files\Stavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AkciaDmg.h">
+      <Filter>Header Files\Akcie</Filter>
+    </ClInclude>
+    <ClInclude Include="AkciaPoskodenieZbranou.h">
+      <Filter>Header Files\Akcie</Filter>
+    </ClInclude>
+    <ClInclude Include="AkciaLiecenie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -267,6 +288,27 @@
       <Filter>Source Files\Akcie</Filter>
     </ClCompile>
     <ClCompile Include="PopupOkno.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Nepriatel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Boj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StavBoj.cpp">
+      <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AkciaDmg.cpp">
+      <Filter>Source Files\Akcie</Filter>
+    </ClCompile>
+    <ClCompile Include="AkciaPoskodenieZbranou.cpp">
+      <Filter>Source Files\Akcie</Filter>
+    </ClCompile>
+    <ClCompile Include="AkciaLiecenie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

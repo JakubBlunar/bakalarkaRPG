@@ -77,7 +77,7 @@ void Stav::render() {
 
 
 void Stav::onEnter() {
-	
+	stlacenaKlavesa = true;
 }
 
 
@@ -96,4 +96,11 @@ void Stav::Setnazov(std::string paNazov) {
 void Stav::zobrazPopup(PopupOkno* paCo) {
 	popupText = paCo;
 	stav = StavAkcia::ZOBRAZUJE_POPUP;
+}
+
+bool Stav::GetzobrazujePopup() {
+	if (stav == StavAkcia::ZOBRAZUJE_POPUP) {
+		return true;
+	}
+	else return false;
 }

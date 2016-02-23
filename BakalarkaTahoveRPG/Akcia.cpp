@@ -1,8 +1,9 @@
 #include "Akcia.h"
 
 #include <iostream>
+#include "Statistika.h"
 
-Akcia::Akcia(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis,int mana) {
+Akcia::Akcia(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis,int mana, AkciaTyp typ) {
 	const std::string akcie_cesta = "./Data/Grafika/Akcie/";
 	this->cenaMany = mana;
 	this->meno = meno;
@@ -10,7 +11,7 @@ Akcia::Akcia(std::string meno, std::string obrazok, int casCastenia, int cooldow
 	this->cooldown = cooldown;
 	this->trvanie = trvanie;
 	this->popis = popis;
-
+	this->typ = typ;
 	this->obrazok = new sf::Sprite();
 	this->textura = new sf::Texture();
 	if (!textura->loadFromFile(akcie_cesta + "" + obrazok + ".png", sf::IntRect(0, 0, 32, 32))) {
@@ -65,7 +66,8 @@ int Akcia::Getcenamany() {
 	return cenaMany;
 }
 
-bool Akcia::vykonajSa(Statistika* statNeprietel, Statistika* statHrac) {
+bool Akcia::vykonajSa(Statistika* statHrac, Statistika* statNepriatel) {
+	statHrac->Setmp(statHrac->Getmp() - cenaMany);
 	std::cout << "Vykonanie akcie: " << meno << std::endl;
 	return true;
 }

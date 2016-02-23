@@ -10,6 +10,7 @@
 #include "StavInfoHraca.h"
 #include "StavInventar.h"
 #include "StavDialog.h"
+#include "StavBoj.h"
 
 #define NAZOV "SUPERRPG"
 
@@ -51,6 +52,13 @@ Hra::Hra() {
 	std::string nazov8 = "stavDialog";
 	Stav* stav8 = new StavDialog(nazov8, okno, this);
 	stavRozhraniaHry->pridajStav(stav8);
+
+	std::string nazov9 = "stavBoj";
+	Stav* stav9 = new StavBoj(nazov9, okno, this);
+	stavRozhraniaHry->pridajStav(stav9);
+
+	
+
 }
 
 Hra::~Hra() {
@@ -61,6 +69,7 @@ Hra::~Hra() {
 
 void Hra::start() {
 	hlavnaSlucka();
+
 }
 
 
@@ -83,20 +92,18 @@ void Hra::hlavnaSlucka() {
 
 		}
 
-			sf::Time uplynulyCas = clock.restart();
-			casOdPoslednehoUpdate += uplynulyCas;
-			while (casOdPoslednehoUpdate > ObnovovaciCas)
-			{
-				casOdPoslednehoUpdate -= ObnovovaciCas;
-				stavRozhraniaHry->update(20);
-			}
+		sf::Time uplynulyCas = clock.restart();
+		casOdPoslednehoUpdate += uplynulyCas;
+		while (casOdPoslednehoUpdate > ObnovovaciCas){
+			casOdPoslednehoUpdate -= ObnovovaciCas;
+			stavRozhraniaHry->update(20);
+		}
 			
-			
-			if (focus) {
-				okno->clear();
-				stavRozhraniaHry->render();
-			}
-			okno->display();
+		if (focus) {
+			okno->clear();
+			stavRozhraniaHry->render();
+		}
+		okno->display();
 	}
 
 }
@@ -123,8 +130,6 @@ Stav* Hra::dajStav(std::string stav) {
 
 void Hra::init() {
 	loader = Loader::Instance();
-
-	font = loader->nacitajFont("font.ttf");
 	focus = true;
 
 	okno = new sf::RenderWindow(sf::VideoMode(1024, 768), NAZOV,sf::Style::Titlebar|sf::Style::Close);

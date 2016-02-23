@@ -11,6 +11,8 @@ public:
 	bool Getzakliknute();
 	sf::Sprite* Getsprite();
 	sf::Text Gettext();
+	bool hover(sf::Vector2i pozicia);
+	sf::Vector2f getPosition();
 private:
 	sf::Sprite* normalne;
 	sf::Sprite* kliknute;

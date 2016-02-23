@@ -45,3 +45,17 @@ sf::Sprite* Tlacidlo::Getsprite() {
 sf::Text Tlacidlo::Gettext() {
 	return text;
 }
+
+bool Tlacidlo::hover(sf::Vector2i mousePos) {
+	if (mousePos.x>pozicia.x && mousePos.x<(pozicia.x + velkost.x)) {
+		if (mousePos.y>pozicia.y && mousePos.y<(pozicia.y + velkost.y)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+sf::Vector2f Tlacidlo::getPosition() {
+	return pozicia;
+}

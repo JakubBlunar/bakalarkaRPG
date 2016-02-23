@@ -28,7 +28,7 @@ private:
 
 	Hrac* hrac;
 	std::map<int, Predmet*>* oblecene;
-	std::vector<Akcia*> hracoveAkcie;
+	std::vector<Akcia*>* hracoveAkcie;
 
 	std::vector<Tlacidlo*> tlacidlaAkcie;
 };

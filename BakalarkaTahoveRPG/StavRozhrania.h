@@ -22,5 +22,5 @@ public:
 private:
 	std::map<std::string, Stav*> stavy;
 	Stav* aktualnyStav;
-
+	Stav* nasledujuci;
 };

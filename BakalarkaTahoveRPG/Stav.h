@@ -27,6 +27,9 @@ public:
 	std::string Getnazov();
 	void Setnazov(std::string paNazov);
 	void zobrazPopup(PopupOkno* paCo);
+
+	bool GetzobrazujePopup();
+
 protected:
 	StavAkcia stav;
 	sf::Font* font;

@@ -8,11 +8,17 @@
 #include "Mapa.h"
 #include "Akcia.h"
 
+#include "AkciaDmg.h"
+
+#include "Nepriatel.h"
+#include "StavBoj.h"
+#include "Boj.h"
+#include "AkciaPoskodenieZbranou.h"
+#include "AkciaLiecenie.h"
 
 
 StavVolbaZamerania::StavVolbaZamerania(std::string paNazov, sf::RenderWindow* paOkno,Hra* paHra) : Stav(paNazov,paOkno,paHra) {
 	font = Loader::Instance()->nacitajFont("font2.otf");
-	oznacene = 1;
 	std::cout << "Volba zamerania vytvorena" << std::endl;
 }
 
@@ -22,12 +28,9 @@ StavVolbaZamerania::~StavVolbaZamerania() {
 	std::cout << "Volba zamerania zmazana" << std::endl;
 }
 
-
-
-
-
 void StavVolbaZamerania::onEnter() {
 	Stav::onEnter();
+	oznacene = 1;
     stlacenaKlavesa = true;
 	
 }
@@ -101,11 +104,14 @@ void StavVolbaZamerania::update(double delta) {
 				stlacenaKlavesa = true;
 				Zameranie* zameranie = new Zameranie("Warrior", 10, 3, 3, 2, 1);
 
-				zameranie->vlozAkciu(new Akcia("Liecenie", "healing1", 0, 1000, 0, "Vylieci ta!", 5), 2);
-				zameranie->vlozAkciu(new Akcia("Utok", "attack", 0, 1000, 0, "Bezny utok zbranou", 0), 1);
+				zameranie->vlozAkciu(new AkciaLiecenie("Liecenie", "healing1", 5000, 10000, 20, "Vylieci ta!", 1,AkciaTyp::MAGICKA,20), 1);
+				zameranie->vlozAkciu(new AkciaDmg("Bash", "attack", 1000, 5000, 0, "Buchnutie zbranou",0,AkciaTyp::FYZICKA,10), 1);
 
 				Hrac* hrac = new Hrac(zameranie);
+				hrac->Getstatistika()->vlozAkciu(new AkciaPoskodenieZbranou("Utok", "Bezny utok nasadenou zbranou", hrac->Getstatistika()));
 				hra->SetHrac(hrac);
+
+				
 
 				Loader* loader = Loader::Instance();
 				loader->nacitajMapu("start", 0, 2, 2);

@@ -7,12 +7,12 @@
 #include "Akcia.h"
 
 Statistika::Statistika() {
-	akcie = new std::map<std::string, Akcia*>();
+	akcie = new std::vector<Akcia*>();
 	uroven = 1;
-	hp = 20;
+	hp = 80;
 	hpMax = 80;
-	mp = 10;
-	mpMax = 10;
+	mp = 20;
+	mpMax = 20;
 	sila = 1;
 	intelekt = 1;
 	obrana = 1;
@@ -36,7 +36,7 @@ Statistika::Statistika(int paUroven, int paHp, int paHpMax, int paMp, int paMpMa
 	rychlost = paRychlost;
 	obrana = paObrana;
 	oblecene = paObleceneVeci;
-	akcie = new std::map<std::string, Akcia*>();
+	akcie = new std::vector<Akcia*>();
 	this->prepocitajPoskodenia();
 }
 
@@ -283,7 +283,7 @@ std::map<int, Predmet*>* Statistika::Getoblecene() {
 	return oblecene;
 }
 
-std::map<std::string, Akcia*>* Statistika::Getakcie() {
+std::vector<Akcia*>* Statistika::Getakcie() {
 	return akcie;
 }
 
@@ -307,7 +307,6 @@ void Statistika::prepocitajPoskodenia() {
 		minPoskodenie = (int)ceil((sila / (double)uroven));
 		maxPoskodenie = (int)ceil((sila / (double)uroven));
 	}
-
 }
 
 int Statistika::Getminposkodenie() {
@@ -318,9 +317,39 @@ int Statistika::Getmaxposkodenie() {
 }
 
 void Statistika::vlozAkciu(Akcia* paAkcia) {
-	
-	if (akcie->count(paAkcia->Getmeno()) == 0) {
-		akcie->insert(std::pair<std::string, Akcia*>(paAkcia->Getmeno(), paAkcia));
+
+	int pocet = std::count(akcie->begin(), akcie->end(), paAkcia);
+	if (pocet == 0) {
+		akcie->push_back(paAkcia);
 	}
 		
+}
+
+int Statistika::Getrychlostutoku() {
+	if (oblecene->count(9)) {
+		Zbran* zbran1 = (Zbran*)oblecene->at(9);
+		if (oblecene->count(10)) {
+			Zbran* zbran2 = (Zbran*)oblecene->at(10);
+			if (zbran2->Gettyp() == 9) {
+				return (zbran1->GetrychlostUtoku() + zbran2->GetrychlostUtoku())/2;
+			}
+			else {
+				return zbran1->GetrychlostUtoku();
+			}
+		}
+		else {
+			return zbran1->GetrychlostUtoku();
+		}
+	}
+	else {
+		return 2000;
+	}
+}
+
+double Statistika::Getsancanauhyb() {
+	return (double) rychlost / (10 * uroven);
+}
+
+double Statistika::Getodolnostvociposkodeniu() {
+	return (double)obrana / (75 * uroven);
 }

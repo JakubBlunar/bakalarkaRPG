@@ -8,6 +8,9 @@
 #include "Zbran.h"
 #include "Akcia.h"
 #include "Tlacidlo.h"
+#include "AkciaDmg.h"
+#include "AkciaLiecenie.h"
+#include "AkciaPoskodenieZbranou.h"
 
 StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
 	font = Loader::Instance()->nacitajFont("font2.otf");
@@ -52,14 +55,7 @@ void StavInfoHraca::onEnter() {
 	oznacene = 1;
 	hrac = hra->GetHrac();
 	oblecene = hrac->Getstatistika()->Getoblecene();
-
-	if (hracoveAkcie.size() != hrac->Getstatistika()->Getakcie()->size()) {
-		hracoveAkcie.erase(hracoveAkcie.begin(), hracoveAkcie.end());
-		for (std::map<std::string, Akcia*>::iterator it = hrac->Getstatistika()->Getakcie()->begin(); it != hrac->Getstatistika()->Getakcie()->end(); ++it)
-		{
-			hracoveAkcie.push_back(it->second);
-		}
-	}
+	hracoveAkcie = hrac->Getstatistika()->Getakcie();
 	
 }
 
@@ -82,54 +78,58 @@ void StavInfoHraca::render() {
 
 		int lvl = hrac->Getstatistika()->dajUroven();
 		text.setCharacterSize(30U);
-		text.setString(" Level: " + std::to_string(lvl));
+		text.setString("Level: " + std::to_string(lvl));
 		text.setPosition(sf::Vector2f(38.f, 91.f));
 		okno->draw(text);
 
 		int xpTeraz = hrac->Getstatistika()->Getskusenosti();
 		int xpNaDalsi = hrac->GetZameranie()->xpNaLevel(lvl+1);
 		text.setCharacterSize(15U);
-		text.setString(" Skusenosti: " + std::to_string(xpTeraz) + " / " + std::to_string(xpNaDalsi));
+		text.setString("Skusenosti: " + std::to_string(xpTeraz) + " / " + std::to_string(xpNaDalsi));
 		text.setPosition(sf::Vector2f(15.f, 135.f));
 		okno->draw(text);
 
 
 		int hpTeraz = hrac->Getstatistika()->Gethp();
 		int hpMax = hrac->Getstatistika()->GethpMax();
-		text.setString(" Hp: " + std::to_string(hpTeraz) + " / " + std::to_string(hpMax));
+		text.setString("Hp: " + std::to_string(hpTeraz) + " / " + std::to_string(hpMax));
 		text.setPosition(sf::Vector2f(15.f, 152.f));
 		okno->draw(text);
 
 		int mpTeraz = hrac->Getstatistika()->Getmp();
 		int mpMax = hrac->Getstatistika()->GetmpMax();
-		text.setString(" Mp: " + std::to_string(mpTeraz) + " / " + std::to_string(mpMax));
+		text.setString("Mp: " + std::to_string(mpTeraz) + " / " + std::to_string(mpMax));
 		text.setPosition(sf::Vector2f(15.f, 170.f));
 		okno->draw(text);
 
 		int stat = hrac->Getstatistika()->Getsila();
-		text.setString(" Sila: " + std::to_string(stat));
+		text.setString("Sila: " + std::to_string(stat));
 		text.setPosition(sf::Vector2f(15.f, 187.f));
 		okno->draw(text);
 
 		stat = hrac->Getstatistika()->Getintelekt();
-		text.setString(" Intelekt: " + std::to_string(stat));
+		text.setString("Intelekt: " + std::to_string(stat));
 		text.setPosition(sf::Vector2f(15.f, 204.f));
 		okno->draw(text);
 
 		stat = hrac->Getstatistika()->Getrychlost();
-		text.setString(" Rychlost: " + std::to_string(stat));
+		text.setString("Rychlost: " + std::to_string(stat));
 		text.setPosition(sf::Vector2f(15.f, 221.f));
 		okno->draw(text);
 		
 		stat = hrac->Getstatistika()->Getobrana();
-		text.setString(" Obrana: " + std::to_string(stat));
+		text.setString("Obrana: " + std::to_string(stat));
 		text.setPosition(sf::Vector2f(15.f, 238.f));
 		okno->draw(text);
 
 		int pMin = hrac->Getstatistika()->Getminposkodenie();
 		int pMax = hrac->Getstatistika()->Getmaxposkodenie();
-		text.setString(" Poskodenie: " + std::to_string(pMin) + " / " + std::to_string(pMax));
+		text.setString("Poskodenie: " + std::to_string(pMin) + " / " + std::to_string(pMax));
 		text.setPosition(sf::Vector2f(15.f, 255.f));
+		okno->draw(text);
+
+		text.setString("Rychlost utoku: " + std::to_string(hrac->Getstatistika()->Getrychlostutoku())+" ms");
+		text.setPosition(sf::Vector2f(15.f, 272.f));
 		okno->draw(text);
 
 		// vykreslovanie oblecenych veci
@@ -139,7 +139,7 @@ void StavInfoHraca::render() {
 
 		sf::Sprite* predmetObrazok;
 		int x = 20;
-		int y = 280;
+		int y = 300;
 
 		//helma
 		rectangle.setPosition(x + 0.f, y + 0.f);
@@ -324,12 +324,12 @@ void StavInfoHraca::render() {
 		okno->draw(pozadieSpellov);
 
 	
-		for (unsigned int i = 0; i < (unsigned int)hracoveAkcie.size(); i++)
+		for (unsigned int i = 0; i < (unsigned int)hracoveAkcie->size(); i++)
 		{
 			if (i >= (unsigned int)(riadok + 1)*nasirku) {
 				riadok++;
 			}
-			Akcia* akcia = hracoveAkcie.at(i);
+			Akcia* akcia = hracoveAkcie->at(i);
 			sf::Sprite* obrazok = akcia->Getobrazok();
 			obrazok->setScale(sf::Vector2f(1.5f, 1.5f));
 			obrazok->setPosition(sf::Vector2f(kuzlaStartX+ (i- riadok*nasirku) * 55 + 3, kuzlaStartY+ riadok*55 +3));
@@ -345,21 +345,45 @@ void StavInfoHraca::render() {
 		pozadieInfo.setPosition(sf::Vector2f(kuzlaStartX, kuzlaStartY+200));
 		okno->draw(pozadieInfo);
 
-		for (unsigned int i = 0; i < (unsigned int) hracoveAkcie.size(); i++)
+		for (unsigned int i = 0; i < (unsigned int) hracoveAkcie->size(); i++)
 		{
 			if (tlacidlaAkcie.at(i)->Getzakliknute()) {
 				
-				sf::Sprite* obrazok = hracoveAkcie.at(i)->Getobrazok();
+				Akcia* akcia = hracoveAkcie->at(i);
+
+				sf::Sprite* obrazok = akcia->Getobrazok();
 				obrazok->setScale(sf::Vector2f(1.0f, 1.0f));
 				obrazok->setPosition(sf::Vector2f(pozadieInfo.getPosition().x + pozadieInfo.getSize().x - obrazok->getTextureRect().width -5 , pozadieInfo.getPosition().y + 5));
 				okno->draw(*obrazok);
 
 				text.setColor(sf::Color::Black);
-				std::string info = hracoveAkcie.at(i)->Getmeno();
-				info += "\n" + hracoveAkcie.at(i)->dajPopis();
+				std::string info = akcia->Getmeno();
+				info += "\n" + akcia->dajPopis()+"\n";
 
-				if (hracoveAkcie.at(i)->Getcenamany() != 0) {
-					info += "\nPotrebne mnozstvo many: " + std::to_string(hracoveAkcie.at(i)->Getcenamany());
+				if (dynamic_cast<AkciaDmg*>(akcia) != NULL) {
+					AkciaDmg* dmgakcia = (AkciaDmg*)akcia;
+					info += "Poskodenie:" + std::to_string(dmgakcia->minPoskodenie(hrac->Getstatistika())) + " - " + std::to_string(dmgakcia->maxPoskodenie(hrac->Getstatistika())) + "\n";
+				}
+
+				if (dynamic_cast<AkciaPoskodenieZbranou*>(akcia) != NULL) {
+					AkciaPoskodenieZbranou* dmgakcia = (AkciaPoskodenieZbranou*)akcia;
+					info += "Poskodenie:" + std::to_string(dmgakcia->minPoskodenie()) + " - " + std::to_string(dmgakcia->maxPoskodenie()) + "\n";
+				}
+
+				if (dynamic_cast<AkciaLiecenie*>(akcia) != NULL) {
+					AkciaLiecenie* liecenieAkcia = (AkciaLiecenie*)akcia;
+					info += "Liecenie:" + std::to_string(liecenieAkcia->minLiecenie(hrac->Getstatistika())) + " - " + std::to_string(liecenieAkcia->maxLiecenie(hrac->Getstatistika())) + "\n";
+				}
+
+				if (akcia->Getcenamany() != 0) {
+					info += "Potrebne mnozstvo many: " + std::to_string(hracoveAkcie->at(i)->Getcenamany())+ "\n";
+				}
+
+				if (akcia->GetcasCastenia() != 0) {
+					info += "Cas castenia:" + std::to_string(akcia->GetcasCastenia()) + "ms\n";
+				}
+				if (akcia->Getcooldown() != 0) {
+					info += "Cooldown:" + std::to_string(akcia->Getcooldown()) + "ms\n";
 				}
 
 				text.setCharacterSize(13);
@@ -385,12 +409,12 @@ void StavInfoHraca::update(double delta) {
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
 			{
 				sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
-				for (unsigned int i = 0; i < hracoveAkcie.size(); i++)
+				for (unsigned int i = 0; i < hracoveAkcie->size(); i++)
 				{
 					tlacidlaAkcie[i]->skontrolujKlik(pozicia);
 					//zrusenie zakliknutia ostatnych
 					if (tlacidlaAkcie[i]->Getzakliknute()) {
-						for (unsigned int j = 0; j < (unsigned int)hracoveAkcie.size(); j++)
+						for (unsigned int j = 0; j < (unsigned int)hracoveAkcie->size(); j++)
 						{
 							if (i != j) {
 								tlacidlaAkcie.at(j)->Setzakliknute(false);
@@ -507,6 +531,7 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 				bonusy += std::to_string(pom->Getminposkodenie()) + " - ";
 				bonusy += std::to_string(pom->Getmaxposkodenie());
 				bonusy += "\n";
+				bonusy += "Rychlost utoku: " + std::to_string(pom->GetrychlostUtoku()) + " ms\n";
 			}
 		}
 

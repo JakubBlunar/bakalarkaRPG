@@ -82,19 +82,13 @@ void StavHlavneMenu::update(double delta) {
 				for (unsigned int i = 0; i < tlacidla.size(); i++)
 				{
 					tlacidla[i]->skontrolujKlik(pozicia);
-				}
-			}
-
-			if (stlacenaMys == false) {
-				for (unsigned int i = 0; i < tlacidla.size(); i++)
-				{
 					if (tlacidla[i]->Getzakliknute()) {
 						stlacenaMys = true;
+						tlacidla[i]->Setzakliknute(false);
 						if (i == 0) {
 							hra->zmenStavRozhrania("volbaZamerania");
 						}
 						if (i == 2) {
-							stlacenaKlavesa = true;
 							okno->close();
 						}
 
@@ -102,16 +96,8 @@ void StavHlavneMenu::update(double delta) {
 				}
 			}
 
-
 			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == true) {
 				stlacenaMys = false;
-				for (unsigned int i = 0; i < tlacidla.size(); i++)
-				{
-					if (tlacidla[i]->Getzakliknute()) {
-						tlacidla[i]->Setzakliknute(false);
-					}
-				}
-
 			}
 
 

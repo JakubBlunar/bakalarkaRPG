@@ -12,8 +12,6 @@ Npc::Npc(std::string paMeno,DialogovyStrom* dialog) {
 	dialogStrom = dialog;
 }
 
-
-
 Npc::~Npc() {
 	delete animacia;
 	delete dialogStrom;

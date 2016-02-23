@@ -6,6 +6,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 class Predmet;
 class Akcia;
@@ -15,13 +16,16 @@ class Statistika
 
 public:
 	Statistika();
-	Statistika(int paUroven, int paHp, int paHpMax, int paMp, int mpMax,int paSila, int paIntelekt, int paRychlost, int paObrana,std::map<int, Predmet*>* paObleceneVeci);
+	Statistika(int paUroven, int paHp, int paHpMax, int paMp, int mpMax,int paSila, int paIntelekt, int paRychlost, int paObrana,std::map<int, Predmet*>* paObleceneVeci = new std::map<int,Predmet*>());
 	virtual ~Statistika();
 
 	std::map<int, Predmet*>* Getoblecene();
-	std::map<std::string, Akcia*>* Getakcie();
+	std::vector<Akcia*>* Getakcie();
 	void vlozAkciu(Akcia* paAkcia);
 
+	double Getsancanauhyb();
+	double Getodolnostvociposkodeniu();
+	int Getrychlostutoku();
 
 	int dajUroven();
 	int Gethp();
@@ -62,7 +66,7 @@ private:
 	int minPoskodenie;
 	int maxPoskodenie;
 
-	std::map<std::string, Akcia*>* akcie;
+	std::vector<Akcia*>* akcie;
 	std::map<int, Predmet*>* oblecene;
 };
 #endif 

@@ -4,10 +4,9 @@
 StavRozhrania::StavRozhrania(Stav* pociatocnyStav) {
 	pridajStav(pociatocnyStav);
 	aktualnyStav = pociatocnyStav;
+	nasledujuci = nullptr;
 
 }
-
-
 
 StavRozhrania::~StavRozhrania() {
 	
@@ -25,7 +24,12 @@ void StavRozhrania::zmenMapu() {
 }
 
 void StavRozhrania::update(double cas) {
-	aktualnyStav->update(cas);
+	if (nasledujuci != nullptr && !aktualnyStav->GetzobrazujePopup()) {
+		zmenStav(nasledujuci->Getnazov());
+	}
+	else {
+		aktualnyStav->update(cas);
+	}
 }
 
 void StavRozhrania::render() {
@@ -35,7 +39,6 @@ void StavRozhrania::render() {
 
 void StavRozhrania::pridajStav(Stav* stav) {
 	stavy.insert(std::pair<std::string, Stav*>(stav->Getnazov(), stav));
-	std::cout << "Stav " << stav->Getnazov() << "bol pridany" << std::endl;
 }
 
 
@@ -45,9 +48,15 @@ Stav* StavRozhrania::GetaktualnyStav() {
 
 
 void StavRozhrania::zmenStav(std::string stav) {
-	aktualnyStav->onExit();
-	aktualnyStav = stavy.at(stav);
-	aktualnyStav->onEnter();
+	if (aktualnyStav->GetzobrazujePopup()) {
+		nasledujuci = stavy.at(stav);
+	}
+	else {
+		aktualnyStav->onExit();
+		aktualnyStav = stavy.at(stav);
+		aktualnyStav->onEnter();
+		nasledujuci = nullptr;
+	}
 }
 
 
