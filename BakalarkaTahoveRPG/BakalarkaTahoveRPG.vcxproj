@@ -151,9 +151,12 @@
     <ClInclude Include="AkciaDmg.h" />
     <ClInclude Include="AkciaLiecenie.h" />
     <ClInclude Include="AkciaPoskodenieZbranou.h" />
+    <ClInclude Include="AkciaPridanieEfektu.h" />
     <ClInclude Include="Animacia.h" />
     <ClInclude Include="Boj.h" />
     <ClInclude Include="DialogovyStrom.h" />
+    <ClInclude Include="Efekt.h" />
+    <ClInclude Include="EfektUpravStat.h" />
     <ClInclude Include="Elixir.h" />
     <ClInclude Include="Hra.h" />
     <ClInclude Include="Hrac.h" />
@@ -195,9 +198,12 @@
     <ClCompile Include="AkciaDmg.cpp" />
     <ClCompile Include="AkciaLiecenie.cpp" />
     <ClCompile Include="AkciaPoskodenieZbranou.cpp" />
+    <ClCompile Include="AkciaPridanieEfektu.cpp" />
     <ClCompile Include="Animacia.cpp" />
     <ClCompile Include="Boj.cpp" />
     <ClCompile Include="DialogovyStrom.cpp" />
+    <ClCompile Include="Efekt.cpp" />
+    <ClCompile Include="EfektUpravStat.cpp" />
     <ClCompile Include="Elixir.cpp" />
     <ClCompile Include="Hra.cpp" />
     <ClCompile Include="Hrac.cpp" />

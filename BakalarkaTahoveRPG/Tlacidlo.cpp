@@ -59,3 +59,7 @@ bool Tlacidlo::hover(sf::Vector2i mousePos) {
 sf::Vector2f Tlacidlo::getPosition() {
 	return pozicia;
 }
+
+sf::FloatRect Tlacidlo::getGlobalBounds() {
+	return aktualne->getGlobalBounds();
+}

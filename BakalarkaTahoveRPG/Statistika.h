@@ -4,12 +4,16 @@
 #if !defined(statistika_h)
 #define statistika_h
 
+#include <SFML\Graphics.hpp>
 #include <string>
 #include <map>
 #include <vector>
+#include "Timer.h"
 
 class Predmet;
 class Akcia;
+class Efekt;
+
 
 class Statistika
 {
@@ -19,9 +23,12 @@ public:
 	Statistika(int paUroven, int paHp, int paHpMax, int paMp, int mpMax,int paSila, int paIntelekt, int paRychlost, int paObrana,std::map<int, Predmet*>* paObleceneVeci = new std::map<int,Predmet*>());
 	virtual ~Statistika();
 
+	std::map<Efekt*, sf::Time>* Getaktivneefekty();
 	std::map<int, Predmet*>* Getoblecene();
 	std::vector<Akcia*>* Getakcie();
 	void vlozAkciu(Akcia* paAkcia);
+	void pridajEfekt(Efekt* paEfekt, sf::Time aktivnyDo);
+	void zrusEfekt(Efekt* paEfekt);
 
 	double Getsancanauhyb();
 	double Getodolnostvociposkodeniu();
@@ -49,6 +56,8 @@ public:
 	void pridajXp(int pocet);
 	void setUroven(int paUroven);
 
+	void setCombat(bool paNa);
+
 	void prepocitajPoskodenia();
 	int Getminposkodenie();
 	int Getmaxposkodenie();
@@ -68,5 +77,10 @@ private:
 
 	std::vector<Akcia*>* akcie;
 	std::map<int, Predmet*>* oblecene;
+	std::map<Efekt*, sf::Time>* aktivneEfekty;
+
+	Timer timerMp;
+	sf::Time poslednaObnova;
+	bool combat;
 };
 #endif 

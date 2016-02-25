@@ -24,7 +24,7 @@ public:
 	virtual std::string Getmeno();
 	virtual sf::Sprite* Getobrazok();
 	int Gettrvanie();
-	virtual bool vykonajSa(Statistika* statHrac,Statistika* statNepriatel);
+	virtual std::string vykonajSa(Statistika* statHrac,Statistika* statNepriatel, sf::Time aktCas);
 
 protected:
 	AkciaTyp typ;

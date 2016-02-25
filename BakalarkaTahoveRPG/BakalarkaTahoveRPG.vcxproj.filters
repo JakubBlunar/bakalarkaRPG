@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Akcie">
       <UniqueIdentifier>{3de62b65-fd86-4fb1-a40f-ef79cda26851}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Akcie\Efekty">
+      <UniqueIdentifier>{7eed5388-1cde-42a4-ae65-044bee56df3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Akcie\Efekty">
+      <UniqueIdentifier>{c50e8b49-d6a2-4a56-89ce-81aeadd0c275}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stav.h">
@@ -181,7 +187,16 @@
       <Filter>Header Files\Akcie</Filter>
     </ClInclude>
     <ClInclude Include="AkciaLiecenie.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Akcie</Filter>
+    </ClInclude>
+    <ClInclude Include="Efekt.h">
+      <Filter>Header Files\Akcie\Efekty</Filter>
+    </ClInclude>
+    <ClInclude Include="EfektUpravStat.h">
+      <Filter>Header Files\Akcie\Efekty</Filter>
+    </ClInclude>
+    <ClInclude Include="AkciaPridanieEfektu.h">
+      <Filter>Header Files\Akcie</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -309,7 +324,16 @@
       <Filter>Source Files\Akcie</Filter>
     </ClCompile>
     <ClCompile Include="AkciaLiecenie.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Akcie</Filter>
+    </ClCompile>
+    <ClCompile Include="Efekt.cpp">
+      <Filter>Source Files\Akcie\Efekty</Filter>
+    </ClCompile>
+    <ClCompile Include="EfektUpravStat.cpp">
+      <Filter>Source Files\Akcie\Efekty</Filter>
+    </ClCompile>
+    <ClCompile Include="AkciaPridanieEfektu.cpp">
+      <Filter>Source Files\Akcie</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

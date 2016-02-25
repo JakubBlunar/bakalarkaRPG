@@ -5,6 +5,7 @@
 class Hrac;
 class Boj;
 class Tlacidlo;
+class Akcia;
 
 class StavBoj:public Stav
 {
@@ -20,8 +21,12 @@ public:
 	void setBoj(Boj* boj);
 
 private:
+	void vykresliInfoAkcie(Akcia* akcia,sf::Vector2f pozicia);
+
 	Boj* boj;
 	Tlacidlo* tlacidla[3][9];
+	std::vector<Akcia*>* hracoveAkcie;
+	Tlacidlo* logHranice;
 };
 
 #endif

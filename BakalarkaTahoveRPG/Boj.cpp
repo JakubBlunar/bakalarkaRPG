@@ -8,7 +8,9 @@
 #include "StavHranieHry.h"
 #include "PopupOkno.h"
 #include "Inventar.h"
+#include "Efekt.h"
 
+#include <map>
 #include <iostream>
 
 Boj::Boj(Hrac* paHrac, Nepriatel* paNpc) {
@@ -32,6 +34,7 @@ void Boj::bojStart() {
 	casovac.add(sf::milliseconds(1));
 	koniec = false;
 	boloVyhodnotenie = false;
+	hrac->Getstatistika()->setCombat(true);
 }
 
 
@@ -61,8 +64,7 @@ void Boj::hracVybralAkciu(Akcia* paAkcia) {
 	hracAkcia = paAkcia;
 	hracCasVykonaniaAkcie = casovac.getElapsedTime().asMilliseconds() + hracAkcia->GetcasCastenia();
 	casovac.resume();
-	std::cout << "Vybrata akcia " << paAkcia->Getmeno() << std::endl;
-	
+	//std::cout << "Vybrata akcia " << paAkcia->Getmeno() << std::endl;
 }
 
 float Boj::castBarProgres() {
@@ -97,6 +99,29 @@ bool Boj::maAkciaCooldown(Akcia* paAkcia) {
 void Boj::update() {
 	if (!koniec) {
 		casovac.pause();
+		
+		//bonusy hraca
+		std::map<Efekt*, sf::Time>* aktivneEfekty = hrac->Getstatistika()->Getaktivneefekty();
+		for (std::map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
+		{
+			if (it->second <= casovac.getElapsedTime()) {
+				hrac->Getstatistika()->zrusEfekt(it->first);
+				logBoja.push_front("Hrac: zrusenie efektu " + it->first->popis());
+			}
+		}
+
+		//bonusy npc
+		aktivneEfekty = npc->Getstatistika()->Getaktivneefekty();
+
+		for (std::map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
+		{
+			if (it->second <= casovac.getElapsedTime()) {
+				npc->Getstatistika()->zrusEfekt(it->first);
+				logBoja.push_front("Npc: zrusenie efektu " + it->first->popis());
+			}
+		}
+
+
 		//aktualizuje cooldowny hraca
 		for (std::map<Akcia*, int>::iterator it = hracCooldowny.begin(); it != hracCooldowny.end(); ++it)
 		{
@@ -115,15 +140,15 @@ void Boj::update() {
 		
 
 		if (casovac.getElapsedTime().asMilliseconds() > hracCasVykonaniaAkcie && hracAkcia != nullptr) {
-
-			hracAkcia->vykonajSa(hrac->Getstatistika(), npc->Getstatistika());
+			std::string vysledok = hracAkcia->vykonajSa(hrac->Getstatistika(), npc->Getstatistika(),casovac.getElapsedTime());
+			logBoja.push_front("Hrac: " + vysledok);
 			hracCooldowny.insert(std::pair<Akcia*, int>(hracAkcia, casovac.getElapsedTime().asMilliseconds() + hracAkcia->Getcooldown()));
 			hracAkcia = nullptr;
 		}
 
 		if (casovac.getElapsedTime().asMilliseconds() > npcCasVykonaniaAkcie && npcAkcia != nullptr) {
-
-			npcAkcia->vykonajSa(npc->Getstatistika(), hrac->Getstatistika());
+			std::string vysledok = npcAkcia->vykonajSa(npc->Getstatistika(), hrac->Getstatistika(),casovac.getElapsedTime());
+			logBoja.push_front("Npc: " + vysledok);
 			npcCooldowny.insert(std::pair<Akcia*, int>(npcAkcia, casovac.getElapsedTime().asMilliseconds() + npcAkcia->Getcooldown()));	
 			npcAkcia = nullptr;
 		}
@@ -143,6 +168,7 @@ void Boj::update() {
 			}
 		}
 
+		
 
 		if (hracAkcia == nullptr) {
 			vyber = true;
@@ -155,7 +181,6 @@ void Boj::update() {
 	else {
 		this->vyhodnotenie();
 	}
-
 }
 
 void Boj::vyhodnotenie() {
@@ -174,13 +199,40 @@ void Boj::vyhodnotenie() {
 			hrac->Getinventar()->pridajZlato(ziskaneZlato);
 			std::string text = "Porazil si " + npc->Getmeno() + "\n";
 			text += "Ziskal si " + std::to_string(ziskaneXp) + " skusenosti a " + std::to_string(ziskaneZlato) + " zlata";
-
 			stavHranieHry->zobrazPopup(new PopupOkno(text));
-			hra->zmenStavRozhrania("hranieHry");
+			
 		}
 		else {
 			std::cout << "Vyhral Npc" << std::endl;
 		}
 
+		//zrusenie aktivnych bufov
+		std::map<Efekt*, sf::Time>* aktivneEfekty = hrac->Getstatistika()->Getaktivneefekty();
+		for (std::map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
+		{
+			hrac->Getstatistika()->zrusEfekt(it->first);
+		}
+
+		hrac->Getstatistika()->setCombat(false);
+		hra->zmenStavRozhrania("hranieHry");
 	}
+}
+
+std::string Boj::Getlog(int paOd, int paDo) {
+	int indexOd, indexDo;
+	if (paOd < 0) {
+		indexOd = 0;
+	}
+	else indexOd = paOd;
+
+	if (paDo >= (signed int)logBoja.size()) {
+		indexDo = logBoja.size()-1;
+	}
+	else indexDo = paDo;
+
+	std::string log = "";
+	for (signed int i = indexOd; i <= indexDo; i++) {
+		log += logBoja.at(i) + "\n";
+	}
+	return log;
 }

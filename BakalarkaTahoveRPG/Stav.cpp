@@ -1,7 +1,9 @@
-
 #include "Stav.h"
 #include "Hra.h"
 #include "PopupOkno.h"
+
+#include <sstream>
+#include <iomanip>  
 
 Stav::Stav(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) {
 	nazov = paNazov;
@@ -103,4 +105,11 @@ bool Stav::GetzobrazujePopup() {
 		return true;
 	}
 	else return false;
+}
+
+std::string Stav::floattostring(float cislo) {
+	std::stringstream stream;
+	stream << std::fixed << std::setprecision(1) << cislo;
+	std::string ssekundy = stream.str();
+	return ssekundy;
 }

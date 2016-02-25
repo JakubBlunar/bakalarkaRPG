@@ -4,7 +4,8 @@
 #include <random>
 #include <iostream>
 
-AkciaDmg::AkciaDmg(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis, int mana,AkciaTyp typ,int paZakladnyDmg):Akcia(meno,obrazok,casCastenia,cooldown,trvanie,popis,mana,typ)
+AkciaDmg::AkciaDmg(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis, int mana,AkciaTyp typ,int paZakladnyDmg)
+	:Akcia(meno,obrazok,casCastenia,cooldown,trvanie,popis,mana,typ)
 {
 	this->zakladnyDmg =paZakladnyDmg;
 }
@@ -12,10 +13,11 @@ AkciaDmg::AkciaDmg(std::string meno, std::string obrazok, int casCastenia, int c
 
 AkciaDmg::~AkciaDmg()
 {
+	Akcia::~Akcia();
 }
 
-bool AkciaDmg::vykonajSa(Statistika* statHrac, Statistika* statNepriatel) {
-	Akcia::vykonajSa(statHrac,statNepriatel);
+std::string AkciaDmg::vykonajSa(Statistika* statHrac, Statistika* statNepriatel, sf::Time aktCas) {
+	Akcia::vykonajSa(statHrac,statNepriatel,aktCas);
 	
 	std::random_device rd;  
 	std::mt19937 generator(rd()); 
@@ -26,12 +28,14 @@ bool AkciaDmg::vykonajSa(Statistika* statHrac, Statistika* statNepriatel) {
 	double p = real(generator);
 	
 	if (p >= statNepriatel->Getsancanauhyb()) {
-		statNepriatel->Sethp(statNepriatel->Gethp() - (int)ceil(poskodenie*(1 - statNepriatel->Getodolnostvociposkodeniu())));
+		int konecnePoskodenie = (int)ceil(poskodenie*(1 - statNepriatel->Getodolnostvociposkodeniu()));
+		statNepriatel->Sethp(statNepriatel->Gethp() - konecnePoskodenie);
+		return meno + " - utoci s poskodenim " + std::to_string(konecnePoskodenie);
 	}
 	else {
-		std::cout << "miss " << std::endl;
+		return meno + " - miss.";
 	}
-	return true;
+	
 }
 
 int AkciaDmg::minPoskodenie(Statistika* statistika) {

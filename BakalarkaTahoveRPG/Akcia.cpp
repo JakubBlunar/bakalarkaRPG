@@ -66,8 +66,7 @@ int Akcia::Getcenamany() {
 	return cenaMany;
 }
 
-bool Akcia::vykonajSa(Statistika* statHrac, Statistika* statNepriatel) {
+std::string Akcia::vykonajSa(Statistika* statHrac, Statistika* statNepriatel,sf::Time aktCas) {
 	statHrac->Setmp(statHrac->Getmp() - cenaMany);
-	std::cout << "Vykonanie akcie: " << meno << std::endl;
-	return true;
+	return "";
 }

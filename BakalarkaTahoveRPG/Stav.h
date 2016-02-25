@@ -42,4 +42,6 @@ protected:
 
 	bool stlacenaKlavesa;
 	bool stlacenaMys;
+
+	std::string floattostring(float cislo);
 };

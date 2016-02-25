@@ -32,8 +32,8 @@ sf::Sprite* AkciaPoskodenieZbranou::Getobrazok() {
 	}
 }
 
-bool AkciaPoskodenieZbranou::vykonajSa(Statistika* statHrac, Statistika* statNepriatel) {
-	Akcia::vykonajSa(statHrac, statNepriatel);
+std::string AkciaPoskodenieZbranou::vykonajSa(Statistika* statHrac, Statistika* statNepriatel,sf::Time aktCas) {
+	Akcia::vykonajSa(statHrac, statNepriatel,aktCas);
 
 	std::random_device rd;
 	std::mt19937 generator(rd());
@@ -45,12 +45,13 @@ bool AkciaPoskodenieZbranou::vykonajSa(Statistika* statHrac, Statistika* statNep
 	double p = real(generator);
 
 	if (p >= statNepriatel->Getsancanauhyb()) {
-		statNepriatel->Sethp(statNepriatel->Gethp() - (int)ceil(poskodenie*(1 - statNepriatel->Getodolnostvociposkodeniu())));
+		int konecnePoskodenie = (int)ceil(poskodenie*(1 - statNepriatel->Getodolnostvociposkodeniu()));
+		statNepriatel->Sethp(statNepriatel->Gethp() - konecnePoskodenie);
+		return meno + " - utoci s poskodenim " + std::to_string(konecnePoskodenie);
 	}
 	else {
-		std::cout << "miss " << std::endl;
+		return meno + " - miss.";
 	}
-	return true;
 }
 
 int AkciaPoskodenieZbranou::minPoskodenie() {

@@ -15,20 +15,19 @@ AkciaLiecenie::~AkciaLiecenie()
 }
 
 
-bool AkciaLiecenie::vykonajSa(Statistika* statHrac, Statistika* statNepriatel) {
-	Akcia::vykonajSa(statHrac, statNepriatel);
+std::string AkciaLiecenie::vykonajSa(Statistika* statHrac, Statistika* statNepriatel, sf::Time aktCas) {
+	Akcia::vykonajSa(statHrac, statNepriatel, aktCas);
 
 	std::random_device rd;
 	std::mt19937 generator(rd());
 	std::uniform_int_distribution<int> uni(minLiecenie(statHrac), maxLiecenie(statHrac));
 	int healing = uni(generator);
-
 	statHrac->zvysStat(healing, "hp");
-	return true;
+	return meno + " - lieci sa za " + std::to_string(healing);
 }
 
 int AkciaLiecenie::minLiecenie(Statistika* statistika) {
-	/*int stat;
+	int stat;
 	if (typ == AkciaTyp::FYZICKA) {
 		stat = statistika->Getsila();
 	}
@@ -36,18 +35,15 @@ int AkciaLiecenie::minLiecenie(Statistika* statistika) {
 		stat = statistika->Getintelekt();
 	}
 	return (int)ceil(0.7*stat* zakladnyHeal);
-	*/
-	return 10;
 }
 
 int AkciaLiecenie::maxLiecenie(Statistika* statistika) {
-	/*int stat;
+	int stat;
 	if (typ == AkciaTyp::FYZICKA) {
 		stat = statistika->Getsila();
 	}
 	else if (typ == AkciaTyp::MAGICKA) {
 		stat = statistika->Getintelekt();
 	}
-	return (int)ceil(1.3*stat* zakladnyHeal);*/
-	return 20;
+	return (int)ceil(1.3*stat* zakladnyHeal);
 }

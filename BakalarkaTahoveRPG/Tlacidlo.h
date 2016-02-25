@@ -13,6 +13,7 @@ public:
 	sf::Text Gettext();
 	bool hover(sf::Vector2i pozicia);
 	sf::Vector2f getPosition();
+	sf::FloatRect getGlobalBounds();
 private:
 	sf::Sprite* normalne;
 	sf::Sprite* kliknute;

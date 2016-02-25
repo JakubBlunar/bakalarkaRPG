@@ -5,14 +5,15 @@
 #include "Pouzitelny.h"
 #include "Zbran.h"
 #include "Akcia.h"
+#include "Efekt.h"
 
 Statistika::Statistika() {
 	akcie = new std::vector<Akcia*>();
 	uroven = 1;
 	hp = 80;
 	hpMax = 80;
-	mp = 20;
-	mpMax = 20;
+	mp = 0;
+	mpMax = 30;
 	sila = 1;
 	intelekt = 1;
 	obrana = 1;
@@ -20,11 +21,14 @@ Statistika::Statistika() {
 	obrana = 0;
 	skusenosti = 0;
 	oblecene = new std::map<int, Predmet*>();
+	aktivneEfekty = new std::map<Efekt*, sf::Time>();
 	prepocitajPoskodenia();
-	
+	timerMp.reset();
+	combat = false;
 }
 
 Statistika::Statistika(int paUroven, int paHp, int paHpMax, int paMp, int paMpMax, int paSila, int paIntelekt, int paRychlost, int paObrana,std::map<int, Predmet*>* paObleceneVeci) {
+	
 	skusenosti = 0;
 	uroven = paUroven;
 	hp = paHp;
@@ -37,7 +41,10 @@ Statistika::Statistika(int paUroven, int paHp, int paHpMax, int paMp, int paMpMa
 	obrana = paObrana;
 	oblecene = paObleceneVeci;
 	akcie = new std::vector<Akcia*>();
+	aktivneEfekty = new std::map<Efekt*, sf::Time>();
 	this->prepocitajPoskodenia();
+	timerMp.reset();
+	combat = false;
 }
 
 
@@ -91,7 +98,18 @@ int Statistika::Getintelekt() {
 
 
 int Statistika::Getmp() {
+	if (!combat) {
+		timerMp.pause();
+		int pocetObnov = timerMp.getElapsedTime().asMilliseconds() / 10000;
+		int obnova = (int)round(0.5*intelekt);
 
+		zvysStat(pocetObnov* obnova, "mp");
+
+		int doDalsej = timerMp.getElapsedTime().asMilliseconds() - pocetObnov * 10000;
+		timerMp.reset(false);
+		timerMp.add(sf::milliseconds(doDalsej));
+		timerMp.resume();
+	}
 	return mp;
 }
 
@@ -209,6 +227,7 @@ void Statistika::Setrychlost(int novaHodnota) {
 void Statistika::Setsila(int novaHodnota) {
 
 	sila = novaHodnota;
+	prepocitajPoskodenia();
 }
 
 
@@ -218,6 +237,16 @@ void Statistika::Setskusenosti(int novaHodnota) {
 
 void Statistika::pridajXp(int pocet) {
 	skusenosti += pocet;
+}
+
+void Statistika::setCombat(bool paNa) {
+	combat = paNa;
+	if (paNa) {
+		timerMp.reset(false);
+	}
+	else {
+		timerMp.reset(true);
+	}
 }
 
 void Statistika::zvysStat(int kolko, std::string paCo) {
@@ -230,12 +259,23 @@ void Statistika::zvysStat(int kolko, std::string paCo) {
 		else {
 			hp += kolko;
 		}
-		
+
+		if (hp < 0) {
+			hp = 0;
+		}
 	}
 
 	//hpMax
 	if (paCo == "hpMax") {
 		hpMax += kolko;
+		if (kolko >= 0) {
+			hp += kolko;
+		}
+		else {
+			if (hp >= hpMax) {
+				hp = hpMax;
+			}
+		}
 	}
 
 	//mp
@@ -246,11 +286,15 @@ void Statistika::zvysStat(int kolko, std::string paCo) {
 		else {
 			mp += kolko;
 		}
+		if (mp < 0) {
+			mp = 0;
+		}
 	}
 
 	//mpMax
 	if (paCo == "mpMax") {
 		mpMax += kolko;
+		mp += kolko;
 	}
 
 	//sila
@@ -272,7 +316,7 @@ void Statistika::zvysStat(int kolko, std::string paCo) {
 	if (paCo == "obrana") {
 		obrana += kolko;
 	}
-	
+	prepocitajPoskodenia();
 }
 
 void Statistika::setUroven(int paUroven) {
@@ -352,4 +396,23 @@ double Statistika::Getsancanauhyb() {
 
 double Statistika::Getodolnostvociposkodeniu() {
 	return (double)obrana / (75 * uroven);
+}
+
+std::map<Efekt*, sf::Time>* Statistika::Getaktivneefekty() {
+	return aktivneEfekty;
+}
+
+void Statistika::pridajEfekt(Efekt* paEfekt, sf::Time aktivnyDo) {
+	if (aktivneEfekty->count(paEfekt)) {
+		aktivneEfekty->at(paEfekt) = aktivnyDo;
+	}
+	else {
+		aktivneEfekty->insert(std::pair<Efekt*, sf::Time>(paEfekt, aktivnyDo));
+		paEfekt->aplikujSa(this);
+	}
+
+}
+void Statistika::zrusEfekt(Efekt* paEfekt) {
+	paEfekt->zrusUcinok(this);
+	aktivneEfekty->erase(paEfekt);
 }

@@ -11,6 +11,7 @@
 #include "AkciaDmg.h"
 #include "AkciaLiecenie.h"
 #include "AkciaPoskodenieZbranou.h"
+#include "AkciaPridanieEfektu.h"
 
 StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
 	font = Loader::Instance()->nacitajFont("font2.otf");
@@ -128,7 +129,7 @@ void StavInfoHraca::render() {
 		text.setPosition(sf::Vector2f(15.f, 255.f));
 		okno->draw(text);
 
-		text.setString("Rychlost utoku: " + std::to_string(hrac->Getstatistika()->Getrychlostutoku())+" ms");
+		text.setString("Rychlost utoku: 1x za " + floattostring(hrac->Getstatistika()->Getrychlostutoku()/1000.f)+" s");
 		text.setPosition(sf::Vector2f(15.f, 272.f));
 		okno->draw(text);
 
@@ -375,15 +376,20 @@ void StavInfoHraca::render() {
 					info += "Liecenie:" + std::to_string(liecenieAkcia->minLiecenie(hrac->Getstatistika())) + " - " + std::to_string(liecenieAkcia->maxLiecenie(hrac->Getstatistika())) + "\n";
 				}
 
+				if (dynamic_cast<AkciaPridanieEfektu*>(akcia) != NULL) {
+					AkciaPridanieEfektu* efektAkcia = (AkciaPridanieEfektu*)akcia;
+					info += "Trvanie: " + floattostring(akcia->Gettrvanie()/1000.f) + " s\n";
+				}
+
 				if (akcia->Getcenamany() != 0) {
 					info += "Potrebne mnozstvo many: " + std::to_string(hracoveAkcie->at(i)->Getcenamany())+ "\n";
 				}
 
 				if (akcia->GetcasCastenia() != 0) {
-					info += "Cas castenia:" + std::to_string(akcia->GetcasCastenia()) + "ms\n";
+					info += "Cas castenia:" + floattostring(akcia->GetcasCastenia() / 1000.f) + "s\n";
 				}
 				if (akcia->Getcooldown() != 0) {
-					info += "Cooldown:" + std::to_string(akcia->Getcooldown()) + "ms\n";
+					info += "Cooldown:" + floattostring(akcia->Getcooldown() / 1000.f) + " s\n";
 				}
 
 				text.setCharacterSize(13);
@@ -394,8 +400,6 @@ void StavInfoHraca::render() {
 		}
 
 		Stav::render();
-	//std::cout << hrac->Getstatistika()->Getakcie()->at("Utok")->dajPopis() << std::endl;
-	//std::cout << oznacene << std::endl;
 }
 
 
@@ -490,8 +494,8 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 
 
 	float posX, posY;
-	posX = x - 5.f+48;
-	posY = y - 5.f+48;
+	posX = x + 45.f;
+	posY = y + 45.f;
 
 	
 	obdlznik.setPosition(posX, posY);

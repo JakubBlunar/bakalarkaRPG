@@ -14,7 +14,7 @@ public:
 	int Getcooldown();
 	sf::Sprite* Getobrazok();
 	std::string Getmeno();
-	bool vykonajSa(Statistika* statHrac, Statistika* statNepriatel);
+	std::string vykonajSa(Statistika* statHrac, Statistika* statNepriatel, sf::Time aktCas);
 	int minPoskodenie();
 	int maxPoskodenie();
 

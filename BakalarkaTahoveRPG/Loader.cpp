@@ -198,6 +198,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 				int idTextury1 = root["Vrstva1"][i*vyska + j].asInt();
 				int idTextury2 = root["Vrstva2"][i*vyska + j].asInt();
 				int idTextury3 = root["Vrstva3"][i*vyska + j].asInt();
+				int idTextury4 = root["boj"][i*vyska + j].asInt();
 
 				Policko* policko = nullptr;
 
@@ -210,7 +211,12 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 						policko = new Policko(false);
 					}
 					else {
-						policko = new PolickoBoj(true);
+						if (idTextury4 == 0) {
+							policko = new Policko(true);
+						}
+						else {
+							policko = new PolickoBoj(true);
+						}
 					}
 				}
 

@@ -8,7 +8,7 @@ class AkciaDmg : public Akcia
 public:
 	AkciaDmg(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis, int mana,AkciaTyp typ,int paZakladnyDmg);
 	~AkciaDmg();
-	bool vykonajSa(Statistika* statHrac, Statistika* statNepriatel);
+	std::string vykonajSa(Statistika* statHrac, Statistika* statNepriatel, sf::Time aktCas);
 	int minPoskodenie(Statistika* stat);
 	int maxPoskodenie(Statistika* stat);
 
