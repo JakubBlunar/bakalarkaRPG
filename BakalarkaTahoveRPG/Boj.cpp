@@ -35,9 +35,12 @@ void Boj::bojStart() {
 	koniec = false;
 	boloVyhodnotenie = false;
 	hrac->Getstatistika()->setCombat(true);
+	npc->Getstatistika()->setCombat(true);
 }
 
-
+Nepriatel* Boj::Getnepriatel() {
+	return npc;
+}
 
 bool Boj::koniecBoja() {
 	return koniec;
@@ -203,7 +206,7 @@ void Boj::vyhodnotenie() {
 			
 		}
 		else {
-			std::cout << "Vyhral Npc" << std::endl;
+			stavHranieHry->zobrazPopup(new PopupOkno("Vyhral npc !"));
 		}
 
 		//zrusenie aktivnych bufov

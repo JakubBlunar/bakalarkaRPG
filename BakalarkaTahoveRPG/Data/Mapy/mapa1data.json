@@ -1,0 +1,23 @@
+{
+  "dvere": {
+    "1": {
+      "x": 1,
+      "y": 2,
+      "kam": "start",
+      "poziciaX": 0,
+      "poziciaY": 1,
+      "smerPohladu": 0
+    },
+    "2": {
+      "x": 3,
+      "y": 2,
+      "kam": "mapa1",
+      "poziciaX": 5,
+      "poziciaY": 2,
+      "smerPohladu": 1
+    }
+
+  },
+
+  "nepriatelia": ["sliz1"]
+}

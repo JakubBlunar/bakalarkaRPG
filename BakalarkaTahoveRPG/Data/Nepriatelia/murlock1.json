@@ -1,0 +1,58 @@
+{
+  "meno": "Murlock",
+  "obrazok": "murlock",
+  "levelOd": 2,
+  "levelDo": 4,
+  "hpOd": 20,
+  "hpDo": 25,
+  "mpOd": 25,
+  "mpDo": 30,
+  "silaOd": 1,
+  "silaDo": 5,
+  "intelektOd": 2,
+  "intelektDo": 6,
+  "redukciaMin": 15,
+  "redukciaMax": 5,
+  "uhybMin": 5,
+  "uhybMax": 30,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Poleptanie kyselinov",
+      "obrazok": "attack",
+      "rychlostCastenia": 3000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "magicka",
+      "mana": 1,
+      "zakladnaHodnota": 1.2
+    },
+    "2": {
+      "typ": "AkciaDmg",
+      "meno": "Poskriabanie",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1
+    },
+     "3": {
+      "typ": "AkciaLiecenie",
+      "meno": "Slabé liecenie",
+      "obrazok": "attack",
+      "rychlostCastenia": 3500,
+      "cooldown": 1000,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "magicka",
+      "mana": 2,
+      "zakladnaHodnota": 1
+    }
+  }
+  
+}

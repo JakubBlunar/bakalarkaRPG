@@ -19,7 +19,7 @@ public:
 	int GetrastSila();
 	int xpNaLevel(int level);
 	void vlozAkciu(Akcia* paAkcia, int paUroven);
-	std::map<std::string, int> lvlUpBonusy();
+	std::map<std::string, int> lvlUpBonusy(int lvl);
 	std::map<Akcia*, int>*  Getspelly();
 
 private:
@@ -31,5 +31,6 @@ private:
 	int rastSila;
 	std::map<Akcia*, int>*  spelly;
 
+	int statFunkcia(int lvl,int zaklad);
 };
 

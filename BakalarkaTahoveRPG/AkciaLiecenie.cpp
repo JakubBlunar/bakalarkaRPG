@@ -34,7 +34,7 @@ int AkciaLiecenie::minLiecenie(Statistika* statistika) {
 	else if (typ == AkciaTyp::MAGICKA) {
 		stat = statistika->Getintelekt();
 	}
-	return (int)ceil(0.7*stat* zakladnyHeal);
+	return (int)floor(1.2*floor(2 * stat + statistika->dajUroven() / 4 + 1) * zakladnyHeal);
 }
 
 int AkciaLiecenie::maxLiecenie(Statistika* statistika) {
@@ -45,5 +45,5 @@ int AkciaLiecenie::maxLiecenie(Statistika* statistika) {
 	else if (typ == AkciaTyp::MAGICKA) {
 		stat = statistika->Getintelekt();
 	}
-	return (int)ceil(1.3*stat* zakladnyHeal);
+	return (int)floor(1.2*floor(2 * stat + statistika->dajUroven() / 4 + 1) * zakladnyHeal);
 }

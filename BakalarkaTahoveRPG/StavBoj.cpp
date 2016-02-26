@@ -12,6 +12,7 @@
 #include "PopupOkno.h"
 #include "AkciaPridanieEfektu.h"
 #include "Efekt.h"
+#include "Nepriatel.h"
 #include <math.h>
 
 StavBoj::StavBoj(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra):Stav(paNazov,paOkno,paHra)
@@ -72,7 +73,12 @@ void StavBoj::onExit() {
 
 
 void StavBoj::render() {
+	
 
+	sf::Sprite* nepriatelObrazok = boj->Getnepriatel()->Getobrazok();
+	nepriatelObrazok->setPosition(sf::Vector2f(400.f, 100.f));
+	nepriatelObrazok->setScale(1.5, 1.5);
+	okno->draw(*nepriatelObrazok);
 
 	okno->draw(*logHranice->Getsprite());
 	sf::Text textLog(boj->Getlog(0, 40),*font,16U);

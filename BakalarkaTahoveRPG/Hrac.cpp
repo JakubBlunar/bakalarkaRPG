@@ -25,13 +25,18 @@ Hrac::Hrac(Zameranie* paZameranie) {
 	statistika = new Statistika();
 	inventar = new Inventar();
 	
-	for (std::map<Akcia*, int>::iterator it = paZameranie->Getspelly()->begin(); it != paZameranie->Getspelly()->end(); ++it)
-	{
+	std::map<std::string, int> bonusy = zameranie->lvlUpBonusy(statistika->dajUroven());
+	for (std::map<std::string, int>::iterator it = bonusy.begin(); it != bonusy.end(); ++it){
+		statistika->zvysStat(it->second - statistika->Getstat(it->first), it->first);
+		statistika->Sethp(statistika->GethpMax());
+		statistika->Setmp(statistika->GetmpMax());
+	}
+
+	for (std::map<Akcia*, int>::iterator it = zameranie->Getspelly()->begin(); it != zameranie->Getspelly()->end(); ++it){
 		if (statistika->dajUroven() == it->second) {
 			statistika->vlozAkciu(it->first);
 		}
 	}
-
 
 }
 
@@ -251,12 +256,12 @@ void Hrac::pridajSkusenosti(int pocet) {
 	int xpnalevel = zameranie->xpNaLevel(statistika->dajUroven() + 1);
 
 	int skusenosti = statistika->Getskusenosti();
-	std::map<std::string, int> bonusy = zameranie->lvlUpBonusy();
+	std::map<std::string, int> bonusy = zameranie->lvlUpBonusy(statistika->dajUroven());
 	if (skusenosti >= xpnalevel) {
 		statistika->setUroven(statistika->dajUroven() + 1);
 		for (std::map<std::string, int>::iterator it = bonusy.begin(); it != bonusy.end(); ++it)
 		{
-			statistika->zvysStat(it->second, it->first);
+			statistika->zvysStat(it->second - statistika->Getstat(it->first), it->first);
 			statistika->Sethp(statistika->GethpMax());
 			statistika->Setmp(statistika->GetmpMax());
 		}

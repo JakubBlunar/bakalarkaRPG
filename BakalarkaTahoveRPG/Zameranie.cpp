@@ -1,5 +1,6 @@
 #include "Zameranie.h"
 #include <map>
+#include <math.h>
 #include "Akcia.h"
 
 #include <iostream>
@@ -60,13 +61,13 @@ int Zameranie::xpNaLevel(int level) {
 	return (int)round((5 * (level * level * level)) / 6);
 }
 
-std::map<std::string, int> Zameranie::lvlUpBonusy(){
+std::map<std::string, int> Zameranie::lvlUpBonusy(int lvl){
 	std::map<std::string, int> bonusy;
-	bonusy.insert(std::pair<std::string, int>("hpMax", (int)rastHp));
-	bonusy.insert(std::pair<std::string, int>("mpMax", (int)rastMp));
-	bonusy.insert(std::pair<std::string, int>("sila", (int)rastSila));
-	bonusy.insert(std::pair<std::string, int>("intel", (int)rastIntel));
-	bonusy.insert(std::pair<std::string, int>("rychlost", (int)rastRychlost));
+	bonusy.insert(std::pair<std::string, int>("hpMax", statFunkcia(lvl,rastHp)));
+	bonusy.insert(std::pair<std::string, int>("mpMax", statFunkcia(lvl, rastMp)));
+	bonusy.insert(std::pair<std::string, int>("sila", statFunkcia(lvl, rastSila)));
+	bonusy.insert(std::pair<std::string, int>("intel", statFunkcia(lvl, rastIntel)));
+	bonusy.insert(std::pair<std::string, int>("rychlost", statFunkcia(lvl, rastRychlost)));
 	return bonusy;
 }
 
@@ -77,4 +78,9 @@ void Zameranie::vlozAkciu(Akcia* paAkcia, int paUroven) {
 
 std::map<Akcia*, int>*  Zameranie::Getspelly() {
 	return spelly;
+}
+
+
+int Zameranie::statFunkcia(int lvl, int zaklad) {
+	return floor(floor((2 * zaklad) * lvl / 100 + 5));
 }

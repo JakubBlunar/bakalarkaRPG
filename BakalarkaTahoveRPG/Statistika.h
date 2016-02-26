@@ -44,6 +44,7 @@ public:
 	int Getrychlost();
 	int Getsila();
 	int Getskusenosti();
+	int Statistika::Getstat(std::string aky);
 	void Sethp(int novaHodnota);
 	void SethpMax(int novaHodnota);
 	void Setintelekt(int novaHodnota);

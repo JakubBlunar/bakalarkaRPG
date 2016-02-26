@@ -1,0 +1,66 @@
+{
+  "meno": "Hnedy medved",
+  "obrazok": "hnedymedved",
+  "levelOd": 1,
+  "levelDo": 3,
+  "hpOd": 20,
+  "hpDo": 30,
+  "mpOd": 5,
+  "mpDo": 10,
+  "silaOd": 2,
+  "silaDo": 6,
+  "intelektOd": 3,
+  "intelektDo": 5,
+  "redukciaMin": 20,
+  "redukciaMax": 40,
+  "uhybMin": 2,
+  "uhybMax": 10,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Mocna laba",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1
+    },
+    "2": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Mocný rev",
+      "obrazok": "attack",
+      "rychlostCastenia": 500,
+      "cooldown": 15000,
+      "trvanie": 8000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 2,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "shout",
+        "stat": "sila",
+        "hodnota": -2,
+        "naSeba": false
+      }
+    },
+    "3": {
+      "typ": "AkciaDmg",
+      "meno": "Zahryznutie",
+      "obrazok": "attack",
+      "rychlostCastenia": 500,
+      "cooldown": 5000,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 1,
+      "zakladnaHodnota": 1.1
+    }
+  }
+  
+}

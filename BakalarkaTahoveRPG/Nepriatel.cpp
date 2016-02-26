@@ -3,14 +3,25 @@
 #include "Akcia.h"
 #include <iostream>
 
-Nepriatel::Nepriatel(std::string paMeno, DialogovyStrom* dialog,Statistika* paStatistika):Npc(paMeno,dialog) {
+Nepriatel::Nepriatel(std::string paMeno, std::string paObrazok, DialogovyStrom* dialog,Statistika* paStatistika):Npc(paMeno,dialog) {
 	statistika = paStatistika;
+	
+	const std::string cesta = "./Data/Grafika/Potvory/";
+	if (!textura.loadFromFile(cesta + paObrazok + ".png", sf::IntRect(0, 0, 256, 256))) {
+
+	}
+	obrazok = new sf::Sprite();
+	obrazok->setTexture(textura);
+	
 }
 
 Nepriatel::~Nepriatel() {
 	delete statistika;
 }
 
+sf::Sprite* Nepriatel::Getobrazok() {
+	return obrazok;
+}
 
 /*
 LogikaNpc Nepriatel::Getlogika(){

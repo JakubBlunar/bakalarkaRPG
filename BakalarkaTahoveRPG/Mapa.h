@@ -48,11 +48,13 @@ public:
 	void nastavPolicko(int x, int y, Policko*);
 	sf::FloatRect Getzobrazenaoblast();
 	sf::Time aktCas();
-	
+	void pridajNepriatela(std::string meno);
+	std::vector<std::string>* Getmoznynepriatelia();
 private:
 	Hra* hra;
 	Hrac* hrac;
 	Policko*** mapa;
+	std::vector<std::string>* moznyNepriatelia;
 
 	int sirka;
 	int vyska;

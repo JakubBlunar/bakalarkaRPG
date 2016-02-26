@@ -10,7 +10,7 @@ class Nepriatel : public Npc
 {
 
 public:
-	Nepriatel(std::string paMeno, DialogovyStrom* dialog, Statistika* paStatistika);
+	Nepriatel(std::string paMeno,std::string obrazok, DialogovyStrom* dialog, Statistika* paStatistika);
 	virtual ~Nepriatel();
 
 	//LogikaNpc Getlogika();
@@ -18,10 +18,13 @@ public:
 	//void Setlogika(LogikaNpc newVal);
 	void Setstatistika(Statistika* newVal);
 	Akcia* vyberAkciu(std::map<Akcia*,int>* cooldowny);
+	sf::Sprite* Getobrazok();
 
 private:
 	//LogikaNpc logika;
 	Statistika* statistika;
+	sf::Texture textura;
+	sf::Sprite* obrazok;
 	
 
 };

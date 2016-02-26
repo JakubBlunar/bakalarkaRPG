@@ -8,13 +8,10 @@
 #include "Loader.h"
 #include <random>
 
-#include "Statistika.h"
-#include "Akcia.h"
-#include "Nepriatel.h"
 #include "StavBoj.h"
 #include "Boj.h"
 #include "PopupOkno.h"
-#include "AkciaDmg.h"
+#include "Nepriatel.h"
 
 PolickoBoj::PolickoBoj(bool paPriechodne) :Policko(paPriechodne)
 {
@@ -25,7 +22,7 @@ PolickoBoj::PolickoBoj(bool paPriechodne) :Policko(paPriechodne)
 
 PolickoBoj::~PolickoBoj()
 {
-
+	
 }
 
 void PolickoBoj::hracSkok(Hrac* paHrac) {
@@ -33,19 +30,26 @@ void PolickoBoj::hracSkok(Hrac* paHrac) {
 	Hra* hra = Loader::Instance()->Gethra();
 	StavHranieHry* stavHranieHry = (StavHranieHry*) Loader::Instance()->Gethra()->dajStav("hranieHry");
 	Mapa* mapa = stavHranieHry->getMapa();
-	
+
+
 	std::random_device rd;
 	std::mt19937 generator(rd());
 	std::uniform_real_distribution<double> real(0, 1);
 	double p = real(generator);
 
 	if (0.1 >= p) {
-		Statistika* npcStatistika = new Statistika(1, 60, 80, 40, 50, 2, 6,2,25);
-		npcStatistika->vlozAkciu(new AkciaDmg("Poleptanie kyselinou", "attack", 2000, 0, 0, "", 0, AkciaTyp::FYZICKA,1));
-		Nepriatel* nepriatel = new Nepriatel("Nejaký sliz", nullptr, npcStatistika);
 
+		std::vector<std::string>* moznyNepriatelia = mapa->Getmoznynepriatelia();
+
+		std::uniform_int_distribution<int> rand(0, moznyNepriatelia->size()-1);
+		int id = rand(generator);
+
+		/*
+		
+		*/
+		Nepriatel* nepriatel = Loader::Instance()->nacitajNepriatela(moznyNepriatelia->at(id));
 		StavBoj* stavBoj = (StavBoj*)hra->dajStav("stavBoj");
-		stavBoj->setBoj(new Boj(paHrac, nepriatel));
+		stavBoj->setBoj(new Boj(paHrac, nepriatel ));
 
 		stavHranieHry->zobrazPopup(new PopupOkno("Napdol ta " + nepriatel->Getmeno()));
 		hra->zmenStavRozhrania("stavBoj");

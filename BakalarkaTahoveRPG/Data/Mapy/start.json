@@ -36,24 +36,5 @@
                 }
             },
        
-"dvere": {
-  "1": {
-    "x": 0,
-    "y": 0,
-    "kam": "les",
-    "poziciaX": 33,
-    "poziciaY": 49,
-    "smerPohladu": 3
-  },
-  "2": {
-      "x": 3,
-      "y": 0,
-      "kam": "mapa1",
-      "poziciaX": 10,
-      "poziciaY": 10,
-      "smerPohladu": 1
-    }
-
-  },
  "width":100
 }

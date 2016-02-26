@@ -30,7 +30,7 @@ public:
 	bool maAkciaCooldown(Akcia* paAkcia);
 	float castBarProgres();
 	std::string Getlog(int paOd, int paDo);
-
+	Nepriatel* Getnepriatel();
 private:
 	Hrac* hrac;
 	Akcia* hracAkcia;

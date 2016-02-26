@@ -22,12 +22,24 @@
 #include "Npc.h"
 #include "PolickoBoj.h"
 
+#include "Statistika.h"
+#include "Akcia.h"
+#include "Nepriatel.h"
+#include "AkciaDmg.h"
+#include "Efekt.h"
+#include "EfektUpravStat.h"
+#include "AkciaPridanieEfektu.h"
+
+#include <random>
+
 Loader* Loader::instancia = NULL;
 
 Loader* Loader::Instance()
 {
-	if (!instancia)
+	if (!instancia) {
+		srand((unsigned int)time(NULL));
 		instancia = new Loader();
+	}
 	return instancia;
 }
 
@@ -132,12 +144,13 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 	bool alive = true;
 	while (alive) {
 
+		Json::Value mapaData;
 		Json::Value root;
 		Json::Reader reader;
 		std::ifstream test(cestaKMapam + "" + paMeno + ".json", std::ifstream::binary);
-		std::cout << cestaKMapam + "" + paMeno + ".json" << std::endl;
+		std::ifstream data(cestaKMapam + "" + paMeno + "data.json", std::ifstream::binary);
 		bool parsingSuccessful = reader.parse(test, root, false);
-
+		parsingSuccessful = reader.parse(data, mapaData, false);
 		if (!parsingSuccessful)
 		{
 			std::cout << "chyba pri parsovani Jsonu mapy" << "\n";
@@ -146,6 +159,14 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 		int vyska = root["height"].asInt();
 		int sirka = root["width"].asInt();
 		novaMapa = new Mapa(paMeno, this->hra->GetHrac(), this->hra,sirka,vyska);
+
+		Json::Value nepriatelia(Json::arrayValue);
+		nepriatelia = mapaData["nepriatelia"];
+
+		for (int i = 0; i < nepriatelia.size(); i++) {
+			novaMapa->pridajNepriatela(nepriatelia[i].asCString());
+		}
+
 
 		// inicializacia mapy dveri
 		polickoDvere = new PolickoDvere**[sirka];
@@ -161,7 +182,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 
 
 		Json::Value dvere(Json::objectValue);
-		dvere = root["dvere"];
+		dvere = mapaData["dvere"];
 		int i = 0;
 		for (Json::Value::iterator it = dvere.begin(); it != dvere.end(); ++it) {
 			Json::Value value = (*it);
@@ -278,6 +299,7 @@ void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
 	std::string cestaKNpc= "./Data/Npc/";
 	std::string cestaNpcAnimacie = "./Data/Grafika/Npc/";
 	
+
 	bool alive = true;
 	while (alive) {
 
@@ -363,4 +385,117 @@ sf::Font* Loader::nacitajFont(std::string menoFontu) {
 		return nacitaneFonty.at(menoFontu);
 	}
 
+}
+
+Nepriatel* Loader::nacitajNepriatela(std::string paMeno) {
+	std::string cestaKNepriatelom = "./Data/Nepriatelia/";
+
+	Nepriatel* novyNepriatel;
+
+		Json::Value nepriatel;
+		Json::Reader reader;
+		std::ifstream json(cestaKNepriatelom + "" + paMeno + ".json", std::ifstream::binary);
+		bool parsingSuccessful = reader.parse(json, nepriatel, false);
+
+		if (!parsingSuccessful)
+		{
+			std::cout << "chyba pri parsovani Jsonu nepriatela " << "\n";
+		}
+
+		std::string meno = nepriatel["meno"].asCString();
+		std::string obrazok = nepriatel["obrazok"].asCString();
+
+		int levelOd = nepriatel["levelOd"].asInt();
+		int levelDo = nepriatel["levelDo"].asInt();
+		int minHp = nepriatel["hpOd"].asInt();
+		int maxHp = nepriatel["hpDo"].asInt();
+		int minMp = nepriatel["mpOd"].asInt();
+		int maxMp = nepriatel["mpDo"].asInt();
+		int silaOd = nepriatel["silaOd"].asInt();
+		int silaDo = nepriatel["silaDo"].asInt();
+		int intelentOd = nepriatel["intelektOd"].asInt();
+		int intelektDo = nepriatel["intelektDo"].asInt();
+		int redukciaMin = nepriatel["redukciaMin"].asInt();
+		int redukciaMax = nepriatel["redukciaMax"].asInt();
+		int uhybMin = nepriatel["uhybMin"].asInt();
+		int uhybMax = nepriatel["uhybMax"].asInt();
+
+		int level = nahodneCislo(levelOd, levelDo);
+		int hp = nahodneCislo(minHp,maxHp);
+		int mp = nahodneCislo(minMp, maxMp);
+		int sila = nahodneCislo(silaOd,silaDo);
+		int intelekt = nahodneCislo(intelentOd, intelektDo);
+
+		int rychlostMin = (int) ceil( ( (double) uhybMin / 100) * 6 * level );
+		int rychlostMax = (int) ceil( ( (double)uhybMax / 100) * 6 * level );
+		int rychlost = nahodneCislo(rychlostMin, rychlostMax);
+
+		int obranaMin = (int)ceil(( (double)redukciaMin/100) * 25 * level);
+		int obranaMax = (int)ceil(( (double)redukciaMax/100 ) * 25 * level);
+		int obrana = nahodneCislo(obranaMin, obranaMax);
+
+		Statistika* statistika = new Statistika(level,hp,hp,mp,mp,sila,intelekt,rychlost,obrana);
+
+		Json::Value akcie(Json::objectValue);
+		akcie = nepriatel["akcie"];
+		
+		for (Json::Value::iterator it = akcie.begin(); it != akcie.end(); ++it){
+			Json::Value key = it.key();
+			Json::Value akcia = (*it);
+
+			std::string typAkcie = akcia["typ"].asCString();
+			std::string menoAkcie = akcia["meno"].asCString();
+			std::string obrazokAkcie = akcia["obrazok"].asCString();
+			int rychlostCasteniaAkcie = akcia["rychlostCastenia"].asInt();
+			int cooldownAkcie = akcia["cooldown"].asInt();
+			int trvanieAkcie = akcia["trvanie"].asInt();
+			std::string popisAkcie = akcia["popis"].asCString();
+
+			AkciaTyp enumTypAkcie;
+			std::string statAkcie = akcia["stat"].asCString();
+			if (statAkcie == "fyzicka") {
+				enumTypAkcie = AkciaTyp::FYZICKA;
+			}
+			else {
+				enumTypAkcie = AkciaTyp::MAGICKA;
+			}
+
+			int manaAkcie = akcia["mana"].asInt();
+			double zakladnaHodnotaAkcie = akcia["zakladnaHodnota"].asDouble();
+			
+			if (typAkcie == "AkciaDmg") {
+				statistika->vlozAkciu(new AkciaDmg(menoAkcie, obrazokAkcie, rychlostCasteniaAkcie, cooldownAkcie, trvanieAkcie, popisAkcie, manaAkcie, enumTypAkcie, zakladnaHodnotaAkcie));
+			}
+			else if(typAkcie == "AkciaPridanieEfektu") {
+				Json::Value efekt(Json::objectValue);
+				efekt = akcia["efekt"];
+				std::string druh = efekt["druh"].asCString();
+				std::string obrazokEfektu = efekt["obrazok"].asCString();
+				std::string statEfektu = efekt["stat"].asCString();
+				int oKolko = efekt["hodnota"].asInt();
+				bool naNpc = efekt["naSeba"].asBool();
+
+				if (druh == "upravStat") {
+					Efekt* novyEfekt = new EfektUpravStat(obrazokEfektu, statEfektu,oKolko);
+					statistika->vlozAkciu(new AkciaPridanieEfektu(menoAkcie, obrazokAkcie, rychlostCasteniaAkcie, cooldownAkcie, trvanieAkcie, popisAkcie, manaAkcie, novyEfekt, naNpc));
+				}
+			}
+			else if (typAkcie == "AkciaLiecenie") {
+				statistika->vlozAkciu(new AkciaDmg(menoAkcie, obrazokAkcie, rychlostCasteniaAkcie, cooldownAkcie, trvanieAkcie, popisAkcie, manaAkcie, enumTypAkcie, zakladnaHodnotaAkcie));
+			}
+
+
+		}
+		statistika->prepocitajPoskodenia();
+		novyNepriatel = new Nepriatel(meno, obrazok, nullptr, statistika);
+
+
+		
+		
+		return novyNepriatel;
+}
+
+int Loader::nahodneCislo(int min, int max) {
+	if (min == max) return min;
+	return min + rand() % (max - min);
 }

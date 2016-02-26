@@ -25,11 +25,13 @@ Statistika::Statistika() {
 	prepocitajPoskodenia();
 	timerMp.reset();
 	combat = false;
+
+
 }
 
 Statistika::Statistika(int paUroven, int paHp, int paHpMax, int paMp, int paMpMax, int paSila, int paIntelekt, int paRychlost, int paObrana,std::map<int, Predmet*>* paObleceneVeci) {
 	
-	skusenosti = 0;
+	skusenosti = 20;
 	uroven = paUroven;
 	hp = paHp;
 	hpMax = paHpMax;
@@ -253,15 +255,11 @@ void Statistika::zvysStat(int kolko, std::string paCo) {
 
 	//hp
 	if (paCo == "hp") {
-		if (hp + kolko > hpMax) {
-			hp = hpMax;
+		if (hp + kolko > GethpMax()) {
+			hp = GethpMax();
 		}
 		else {
 			hp += kolko;
-		}
-
-		if (hp < 0) {
-			hp = 0;
 		}
 	}
 
@@ -280,14 +278,11 @@ void Statistika::zvysStat(int kolko, std::string paCo) {
 
 	//mp
 	if (paCo == "mp") {
-		if (mp + kolko > mpMax) {
-			mp = mpMax;
+		if (mp + kolko > GetmpMax()) {
+			mp = GetmpMax();
 		}
 		else {
 			mp += kolko;
-		}
-		if (mp < 0) {
-			mp = 0;
 		}
 	}
 
@@ -319,6 +314,50 @@ void Statistika::zvysStat(int kolko, std::string paCo) {
 	prepocitajPoskodenia();
 }
 
+int Statistika::Getstat(std::string paCo) {
+
+	//hp
+	if (paCo == "hp") {
+		return hp;
+	}
+
+	//hpMax
+	if (paCo == "hpMax") {
+		return hpMax;
+	}
+
+	//mp
+	if (paCo == "mp") {
+		return mp;
+	}
+
+	//mpMax
+	if (paCo == "mpMax") {
+		return mpMax;
+	}
+
+	//sila
+	if (paCo == "sila") {
+		return sila;
+	}
+
+	//intel
+	if (paCo == "intel") {
+		return intelekt;
+	}
+
+	//rychlost
+	if (paCo == "rychlost") {
+		return rychlost;
+	}
+
+	//obrana
+	if (paCo == "obrana") {
+		return obrana;
+	}
+	return 0;
+}
+
 void Statistika::setUroven(int paUroven) {
 	uroven = paUroven;
 }
@@ -336,20 +375,27 @@ void Statistika::prepocitajPoskodenia() {
 		Zbran* zbran1 =(Zbran*)oblecene->at(9);
 		if (oblecene->count(10)) {
 			Zbran* zbran2 = (Zbran*)oblecene->at(10);
-			double sucet = zbran1->Getminposkodenie() + 0.75*zbran2->Getmaxposkodenie();
-			minPoskodenie = (int)round(sucet + sucet*(0.1 * sila / uroven));
+			if (zbran2->Gettyp() != 11) {
+				int sucet = (int)floor(zbran1->Getminposkodenie() + 0.75*zbran2->Getminposkodenie());
+				minPoskodenie = (int)floor(2 * sila / 6 + 1) * sila * sucet;
 
-			sucet = zbran1->Getmaxposkodenie() + 0.75*zbran2->Getmaxposkodenie();
-			maxPoskodenie = (int)round(sucet + sucet*(0.1 * sila / uroven));
+				sucet = (int)floor(zbran1->Getmaxposkodenie() + 0.75*zbran2->Getmaxposkodenie());
+				maxPoskodenie = (int)floor(2 * sila / 5 + 1) * sucet;
+			}
+			else {
+				minPoskodenie = (int)floor(2 * sila / 5 + 1) * zbran1->Getminposkodenie();
+				maxPoskodenie = (int)floor(2 * sila / 5 + 1) * zbran1->Getmaxposkodenie();
+			}
 		}
 		else {
-			minPoskodenie = (int)round(zbran1->Getminposkodenie() + zbran1->Getminposkodenie()*(0.1 * sila / uroven));
-			maxPoskodenie = (int)round(zbran1->Getmaxposkodenie() + zbran1->Getmaxposkodenie()*(0.1 * sila / uroven));
+			minPoskodenie = (int)floor(2 * sila / 5 + 1) * zbran1->Getminposkodenie();
+			maxPoskodenie = (int)floor(2 * sila / 5 + 1) * zbran1->Getmaxposkodenie();
 		}
 	}
 	else {
-		minPoskodenie = (int)ceil((sila / (double)uroven));
-		maxPoskodenie = (int)ceil((sila / (double)uroven));
+		
+		minPoskodenie = (int)floor(2 * sila / 5 + 1);
+		maxPoskodenie = (int)floor(2 * sila / 5 + 1);
 	}
 }
 
@@ -391,11 +437,12 @@ int Statistika::Getrychlostutoku() {
 }
 
 double Statistika::Getsancanauhyb() {
-	return (double) rychlost / (10 * uroven);
+	if ((double)rychlost / (6 * uroven) > 0.50) return 0.50;
+	return (double) rychlost / (6 * uroven);
 }
 
 double Statistika::Getodolnostvociposkodeniu() {
-	return (double)obrana / (75 * uroven);
+	return (double)obrana / (25 * uroven);
 }
 
 std::map<Efekt*, sf::Time>* Statistika::Getaktivneefekty() {

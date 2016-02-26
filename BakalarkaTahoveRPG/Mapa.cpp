@@ -8,6 +8,7 @@
 #include "StavHranieHry.h"
 
 Mapa::Mapa(std::string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSirka) {
+	moznyNepriatelia = new std::vector<std::string>();
 	this->hrac = paHrac;
 	this->hra = hra;
 	posunX = 0;
@@ -334,4 +335,11 @@ void Mapa::hracInterakcia(StavHranieHry* paStav, void(StavHranieHry::*callbackFu
 
 sf::Time Mapa::aktCas() {
 	return casovac.getElapsedTime();
+}
+
+void Mapa::pridajNepriatela(std::string meno) {
+	moznyNepriatelia->push_back(meno);
+}
+std::vector<std::string>* Mapa::Getmoznynepriatelia() {
+	return moznyNepriatelia;
 }

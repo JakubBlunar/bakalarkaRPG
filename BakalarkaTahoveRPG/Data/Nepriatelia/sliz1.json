@@ -1,0 +1,55 @@
+{
+  "meno": "Lepkavy sliz",
+  "obrazok": "slime",
+  "levelOd": 1,
+  "levelDo": 3,
+  "hpOd": 15,
+  "hpDo": 25,
+  "mpOd": 2,
+  "mpDo": 6,
+  "silaOd": 1,
+  "silaDo": 5,
+  "intelektOd": 1,
+  "intelektDo": 1,
+  "redukciaMin": 20,
+  "redukciaMax": 40,
+  "uhybMin": 10,
+  "uhybMax": 20,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Poleptanie kyselinov",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1.0
+    },
+    "2": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Prsknutie do oci",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 10000,
+      "trvanie": 4000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 2,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "shout",
+        "stat": "sila",
+        "hodnota": -2,
+        "naSeba": false
+      }
+
+    }
+  }
+  
+}

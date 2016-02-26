@@ -8,6 +8,7 @@ class Npc;
 class Hra;
 class Mapa;
 class DialogovyStrom;
+class Nepriatel;
 
 class Loader {
 public:
@@ -16,6 +17,8 @@ public:
 	void nacitajMapu(std::string paMeno,int paX,int paY,int smer);
 	sf::Font* nacitajFont(std::string menoFontu);
 	DialogovyStrom* nacitajDialog(std::string paMeno);
+	Nepriatel* nacitajNepriatela(std::string paMeno);
+
 	bool Getnacitava();
 	Hra* Gethra();
 private:
@@ -36,6 +39,7 @@ private:
 	
 	std::map<std::string, sf::Font*> nacitaneFonty;
 	
+	int  nahodneCislo(int min, int max);
 };
 
 #endif // LOADER.H

@@ -11,7 +11,7 @@ Inventar::Inventar() {
 	pocetZlata = 0;
 
 	kapacita = 36;
-	Pouzitelny* zbran = new Zbran("Katana", 9, "wp1", 100,1,1,5,2000);
+	Pouzitelny* zbran = new Zbran("Katana", 9, "wp1", 100,1,1,2,2000);
 	Pouzitelny* brnenie = new Oblecenie("Ruth brnenie", 3, "ch1", 3,1);
 	Pouzitelny* stit = new Zbran("Tower stit", 11, "st1", 11,1,0,0,10000);
 	Pouzitelny* ramena = new Oblecenie("Ruth ramena", 2, "sh1", 3, 1);
@@ -21,17 +21,18 @@ Inventar::Inventar() {
 	Pouzitelny* topanky = new Oblecenie("Platovane topanky", 8, "bt1", 3, 1);
 	Pouzitelny* nahrdelnik = new Oblecenie("Zlaty nahrdelnik", 5, "nc1", 3, 1);
 	Pouzitelny* prsten = new Oblecenie("Prsten sily", 6, "pr1", 3, 1);
-	stit->Setarmor(25);
-
-	Pouzitelny* elixir = new Elixir("Maly Hp elixir", 12, "elixir", 5000, 1, "hp", 50);
-	zbran->Setsila(3);
-	zbran->SetsilaMult(0.05);
 	
+	stit->Setarmor(5);
 
-	brnenie->Setarmor(15);
-	brnenie->SetarmorMult(0.03);
-	brnenie->Setinteligencia(3);
-	brnenie->SetinteligenciaMult(0.01);
+	ramena->Setarmor(2);
+	helma->Setarmor(2);
+	nohavice->Setarmor(3);
+	rukavice->Setarmor(1);
+	topanky->Setarmor(2);
+
+	Pouzitelny* elixir = new Elixir("Maly Hp elixir", 12, "elixir", 5000, 1, "hp", 500);
+	
+	brnenie->Setarmor(3);
 	brnenie->Sethp(5);
 	try {
 	
@@ -46,7 +47,6 @@ Inventar::Inventar() {
 		pridajPredmet(prsten);
 		pridajPredmet(rukavice);
 		pridajPredmet(elixir);
-		pridajPredmet(new Zbran("Katana", 9, "wp1", 100, 1, 1, 5, 1000));
 	}
 	catch (int ex) {
 		if (ex == 1) {
