@@ -16,6 +16,6 @@ public:
 	virtual ~Oblecenie();
 
 	void pouzi(Hrac* hrac);
-
+	Oblecenie* copy();
 };
 #endif

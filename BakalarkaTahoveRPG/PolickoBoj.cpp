@@ -15,8 +15,6 @@
 
 PolickoBoj::PolickoBoj(bool paPriechodne) :Policko(paPriechodne)
 {
-	jePopup = false;
-	zapnute = false;
 }
 
 
@@ -51,7 +49,7 @@ void PolickoBoj::hracSkok(Hrac* paHrac) {
 		StavBoj* stavBoj = (StavBoj*)hra->dajStav("stavBoj");
 		stavBoj->setBoj(new Boj(paHrac, nepriatel ));
 
-		stavHranieHry->zobrazPopup(new PopupOkno("Napdol ta " + nepriatel->Getmeno()));
+		stavHranieHry->zobrazPopup(new PopupOkno("Napdol ta " + nepriatel->Getmeno() + " urovne " + std::to_string(nepriatel->Getstatistika()->dajUroven()) +"." ));
 		hra->zmenStavRozhrania("stavBoj");
 	}
 

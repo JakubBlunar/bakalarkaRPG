@@ -215,3 +215,20 @@ void Zbran::pouzi(Hrac* hrac) {
 int Zbran::GetrychlostUtoku() {
 	return rychlostUtoku;
 }
+
+Zbran* Zbran::copy() {
+	Zbran * nove = new Zbran(meno, typ, sObrazok, cena, uroven, minPoskodenie, maxPoskodenie, rychlostUtoku);
+	nove->Setarmor(armor);
+	nove->SetarmorMult(armorMult);
+	nove->Sethp(hp);
+	nove->SethpMult(hpMult);
+	nove->Setinteligencia(inteligencia);
+	nove->SetinteligenciaMult(inteligenciaMult);
+	nove->Setmp(mp);
+	nove->SetmpMult(mpMult);
+	nove->Setrychlost(rychlost);
+	nove->SetrychlostMult(rychlostMult);
+	nove->Setsila(sila);
+	nove->SetsilaMult(silaMult);
+	return nove;
+}

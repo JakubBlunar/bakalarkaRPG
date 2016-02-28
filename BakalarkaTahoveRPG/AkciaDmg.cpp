@@ -50,7 +50,7 @@ int AkciaDmg::minPoskodenie(Statistika* statistika) {
 		return (int)ceil(0.9*statistika->Getminposkodenie()*zakladnyDmg);
 	}
 	else {
-		return (int)floor(0.9*floor(2 * statistika->Getintelekt() + statistika->dajUroven() / 4 + 1) * zakladnyDmg);
+		return (int)floor(0.8*floor(2 * statistika->Getintelekt() + statistika->dajUroven() / 6 + 1) * zakladnyDmg);
 	}
 	
 	
@@ -61,7 +61,7 @@ int AkciaDmg::maxPoskodenie(Statistika* statistika) {
 		return (int)ceil(1.3*statistika->Getmaxposkodenie()*zakladnyDmg);
 	}
 	else{
-		return (int)floor(1.2*floor(2 * statistika->Getintelekt()+ statistika->dajUroven() / 4 + 1) * zakladnyDmg);
+		return (int)floor(1.1*floor(2 * statistika->Getintelekt()+ statistika->dajUroven() / 6 + 1) * zakladnyDmg);
 	}
 	
 }

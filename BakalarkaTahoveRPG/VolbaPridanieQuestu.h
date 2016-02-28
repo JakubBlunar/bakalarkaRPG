@@ -1,4 +1,5 @@
-#pragma once
+#if !defined(VolbaPridanieQuestu_h)
+#define VolbaPridanieQuestu_h
 
 #include "DialogovyStrom.h"
 
@@ -12,3 +13,4 @@ public:
 	void akcia(Hrac* hrac);
 };
 
+#endif

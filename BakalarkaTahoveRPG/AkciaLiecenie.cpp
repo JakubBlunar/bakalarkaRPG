@@ -4,7 +4,7 @@
 
 
 
-AkciaLiecenie::AkciaLiecenie(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis, int mana, AkciaTyp typ, int paZakladnyHeal):Akcia(meno, obrazok, casCastenia, cooldown, trvanie, popis, mana, typ)
+AkciaLiecenie::AkciaLiecenie(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis, int mana, AkciaTyp typ, double paZakladnyHeal):Akcia(meno, obrazok, casCastenia, cooldown, trvanie, popis, mana, typ)
 {
 	this->zakladnyHeal = paZakladnyHeal;
 }
@@ -34,7 +34,7 @@ int AkciaLiecenie::minLiecenie(Statistika* statistika) {
 	else if (typ == AkciaTyp::MAGICKA) {
 		stat = statistika->Getintelekt();
 	}
-	return (int)floor(1.2*floor(2 * stat + statistika->dajUroven() / 4 + 1) * zakladnyHeal);
+	return (int)floor(0.9*floor(2 * stat + statistika->dajUroven() / 5 + 1) * zakladnyHeal);
 }
 
 int AkciaLiecenie::maxLiecenie(Statistika* statistika) {
@@ -45,5 +45,5 @@ int AkciaLiecenie::maxLiecenie(Statistika* statistika) {
 	else if (typ == AkciaTyp::MAGICKA) {
 		stat = statistika->Getintelekt();
 	}
-	return (int)floor(1.2*floor(2 * stat + statistika->dajUroven() / 4 + 1) * zakladnyHeal);
+	return (int)floor(1.3*floor(2 * stat + statistika->dajUroven() / 5 + 1) * zakladnyHeal);
 }

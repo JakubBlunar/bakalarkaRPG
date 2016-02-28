@@ -48,3 +48,20 @@ void Oblecenie::pouzi(Hrac* hrac) {
 		hrac->Getinventar()->pridajPredmet(this);
 	}
 }
+
+Oblecenie* Oblecenie::copy() {
+	Oblecenie* nove = new Oblecenie(meno, typ, sObrazok, cena, uroven);
+	nove->Setarmor(armor);
+	nove->SetarmorMult(armorMult);
+	nove->Sethp(hp);
+	nove->SethpMult(hpMult);
+	nove->Setinteligencia(inteligencia);
+	nove->SetinteligenciaMult(inteligenciaMult);
+	nove->Setmp(mp);
+	nove->SetmpMult(mpMult);
+	nove->Setrychlost(rychlost);
+	nove->SetrychlostMult(rychlostMult);
+	nove->Setsila(sila);
+	nove->SetsilaMult(silaMult);
+	return nove;
+}

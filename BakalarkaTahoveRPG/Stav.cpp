@@ -32,7 +32,9 @@ void Stav::update(double delta) {
 			if (popupText->skoncil()) {
 				delete popupText;
 				popupText = nullptr;
+				stlacenaKlavesa = true;
 				stav = StavAkcia::NORMAL;
+				
 			}
 			else {
 				stlacenaKlavesa = true;

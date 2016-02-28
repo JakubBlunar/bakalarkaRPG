@@ -1,0 +1,77 @@
+{
+  "polozky": {
+    "1": {
+      "typTriedy": "elixir",
+      "meno": "Maly Hp elixir",
+      "obrazok": "elixir",
+      "typ": 12,
+      "cena": 20,
+      "uroven": 1,
+
+      "stat": "hp",
+      "oKolko": 50,
+
+      "hp": 0,
+      "hpMult": 0,
+      "mp": 0,
+      "mpMult": 0,
+      "sila": 0,
+      "silaMult": 0,
+      "intelekt": 0,
+      "intelektMult": 0,
+      "rychlost": 0,
+      "rychlostMult": 0,
+      "obrana": 0,
+      "obranaMult": 0
+
+
+    },
+    "2": {
+      "typTriedy": "zbran",
+      "meno": "Maly mec",
+      "obrazok": "wp1",
+      "typ": 9,
+      "cena": 100,
+      "uroven": 1,
+       
+      "hp": 0,
+      "hpMult": 0,
+      "mp": 0,
+      "mpMult": 0,
+      "sila": 0,
+      "silaMult": 0,
+      "intelekt": 0,
+      "intelektMult": 0,
+      "rychlost": 0,
+      "rychlostMult": 0,
+      "obrana": 0,
+      "obranaMult": 0,
+
+      "minDmg": 1,
+      "maxDmg": 2,
+      "rychlostUtoku": 2000
+    },
+     "3": {
+      "typTriedy": "oblecenie",
+      "meno": "Brnenie",
+      "obrazok": "ch1",
+      "typ": 3,
+      "cena": 50,
+      "uroven": 1,
+
+      "hp": 5,
+      "hpMult": 0,
+      "mp": 2,
+      "mpMult": 0,
+      "sila": 0,
+      "silaMult": 0,
+      "intelekt": 0,
+      "intelektMult": 0,
+      "rychlost": 0,
+      "rychlostMult": 0,
+      "obrana": 0,
+      "obranaMult": 0
+    }
+  }
+  
+}

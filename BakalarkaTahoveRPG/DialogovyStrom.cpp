@@ -35,7 +35,7 @@ DialogVolba* DialogPolozka::Getvolba(int paIndex) {
 }
 
 void DialogVolba::akcia(Hrac* hrac) {
-	cout << "Ziadna akcia - obycajna volba" << endl;
+	
 }
 
 DialogVolba::DialogVolba(string paText, int dalsia) {

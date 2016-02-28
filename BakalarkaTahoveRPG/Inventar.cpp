@@ -34,6 +34,7 @@ Inventar::Inventar() {
 	
 	brnenie->Setarmor(3);
 	brnenie->Sethp(5);
+	
 	try {
 	
 		pridajPredmet(zbran);
@@ -47,6 +48,7 @@ Inventar::Inventar() {
 		pridajPredmet(prsten);
 		pridajPredmet(rukavice);
 		pridajPredmet(elixir);
+		pridajPredmet(new Elixir("Maly Hp elixir", 12, "elixir", 5000, 1, "hp", 500));
 	}
 	catch (int ex) {
 		if (ex == 1) {

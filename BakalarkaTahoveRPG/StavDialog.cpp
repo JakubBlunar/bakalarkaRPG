@@ -23,9 +23,7 @@ StavDialog::~StavDialog() {
 void StavDialog::onEnter() {
 	Stav::onEnter();
 	oznacene = 0;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
-		stlacenaKlavesa = true;
-	}
+	stlacenaKlavesa = true;
 }
 
 
@@ -52,6 +50,8 @@ void StavDialog::render() {
 		text.setPosition(sf::Vector2f(10.f, 10.f));
 		okno->draw(text);
 
+		float y = 15.f + text.getGlobalBounds().height;
+
 		text.setCharacterSize(20U);
 		for (int i = 0; i < dialog->Getaktualnapolozka()->pocetMoznosti(); i++) {
 			if (oznacene == i) {
@@ -60,13 +60,13 @@ void StavDialog::render() {
 			else {
 				text.setColor(sf::Color::White);
 			}
-			text.setString(std::to_string(i)+ ". " + dialog->Getaktualnapolozka()->Getvolba(i)->text);
-			text.setPosition(sf::Vector2f(32.f, i*25 +40.f));
+			text.setString(std::to_string(i+1)+ ". " + dialog->Getaktualnapolozka()->Getvolba(i)->text);
+			text.setPosition(sf::Vector2f(32.f,y + i*25 +40.f));
 			okno->draw(text);
 		}
 
 	}
-	//std::cout << oznacene << std::endl;
+	Stav::render();
 }
 
 
@@ -96,7 +96,7 @@ void StavDialog::update(double delta) {
 					if (oznacene > 0) oznacene--;
 				}
 
-				if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+				if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)|| sf::Keyboard::isKeyPressed(sf::Keyboard::E))) {
 					stlacenaKlavesa = true;
 					dialog->zmenPolozku(oznacene);
 					oznacene = 0;
@@ -113,6 +113,7 @@ void StavDialog::update(double delta) {
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::E)
 				) {
 				stlacenaKlavesa = false;
 			}

@@ -8,6 +8,7 @@ Predmet::Predmet(std::string meno, int typ, std::string paObrazok, int cena,int 
 	
 	const std::string predmety_cesta = "Data/Grafika/Predmety/";
 	
+	this->sObrazok = paObrazok;
 	this->uroven = paUroven;
 	this->meno = meno;
 	this->typ = typ;
@@ -27,7 +28,6 @@ Predmet::Predmet(std::string meno, int typ, std::string paObrazok, int cena,int 
 
 Predmet::~Predmet() {
 	delete obrazok;
-	delete textura;
 }
 
 

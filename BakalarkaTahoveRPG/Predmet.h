@@ -29,13 +29,14 @@ public:
 	void Setobrazok(sf::Sprite* newVal);
 	
 
-private:
+protected:
 	int uroven;
 	int typ;
 	int cena;
 	std::string meno;
 	sf::Sprite* obrazok;
 	sf::Texture* textura;
+	std::string sObrazok;
 	
 
 };

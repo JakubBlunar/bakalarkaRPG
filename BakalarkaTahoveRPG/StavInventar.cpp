@@ -97,7 +97,7 @@ void StavInventar::render() {
 	}
 
 	if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
-		vykresliOknoPredmetu(inventar->dajPredmetNaIndexe(oznacene), startX + (oznacene%nasirku) * 55 + 48, startY + (oznacene / nasirku) * 55 + 48, okno);
+		vykresliOknoPredmetu(inventar->dajPredmetNaIndexe(oznacene), startX + (oznacene%nasirku) * 55 + 48, startY + (oznacene / nasirku) * 55 + 48, okno, true);
 	}
 
 	text.setString("Enter - pouzi oznaceny predmet\nX - vyhod predmet");
@@ -188,7 +188,7 @@ void StavInventar::update(double delta) {
 }
 
 
-void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::RenderWindow* okno) {
+void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::RenderWindow* okno, bool predaj) {
 	
 	// vykreslenie obdlznika na ktorom sa bude vypisovat info predmetu 
 	sf::RectangleShape obdlznik;
@@ -238,7 +238,13 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 		Elixir* elixir = (Elixir*)predmet;
 
 		std::string info = elixir->dajInfo();
-		info += "\n\nCena: " + std::to_string(elixir->Getcena());
+
+		if (predaj) {
+			info += "\n\nCena: " + std::to_string((int)round(elixir->Getcena() / 2));
+		}
+		else {
+			info += "\n\nCena: " + std::to_string(elixir->Getcena());
+		}
 
 		text.setPosition(sf::Vector2f(posX + 5.f, posY + 48.f));
 		text.setString(info);
@@ -340,7 +346,12 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 			info += " %\n";
 		}
 
-		info += "\n\nCena: " + std::to_string(pouzitelny->Getcena());
+		if (predaj) {
+			info += "\n\nCena: " + std::to_string((int)round(pouzitelny->Getcena() / 2));
+		}
+		else {
+			info += "\n\nCena: " + std::to_string(pouzitelny->Getcena());
+		}
 
 		text.setPosition(sf::Vector2f(posX + 5.f, posY + 48.f));
 		text.setString(info);

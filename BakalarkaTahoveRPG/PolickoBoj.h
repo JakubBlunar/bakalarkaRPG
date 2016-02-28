@@ -10,8 +10,5 @@ public:
 	~PolickoBoj();
 
 	void hracSkok(Hrac* paHrac);
-private:
-	bool jePopup;
-	bool zapnute;
 };
 

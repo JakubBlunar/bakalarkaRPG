@@ -1,0 +1,39 @@
+{
+  "polozky": {
+    "0": {
+      "text": "Ahoj bojovnik !\nVyzeras ubolene.\nAk chces mozem ta osetrit.",
+      "volby": {
+        "1": {
+          "kam": 1,
+          "text": "To by som bol rád.",
+          "typ": "liecenie"
+        },
+        "2": {
+          "kam": 2,
+          "text": "Dakujem ale neprosim si.",
+          "typ": ""
+        }
+      }
+    },
+    "1": {
+      "text": "Abraka dabra nech sa ti polepsi.",
+      "volby": {
+        "1": {
+          "kam": -1,
+          "text": "Dakujem!",
+          "typ": ""
+        }
+      }
+    },
+    "2": {
+      "text": "Tak ako povies.\nAk by si potreboval pomoc budem tu.",
+      "volby": {
+        "1": {
+          "kam": -1,
+          "text": "Dobre. Maj sa zatial.",
+          "typ": ""
+        }
+      }
+    }
+  }
+}

@@ -15,7 +15,7 @@ public:
 	int Getmaxposkodenie();
 	int GetrychlostUtoku();
 	void pouzi(Hrac* hrac);
-
+	Zbran* copy();
 private:
 	int rychlostUtoku;
 	int minPoskodenie;

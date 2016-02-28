@@ -21,7 +21,6 @@ Pouzitelny::Pouzitelny(std::string meno, int typ, std::string paObrazok, int cen
 
 
 Pouzitelny::~Pouzitelny() {
-	Predmet::~Predmet();
 }
 
 
@@ -46,7 +45,7 @@ int Pouzitelny::Gethp() {
 }
 
 
-int Pouzitelny::GethpMult() {
+double Pouzitelny::GethpMult() {
 
 	return hpMult;
 }
@@ -70,7 +69,7 @@ int Pouzitelny::Getmp() {
 }
 
 
-int Pouzitelny::GetmpMult() {
+double Pouzitelny::GetmpMult() {
 
 	return mpMult;
 }
@@ -124,7 +123,7 @@ void Pouzitelny::Sethp(int newVal) {
 }
 
 
-void Pouzitelny::SethpMult(int newVal) {
+void Pouzitelny::SethpMult(double newVal) {
 
 	hpMult = newVal;
 }
@@ -148,7 +147,7 @@ void Pouzitelny::Setmp(int newVal) {
 }
 
 
-void Pouzitelny::SetmpMult(int newVal) {
+void Pouzitelny::SetmpMult(double newVal) {
 
 	mpMult = newVal;
 }

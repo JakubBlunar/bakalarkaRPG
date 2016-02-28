@@ -198,6 +198,15 @@
     <ClInclude Include="AkciaPridanieEfektu.h">
       <Filter>Header Files\Akcie</Filter>
     </ClInclude>
+    <ClInclude Include="VolbaObchodovanie.h">
+      <Filter>Header Files\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="StavObchod.h">
+      <Filter>Header Files\Stavy</Filter>
+    </ClInclude>
+    <ClInclude Include="VolbaVyliecenie.h">
+      <Filter>Header Files\Dialog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -334,6 +343,15 @@
     </ClCompile>
     <ClCompile Include="AkciaPridanieEfektu.cpp">
       <Filter>Source Files\Akcie</Filter>
+    </ClCompile>
+    <ClCompile Include="VolbaObchodovanie.cpp">
+      <Filter>Source Files\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="StavObchod.cpp">
+      <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="VolbaVyliecenie.cpp">
+      <Filter>Source Files\Dialog</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

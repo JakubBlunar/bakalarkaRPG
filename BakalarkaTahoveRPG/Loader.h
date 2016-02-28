@@ -3,12 +3,14 @@
 #include <SFML\Graphics.hpp>
 #include <map>
 #include <string>
+#include <vector>
 
 class Npc;
 class Hra;
 class Mapa;
 class DialogovyStrom;
 class Nepriatel;
+class Predmet;
 
 class Loader {
 public:
@@ -18,6 +20,7 @@ public:
 	sf::Font* nacitajFont(std::string menoFontu);
 	DialogovyStrom* nacitajDialog(std::string paMeno);
 	Nepriatel* nacitajNepriatela(std::string paMeno);
+	std::vector<Predmet*>* nacitajObchod(std::string paMeno);
 
 	bool Getnacitava();
 	Hra* Gethra();
@@ -39,6 +42,7 @@ private:
 	
 	std::map<std::string, sf::Font*> nacitaneFonty;
 	
+
 	int  nahodneCislo(int min, int max);
 };
 

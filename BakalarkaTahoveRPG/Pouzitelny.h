@@ -12,11 +12,11 @@ public:
 	int Getarmor();
 	double GetarmorMult();
 	int Gethp();
-	int GethpMult();
+	double GethpMult();
 	int Getinteligencia();
 	double GetinteligenciaMult();
 	int Getmp();
-	int GetmpMult();
+	double GetmpMult();
 	int Getrychlost();
 	double GetrychlostMult();
 	int Getsila();
@@ -29,11 +29,11 @@ public:
 	void Setarmor(int newVal);
 	void SetarmorMult(double newVal);
 	void Sethp(int newVal);
-	void SethpMult(int newVal);
+	void SethpMult(double newVal);
 	void Setinteligencia(int newVal);
 	void SetinteligenciaMult(double newVal);
 	void Setmp(int newVal);
-	void SetmpMult(int newVal);
+	void SetmpMult(double newVal);
 	void Setobleceny(bool newVal);
 	void Setrychlost(int newVal);
 	void SetrychlostMult(double newVal);
@@ -42,16 +42,14 @@ public:
 protected:
 	Pouzitelny(std::string meno, int typ, std::string paObrazok, int cena, int paUroven);
 	virtual ~Pouzitelny();
-
-private:
 	int armor;
 	double armorMult;
 	int hp;
-	int hpMult;
+	double hpMult;
 	int inteligencia;
 	double inteligenciaMult;
 	int mp;
-	int mpMult;
+	double mpMult;
 	bool obleceny;
 	int rychlost;
 	double rychlostMult;

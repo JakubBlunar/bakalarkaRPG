@@ -12,7 +12,6 @@ Elixir::Elixir(std::string meno, int typ, std::string paObrazok, int cena, int p
 
 
 Elixir::~Elixir() {
-	Pouzitelny::~Pouzitelny();
 }
 
 
@@ -21,7 +20,7 @@ void Elixir::pouzi(Hrac* hrac) {
 	if (hrac->Getstatistika()->dajUroven() < this->Geturoven()) return;
 	hrac->Getstatistika()->zvysStat(oKolko, stat);
 	hrac->Getinventar()->zmazPredmet(this);
-
+	delete this;
 }
 
 std::string Elixir::dajInfo() {
@@ -73,4 +72,8 @@ std::string Elixir::dajInfo() {
 	}
 
 	return info;
+}
+
+Elixir* Elixir::copy() {
+	return new Elixir(meno,typ,sObrazok,cena,uroven,stat,oKolko);
 }

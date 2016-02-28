@@ -19,8 +19,11 @@
 #include "Animacia.h"
 #include "DialogovyStrom.h"
 #include "VolbaPridanieQuestu.h"
+#include "VolbaObchodovanie.h"
+#include "VolbaVyliecenie.h"
 #include "Npc.h"
 #include "PolickoBoj.h"
+
 
 #include "Statistika.h"
 #include "Akcia.h"
@@ -29,6 +32,12 @@
 #include "Efekt.h"
 #include "EfektUpravStat.h"
 #include "AkciaPridanieEfektu.h"
+#include "AkciaLiecenie.h"
+
+#include "Elixir.h"
+#include "Pouzitelny.h"
+#include "Oblecenie.h"
+#include "Zbran.h"
 
 #include <random>
 
@@ -67,6 +76,7 @@ DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
 
 	if (!parsingSuccessful)
 	{
+		std::cout << "chyba!!!!" << std::endl;
 		DialogovyStrom* dialog;
 		dialog = new DialogovyStrom();
 		DialogPolozka *node0 = new DialogPolozka("Ahoj udatny bojovnik.");
@@ -101,6 +111,13 @@ DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
 			}
 			else if(typ == "pridanieQuestu") {
 				polozka->pridajMoznost(new VolbaPridanieQuestu(volbaText, dalsia));
+			}
+			else if (typ == "obchod") {
+				std::string aky = volbaData["aky"].asCString();
+				polozka->pridajMoznost(new VolbaObchodovanie(volbaText, dalsia,aky));
+			}
+			else if (typ == "liecenie") {
+				polozka->pridajMoznost(new VolbaVyliecenie(volbaText, dalsia));
 			}
 
 
@@ -163,7 +180,7 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 		Json::Value nepriatelia(Json::arrayValue);
 		nepriatelia = mapaData["nepriatelia"];
 
-		for (int i = 0; i < nepriatelia.size(); i++) {
+		for (unsigned int i = 0; i < nepriatelia.size(); i++) {
 			novaMapa->pridajNepriatela(nepriatelia[i].asCString());
 		}
 
@@ -481,7 +498,7 @@ Nepriatel* Loader::nacitajNepriatela(std::string paMeno) {
 				}
 			}
 			else if (typAkcie == "AkciaLiecenie") {
-				statistika->vlozAkciu(new AkciaDmg(menoAkcie, obrazokAkcie, rychlostCasteniaAkcie, cooldownAkcie, trvanieAkcie, popisAkcie, manaAkcie, enumTypAkcie, zakladnaHodnotaAkcie));
+				statistika->vlozAkciu(new AkciaLiecenie(menoAkcie, obrazokAkcie, rychlostCasteniaAkcie, cooldownAkcie, trvanieAkcie, popisAkcie, manaAkcie, enumTypAkcie, zakladnaHodnotaAkcie));
 			}
 
 
@@ -498,4 +515,92 @@ Nepriatel* Loader::nacitajNepriatela(std::string paMeno) {
 int Loader::nahodneCislo(int min, int max) {
 	if (min == max) return min;
 	return min + rand() % (max - min);
+}
+
+std::vector<Predmet*>* Loader::nacitajObchod(std::string paMeno) {
+	std::string cestaKObchodom = "./Data/Obchody/";
+
+	std::vector<Predmet*>* obchod = new std::vector<Predmet*>();
+
+	Json::Value jObchod;
+	Json::Reader reader;
+	std::ifstream json(cestaKObchodom + "" + paMeno + ".json", std::ifstream::binary);
+	bool parsingSuccessful = reader.parse(json, jObchod, false);
+
+	if (!parsingSuccessful)
+	{
+		std::cout << "chyba pri parsovani Jsonu obchodu " << "\n";
+	}
+
+	Json::Value polozky(Json::objectValue);
+	polozky = jObchod["polozky"];
+
+	for (Json::Value::iterator it = polozky.begin(); it != polozky.end(); ++it) {
+		Json::Value key = it.key();
+		Json::Value polozka = (*it);
+
+		std::string typTriedy = polozka["typTriedy"].asCString();
+		
+		std::string meno = polozka["meno"].asCString();
+		std::string obrazok = polozka["obrazok"].asCString();
+		int typ = polozka["typ"].asInt();
+		int cena = polozka["cena"].asInt();
+		int uroven = polozka["uroven"].asInt();
+
+		if (typTriedy == "elixir") {
+			std::string co = polozka["stat"].asCString();
+			int oKolko = polozka["oKolko"].asInt();
+			obchod->push_back(new Elixir(meno, typ, obrazok, cena, uroven, co, oKolko));
+		}
+		else {
+
+			Pouzitelny* predmet;
+			if (typTriedy == "zbran") {
+
+				int minDmg = polozka["minDmg"].asInt();
+				int maxDmg = polozka["maxDmg"].asInt();
+				int rychlostUtoku = polozka["rychlostUtoku"].asInt();
+
+				predmet = new Zbran(meno, typ, obrazok, cena, uroven,minDmg,maxDmg,rychlostUtoku);
+			}
+			else {
+				predmet = new Oblecenie(meno, typ, obrazok, cena, uroven);
+			}
+
+			int hp = polozka["hp"].asInt();
+			double hpMult = polozka["hpMult"].asDouble();
+			int mp = polozka["mp"].asInt();
+			double mpMult = polozka["mpMult"].asDouble();
+			int sila = polozka["sila"].asInt();
+			double silaMult = polozka["silaMult"].asDouble();
+			int intelekt = polozka["intelekt"].asInt();
+			double intelektMult = polozka["intelektMult"].asDouble();
+			int rychlost = polozka["rychlost"].asInt();
+			double rychlostMult = polozka["rychlostMult"].asDouble();
+			int obrana = polozka["obrana"].asInt();
+			double obranaMult = polozka["obranaMult"].asDouble();
+
+			predmet->Sethp(hp);
+			predmet->SethpMult(hpMult);
+			predmet->Setmp(mp);
+			predmet->SetmpMult(mpMult);
+			predmet->Setsila(sila);
+			predmet->SetsilaMult(silaMult);
+			predmet->Setinteligencia(intelekt);
+			predmet->SetinteligenciaMult(intelektMult);
+			predmet->Setrychlost(rychlost);
+			predmet->SetrychlostMult(rychlostMult);
+			predmet->Setarmor(obrana);
+			predmet->SetarmorMult(obranaMult);
+
+			obchod->push_back(predmet);
+
+		}
+
+	}
+	
+
+
+
+	return obchod;
 }
