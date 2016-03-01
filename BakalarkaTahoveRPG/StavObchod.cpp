@@ -270,7 +270,7 @@ void StavObchod::update(double delta) {
 						inventar->zmazPredmet(p);
 						inventar->pridajZlato((int)round(p->Getcena()/2));
 						std::string info = "Predmet " + p->Getmeno() + " bol predany!";
-						//delete p;
+						delete p;
 						zobrazPopup(new PopupOkno(info));
 
 					}

@@ -8,10 +8,10 @@
 #include "Elixir.h"
 
 Inventar::Inventar() {
-	pocetZlata = 0;
+	pocetZlata = 500;
+	kapacita = 18;
 
-	kapacita = 36;
-	Pouzitelny* zbran = new Zbran("Katana", 9, "wp1", 100,1,1,2,2000);
+	/*Pouzitelny* zbran = new Zbran("Katana", 9, "wp1", 100,1,1,2,2000);
 	Pouzitelny* brnenie = new Oblecenie("Ruth brnenie", 3, "ch1", 3,1);
 	Pouzitelny* stit = new Zbran("Tower stit", 11, "st1", 11,1,0,0,10000);
 	Pouzitelny* ramena = new Oblecenie("Ruth ramena", 2, "sh1", 3, 1);
@@ -54,7 +54,7 @@ Inventar::Inventar() {
 		if (ex == 1) {
 			std::cout << "inventar je plny" << std::endl;
 		}
-	}
+	}*/
 }
 
 

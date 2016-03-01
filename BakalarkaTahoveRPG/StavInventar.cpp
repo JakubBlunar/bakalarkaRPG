@@ -19,7 +19,7 @@ StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* p
 	
 	ukazovatel.setSize(sf::Vector2f(48, 48));
 	ukazovatel.setFillColor(sf::Color(255, 0, 0, 128));
-	oznacene = -10;
+	oznacene = 0;
 	nasirku =18;
 }
 
@@ -38,12 +38,8 @@ void StavInventar::onEnter() {
 
 	hrac = hra->GetHrac();
 	inventar = hrac->Getinventar();
-	if (inventar->pocetPredmetov() > 0) {
-		oznacene = 0;
-	}
-	else {
-		oznacene = -10;
-	}
+	oznacene = 0;
+	
 }
 
 

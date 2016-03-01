@@ -14,7 +14,6 @@ Oblecenie::Oblecenie(std::string meno, int typ, std::string paObrazok, int cena,
 
 
 Oblecenie::~Oblecenie() {
-	Pouzitelny::~Pouzitelny();
 }
 
 

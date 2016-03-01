@@ -28,6 +28,7 @@ Predmet::Predmet(std::string meno, int typ, std::string paObrazok, int cena,int 
 
 Predmet::~Predmet() {
 	delete obrazok;
+	delete textura;
 }
 
 

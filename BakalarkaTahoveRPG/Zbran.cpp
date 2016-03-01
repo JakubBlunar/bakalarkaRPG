@@ -13,7 +13,7 @@ Zbran::Zbran(std::string meno, int typ, std::string paObrazok, int cena, int paU
 
 
 Zbran::~Zbran() {
-	Pouzitelny::~Pouzitelny();
+
 }
 
 
