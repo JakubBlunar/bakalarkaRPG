@@ -2,6 +2,7 @@
 
 #include <SFML\Graphics.hpp>
 #include <map>
+#include <deque>
 
 class Mapa;
 class Zameranie;
@@ -9,6 +10,7 @@ class Animacia;
 class Statistika;
 class Inventar;
 class Predmet;
+class QuestManager;
 
 enum SmerPohladu
 {
@@ -51,6 +53,7 @@ public:
 	int GetpolickoY();
 
 	void setMapa(Mapa*);
+	Mapa* getMapa();
 
 	Statistika* Getstatistika();
 	void Setstatistika(Statistika* paStatistika);
@@ -59,6 +62,9 @@ public:
 	void vyhodPredmet(Predmet* predemet);
 
 	void pridajSkusenosti(int pocet);
+	QuestManager* Getmanazerquestov();
+	
+
 private:
 	Animacia* animaciaDole;
 	Animacia* animaciaHore;
@@ -80,7 +86,8 @@ private:
 	SmerPohladu smerPohybu;
 	bool hybeSa;
 	int pohybDelta;
-
 	Mapa* mapa;
+
+	QuestManager* manazerQuestov;
 };
 

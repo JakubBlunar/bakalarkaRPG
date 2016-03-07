@@ -23,8 +23,9 @@ public:
 	void Setkapacita(int paNova);
 	int pocetPredmetov(std::string meno);
 	int pocetPredmetov();
-	void pridajPredmet(Predmet* predmet);
+	void pridajPredmet(Predmet* predmet,bool loot = true);
 	void zmazPredmet(Predmet* predmet);
+	void zmazPredmet(std::string paNazovPredmetu);
 	Predmet* dajPredmetNaIndexe(int i);
 
 private:

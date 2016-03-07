@@ -7,6 +7,11 @@
 #include "Inventar.h"
 #include "Statistika.h"
 
+#include "Loader.h"
+#include "Stav.h"
+#include "Hra.h"
+#include "PopupOkno.h"
+
 Oblecenie::Oblecenie(std::string meno, int typ, std::string paObrazok, int cena, int paUroven):Pouzitelny(meno, typ, paObrazok, cena,paUroven) {
 
 }
@@ -42,9 +47,14 @@ void Oblecenie::pouzi(Hrac* hrac) {
 			Pouzitelny::Setobleceny(true);
 	}
 	else {
-		Pouzitelny::Setobleceny(false);
-		oblecene->erase(this->Gettyp());
-		hrac->Getinventar()->pridajPredmet(this);
+		if (hrac->Getinventar()->pocetPredmetov() < hrac->Getinventar()->Getkapacita()) {
+			Pouzitelny::Setobleceny(false);
+			oblecene->erase(this->Gettyp());
+			hrac->Getinventar()->pridajPredmet(this);
+		}
+		else {
+			Loader::Instance()->Gethra()->dajStav("")->zobrazPopup(new PopupOkno("Nedá sa vyzliec! inventar je plnı !"));
+		}
 	}
 }
 

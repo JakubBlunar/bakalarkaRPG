@@ -3,6 +3,10 @@
 #include "Hrac.h"
 #include "Statistika.h"
 #include "Inventar.h"
+#include "Loader.h"
+#include "Stav.h"
+#include "Hra.h"
+#include "PopupOkno.h"
 
 Zbran::Zbran(std::string meno, int typ, std::string paObrazok, int cena, int paUroven, int paMinPoskodenie, int paMaxPoskodnie,int rychlostUtoku) :Pouzitelny(meno, typ, paObrazok, cena, paUroven) {
 	minPoskodenie = paMinPoskodenie;
@@ -24,10 +28,6 @@ int Zbran::Getmaxposkodenie() {
 	return maxPoskodenie;
 }
 
-
-/*
-	hnusnÈ rieöenie a nepaËi sa mi :D
-*/
 
 void Zbran::pouzi(Hrac* hrac) {
 
@@ -199,9 +199,14 @@ void Zbran::pouzi(Hrac* hrac) {
 		for (int i = 9; i <= 10; i++) {
 			if (oblecene->count(i)) {
 				if (oblecene->at(i) == this) {
-					Pouzitelny::Setobleceny(false);
-					hrac->Getinventar()->pridajPredmet(this);
-					oblecene->erase(i);
+					if (hrac->Getinventar()->pocetPredmetov() < hrac->Getinventar()->Getkapacita()) {
+						Pouzitelny::Setobleceny(false);
+						hrac->Getinventar()->pridajPredmet(this);
+						oblecene->erase(i);
+					}
+					else {
+						Loader::Instance()->Gethra()->dajStav("")->zobrazPopup(new PopupOkno("Ned· sa vyzliecù! inventar je pln˝ !"));
+					}
 
 				}
 			}

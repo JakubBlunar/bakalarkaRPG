@@ -34,7 +34,10 @@ void StavHranieHry::onEnter() {
 	hrac = hra->GetHrac();
 	loot = nullptr;
 	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) 
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::C) 
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::I)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
 		stlacenaKlavesa = true;
 	}
 }
@@ -140,20 +143,12 @@ void StavHranieHry::update(double delta) {
 			if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) || sf::Keyboard::isKeyPressed(sf::Keyboard::E))) {
 				stlacenaKlavesa = true;
 				Predmet* predmet = loot->at(lootIndex);
-				try {
-					hrac->Getinventar()->pridajPredmet(predmet);
-					loot->erase(loot->begin() + lootIndex);
-					if ((unsigned int)lootIndex >= loot->size()) {
-						lootIndex = 0;
-					}
+				hrac->Getinventar()->pridajPredmet(predmet);
+				loot->erase(loot->begin() + lootIndex);
+				if ((unsigned int)lootIndex >= loot->size()) {
+					lootIndex = 0;
 				}
-				catch (int ex) {
-					if (ex == 1) {
-						zobrazPopup(new PopupOkno("Inventar je plný !"));
-					}
-				}
-
-
+				
 				if (loot->size() == 0) {
 					loot = nullptr;
 					lootIndex = 0;
@@ -240,6 +235,10 @@ void StavHranieHry::update(double delta) {
 				hra->zmenStavRozhrania("stavPauza");
 			}
 
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::O) && !stlacenaKlavesa) {
+				hra->zmenStavRozhrania("stavPrehladQuestov");
+			}
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && !stlacenaKlavesa) {
 				hra->zmenStavRozhrania("stavInfoHraca");
 			}
@@ -248,7 +247,7 @@ void StavHranieHry::update(double delta) {
 				hra->zmenStavRozhrania("stavInventar");
 			}
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !stlacenaKlavesa) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !stlacenaKlavesa) { // cheat :D
 				stlacenaKlavesa = true;
 				hrac->pridajSkusenosti(10);
 				hrac->Getinventar()->pridajZlato(1000);
@@ -266,7 +265,8 @@ void StavHranieHry::update(double delta) {
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::C)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::X)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::I)
-				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::E)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
 				stlacenaKlavesa = false;
 			}
 			

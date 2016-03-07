@@ -26,8 +26,21 @@
 			"meno": "Jano",
 			"posX": 5,
 			"posY": 0
-		}
+		},
 
+    "2": {
+			"animacia": {
+				"aniX": 32,
+				"aniY": 48,
+				"nazov": "knazka_dole",
+        "pocet": 4,
+        "trvanie": 10
+			},
+			"dialog": "bylinkarka_q",
+			"meno": "Bylinkarka",
+			"posX": 10,
+			"posY": 8
+		}
 
 	}
 }

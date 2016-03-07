@@ -44,17 +44,25 @@ public:
 	void render(sf::RenderWindow* okno);
 	void update(double delta);
 
+	std::string Getmeno();
 	Policko* GetPolicko(int x, int y);
 	void nastavPolicko(int x, int y, Policko*);
 	sf::FloatRect Getzobrazenaoblast();
 	sf::Time aktCas();
 	void pridajNepriatela(std::string meno);
 	std::vector<std::string>* Getmoznynepriatelia();
+
+	void setHrobSuradnice(sf::Vector2i);
+	sf::Vector2i Gethrobsuradnice();
 private:
+
+	sf::Vector2i hrobSuradnice;
+
 	Hra* hra;
 	Hrac* hrac;
 	Policko*** mapa;
 	std::vector<std::string>* moznyNepriatelia;
+	std::string menoMapy;
 
 	int sirka;
 	int vyska;

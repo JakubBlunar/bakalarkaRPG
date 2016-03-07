@@ -22,7 +22,6 @@
     <ProjectGuid>{4BCCDF32-2BF1-4F43-9C85-DA6C3DBAA5E8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BakalarkaTahoveRPG</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -126,7 +125,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>E:\BakalarkaTahoveRPG\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -158,6 +157,7 @@
     <ClInclude Include="Efekt.h" />
     <ClInclude Include="EfektUpravStat.h" />
     <ClInclude Include="Elixir.h" />
+    <ClInclude Include="Generator.h" />
     <ClInclude Include="Hra.h" />
     <ClInclude Include="Hrac.h" />
     <ClInclude Include="Inventar.h" />
@@ -174,6 +174,12 @@
     <ClInclude Include="PopupOkno.h" />
     <ClInclude Include="Pouzitelny.h" />
     <ClInclude Include="Predmet.h" />
+    <ClInclude Include="Quest.h" />
+    <ClInclude Include="QuestKill.h" />
+    <ClInclude Include="QuestLoot.h" />
+    <ClInclude Include="QuestManager.h" />
+    <ClInclude Include="QuestOdmena.h" />
+    <ClInclude Include="QuestPolozka.h" />
     <ClInclude Include="Statistika.h" />
     <ClInclude Include="Stav.h" />
     <ClInclude Include="StavBoj.h" />
@@ -185,12 +191,13 @@
     <ClInclude Include="StavLoading.h" />
     <ClInclude Include="StavObchod.h" />
     <ClInclude Include="StavPauza.h" />
+    <ClInclude Include="StavPrehladQuestov.h" />
     <ClInclude Include="StavRozhrania.h" />
     <ClInclude Include="StavVolbaZamerania.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Tlacidlo.h" />
     <ClInclude Include="VolbaObchodovanie.h" />
-    <ClInclude Include="VolbaPridanieQuestu.h" />
+    <ClInclude Include="VolbaUpravaQuestu.h" />
     <ClInclude Include="VolbaVyliecenie.h" />
     <ClInclude Include="Vrstva.h" />
     <ClInclude Include="Zameranie.h" />
@@ -208,6 +215,7 @@
     <ClCompile Include="Efekt.cpp" />
     <ClCompile Include="EfektUpravStat.cpp" />
     <ClCompile Include="Elixir.cpp" />
+    <ClCompile Include="Generator.cpp" />
     <ClCompile Include="Hra.cpp" />
     <ClCompile Include="Hrac.cpp" />
     <ClCompile Include="Inventar.cpp" />
@@ -224,6 +232,12 @@
     <ClCompile Include="PopupOkno.cpp" />
     <ClCompile Include="Pouzitelny.cpp" />
     <ClCompile Include="Predmet.cpp" />
+    <ClCompile Include="Quest.cpp" />
+    <ClCompile Include="QuestKill.cpp" />
+    <ClCompile Include="QuestLoot.cpp" />
+    <ClCompile Include="QuestManager.cpp" />
+    <ClCompile Include="QuestOdmena.cpp" />
+    <ClCompile Include="QuestPolozka.cpp" />
     <ClCompile Include="Statistika.cpp" />
     <ClCompile Include="Stav.cpp" />
     <ClCompile Include="StavBoj.cpp" />
@@ -235,12 +249,13 @@
     <ClCompile Include="StavLoading.cpp" />
     <ClCompile Include="StavObchod.cpp" />
     <ClCompile Include="StavPauza.cpp" />
+    <ClCompile Include="StavPrehladQuestov.cpp" />
     <ClCompile Include="StavRozhrania.cpp" />
     <ClCompile Include="StavVolbaZamerania.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Tlacidlo.cpp" />
     <ClCompile Include="VolbaObchodovanie.cpp" />
-    <ClCompile Include="VolbaPridanieQuestu.cpp" />
+    <ClCompile Include="VolbaUpravaQuestu.cpp" />
     <ClCompile Include="VolbaVyliecenie.cpp" />
     <ClCompile Include="Vrstva.cpp" />
     <ClCompile Include="Zameranie.cpp" />

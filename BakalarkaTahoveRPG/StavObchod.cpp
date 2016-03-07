@@ -200,10 +200,15 @@ void StavObchod::update(double delta) {
 							Oblecenie* oblecenie = (Oblecenie*)p;
 							kopia = oblecenie->copy();
 						}
-
-						inventar->Setzlato(inventar->Getzlato() - kopia->Getcena());
-						inventar->pridajPredmet(kopia);
-						zobrazPopup(new PopupOkno("Predmet " + kopia->Getmeno() + " bol uspesne kupeny!"));
+						
+						if (inventar->Getkapacita() > inventar->pocetPredmetov()) {
+							inventar->Setzlato(inventar->Getzlato() - kopia->Getcena());
+							inventar->pridajPredmet(kopia);
+							zobrazPopup(new PopupOkno("Predmet " + kopia->Getmeno() + " bol uspesne kupeny!"));
+						}
+						else {
+							zobrazPopup(new PopupOkno("Predmet " + kopia->Getmeno() + " sa nedá kupi! inventar je plnı"));
+						}
 					}
 					else {
 						zobrazPopup(new PopupOkno("Nemas dostatok zlata!"));

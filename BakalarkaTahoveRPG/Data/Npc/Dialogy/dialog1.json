@@ -1,6 +1,7 @@
 {
   "polozky": {
     "0": {
+      "typ": "normalVolba",
       "text": "Ahoj udatny bojovnik.",
       "volby": {
         "1": {
@@ -16,6 +17,7 @@
       }
     },
     "1": {
+      "typ": "normalVolba",
       "text": "Nechcem sa s tebou rozpravat!",
       "volby": {
         "1": {
@@ -26,62 +28,95 @@
       }
     },
     "2": {
-      "text": "Mám pre teba quest. A ponukam pekné veci.",
+      "typ": "normalVolba",
+      "text": "Ponukam ti pekne veci.",
       "volby": {
         "1": {
-          "kam": -1,
-          "text": "Nechce sa mi.",
-          "typ": ""
-        },
-        "2": {
           "kam": 4,
-          "text": "Co treba spravit?",
-          "typ": ""
-        },
-        "3": {
-          "kam": 3,
-          "text": "Co za to ziskam?",
-          "typ": ""
-        },
-        "4": {
-          "kam": 5,
           "text": "Ukaz mi co predavas",
           "typ": "obchod",
           "aky": "obchod_elixiry"
+        },
+        "2": {
+          "kam": 3,
+          "text": "Nemas pre mna nejaku ulohu?",
+          "typ": ""
         }
+
       }
     },
+
     "3": {
-      "text": "Dostanes 5 goldov",
+      "typ": "questVolba",
+
+      "quest": {
+          "typ": "kill",
+          "nazov": "Nebezpecni murloci.",
+          "co": "Murlock",
+          "kolko": 1,
+          "popis": "Murloci si zacali dovolovat do ludi.\nChod a ukaz im kto je tu panom",
+          "xp": 15,
+          "zlato": 50,
+          "predmety": [
+            
+            {
+              "typTriedy": "zbran",
+              "meno": "Maly mec",
+              "obrazok": "wp1",
+              "typ": 9,
+              "cena": 100,
+              "uroven": 1,
+       
+              "hp": 0,
+              "hpMult": 0,
+              "mp": 0,
+              "mpMult": 0,
+              "sila": 0,
+              "silaMult": 0,
+              "intelekt": 0,
+              "intelektMult": 0,
+              "rychlost": 0,
+              "rychlostMult": 0,
+              "obrana": 0,
+              "obranaMult": 0,
+
+              "minDmg": 1,
+              "maxDmg": 2,
+              "rychlostUtoku": 2000
+            }
+         
+          ]
+      },
+
+      "polozkaTexty": [
+        "Ano mam jednu. Chod a zabi mi par priser. Dostanes... ",
+        "Ako vidím stale si nezabil dostatocné mnozstvo.",
+        "Vyborne splnil si zadanie ulohy.\nDostavas...",
+        "Dakujem už si pre mna spravil vela."
+      ],
+
       "volby": {
         "1": {
           "kam": -1,
-          "text": "To sa mi nechce.",
+          "text": "Ahoj!",
           "typ": ""
         },
         "2": {
-          "kam": 4,
-          "text": "Ok, co treba spravit?",
-          "typ": ""
+          "kam": -1,
+          "text": "",
+          "volbaTexty": [
+            "Jasne rád to pre teba spravím.",
+            "Tak ja teda idem.",
+            "Dakujeem . ",
+            "Tak niè teda."
+          ],
+          "typ": "upravaQuestu"
         }
       }
     },
+
     "4": {
-      "text": "Zabi 10 priser.",
-      "volby": {
-        "1": {
-          "kam": -1,
-          "text": "Nie!",
-          "typ": ""
-        },
-        "2": {
-          "kam": -1,
-          "text": "Ok idem na to.",
-          "typ": "pridanieQuestu"
-        }
-      }
-    },
-    "5": {
+      "typ": "normalVolba",
       "text": "Dakujem tak sa maj.",
       "volby": {
         "1": {
@@ -92,5 +127,6 @@
 
       }
     }
+    
   }
 }

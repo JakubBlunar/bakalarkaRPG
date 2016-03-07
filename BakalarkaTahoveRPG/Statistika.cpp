@@ -377,25 +377,25 @@ void Statistika::prepocitajPoskodenia() {
 			Zbran* zbran2 = (Zbran*)oblecene->at(10);
 			if (zbran2->Gettyp() != 11) {
 				int sucet = (int)floor(zbran1->Getminposkodenie() + 0.75*zbran2->Getminposkodenie());
-				minPoskodenie = (int)floor(2 * sila / 6 + 1) * sila * sucet;
-
+				
+				minPoskodenie = (int)floor(2 * sila / 10 + 1) * sucet;
 				sucet = (int)floor(zbran1->Getmaxposkodenie() + 0.75*zbran2->Getmaxposkodenie());
-				maxPoskodenie = (int)floor(2 * sila / 5 + 1) * sucet;
+				maxPoskodenie = (int)floor(2 * sila / 10 + 1) * sucet;
 			}
 			else {
-				minPoskodenie = (int)floor(2 * sila / 5 + 1) * zbran1->Getminposkodenie();
-				maxPoskodenie = (int)floor(2 * sila / 5 + 1) * zbran1->Getmaxposkodenie();
+				minPoskodenie = (int)floor(2 * sila / 10 + 1) * zbran1->Getminposkodenie();
+				maxPoskodenie = (int)floor(2 * sila / 10 + 1) * zbran1->Getmaxposkodenie();
 			}
 		}
 		else {
-			minPoskodenie = (int)floor(2 * sila / 5 + 1) * zbran1->Getminposkodenie();
-			maxPoskodenie = (int)floor(2 * sila / 5 + 1) * zbran1->Getmaxposkodenie();
+			minPoskodenie = (int)floor(2 * sila / 10 + 1) * zbran1->Getminposkodenie();
+			maxPoskodenie = (int)floor(2 * sila / 10 + 1) * zbran1->Getmaxposkodenie();
 		}
 	}
 	else {
 		
-		minPoskodenie = (int)floor(2 * sila / 5 + 1);
-		maxPoskodenie = (int)floor(2 * sila / 5 + 1);
+		minPoskodenie = (int)floor(2 * sila / 10 + 1);
+		maxPoskodenie = (int)floor(2 * sila / 10 + 1);
 	}
 }
 

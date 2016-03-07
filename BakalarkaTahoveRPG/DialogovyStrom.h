@@ -12,11 +12,13 @@ class DialogPolozka;
 
 class DialogVolba {
 public:
-	bool pouzita;
 	DialogVolba(string paText, int dalsia);
-	string text;
+	virtual string Gettext();
 	int dalsia;
 	virtual void akcia(Hrac* hrac);
+private:
+	string text;
+
 };
 
 
@@ -24,11 +26,11 @@ class DialogPolozka {
 public:
 	DialogPolozka(string paText);
 	~DialogPolozka();
-	int pocetMoznosti();
+	virtual int pocetMoznosti();
 	void pridajMoznost(DialogVolba* paVolba);
-	string Gettext();
-	DialogVolba* Getvolba(int paIndex);
-private:
+	virtual string Gettext();
+	virtual DialogVolba* Getvolba(int paIndex);
+protected:
 	string text;
 	vector<DialogVolba*> dialogoveMoznosti;
 

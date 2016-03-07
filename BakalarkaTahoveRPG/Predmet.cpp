@@ -6,13 +6,57 @@
 
 Predmet::Predmet(std::string meno, int typ, std::string paObrazok, int cena,int paUroven) {
 	
-	const std::string predmety_cesta = "Data/Grafika/Predmety/";
-	
+	std::string predmety_cesta = "Data/Grafika/Predmety/";
 	this->sObrazok = paObrazok;
 	this->uroven = paUroven;
 	this->meno = meno;
 	this->typ = typ;
 	this->cena = cena;
+
+	switch (typ)
+	{
+	case (1) :
+		predmety_cesta += "Helma";
+		break;
+	case (2) :
+		predmety_cesta += "Ramena";
+		break;
+	case (3) :
+		predmety_cesta += "Brnenie";
+		break;
+	case (4) :
+		predmety_cesta += "Nohavice";
+		break;
+	case (5) :
+		predmety_cesta += "Nahrdelnik";
+		break;
+	case (6) :
+		predmety_cesta += "Prsten";
+		break;
+	case (7) :
+		predmety_cesta += "Rukavice";
+		break;
+	case (8) :
+		predmety_cesta += "Topanky";
+		break;
+	case (9) :
+		predmety_cesta += "Zbran1h";
+		break;
+	case (10) :
+		predmety_cesta += "Zbran2h";
+		break;
+	case (11) :
+		predmety_cesta += "Stit";
+		break;
+	case(12) :
+		predmety_cesta += "Elixir";
+		break;
+	case(13) :
+		predmety_cesta += "Ostatne";
+		break;
+	}
+	predmety_cesta += "/";
+	
 	obrazok = new sf::Sprite();
 	
 	textura = new sf::Texture();
@@ -111,9 +155,14 @@ std::string Predmet::Getstringovytyp() {
 		return "Stit";
 	case(12) :
 		return "Elixir";
-		break;
+	case(13) :
+		return "Ulohovy predmet";
 	default:
 		return "ine";
 		break;
 	}
+}
+
+Predmet* Predmet::copy() {
+	return new Predmet(meno, typ, sObrazok, cena, uroven);
 }

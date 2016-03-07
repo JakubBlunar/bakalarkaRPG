@@ -494,15 +494,17 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 
 
 	float posX, posY;
-	posX = x + 45.f;
-	posY = y + 45.f;
+	posX = x + 38.f;
+	posY = y +38.f;
 
-	
-	obdlznik.setPosition(posX, posY);
-	okno->draw(obdlznik);
-
+	obdlznik.setPosition(sf::Vector2f(posX, posY));
 	// tu už je samotny vypis infa
-	sf::Text text(predmet->Getmeno(), *font, 14U);
+	sf::Text text(predmet->Getmeno(), *font, 14U);//vypisanie mena
+	if (text.getGlobalBounds().width > obdlznik.getGlobalBounds().width - 5) {
+		obdlznik.setSize(sf::Vector2f(text.getGlobalBounds().width + 20, 200));
+	}
+	
+	okno->draw(obdlznik);
 
 	text.setColor(sf::Color::Black);
 

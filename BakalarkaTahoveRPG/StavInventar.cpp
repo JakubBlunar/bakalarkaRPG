@@ -197,17 +197,21 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	posX = x -5.f;
 	posY = y -5.f;
 
-	if ((signed int)posX < (signed int)okno->getSize().x - 230) {
+	// tu už je samotny vypis infa
+	sf::Text text(predmet->Getmeno(), *font, 14U);//vypisanie mena
+	if (text.getGlobalBounds().width > obdlznik.getGlobalBounds().width - 5) {
+		obdlznik.setSize(sf::Vector2f(text.getGlobalBounds().width+20, 200));
+	}
+
+	if ((signed int)posX < (signed int)okno->getSize().x - (obdlznik.getSize().x +20)) {
 		obdlznik.setPosition(posX, posY);
 	}
 	else {
-		posX -= 180;
+		posX -= (obdlznik.getSize().x + 20);
 		obdlznik.setPosition(posX, posY);
 	}
 	okno->draw(obdlznik);
 
-	// tu už je samotny vypis infa
-	sf::Text text(predmet->Getmeno(), *font, 14U);//vypisanie mena
 
 	text.setColor(sf::Color::Black);
 	
@@ -216,7 +220,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	text.setPosition(sf::Vector2f(posX+5.f, posY+5.f));
 	okno->draw(text);
 
-	
+	text.setScale(1,1);
 	text.setCharacterSize(10U);
 	text.setString(predmet->Getstringovytyp());
 	text.setPosition(sf::Vector2f(posX+5.f, posY+23.f));

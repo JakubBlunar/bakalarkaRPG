@@ -9,9 +9,17 @@
 #include "PopupOkno.h"
 #include "Inventar.h"
 #include "Efekt.h"
+#include "QuestManager.h"
+#include "Policko.h"
+#include "Generator.h"
+#include "Quest.h"
 
 #include <map>
 #include <iostream>
+#include <random>
+#include <deque>
+
+
 
 Boj::Boj(Hrac* paHrac, Nepriatel* paNpc) {
 	hrac = paHrac;
@@ -195,18 +203,70 @@ void Boj::vyhodnotenie() {
 		Mapa* mapa = stavHranieHry->getMapa();
 
 		if (hrac->Getstatistika()->Gethp() > 0) {
-			std::cout << "Vyhral hrac" << std::endl;
-			int ziskaneXp = 1;
-			int ziskaneZlato = 10;
+			int ziskaneXp = npc->Getstatistika()->dajUroven() - hrac->Getstatistika()->dajUroven();
+			if (ziskaneXp < 1) {
+				ziskaneXp = 1;
+			}
+
+			int ziskaneZlato = 2 * npc->Getstatistika()->dajUroven();
 			hrac->pridajSkusenosti(ziskaneXp);
 			hrac->Getinventar()->pridajZlato(ziskaneZlato);
 			std::string text = "Porazil si " + npc->Getmeno() + "\n";
 			text += "Ziskal si " + std::to_string(ziskaneXp) + " skusenosti a " + std::to_string(ziskaneZlato) + " zlata";
 			stavHranieHry->zobrazPopup(new PopupOkno(text));
-			
+			QuestManager* qm = hrac->Getmanazerquestov();
+			qm->udalost(Event::ZABITIE_NPC, npc);
+
+			if ( rand() % 100 < 25){// 25% že padne predmet
+				int cislo = rand() % 100;
+				int lvlOd = npc->Getstatistika()->dajUroven()-2;
+				int lvlDo = npc->Getstatistika()->dajUroven()+2;
+				if (lvlOd < 1) {
+					lvlOd = 1;
+				}
+
+				int vyslednyLvl = lvlOd + rand() % (lvlDo - lvlOd + 1);
+
+				if (cislo < 25) {
+					mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(Generator::Instance()->nahodnaZbran(vyslednyLvl), mapa->aktCas());
+				}
+				else if (cislo < 50) {
+					mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(Generator::Instance()->nahodneOblecenie(vyslednyLvl), mapa->aktCas());
+				}
+				else {
+					mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(Generator::Instance()->nahodnyElixir(), mapa->aktCas());
+				}
+			}
+
+			std::deque<Quest*>* nedokonceneQuesty = hrac->Getmanazerquestov()->Getnedokoncenequesty();
+			std::map<std::string, Predmet*>* questDrop = npc->dropQuestPredmetov();
+
+			for (unsigned int i = 0; i < nedokonceneQuesty->size(); i++) {
+				Quest* q = nedokonceneQuesty->at(i);
+				if (questDrop->count(q->Getnazov()) && q->Getstav() == StavQuestu::ROZROBENY) {// predmet je v npc drope a je rozrobeny
+					if (rand() % 100 < 30) {
+						mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(questDrop->at(q->Getnazov())->copy(), mapa->aktCas());
+					}
+				}
+			}
+
+
 		}
 		else {
-			stavHranieHry->zobrazPopup(new PopupOkno("Vyhral npc !"));
+
+			Statistika* s = hrac->Getstatistika();
+			s->Sethp(s->GethpMax());
+			s->Setmp(s->GetmpMax());
+
+			while (hrac->Getinventar()->pocetPredmetov() != 0){
+
+				Predmet * p = hrac->Getinventar()->dajPredmetNaIndexe(hrac->Getinventar()->pocetPredmetov() - 1);
+				hrac->Getinventar()->zmazPredmet(p);
+				mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(p,mapa->aktCas());
+			}
+
+			mapa->posunHracaNaPolicko(mapa->Gethrobsuradnice().x, mapa->Gethrobsuradnice().y,0);
+			stavHranieHry->zobrazPopup(new PopupOkno("Upadol si do bezvedomia ! Zobudil si sa a zistil si ze si stratil všetky veci."));
 		}
 
 		//zrusenie aktivnych bufov

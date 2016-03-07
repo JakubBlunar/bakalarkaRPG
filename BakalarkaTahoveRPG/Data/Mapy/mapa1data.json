@@ -19,5 +19,7 @@
 
   },
 
-  "nepriatelia": ["sliz1"]
+  "nepriatelia": [ "sliz1" ],
+  "hrobX": 5,
+  "hrobY": 5
 }

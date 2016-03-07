@@ -9,6 +9,14 @@
 #include "Inventar.h"
 #include "Akcia.h"
 #include "Policko.h"
+#include "QuestManager.h"
+
+#include "Loader.h"
+#include "Stav.h"
+#include "Hra.h"
+#include "PopupOkno.h"
+#include "Akcia.h"
+
 
 Hrac::Hrac(Zameranie* paZameranie) {
 	zameranie = paZameranie;
@@ -38,11 +46,14 @@ Hrac::Hrac(Zameranie* paZameranie) {
 		}
 	}
 
+	manazerQuestov = new QuestManager();
+
 }
 
 Hrac::~Hrac() {
 	delete statistika;
 	delete zameranie;
+	delete manazerQuestov;
 	std::cout << "Hrac zmazany" << std::endl;
 }
 
@@ -252,29 +263,79 @@ Inventar* Hrac::Getinventar() {
 }
 
 void Hrac::pridajSkusenosti(int pocet) {
-	statistika->pridajXp(pocet);
-	int xpnalevel = zameranie->xpNaLevel(statistika->dajUroven() + 1);
+	
+	int ostatok = pocet;
 
-	int skusenosti = statistika->Getskusenosti();
-	std::map<std::string, int> bonusy = zameranie->lvlUpBonusy(statistika->dajUroven());
-	if (skusenosti >= xpnalevel) {
-		statistika->setUroven(statistika->dajUroven() + 1);
-		for (std::map<std::string, int>::iterator it = bonusy.begin(); it != bonusy.end(); ++it)
-		{
-			statistika->zvysStat(it->second - statistika->Getstat(it->first), it->first);
-			statistika->Sethp(statistika->GethpMax());
-			statistika->Setmp(statistika->GetmpMax());
-		}
+	int lvlPred = statistika->dajUroven();
+	unsigned int pocetAkciiPred = statistika->Getakcie()->size();
+
+	while (ostatok > 0)
+	{
+		int xpnalevel = zameranie->xpNaLevel(statistika->dajUroven() + 1);
+
+		int skusenosti = statistika->Getskusenosti();
 		
-		for (std::map<Akcia*, int>::iterator it = zameranie->Getspelly()->begin(); it != zameranie->Getspelly()->end(); ++it)
-		{
-			if (statistika->dajUroven() == it->second) {
-				statistika->vlozAkciu(it->first);
-			}
+		if (skusenosti + ostatok > xpnalevel) {
+			statistika->pridajXp(xpnalevel - skusenosti);
+			ostatok -= (xpnalevel - skusenosti);
+		}
+		else {
+			statistika->pridajXp(ostatok);
+			ostatok = 0;
 		}
 
+		if (skusenosti >= xpnalevel) {
+			statistika->setUroven(statistika->dajUroven() + 1);
+			std::map<std::string, int> bonusy = zameranie->lvlUpBonusy(statistika->dajUroven());
+			for (std::map<std::string, int>::iterator it = bonusy.begin(); it != bonusy.end(); ++it)
+			{
+				statistika->zvysStat(it->second - statistika->Getstat(it->first), it->first);
+				statistika->Sethp(statistika->GethpMax());
+				statistika->Setmp(statistika->GetmpMax());
+			}
+
+			for (std::map<Akcia*, int>::iterator it = zameranie->Getspelly()->begin(); it != zameranie->Getspelly()->end(); ++it)
+			{
+				if (statistika->dajUroven() == it->second) {
+					statistika->vlozAkciu(it->first);
+				}
+			}
+
+		}
 	}
 	
+	if (lvlPred < statistika->dajUroven()) {
+		std::map<std::string, int> bonusy = zameranie->lvlUpBonusy(lvlPred);
+
+		std::string text = "Gratulujem! Postupil si na uroven " + std::to_string(statistika->dajUroven()) + "\n";
+		text += "Max Hp = " + std::to_string(statistika->GethpMax()) + " ( +" + std::to_string(statistika->GethpMax() - bonusy.at("hpMax")) + " )\n";
+		text += "Max mana = " + std::to_string(statistika->GetmpMax()) + " ( +" + std::to_string(statistika->GetmpMax() - bonusy.at("mpMax")) + " )\n";
+		text += "Sila = " + std::to_string(statistika->Getsila()) + " ( +" + std::to_string(statistika->Getsila() - bonusy.at("sila")) + " )\n";
+		text += "Intelekt = " + std::to_string(statistika->Getintelekt()) + " ( +" + std::to_string(statistika->Getintelekt() - bonusy.at("intel")) + " )\n";
+		text += "Rychlost = " + std::to_string(statistika->Getrychlost()) + " ( +" + std::to_string(statistika->Getrychlost() - bonusy.at("rychlost")) + " )\n";
+		text += "Zdravie a mana boli doplnene!";
+
+		PopupOkno* pop = new PopupOkno(text);
+
+		if (statistika->Getakcie()->size() > pocetAkciiPred) {
+			pop->pridajStranku("Ziskal si nove kuzla! \n");
+			for (std::map<Akcia*, int>::iterator it = zameranie->Getspelly()->begin(); it != zameranie->Getspelly()->end(); ++it)
+			{
+				if (lvlPred < it->second && it->second <= statistika->dajUroven()) {
+					std::string info = it->first->Getmeno() +"\n\n" + it->first->dajPopis();
+					pop->pridajStranku(info);
+					statistika->vlozAkciu(it->first);
+				}
+			}
+		}
+		Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(pop);
+	}
+	
+	
+}
+
+Mapa* Hrac::getMapa() {
+	return mapa;
 }
 
 SmerPohladu Hrac::GetSmerPohladu() {
@@ -285,4 +346,8 @@ void Hrac::vyhodPredmet(Predmet* paPredmet) {
 	Policko* policko = mapa->GetPolicko(polickoX, polickoY);
 	inventar->zmazPredmet(paPredmet);
 	policko->polozPredmet(paPredmet,mapa->aktCas());
+}
+
+QuestManager* Hrac::Getmanazerquestov() {
+	return manazerQuestov;
 }

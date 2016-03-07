@@ -12,12 +12,13 @@
 #include "StavDialog.h"
 #include "StavBoj.h"
 #include "StavObchod.h"
+#include "StavPrehladQuestov.h"
 
-#define NAZOV "SUPERRPG"
+#define NAZOV "Moje Rpg"
 
 
 Hra::Hra() {
-
+	hrac = nullptr;
 	init();
 	loader->setHra(this);
 
@@ -61,6 +62,10 @@ Hra::Hra() {
 	std::string nazov10 = "stavObchod";
 	Stav* stav10 = new StavObchod(nazov10, okno, this);
 	stavRozhraniaHry->pridajStav(stav10);
+
+	std::string nazov11 = "stavPrehladQuestov";
+	Stav* stav11 = new StavPrehladQuestov(nazov11, okno, this);
+	stavRozhraniaHry->pridajStav(stav11);
 
 }
 

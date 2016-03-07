@@ -26,5 +26,7 @@
     }
 
   },
-  "nepriatelia": ["sliz1","medved1","murlock1"]
+  "nepriatelia": [ "sliz1", "medved1", "murlock1" ],
+  "hrobX": 10,
+  "hrobY": 10
 }

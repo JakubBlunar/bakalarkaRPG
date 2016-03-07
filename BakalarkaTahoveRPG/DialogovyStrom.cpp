@@ -8,6 +8,10 @@ DialogPolozka::DialogPolozka(string paText) {
 	text = paText;
 }
 
+string DialogPolozka::Gettext() {
+	return text;
+}
+
 DialogPolozka::~DialogPolozka() {
 	for (unsigned int i = 0; i < dialogoveMoznosti.size(); i++)
 	{
@@ -19,9 +23,6 @@ void DialogPolozka::pridajMoznost(DialogVolba* paVolba) {
 	dialogoveMoznosti.push_back(paVolba);
 }
 
-string DialogPolozka::Gettext() {
-	return text;
-}
 
 int DialogPolozka::pocetMoznosti() {
 	return dialogoveMoznosti.size();
@@ -33,6 +34,11 @@ DialogVolba* DialogPolozka::Getvolba(int paIndex) {
 	}
 	return nullptr;
 }
+
+string DialogVolba::Gettext() {
+	return text;
+}
+
 
 void DialogVolba::akcia(Hrac* hrac) {
 	

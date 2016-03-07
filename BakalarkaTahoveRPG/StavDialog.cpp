@@ -60,7 +60,7 @@ void StavDialog::render() {
 			else {
 				text.setColor(sf::Color::White);
 			}
-			text.setString(std::to_string(i+1)+ ". " + dialog->Getaktualnapolozka()->Getvolba(i)->text);
+			text.setString(std::to_string(i+1)+ ". " + dialog->Getaktualnapolozka()->Getvolba(i)->Gettext());
 			text.setPosition(sf::Vector2f(32.f,y + i*25 +40.f));
 			okno->draw(text);
 		}

@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Akcie\Efekty">
       <UniqueIdentifier>{c50e8b49-d6a2-4a56-89ce-81aeadd0c275}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Questy">
+      <UniqueIdentifier>{e28a32a2-b197-4e00-a8f3-c2b3779a49c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Questy">
+      <UniqueIdentifier>{df7a8422-f81d-46f0-b42d-450c425a7aa8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stav.h">
@@ -147,9 +153,6 @@
     <ClInclude Include="DialogovyStrom.h">
       <Filter>Header Files\Dialog</Filter>
     </ClInclude>
-    <ClInclude Include="VolbaPridanieQuestu.h">
-      <Filter>Header Files\Dialog</Filter>
-    </ClInclude>
     <ClInclude Include="PolickoBoj.h">
       <Filter>Header Files\Mapa\Policka</Filter>
     </ClInclude>
@@ -206,6 +209,33 @@
     </ClInclude>
     <ClInclude Include="VolbaVyliecenie.h">
       <Filter>Header Files\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="VolbaUpravaQuestu.h">
+      <Filter>Header Files\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestPolozka.h">
+      <Filter>Header Files\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Quest.h">
+      <Filter>Header Files\Questy</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestManager.h">
+      <Filter>Header Files\Questy</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestLoot.h">
+      <Filter>Header Files\Questy</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestKill.h">
+      <Filter>Header Files\Questy</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestOdmena.h">
+      <Filter>Header Files\Questy</Filter>
+    </ClInclude>
+    <ClInclude Include="StavPrehladQuestov.h">
+      <Filter>Header Files\Stavy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +323,6 @@
     <ClCompile Include="DialogovyStrom.cpp">
       <Filter>Source Files\Dialog</Filter>
     </ClCompile>
-    <ClCompile Include="VolbaPridanieQuestu.cpp">
-      <Filter>Source Files\Dialog</Filter>
-    </ClCompile>
     <ClCompile Include="PolickoBoj.cpp">
       <Filter>Source Files\Mapa\Policka</Filter>
     </ClCompile>
@@ -352,6 +379,33 @@
     </ClCompile>
     <ClCompile Include="VolbaVyliecenie.cpp">
       <Filter>Source Files\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="VolbaUpravaQuestu.cpp">
+      <Filter>Source Files\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Generator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestPolozka.cpp">
+      <Filter>Source Files\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Quest.cpp">
+      <Filter>Source Files\Questy</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestManager.cpp">
+      <Filter>Source Files\Questy</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestLoot.cpp">
+      <Filter>Source Files\Questy</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestKill.cpp">
+      <Filter>Source Files\Questy</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestOdmena.cpp">
+      <Filter>Source Files\Questy</Filter>
+    </ClCompile>
+    <ClCompile Include="StavPrehladQuestov.cpp">
+      <Filter>Source Files\Stavy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

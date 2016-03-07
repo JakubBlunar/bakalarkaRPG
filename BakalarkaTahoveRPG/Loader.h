@@ -5,6 +5,9 @@
 #include <string>
 #include <vector>
 
+#include "json-forwards.h"
+#include "json.h"
+
 class Npc;
 class Hra;
 class Mapa;
@@ -42,6 +45,7 @@ private:
 	
 	std::map<std::string, sf::Font*> nacitaneFonty;
 	
+	Predmet* parsujPredmet(Json::Value jPredmet);
 
 	int  nahodneCislo(int min, int max);
 };

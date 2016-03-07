@@ -59,7 +59,7 @@ Npc* Policko::Getnpc() {
 }
 
 void Policko::polozPredmet(Predmet* paPredmet,sf::Time kedy) {
-	casMazaniaPredmetov = kedy.asSeconds() + 300.f;// o 5 minut
+	casMazaniaPredmetov = kedy.asSeconds() + 600.f;// o 10 minut
 	polozenePredmety->push_back(paPredmet);
 }
 

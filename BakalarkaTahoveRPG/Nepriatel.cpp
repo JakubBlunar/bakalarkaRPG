@@ -12,10 +12,11 @@ Nepriatel::Nepriatel(std::string paMeno, std::string paObrazok, DialogovyStrom* 
 	}
 	obrazok = new sf::Sprite();
 	obrazok->setTexture(textura);
-	
+	questDrop = new std::map< std::string,Predmet*>();
 }
 
 Nepriatel::~Nepriatel() {
+	delete questDrop;
 	delete statistika;
 }
 
@@ -23,24 +24,11 @@ sf::Sprite* Nepriatel::Getobrazok() {
 	return obrazok;
 }
 
-/*
-LogikaNpc Nepriatel::Getlogika(){
-
-return logika;
-}
-*/
 
 Statistika* Nepriatel::Getstatistika() {
 
 	return statistika;
 }
-
-/*
-void Nepriatel::Setlogika(LogikaNpc newVal){
-
-logika = newVal;
-}
-*/
 
 void Nepriatel::Setstatistika(Statistika* newVal) {
 
@@ -80,4 +68,13 @@ Akcia* Nepriatel::vyberAkciu(std::map<Akcia*,int>* cooldowny) {
 		return new Akcia("Neznama akcia", "neznamy", 1000, 0, 0, "Neznamy spell", 0,AkciaTyp::MAGICKA);
 	}
 
+	
+
+}
+void Nepriatel::pridajDropItem(std::string paNazovQuestu, Predmet* paPredmet) {
+	questDrop->insert_or_assign(paNazovQuestu, paPredmet);
+}
+
+std::map< std::string, Predmet*>* Nepriatel::dropQuestPredmetov() {
+	return questDrop;
 }

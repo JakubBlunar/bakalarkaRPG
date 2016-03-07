@@ -1,6 +1,7 @@
 {
   "polozky": {
     "0": {
+      "typ": "normalVolba",
       "text": "Ahoj bojovnik !\nVyzeras ubolene.\nAk chces mozem ta osetrit.",
       "volby": {
         "1": {
@@ -16,6 +17,7 @@
       }
     },
     "1": {
+      "typ": "normalVolba",
       "text": "Abraka dabra nech sa ti polepsi.",
       "volby": {
         "1": {
@@ -26,6 +28,7 @@
       }
     },
     "2": {
+      "typ": "normalVolba",
       "text": "Tak ako povies.\nAk by si potreboval pomoc budem tu.",
       "volby": {
         "1": {

@@ -18,12 +18,11 @@
 #include "Npc.h"
 #include "Animacia.h"
 #include "DialogovyStrom.h"
-#include "VolbaPridanieQuestu.h"
 #include "VolbaObchodovanie.h"
 #include "VolbaVyliecenie.h"
 #include "Npc.h"
 #include "PolickoBoj.h"
-
+#include "VolbaUpravaQuestu.h"
 
 #include "Statistika.h"
 #include "Akcia.h"
@@ -39,6 +38,11 @@
 #include "Oblecenie.h"
 #include "Zbran.h"
 
+#include "Quest.h"
+#include "QuestPolozka.h"
+#include "QuestKill.h"
+#include "QuestLoot.h"
+
 #include <random>
 
 Loader* Loader::instancia = NULL;
@@ -46,7 +50,6 @@ Loader* Loader::instancia = NULL;
 Loader* Loader::Instance()
 {
 	if (!instancia) {
-		srand((unsigned int)time(NULL));
 		instancia = new Loader();
 	}
 	return instancia;
@@ -89,16 +92,79 @@ DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
 	objekt = root["polozky"];
 
 	DialogovyStrom* dialog = new DialogovyStrom();
+	Quest* quest;
 
 	for (Json::Value::iterator it = objekt.begin(); it != objekt.end(); ++it){
 		Json::Value key = it.key();
-		Json::Value value = (*it);
+		Json::Value polozkaData = (*it);
 
-		std::string textPolozky = value["text"].asCString();
-		DialogPolozka* polozka = new DialogPolozka(textPolozky);
+		std::string typPolozky = polozkaData["typ"].asCString();
+		
+		DialogPolozka* polozka;
+		if (typPolozky == "normalVolba") {
+			std::string textPolozky = polozkaData["text"].asCString();
+			polozka = new DialogPolozka(textPolozky);
+		}
+		else if (typPolozky == "questVolba") {
+			
+			Json::Value jquest(Json::objectValue);
+			jquest = polozkaData["quest"];
+			
+			std::string questTyp = jquest["typ"].asCString();
+			std::string questNazov = jquest["nazov"].asCString();
+			std::string questPopis = jquest["popis"].asCString();
+			int odmenaXp = jquest["xp"].asInt();
+			int odmenaZlato = jquest["zlato"].asInt();
+
+			if (questTyp == "kill") {
+				std::string questKoho = jquest["co"].asCString();
+				int questKolko = jquest["kolko"].asInt();
+				quest = new QuestKill(questNazov,questPopis, questKoho, questKolko,odmenaXp,odmenaZlato);
+			}
+			else if (questTyp == "loot") {
+				std::string questCo = jquest["co"].asCString();
+				int questKolko = jquest["kolko"].asInt();
+				quest = new QuestLoot(questNazov,questPopis,questCo, questKolko,odmenaXp,odmenaZlato);
+			}
+
+			Json::Value odmenaVeci(Json::arrayValue);
+			odmenaVeci = jquest["predmety"];
+			for (unsigned int i = 0; i < odmenaVeci.size(); i++) {
+				Json::Value jPredmet(Json::objectValue);
+				jPredmet = odmenaVeci[i];
+				quest->pridajOdmenu(parsujPredmet(jPredmet));
+			}
+
+			polozka = new QuestPolozka(questNazov);
+
+			Json::Value polozkaTexty(Json::arrayValue);
+			polozkaTexty = polozkaData["polozkaTexty"];
+			QuestPolozka* qp = (QuestPolozka*)polozka;
+			for (unsigned int i = 0; i < polozkaTexty.size(); i++) {
+				if (i == 0) {
+					qp->vlozText(StavQuestu::NEPRIJATY, polozkaTexty[i].asCString());
+				}
+
+				if (i == 1) {
+					qp->vlozText(StavQuestu::ROZROBENY, polozkaTexty[i].asCString());
+				}
+
+				if (i == 2) {
+					qp->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, polozkaTexty[i].asCString());
+				}
+
+				if (i == 3) {
+					qp->vlozText(StavQuestu::DOKONCENY, polozkaTexty[i].asCString());
+				}
+
+			}
+
+		}
+
+
 
 		Json::Value volby(Json::objectValue);
-		volby = value["volby"];
+		volby = polozkaData["volby"];
 
 		for (Json::Value::iterator it = volby.begin(); it != volby.end(); ++it) {
 			Json::Value volbaID = it.key();
@@ -109,8 +175,34 @@ DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
 			if (typ == "") {
 				polozka->pridajMoznost(new DialogVolba(volbaText, dalsia));
 			}
-			else if(typ == "pridanieQuestu") {
-				polozka->pridajMoznost(new VolbaPridanieQuestu(volbaText, dalsia));
+			else if(typ == "upravaQuestu") {
+
+				VolbaUpravaQuestu*  volba = new VolbaUpravaQuestu(dalsia, quest);
+				
+				Json::Value volbaTexty(Json::arrayValue);
+				volbaTexty = volbaData["volbaTexty"];
+
+				for (unsigned int i = 0; i < volbaTexty.size(); i++) {
+					if (i == 0) {
+						volba->vlozText(StavQuestu::NEPRIJATY, volbaTexty[i].asCString());
+					}
+
+					if (i == 1) {
+						volba->vlozText(StavQuestu::ROZROBENY, volbaTexty[i].asCString());
+					}
+
+					if (i == 2) {
+						volba->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, volbaTexty[i].asCString());
+					}
+
+					if (i == 3) {
+						volba->vlozText(StavQuestu::DOKONCENY, volbaTexty[i].asCString());
+					}
+
+				}
+
+				polozka->pridajMoznost(volba);
+				quest = nullptr;
 			}
 			else if (typ == "obchod") {
 				std::string aky = volbaData["aky"].asCString();
@@ -176,6 +268,8 @@ void Loader::nacitajMapu(std::string paMeno , int posX, int posY,int smer) {
 		int vyska = root["height"].asInt();
 		int sirka = root["width"].asInt();
 		novaMapa = new Mapa(paMeno, this->hra->GetHrac(), this->hra,sirka,vyska);
+
+		novaMapa->setHrobSuradnice(sf::Vector2i(mapaData["hrobX"].asInt(), mapaData["hrobY"].asInt()));
 
 		Json::Value nepriatelia(Json::arrayValue);
 		nepriatelia = mapaData["nepriatelia"];
@@ -503,10 +597,28 @@ Nepriatel* Loader::nacitajNepriatela(std::string paMeno) {
 
 
 		}
+
 		statistika->prepocitajPoskodenia();
 		novyNepriatel = new Nepriatel(meno, obrazok, nullptr, statistika);
 
 
+
+		Json::Value dropy(Json::objectValue);
+		dropy = nepriatel["questDrop"];
+
+		for (Json::Value::iterator it = dropy.begin(); it != dropy.end(); ++it) {
+			Json::Value key = it.key();
+			Json::Value predmet = (*it);
+
+			std::string meno = predmet["meno"].asCString();
+			std::string obrazok = predmet["obrazok"].asCString();
+			int typ = predmet["typ"].asInt();
+			int cena = predmet["cena"].asInt();
+			int uroven = predmet["uroven"].asInt();
+			
+			novyNepriatel->pridajDropItem(key.asCString(), new Predmet(meno,typ,obrazok,cena,uroven));
+
+		}
 		
 		
 		return novyNepriatel;
@@ -539,7 +651,9 @@ std::vector<Predmet*>* Loader::nacitajObchod(std::string paMeno) {
 		Json::Value key = it.key();
 		Json::Value polozka = (*it);
 
-		std::string typTriedy = polozka["typTriedy"].asCString();
+		Predmet* p = parsujPredmet(polozka);
+		obchod->push_back(p);
+		/*std::string typTriedy = polozka["typTriedy"].asCString();
 		
 		std::string meno = polozka["meno"].asCString();
 		std::string obrazok = polozka["obrazok"].asCString();
@@ -595,7 +709,7 @@ std::vector<Predmet*>* Loader::nacitajObchod(std::string paMeno) {
 
 			obchod->push_back(predmet);
 
-		}
+		}*/
 
 	}
 	
@@ -603,4 +717,65 @@ std::vector<Predmet*>* Loader::nacitajObchod(std::string paMeno) {
 
 
 	return obchod;
+}
+
+Predmet* Loader::parsujPredmet(Json::Value jPredmet) {
+	Predmet* predmet = nullptr;
+
+	std::string typTriedy = jPredmet["typTriedy"].asCString();
+
+	std::string meno = jPredmet["meno"].asCString();
+	std::string obrazok = jPredmet["obrazok"].asCString();
+	int typ = jPredmet["typ"].asInt();
+	int cena = jPredmet["cena"].asInt();
+	int uroven = jPredmet["uroven"].asInt();
+
+	if (typTriedy == "elixir") {
+		std::string co = jPredmet["stat"].asCString();
+		int oKolko = jPredmet["oKolko"].asInt();
+		predmet = new Elixir(meno, typ, obrazok, cena, uroven, co, oKolko);
+	}
+	else {
+
+		
+		if (typTriedy == "zbran") {
+
+			int minDmg = jPredmet["minDmg"].asInt();
+			int maxDmg = jPredmet["maxDmg"].asInt();
+			int rychlostUtoku = jPredmet["rychlostUtoku"].asInt();
+
+			predmet = new Zbran(meno, typ, obrazok, cena, uroven, minDmg, maxDmg, rychlostUtoku);
+		}
+		else {
+			predmet = new Oblecenie(meno, typ, obrazok, cena, uroven);
+		}
+
+		Pouzitelny* ppredmet = (Pouzitelny*)predmet;
+		int hp = jPredmet["hp"].asInt();
+		double hpMult = jPredmet["hpMult"].asDouble();
+		int mp = jPredmet["mp"].asInt();
+		double mpMult = jPredmet["mpMult"].asDouble();
+		int sila = jPredmet["sila"].asInt();
+		double silaMult = jPredmet["silaMult"].asDouble();
+		int intelekt = jPredmet["intelekt"].asInt();
+		double intelektMult = jPredmet["intelektMult"].asDouble();
+		int rychlost = jPredmet["rychlost"].asInt();
+		double rychlostMult = jPredmet["rychlostMult"].asDouble();
+		int obrana = jPredmet["obrana"].asInt();
+		double obranaMult = jPredmet["obranaMult"].asDouble();
+
+		ppredmet->Sethp(hp);
+		ppredmet->SethpMult(hpMult);
+		ppredmet->Setmp(mp);
+		ppredmet->SetmpMult(mpMult);
+		ppredmet->Setsila(sila);
+		ppredmet->SetsilaMult(silaMult);
+		ppredmet->Setinteligencia(intelekt);
+		ppredmet->SetinteligenciaMult(intelektMult);
+		ppredmet->Setrychlost(rychlost);
+		ppredmet->SetrychlostMult(rychlostMult);
+		ppredmet->Setarmor(obrana);
+		ppredmet->SetarmorMult(obranaMult);
+	}
+	return predmet;
 }

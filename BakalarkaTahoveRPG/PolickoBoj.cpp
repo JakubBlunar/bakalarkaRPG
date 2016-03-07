@@ -38,19 +38,21 @@ void PolickoBoj::hracSkok(Hrac* paHrac) {
 	if (0.1 >= p) {
 
 		std::vector<std::string>* moznyNepriatelia = mapa->Getmoznynepriatelia();
+		if (moznyNepriatelia->size() > 0) {
+			std::uniform_int_distribution<int> rand(0, moznyNepriatelia->size() - 1);
+			int id = rand(generator);
 
-		std::uniform_int_distribution<int> rand(0, moznyNepriatelia->size()-1);
-		int id = rand(generator);
+			/*
 
-		/*
-		
-		*/
-		Nepriatel* nepriatel = Loader::Instance()->nacitajNepriatela(moznyNepriatelia->at(id));
-		StavBoj* stavBoj = (StavBoj*)hra->dajStav("stavBoj");
-		stavBoj->setBoj(new Boj(paHrac, nepriatel ));
+			*/
 
-		stavHranieHry->zobrazPopup(new PopupOkno("Napdol ta " + nepriatel->Getmeno() + " urovne " + std::to_string(nepriatel->Getstatistika()->dajUroven()) +"." ));
-		hra->zmenStavRozhrania("stavBoj");
+			Nepriatel* nepriatel = Loader::Instance()->nacitajNepriatela(moznyNepriatelia->at(id));
+			StavBoj* stavBoj = (StavBoj*)hra->dajStav("stavBoj");
+			stavBoj->setBoj(new Boj(paHrac, nepriatel));
+
+			stavHranieHry->zobrazPopup(new PopupOkno("Napdol ta " + nepriatel->Getmeno() + " urovne " + std::to_string(nepriatel->Getstatistika()->dajUroven()) + "."));
+			hra->zmenStavRozhrania("stavBoj");
+		}
 	}
 
 

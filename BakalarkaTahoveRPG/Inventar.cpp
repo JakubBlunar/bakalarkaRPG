@@ -7,54 +7,19 @@
 #include "Zbran.h"
 #include "Elixir.h"
 
+#include "Loader.h"
+#include "Hra.h"
+#include "PopupOkno.h"
+#include "Stav.h"
+#include "Hrac.h"
+#include "QuestManager.h"
+
 Inventar::Inventar() {
 	pocetZlata = 500;
 	kapacita = 18;
 
-	/*Pouzitelny* zbran = new Zbran("Katana", 9, "wp1", 100,1,1,2,2000);
-	Pouzitelny* brnenie = new Oblecenie("Ruth brnenie", 3, "ch1", 3,1);
-	Pouzitelny* stit = new Zbran("Tower stit", 11, "st1", 11,1,0,0,10000);
-	Pouzitelny* ramena = new Oblecenie("Ruth ramena", 2, "sh1", 3, 1);
-	Pouzitelny* helma = new Oblecenie("Ruthless helm", 1, "hm1", 3, 1);
-	Pouzitelny* nohavice = new Oblecenie("Zlate nohavice", 4, "lg1", 3, 1);
-	Pouzitelny* rukavice = new Oblecenie("Platove rukavice", 7, "gt1", 3, 1);
-	Pouzitelny* topanky = new Oblecenie("Platovane topanky", 8, "bt1", 3, 1);
-	Pouzitelny* nahrdelnik = new Oblecenie("Zlaty nahrdelnik", 5, "nc1", 3, 1);
-	Pouzitelny* prsten = new Oblecenie("Prsten sily", 6, "pr1", 3, 1);
-	
-	stit->Setarmor(5);
-
-	ramena->Setarmor(2);
-	helma->Setarmor(2);
-	nohavice->Setarmor(3);
-	rukavice->Setarmor(1);
-	topanky->Setarmor(2);
-
-	Pouzitelny* elixir = new Elixir("Maly Hp elixir", 12, "elixir", 5000, 1, "hp", 500);
-	
-	brnenie->Setarmor(3);
-	brnenie->Sethp(5);
-	
-	try {
-	
-		pridajPredmet(zbran);
-		pridajPredmet(brnenie);
-		pridajPredmet(stit);
-		pridajPredmet(ramena);
-		pridajPredmet(helma);
-		pridajPredmet(nohavice);
-		pridajPredmet(topanky);
-		pridajPredmet(nahrdelnik);
-		pridajPredmet(prsten);
-		pridajPredmet(rukavice);
-		pridajPredmet(elixir);
-		pridajPredmet(new Elixir("Maly Hp elixir", 12, "elixir", 5000, 1, "hp", 500));
-	}
-	catch (int ex) {
-		if (ex == 1) {
-			std::cout << "inventar je plny" << std::endl;
-		}
-	}*/
+	Pouzitelny* zbran = new Zbran("Admin - Katana", 9, "wp1", 100,1,100,100,500);
+	pridajPredmet(zbran,false);
 }
 
 
@@ -99,17 +64,40 @@ int Inventar::pocetPredmetov() {
 }
 
 
-void Inventar::pridajPredmet(Predmet* predmet){
+void Inventar::pridajPredmet(Predmet* predmet,bool loot){
 	if ((signed int)predmety.size() < kapacita) {
 		predmety.push_back(predmet);
+		if (loot) {
+			Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(Event::VYHODENIE_PREDMETU, predmet);
+		}
 	}
 	else {
+		Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(new PopupOkno("Inventar je plny!"));
 		throw 1;
 	}
 }
 
 void Inventar::zmazPredmet(Predmet* predmet) {
 	predmety.erase(std::remove(predmety.begin(), predmety.end(), predmet), predmety.end());
+	Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(Event::VYHODENIE_PREDMETU, predmet);
+}
+
+void Inventar::zmazPredmet(std::string nazovPredmetu) {
+	std::vector<Predmet*> naZmazanie;
+	for (unsigned int i = 0; i < predmety.size(); i++) {
+		if (predmety.at(i)->Getmeno() == nazovPredmetu) {
+			naZmazanie.push_back(predmety.at(i));
+		}
+	}
+	
+	Predmet* predmet;
+	while (naZmazanie.size() > 0) {
+		predmet = naZmazanie.back();
+		naZmazanie.pop_back();
+		zmazPredmet(predmet);
+	}
+
+	Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(Event::VYHODENIE_PREDMETU, predmet);
 }
 
 Predmet* Inventar::dajPredmetNaIndexe(int i) {

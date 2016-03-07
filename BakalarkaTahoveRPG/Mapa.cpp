@@ -9,8 +9,9 @@
 
 Mapa::Mapa(std::string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSirka) {
 	moznyNepriatelia = new std::vector<std::string>();
+	this->menoMapy = menoMapy;
 	this->hrac = paHrac;
-	this->hra = hra;
+	this->hra = nullptr;
 	posunX = 0;
 	posunY = 0;
 	vyska = paVyska;
@@ -34,6 +35,8 @@ Mapa::Mapa(std::string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSir
 		}
 	}
 
+	hrobSuradnice = sf::Vector2i(0, 0);
+
 }
 
 Mapa::~Mapa() {
@@ -52,16 +55,26 @@ Mapa::~Mapa() {
 	delete[] mapa;
 }
 
+std::string Mapa::Getmeno() {
+	return menoMapy;
+}
 
 void Mapa::setHrac(Hrac* paHrac) {
 	hrac = paHrac;
 }
 
-
 void Mapa::posun(int posunX, int posunY) {
 	this->posunX += posunX;
 	this->posunY += posunY;
 
+}
+
+void Mapa::setHrobSuradnice(sf::Vector2i paSuradnice) {
+	hrobSuradnice = paSuradnice;
+}
+
+sf::Vector2i Mapa::Gethrobsuradnice() {
+	return hrobSuradnice;
 }
 
 void Mapa::render(sf::RenderWindow* okno) {
@@ -113,7 +126,6 @@ void Mapa::render(sf::RenderWindow* okno) {
 	}
 	okno->setView(okno->getDefaultView());
 }
-
 
 sf::FloatRect Mapa::Getzobrazenaoblast() {
 	return sf::FloatRect(posunX + 0.f,posunY + 0.f,view.getSize().x + 0.f,view.getSize().y + 0.f);

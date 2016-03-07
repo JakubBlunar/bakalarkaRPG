@@ -27,7 +27,7 @@ public:
 	void Setcena(int newVal);
 	void Setmeno(std::string newVal);
 	void Setobrazok(sf::Sprite* newVal);
-	
+	virtual Predmet* copy();
 
 protected:
 	int uroven;
