@@ -53,7 +53,7 @@
           "typ": "kill",
           "nazov": "Nebezpecni murloci.",
           "co": "Murlock",
-          "kolko": 1,
+          "kolko": 10,
           "popis": "Murloci si zacali dovolovat do ludi.\nChod a ukaz im kto je tu panom",
           "xp": 15,
           "zlato": 50,

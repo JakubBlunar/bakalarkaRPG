@@ -9,8 +9,6 @@ StavPauza::StavPauza(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) 
 
 	oznacene = 0;
 
-	font = Loader::Instance()->nacitajFont("font2.otf");
-
 }
 
 

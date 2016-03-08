@@ -5,7 +5,6 @@
 
 
 StavLoading::StavLoading(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
-	font = Loader::Instance()->nacitajFont("font2.otf");
 }
 
 

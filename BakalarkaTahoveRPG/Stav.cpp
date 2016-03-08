@@ -1,6 +1,7 @@
 #include "Stav.h"
 #include "Hra.h"
 #include "PopupOkno.h"
+#include "Loader.h"
 
 #include <sstream>
 #include <iomanip>  
@@ -13,6 +14,7 @@ Stav::Stav(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) {
 
 	stlacenaMys = true;
 	stlacenaKlavesa = true;
+	font = Loader::Instance()->nacitajFont("font2.ttf");
 }
 
 

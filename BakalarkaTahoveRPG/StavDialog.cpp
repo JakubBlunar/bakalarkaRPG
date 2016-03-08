@@ -8,7 +8,7 @@
 
 
 StavDialog::StavDialog(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
-	font = Loader::Instance()->nacitajFont("font2.otf");
+
 	dialog = nullptr;
 	npc = nullptr;
 	oznacene = 0;
@@ -55,7 +55,7 @@ void StavDialog::render() {
 		text.setCharacterSize(20U);
 		for (int i = 0; i < dialog->Getaktualnapolozka()->pocetMoznosti(); i++) {
 			if (oznacene == i) {
-				text.setColor(sf::Color::Blue);
+				text.setColor(sf::Color::Green);
 			}
 			else {
 				text.setColor(sf::Color::White);

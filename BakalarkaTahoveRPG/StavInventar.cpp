@@ -15,7 +15,6 @@
 
 
 StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
-	font = Loader::Instance()->nacitajFont("font2.otf");
 	
 	ukazovatel.setSize(sf::Vector2f(48, 48));
 	ukazovatel.setFillColor(sf::Color(255, 0, 0, 128));

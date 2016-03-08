@@ -12,7 +12,6 @@
 StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra, Mapa* mapa) : Stav(paNazov, paOkno, paHra)
 {
 	this->mapa = mapa;
-	font = Loader::Instance()->nacitajFont("font2.otf");
 	loot = nullptr;
 	
 	

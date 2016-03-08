@@ -4,8 +4,6 @@
 #include "Tlacidlo.h"
 
 StavHlavneMenu::StavHlavneMenu(std::string paNazov, sf::RenderWindow* paOkno,Hra* paHra): Stav(paNazov,paOkno,paHra){
-	
-	font = Loader::Instance()->nacitajFont("font2.otf");
 
 	sf::Texture texture;
 	texture.create(1000, 1000);

@@ -14,7 +14,6 @@
 #include "AkciaPridanieEfektu.h"
 
 StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
-	font = Loader::Instance()->nacitajFont("font2.otf");
 	
 	ukazovatel.setSize(sf::Vector2f(48, 48));
 	ukazovatel.setFillColor(sf::Color(255, 0, 0, 128));
@@ -68,7 +67,8 @@ void StavInfoHraca::onExit() {
 
 void StavInfoHraca::render() {
 		
-		sf::Text text("Hrac Info",*font, 45U);
+
+		sf::Text text("Hrac info:",*font, 45U);
 		text.setPosition(sf::Vector2f(10.f, 10.f));
 		okno->draw(text);
 		
