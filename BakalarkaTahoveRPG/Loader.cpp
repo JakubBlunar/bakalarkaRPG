@@ -105,7 +105,10 @@ DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
 			polozka = new DialogPolozka(textPolozky);
 		}
 		else if (typPolozky == "questVolba") {
-			
+			string questSubor = polozkaData["quest"].asCString();
+
+			quest = nacitajQuest(questSubor);
+			/*
 			Json::Value jquest(Json::objectValue);
 			jquest = polozkaData["quest"];
 			
@@ -145,8 +148,9 @@ DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
 				jPredmet = odmenaVeci[i];
 				quest->pridajOdmenu(parsujPredmet(jPredmet));
 			}
+			*/
 
-			polozka = new QuestPolozka(questNazov);
+			polozka = new QuestPolozka(quest->Getnazov());
 
 			Json::Value polozkaTexty(Json::arrayValue);
 			polozkaTexty = polozkaData["polozkaTexty"];
@@ -664,63 +668,6 @@ std::vector<Predmet*>* Loader::nacitajObchod(std::string paMeno) {
 
 		Predmet* p = parsujPredmet(polozka);
 		obchod->push_back(p);
-		/*std::string typTriedy = polozka["typTriedy"].asCString();
-		
-		std::string meno = polozka["meno"].asCString();
-		std::string obrazok = polozka["obrazok"].asCString();
-		int typ = polozka["typ"].asInt();
-		int cena = polozka["cena"].asInt();
-		int uroven = polozka["uroven"].asInt();
-
-		if (typTriedy == "elixir") {
-			std::string co = polozka["stat"].asCString();
-			int oKolko = polozka["oKolko"].asInt();
-			obchod->push_back(new Elixir(meno, typ, obrazok, cena, uroven, co, oKolko));
-		}
-		else {
-
-			Pouzitelny* predmet;
-			if (typTriedy == "zbran") {
-
-				int minDmg = polozka["minDmg"].asInt();
-				int maxDmg = polozka["maxDmg"].asInt();
-				int rychlostUtoku = polozka["rychlostUtoku"].asInt();
-
-				predmet = new Zbran(meno, typ, obrazok, cena, uroven,minDmg,maxDmg,rychlostUtoku);
-			}
-			else {
-				predmet = new Oblecenie(meno, typ, obrazok, cena, uroven);
-			}
-
-			int hp = polozka["hp"].asInt();
-			double hpMult = polozka["hpMult"].asDouble();
-			int mp = polozka["mp"].asInt();
-			double mpMult = polozka["mpMult"].asDouble();
-			int sila = polozka["sila"].asInt();
-			double silaMult = polozka["silaMult"].asDouble();
-			int intelekt = polozka["intelekt"].asInt();
-			double intelektMult = polozka["intelektMult"].asDouble();
-			int rychlost = polozka["rychlost"].asInt();
-			double rychlostMult = polozka["rychlostMult"].asDouble();
-			int obrana = polozka["obrana"].asInt();
-			double obranaMult = polozka["obranaMult"].asDouble();
-
-			predmet->Sethp(hp);
-			predmet->SethpMult(hpMult);
-			predmet->Setmp(mp);
-			predmet->SetmpMult(mpMult);
-			predmet->Setsila(sila);
-			predmet->SetsilaMult(silaMult);
-			predmet->Setinteligencia(intelekt);
-			predmet->SetinteligenciaMult(intelektMult);
-			predmet->Setrychlost(rychlost);
-			predmet->SetrychlostMult(rychlostMult);
-			predmet->Setarmor(obrana);
-			predmet->SetarmorMult(obranaMult);
-
-			obchod->push_back(predmet);
-
-		}*/
 
 	}
 	
@@ -789,4 +736,60 @@ Predmet* Loader::parsujPredmet(Json::Value jPredmet) {
 		ppredmet->SetarmorMult(obranaMult);
 	}
 	return predmet;
+}
+
+Quest* Loader::nacitajQuest(string paMeno) {
+	
+	Quest* quest;
+
+	std::string cestaKuQuestom = "./Data/Questy/";
+
+	std::vector<Predmet*>* obchod = new std::vector<Predmet*>();
+
+	Json::Value jQuest;
+	Json::Reader reader;
+	std::ifstream json(cestaKuQuestom + "" + paMeno + ".json", std::ifstream::binary);
+	bool parsingSuccessful = reader.parse(json, jQuest, false);
+
+	if (!parsingSuccessful)
+	{
+		std::cout << "chyba pri parsovani Jsonu questu" << "\n";
+	}
+
+	std::string questNazov = jQuest["nazov"].asCString();
+	std::string questPopis = jQuest["popis"].asCString();
+	int odmenaXp = jQuest["xp"].asInt();
+	int odmenaZlato = jQuest["zlato"].asInt();
+
+	quest = new Quest(questNazov, questPopis, odmenaXp, odmenaZlato);
+
+	Json::Value questPoziadavky(Json::arrayValue);
+	questPoziadavky = jQuest["poziadavky"];
+	for (unsigned int i = 0; i < questPoziadavky.size(); i++) {
+		Json::Value poziadavka(Json::objectValue);
+		poziadavka = questPoziadavky[i];
+
+		string pTyp = poziadavka["typ"].asCString();
+		if (pTyp == "kill") {
+			std::string pKoho = poziadavka["co"].asCString();
+			int pKolko = poziadavka["kolko"].asInt();
+			std::string pKde = poziadavka["kde"].asCString();
+			quest->pridajPoziadavku(new PoziadavkaZabi(pKoho, pKolko, pKde));
+		}
+		else if (pTyp == "loot") {
+			std::string pCo = poziadavka["co"].asCString();
+			int pKolko = poziadavka["kolko"].asInt();
+			quest->pridajPoziadavku(new PoziadavkaLoot(pCo, pKolko));
+		}
+	}
+
+
+	Json::Value odmenaVeci(Json::arrayValue);
+	odmenaVeci = jQuest["predmety"];
+	for (unsigned int i = 0; i < odmenaVeci.size(); i++) {
+		Json::Value jPredmet(Json::objectValue);
+		jPredmet = odmenaVeci[i];
+		quest->pridajOdmenu(parsujPredmet(jPredmet));
+	}
+	return quest;
 }

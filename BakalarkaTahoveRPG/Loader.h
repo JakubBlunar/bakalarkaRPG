@@ -14,6 +14,7 @@ class Mapa;
 class DialogovyStrom;
 class Nepriatel;
 class Predmet;
+class Quest;
 
 class Loader {
 public:
@@ -24,7 +25,7 @@ public:
 	DialogovyStrom* nacitajDialog(std::string paMeno);
 	Nepriatel* nacitajNepriatela(std::string paMeno);
 	std::vector<Predmet*>* nacitajObchod(std::string paMeno);
-
+	Quest* nacitajQuest(std::string paMeno);
 	bool Getnacitava();
 	Hra* Gethra();
 private:

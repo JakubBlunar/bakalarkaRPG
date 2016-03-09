@@ -49,52 +49,7 @@
     "3": {
       "typ": "questVolba",
 
-      "quest": {
-          "typ": "kill",
-          "nazov": "Nebezpecni murloci.",
-          "co": "Murlock",
-          "kolko": 10,
-          "popis": "Murloci si zacali dovolovat do ludi.\nChod a ukaz im kto je tu panom",
-          "xp": 15,
-          "zlato": 50,
-          "poziadavky": [
-            {
-              "typ": "kill",
-              "co": "Murlock",
-              "kolko": 2,
-              "kde": ""
-            }
-          ],
-          "predmety": [
-            
-            {
-              "typTriedy": "zbran",
-              "meno": "Maly mec",
-              "obrazok": "wp1",
-              "typ": 9,
-              "cena": 100,
-              "uroven": 1,
-       
-              "hp": 0,
-              "hpMult": 0,
-              "mp": 0,
-              "mpMult": 0,
-              "sila": 0,
-              "silaMult": 0,
-              "intelekt": 0,
-              "intelektMult": 0,
-              "rychlost": 0,
-              "rychlostMult": 0,
-              "obrana": 0,
-              "obranaMult": 0,
-
-              "minDmg": 1,
-              "maxDmg": 2,
-              "rychlostUtoku": 2000
-            }
-         
-          ]
-      },
+      "quest": "quest1",
 
       "polozkaTexty": [
         "Ano mam jednu. Chod a zabi mi par priser. Dostanes... ",

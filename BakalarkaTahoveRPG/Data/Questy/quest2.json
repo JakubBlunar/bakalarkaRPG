@@ -1,0 +1,43 @@
+{
+  "nazov": "Kvetinky pre bylinkarku.",
+  "popis": "Mulroci ukradli bylinkakre kvetiny.\nPrines jej ich spet",
+  "xp": 0,
+  "zlato": 150,
+  "predmety": [
+    {
+      "typTriedy": "elixir",
+      "meno": "Maly Hp elixir",
+      "obrazok": "elixir",
+      "typ": 12,
+      "cena": 20,
+      "uroven": 1,
+
+      "stat": "hp",
+      "oKolko": 50,
+
+      "hp": 0,
+      "hpMult": 0,
+      "mp": 0,
+      "mpMult": 0,
+      "sila": 0,
+      "silaMult": 0,
+      "intelekt": 0,
+      "intelektMult": 0,
+      "rychlost": 0,
+      "rychlostMult": 0,
+      "obrana": 0,
+      "obranaMult": 0
+    }
+
+  ],
+  "poziadavky": [
+    {
+      "typ": "loot",
+      "co": "Kvet",
+      "kolko": 1
+    }
+
+  ]
+
+
+}

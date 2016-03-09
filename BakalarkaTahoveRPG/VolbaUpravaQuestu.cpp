@@ -24,7 +24,6 @@ void VolbaUpravaQuestu::akcia(Hrac* hrac) {
 
 	if (!hrac->Getmanazerquestov()->maQuest(quest->Getnazov())) {
 		hrac->Getmanazerquestov()->pridajQuest(quest);
-		std::cout << "Pridanie questu " << quest->Getnazov() << std::endl;
 		Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(new PopupOkno("Uspesne si prijal quest " + quest->Getnazov() ));
 	}
 	else {
