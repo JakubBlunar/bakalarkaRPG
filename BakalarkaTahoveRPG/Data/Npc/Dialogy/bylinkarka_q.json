@@ -4,10 +4,7 @@
       "typ": "questVolba",
 
       "quest": {
-          "typ": "loot",
           "nazov": "Kvetinky pre bylinkarku.",
-          "co": "Kvet",
-          "kolko": 5,
           "popis": "Mulroci ukradli bylinkakre kvetiny.\nPrines jej ich spet",
           "xp": 0,
           "zlato": 150,
@@ -35,6 +32,14 @@
               "rychlostMult": 0,
               "obrana": 0,
               "obranaMult": 0
+            }
+
+          ],
+          "poziadavky": [
+            {
+              "typ": "loot",
+              "co": "Kvet",
+              "kolko": 1
             }
 
           ]

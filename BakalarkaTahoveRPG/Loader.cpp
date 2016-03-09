@@ -40,8 +40,7 @@
 
 #include "Quest.h"
 #include "QuestPolozka.h"
-#include "QuestKill.h"
-#include "QuestLoot.h"
+#include "Poziadavka.h"
 
 #include <random>
 
@@ -110,22 +109,34 @@ DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
 			Json::Value jquest(Json::objectValue);
 			jquest = polozkaData["quest"];
 			
-			std::string questTyp = jquest["typ"].asCString();
+			
 			std::string questNazov = jquest["nazov"].asCString();
 			std::string questPopis = jquest["popis"].asCString();
 			int odmenaXp = jquest["xp"].asInt();
 			int odmenaZlato = jquest["zlato"].asInt();
+			
+			quest = new Quest(questNazov, questPopis, odmenaXp, odmenaZlato);
 
-			if (questTyp == "kill") {
-				std::string questKoho = jquest["co"].asCString();
-				int questKolko = jquest["kolko"].asInt();
-				quest = new QuestKill(questNazov,questPopis, questKoho, questKolko,odmenaXp,odmenaZlato);
+			Json::Value questPoziadavky(Json::arrayValue);
+			questPoziadavky = jquest["poziadavky"];
+			for (unsigned int i = 0; i < questPoziadavky.size(); i++) {
+				Json::Value poziadavka(Json::objectValue);
+				poziadavka = questPoziadavky[i];
+
+				string pTyp = poziadavka["typ"].asCString();
+				if (pTyp == "kill") {
+					std::string pKoho = poziadavka["co"].asCString();
+					int pKolko = poziadavka["kolko"].asInt();
+					std::string pKde = poziadavka["kde"].asCString();
+					quest->pridajPoziadavku(new PoziadavkaZabi(pKoho, pKolko, pKde));
+				}
+				else if (pTyp == "loot") {
+					std::string pCo = poziadavka["co"].asCString();
+					int pKolko = poziadavka["kolko"].asInt();
+					quest->pridajPoziadavku(new PoziadavkaLoot(pCo, pKolko));
+				}
 			}
-			else if (questTyp == "loot") {
-				std::string questCo = jquest["co"].asCString();
-				int questKolko = jquest["kolko"].asInt();
-				quest = new QuestLoot(questNazov,questPopis,questCo, questKolko,odmenaXp,odmenaZlato);
-			}
+
 
 			Json::Value odmenaVeci(Json::arrayValue);
 			odmenaVeci = jquest["predmety"];

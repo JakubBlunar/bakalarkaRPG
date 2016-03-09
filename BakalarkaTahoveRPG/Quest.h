@@ -2,6 +2,7 @@
 #define Quest_h
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -9,6 +10,7 @@ class QuestOdmena;
 class Nepriatel;
 class Hrac;
 class Predmet;
+class Poziadavka;
 
 enum StavQuestu {
 	NEPRIJATY = 0,
@@ -20,20 +22,22 @@ enum StavQuestu {
 class Quest
 {
 public:
-	virtual void zabitieNpc(Nepriatel* nepriatel) = 0;
-	virtual void lootnutiePredmetu(Predmet* paPredmet) = 0;
-	virtual void kontrola() = 0;
-	virtual string getPopis();
-	virtual void dokonciSa(Hrac* hrac);
+	void zabitieNpc(Nepriatel* nepriatel);
+	void lootnutiePredmetu(Predmet* paPredmet);
+	void kontrola();
+	string getPopis();
+	void dokonciSa(Hrac* hrac);
 	void setStav(StavQuestu paStav);
 	StavQuestu Getstav();
 	string Getnazov();
 	void pridajOdmenu(Predmet* paPredmet);
 	string GetpopisOdmeny();
+	Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata);
+	void pridajPoziadavku(Poziadavka* poziadavka);
 protected:
-	Quest(string paNazov,string paPopis, int pocetXp, int pocetZlata);
 	
-
+	
+	vector <Poziadavka* > poziadavky;
 	string nazov;
 	StavQuestu stav;
 	string popis;

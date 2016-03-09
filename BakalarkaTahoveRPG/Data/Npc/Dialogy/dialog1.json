@@ -57,6 +57,14 @@
           "popis": "Murloci si zacali dovolovat do ludi.\nChod a ukaz im kto je tu panom",
           "xp": 15,
           "zlato": 50,
+          "poziadavky": [
+            {
+              "typ": "kill",
+              "co": "Murlock",
+              "kolko": 2,
+              "kde": ""
+            }
+          ],
           "predmety": [
             
             {

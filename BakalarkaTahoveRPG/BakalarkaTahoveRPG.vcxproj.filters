@@ -225,17 +225,14 @@
     <ClInclude Include="QuestManager.h">
       <Filter>Header Files\Questy</Filter>
     </ClInclude>
-    <ClInclude Include="QuestLoot.h">
-      <Filter>Header Files\Questy</Filter>
-    </ClInclude>
-    <ClInclude Include="QuestKill.h">
-      <Filter>Header Files\Questy</Filter>
-    </ClInclude>
     <ClInclude Include="QuestOdmena.h">
       <Filter>Header Files\Questy</Filter>
     </ClInclude>
     <ClInclude Include="StavPrehladQuestov.h">
       <Filter>Header Files\Stavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Poziadavka.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -395,17 +392,14 @@
     <ClCompile Include="QuestManager.cpp">
       <Filter>Source Files\Questy</Filter>
     </ClCompile>
-    <ClCompile Include="QuestLoot.cpp">
-      <Filter>Source Files\Questy</Filter>
-    </ClCompile>
-    <ClCompile Include="QuestKill.cpp">
-      <Filter>Source Files\Questy</Filter>
-    </ClCompile>
     <ClCompile Include="QuestOdmena.cpp">
       <Filter>Source Files\Questy</Filter>
     </ClCompile>
     <ClCompile Include="StavPrehladQuestov.cpp">
       <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Poziadavka.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

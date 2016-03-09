@@ -8,6 +8,7 @@
 
 #include "Mapa.h"
 #include "Policko.h"
+#include "Poziadavka.h"
 
 
 Quest::Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata)
@@ -31,8 +32,11 @@ string Quest::Getnazov() {
 }
 
 string Quest::getPopis() {
-	string ts = "";
 	
+	
+	string popisQuestu = "";
+	
+	string ts = "";
 	switch (stav)
 	{
 	case StavQuestu::NEPRIJATY:
@@ -48,8 +52,15 @@ string Quest::getPopis() {
 		ts = "Dokonceny";
 		break;
 	}
+	popisQuestu+= "Stav: " + ts + "\n\n" + popis + "\n\n";
 
-	return "Stav: " + ts+ "\n\n" +popis;
+	for (unsigned int i = 0; i < poziadavky.size(); i++) {
+		popisQuestu += poziadavky.at(i)->Getpopis() + "\n";
+	}
+
+	popisQuestu += "\n" + GetpopisOdmeny();
+
+	return popisQuestu;
 }
 
 void Quest::pridajOdmenu(Predmet* paPredmet) {
@@ -57,26 +68,32 @@ void Quest::pridajOdmenu(Predmet* paPredmet) {
 }
 
 void Quest::dokonciSa(Hrac* paHrac) {
-	paHrac->pridajSkusenosti(odmena->Getpocetxp());
-	
-	Inventar* inv = paHrac->Getinventar();
-	inv->pridajZlato(odmena->Getpocetzlata());
+	if (stav == StavQuestu::SPLNENIE_POZIADAVIEK) {
+		stav = StavQuestu::DOKONCENY;
 
-	vector<Predmet*>* predmety = odmena->getPredmety();
-	bool ajNaZem = false;
-	for (unsigned int i = 0; i < predmety->size(); i++) {		
-		if (inv->pocetPredmetov() < inv->Getkapacita()) {
-			paHrac->Getinventar()->pridajPredmet(predmety->at(i));
-		}
-		else {// ak nemá kapacitu v inventary tak sa predmety vyhodia na mapu kde hrac stoji
-			Mapa* m = paHrac->getMapa();
-			m->GetPolicko(paHrac->GetpolickoX(),paHrac->GetpolickoY())->polozPredmet(predmety->at(i),m->aktCas()+sf::seconds(300));
-			ajNaZem = true;
-		}
-	}
+		for (unsigned int i = 0; i < poziadavky.size(); i++) poziadavky.at(i)->dokoncenie(paHrac);
 
-	if (ajNaZem) {
-		
+		paHrac->pridajSkusenosti(odmena->Getpocetxp());
+
+		Inventar* inv = paHrac->Getinventar();
+		inv->pridajZlato(odmena->Getpocetzlata());
+
+		vector<Predmet*>* predmety = odmena->getPredmety();
+		bool ajNaZem = false;
+		for (unsigned int i = 0; i < predmety->size(); i++) {
+			if (inv->pocetPredmetov() < inv->Getkapacita()) {
+				paHrac->Getinventar()->pridajPredmet(predmety->at(i));
+			}
+			else {// ak nemá kapacitu v inventary tak sa predmety vyhodia na mapu kde hrac stoji
+				Mapa* m = paHrac->getMapa();
+				m->GetPolicko(paHrac->GetpolickoX(), paHrac->GetpolickoY())->polozPredmet(predmety->at(i), m->aktCas() + sf::seconds(300));
+				ajNaZem = true;
+			}
+		}
+
+		if (ajNaZem) {
+
+		}
 	}
 }
 
@@ -98,3 +115,33 @@ string Quest::GetpopisOdmeny() {
 	}
 	return popis;
 }
+
+void Quest::zabitieNpc(Nepriatel* nepriatel) {
+	for (unsigned int i = 0; i < poziadavky.size(); i++) poziadavky.at(i)->akcia(nepriatel);
+	kontrola();
+}
+
+void Quest::lootnutiePredmetu(Predmet* paPredmet) {
+	for (unsigned int i = 0; i < poziadavky.size(); i++) poziadavky.at(i)->akcia(paPredmet);
+	kontrola();
+}
+
+void Quest::kontrola() {
+	bool splnene = true;
+	for (unsigned int i = 0; i < poziadavky.size(); i++) {
+		if (!poziadavky.at(i)->jeSplnena()) splnene = false;
+	}
+
+	if (splnene && stav != StavQuestu::DOKONCENY) {
+		stav = StavQuestu::SPLNENIE_POZIADAVIEK;
+	}
+	else {
+		stav = StavQuestu::ROZROBENY;
+	}
+}
+
+void Quest::pridajPoziadavku(Poziadavka* poziadavka) {
+	poziadavky.push_back(poziadavka);
+}
+
+

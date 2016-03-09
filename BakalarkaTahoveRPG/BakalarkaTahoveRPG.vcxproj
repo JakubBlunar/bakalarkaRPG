@@ -173,10 +173,9 @@
     <ClInclude Include="PolickoDvere.h" />
     <ClInclude Include="PopupOkno.h" />
     <ClInclude Include="Pouzitelny.h" />
+    <ClInclude Include="Poziadavka.h" />
     <ClInclude Include="Predmet.h" />
     <ClInclude Include="Quest.h" />
-    <ClInclude Include="QuestKill.h" />
-    <ClInclude Include="QuestLoot.h" />
     <ClInclude Include="QuestManager.h" />
     <ClInclude Include="QuestOdmena.h" />
     <ClInclude Include="QuestPolozka.h" />
@@ -231,10 +230,9 @@
     <ClCompile Include="PolickoDvere.cpp" />
     <ClCompile Include="PopupOkno.cpp" />
     <ClCompile Include="Pouzitelny.cpp" />
+    <ClCompile Include="Poziadavka.cpp" />
     <ClCompile Include="Predmet.cpp" />
     <ClCompile Include="Quest.cpp" />
-    <ClCompile Include="QuestKill.cpp" />
-    <ClCompile Include="QuestLoot.cpp" />
     <ClCompile Include="QuestManager.cpp" />
     <ClCompile Include="QuestOdmena.cpp" />
     <ClCompile Include="QuestPolozka.cpp" />
