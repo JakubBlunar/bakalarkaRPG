@@ -11,6 +11,8 @@ class Nepriatel;
 class Hrac;
 class Predmet;
 class Poziadavka;
+class QuestPolozka;
+class DialogVolba;
 
 enum StavQuestu {
 	NEPRIJATY = 0,
@@ -32,16 +34,38 @@ public:
 	string Getnazov();
 	void pridajOdmenu(Predmet* paPredmet);
 	string GetpopisOdmeny();
-	Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata);
+	Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata,string paStartNpc,string paEndNpc);
 	void pridajPoziadavku(Poziadavka* poziadavka);
-protected:
-	
-	
+
+	void Setpredchadzajuci(Quest* paQuest);
+	void Setnasledujuci(Quest* paQuest);
+	Quest* Getnasledujuci();
+	Quest* Getpredchadzajuci();
+	string Getstartnpc();
+	string Getendnpc();
+
+	void SetdialogPolozka(QuestPolozka* paPolozka);
+	void SetvolbaKuQuestu(DialogVolba* paVolba);
+
+	QuestPolozka* GetdialogPolozka();
+	DialogVolba* GetvolbaKuQuestu();
+
+private:
+	Quest* predchadzajuci;
+	Quest* nasledujuci;
 	vector <Poziadavka* > poziadavky;
 	string nazov;
 	StavQuestu stav;
 	string popis;
 	QuestOdmena* odmena;
+
+	string startNpc = "";
+	string endNpc = "";
+
+
+	QuestPolozka* dialogPolozka;
+	DialogVolba* volbaKuQuestu;
+
 };
 
 #endif

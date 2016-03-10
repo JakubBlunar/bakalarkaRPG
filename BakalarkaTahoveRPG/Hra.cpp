@@ -82,7 +82,7 @@ void Hra::start() {
 
 
 void Hra::hlavnaSlucka() {
-	const sf::Time ObnovovaciCas = sf::seconds(1.f / 250.f);
+	const sf::Time ObnovovaciCas = sf::seconds(1.f / 120.f);
 	sf::Clock clock;
 	sf::Time casOdPoslednehoUpdate = sf::Time::Zero;
 

@@ -32,53 +32,15 @@
       "text": "Ponukam ti pekne veci.",
       "volby": {
         "1": {
-          "kam": 4,
+          "kam": 3,
           "text": "Ukaz mi co predavas",
           "typ": "obchod",
           "aky": "obchod_elixiry"
-        },
-        "2": {
-          "kam": 3,
-          "text": "Nemas pre mna nejaku ulohu?",
-          "typ": ""
         }
 
       }
     },
-
     "3": {
-      "typ": "questVolba",
-
-      "quest": "quest1",
-
-      "polozkaTexty": [
-        "Ano mam jednu. Chod a zabi mi par priser. Dostanes... ",
-        "Ako vidím stale si nezabil dostatocné mnozstvo.",
-        "Vyborne splnil si zadanie ulohy.\nDostavas...",
-        "Dakujem už si pre mna spravil vela."
-      ],
-
-      "volby": {
-        "1": {
-          "kam": -1,
-          "text": "Ahoj!",
-          "typ": ""
-        },
-        "2": {
-          "kam": -1,
-          "text": "",
-          "volbaTexty": [
-            "Jasne rád to pre teba spravím.",
-            "Tak ja teda idem.",
-            "Dakujeem . ",
-            "Tak niè teda."
-          ],
-          "typ": "upravaQuestu"
-        }
-      }
-    },
-
-    "4": {
       "typ": "normalVolba",
       "text": "Dakujem tak sa maj.",
       "volby": {
@@ -90,6 +52,6 @@
 
       }
     }
-    
+
   }
 }

@@ -33,7 +33,7 @@
       "typ": 9,
       "cena": 100,
       "uroven": 1,
-       
+
       "hp": 0,
       "hpMult": 0,
       "mp": 0,
@@ -51,7 +51,7 @@
       "maxDmg": 2,
       "rychlostUtoku": 2000
     },
-     "3": {
+    "3": {
       "typTriedy": "oblecenie",
       "meno": "Brnenie",
       "obrazok": "ch1",
@@ -73,5 +73,5 @@
       "obranaMult": 0
     }
   }
-  
+
 }

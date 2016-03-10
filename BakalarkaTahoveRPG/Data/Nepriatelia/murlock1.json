@@ -56,13 +56,13 @@
   },
 
   "questDrop": {
-        "Kvetinky pre bylinkarku.": {
-            "meno": "Kvet",
-            "obrazok": "kvet",
-            "typ": 13,
-            "cena": 10,
-            "uroven": 1
-        }
+    "Kvetinky pre bylinkarku.": {
+      "meno": "Kvet",
+      "obrazok": "kvet",
+      "typ": 13,
+      "cena": 10,
+      "uroven": 1
+    }
   }
-  
+
 }

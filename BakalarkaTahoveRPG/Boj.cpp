@@ -75,7 +75,6 @@ void Boj::hracVybralAkciu(Akcia* paAkcia) {
 	hracAkcia = paAkcia;
 	hracCasVykonaniaAkcie = casovac.getElapsedTime().asMilliseconds() + hracAkcia->GetcasCastenia();
 	casovac.resume();
-	//std::cout << "Vybrata akcia " << paAkcia->Getmeno() << std::endl;
 }
 
 float Boj::castBarProgres() {
@@ -84,7 +83,7 @@ float Boj::castBarProgres() {
 	}
 	else {
 		if (hracAkcia->GetcasCastenia() != 0) {
-			return  (float)(casovac.getElapsedTime().asMilliseconds() - (hracCasVykonaniaAkcie - hracAkcia->GetcasCastenia()))/ hracAkcia->GetcasCastenia();
+			return  (float)(casovac.getElapsedTime().asMilliseconds() - (hracCasVykonaniaAkcie - hracAkcia->GetcasCastenia())) / hracAkcia->GetcasCastenia();
 		}
 		else return -1;
 	}
@@ -110,7 +109,7 @@ bool Boj::maAkciaCooldown(Akcia* paAkcia) {
 void Boj::update() {
 	if (!koniec) {
 		casovac.pause();
-		
+
 		//bonusy hraca
 		std::map<Efekt*, sf::Time>* aktivneEfekty = hrac->Getstatistika()->Getaktivneefekty();
 		for (std::map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
@@ -148,38 +147,38 @@ void Boj::update() {
 				npcCooldowny.erase(it->first);
 			}
 		}
-		
+
 
 		if (casovac.getElapsedTime().asMilliseconds() > hracCasVykonaniaAkcie && hracAkcia != nullptr) {
-			std::string vysledok = hracAkcia->vykonajSa(hrac->Getstatistika(), npc->Getstatistika(),casovac.getElapsedTime());
+			std::string vysledok = hracAkcia->vykonajSa(hrac->Getstatistika(), npc->Getstatistika(), casovac.getElapsedTime());
 			logBoja.push_front("Hrac: " + vysledok);
 			hracCooldowny.insert(std::pair<Akcia*, int>(hracAkcia, casovac.getElapsedTime().asMilliseconds() + hracAkcia->Getcooldown()));
 			hracAkcia = nullptr;
 		}
 
 		if (casovac.getElapsedTime().asMilliseconds() > npcCasVykonaniaAkcie && npcAkcia != nullptr) {
-			std::string vysledok = npcAkcia->vykonajSa(npc->Getstatistika(), hrac->Getstatistika(),casovac.getElapsedTime());
+			std::string vysledok = npcAkcia->vykonajSa(npc->Getstatistika(), hrac->Getstatistika(), casovac.getElapsedTime());
 			logBoja.push_front("Npc: " + vysledok);
-			npcCooldowny.insert(std::pair<Akcia*, int>(npcAkcia, casovac.getElapsedTime().asMilliseconds() + npcAkcia->Getcooldown()));	
+			npcCooldowny.insert(std::pair<Akcia*, int>(npcAkcia, casovac.getElapsedTime().asMilliseconds() + npcAkcia->Getcooldown()));
 			npcAkcia = nullptr;
 		}
 
-		if (hrac->Getstatistika()->Gethp() <= 0 || npc->Getstatistika()->Gethp() <= 0 ) {
+		if (hrac->Getstatistika()->Gethp() <= 0 || npc->Getstatistika()->Gethp() <= 0) {
 			koniec = true;
 		}
-		
 
-		if( npcAkcia == nullptr) {// vyberie si npc akciu
+
+		if (npcAkcia == nullptr) {// vyberie si npc akciu
 			Akcia* akcia;
 			akcia = npc->vyberAkciu(&npcCooldowny);
 			npcAkcia = akcia;
-			if(akcia != nullptr){
+			if (akcia != nullptr) {
 				npcCasVykonaniaAkcie = casovac.getElapsedTime().asMilliseconds() + akcia->GetcasCastenia();
 				casovac.resume();
 			}
 		}
 
-		
+
 
 		if (hracAkcia == nullptr) {
 			vyber = true;
@@ -217,10 +216,10 @@ void Boj::vyhodnotenie() {
 			QuestManager* qm = hrac->Getmanazerquestov();
 			qm->udalost(Event::ZABITIE_NPC, npc);
 
-			if ( rand() % 100 < 25){// 25% že padne predmet
+			if (rand() % 100 < 25) {// 25% že padne predmet
 				int cislo = rand() % 100;
-				int lvlOd = npc->Getstatistika()->dajUroven()-2;
-				int lvlDo = npc->Getstatistika()->dajUroven()+2;
+				int lvlOd = npc->Getstatistika()->dajUroven() - 2;
+				int lvlDo = npc->Getstatistika()->dajUroven() + 2;
 				if (lvlOd < 1) {
 					lvlOd = 1;
 				}
@@ -244,7 +243,7 @@ void Boj::vyhodnotenie() {
 			for (unsigned int i = 0; i < nedokonceneQuesty->size(); i++) {
 				Quest* q = nedokonceneQuesty->at(i);
 				if (questDrop->count(q->Getnazov()) && q->Getstav() == StavQuestu::ROZROBENY) {// predmet je v npc drope a je rozrobeny
-					if (rand() % 100 < 30) {
+					if (rand() % 100 < 40) {
 						mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(questDrop->at(q->Getnazov())->copy(), mapa->aktCas());
 					}
 				}
@@ -258,14 +257,14 @@ void Boj::vyhodnotenie() {
 			s->Sethp(s->GethpMax());
 			s->Setmp(s->GetmpMax());
 
-			while (hrac->Getinventar()->pocetPredmetov() != 0){
+			while (hrac->Getinventar()->pocetPredmetov() != 0) {
 
 				Predmet * p = hrac->Getinventar()->dajPredmetNaIndexe(hrac->Getinventar()->pocetPredmetov() - 1);
 				hrac->Getinventar()->zmazPredmet(p);
-				mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(p,mapa->aktCas());
+				mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(p, mapa->aktCas());
 			}
 
-			mapa->posunHracaNaPolicko(mapa->Gethrobsuradnice().x, mapa->Gethrobsuradnice().y,0);
+			mapa->posunHracaNaPolicko(mapa->Gethrobsuradnice().x, mapa->Gethrobsuradnice().y, 0);
 			stavHranieHry->zobrazPopup(new PopupOkno("Upadol si do bezvedomia ! Zobudil si sa a zistil si ze si stratil všetky veci."));
 		}
 
@@ -289,7 +288,7 @@ std::string Boj::Getlog(int paOd, int paDo) {
 	else indexOd = paOd;
 
 	if (paDo >= (signed int)logBoja.size()) {
-		indexDo = logBoja.size()-1;
+		indexDo = logBoja.size() - 1;
 	}
 	else indexDo = paDo;
 

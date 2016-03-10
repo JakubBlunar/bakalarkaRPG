@@ -1,14 +1,14 @@
-{       
-"dvere": {
-  "1": {
-    "x": 0,
-    "y": 0,
-    "kam": "les",
-    "poziciaX": 33,
-    "poziciaY": 49,
-    "smerPohladu": 3
-  },
-  "2": {
+{
+  "dvere": {
+    "1": {
+      "x": 0,
+      "y": 0,
+      "kam": "les",
+      "poziciaX": 33,
+      "poziciaY": 49,
+      "smerPohladu": 3
+    },
+    "2": {
       "x": 3,
       "y": 0,
       "kam": "mapa1",
@@ -18,7 +18,9 @@
     }
 
   },
-  "nepriatelia": ["sliz1", "medved1", "murlock1"],
+  "nepriatelia": [ "sliz1", "medved1", "murlock1" ],
   "hrobX": 3,
-  "hrobY": 20
+  "hrobY": 20,
+
+  "questy": [ "quest1", "quest2" ]
 }

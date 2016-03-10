@@ -2,11 +2,19 @@
 #include "Quest.h"
 #include "Nepriatel.h"
 
+#include "Loader.h"
+#include "Hra.h"
+#include "Stav.h"
+#include "PopupOkno.h"
+
+#include <algorithm>
+
 
 QuestManager::QuestManager()
 {
 	nedokonceneQuesty = new std::deque<Quest*>();
 	dokonceneQuesty = new std::deque<Quest*>();
+	nacitaneQuesty = new std::deque<Quest*>();
 }
 
 
@@ -16,8 +24,11 @@ QuestManager::~QuestManager()
 }
 
 void QuestManager::pridajQuest(Quest* quest) {
-	nedokonceneQuesty->push_front(quest);
-	quest->setStav(StavQuestu::ROZROBENY);
+	if (!maQuest(quest->Getnazov())) {
+		nedokonceneQuesty->push_front(quest);
+		quest->setStav(StavQuestu::ROZROBENY);
+		Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(new PopupOkno("Ziskal si novy quest " + quest->Getnazov()));
+	}
 }
 
 
@@ -99,8 +110,39 @@ void QuestManager::dokoncenieQuestu(std::string meno, Hrac* hrac) {
 			nedokonceneQuesty->erase(nedokonceneQuesty->begin() + i);
 			dokonceneQuesty->push_back(q);
 			q->dokonciSa(hrac);
-
+			if (q->Getnasledujuci() != nullptr) {
+				pridajQuest(q->Getnasledujuci());
+			}
 		}
 	}
 
+}
+
+void QuestManager::nacitanyQuest(Quest* paQuest) {
+	nacitaneQuesty->push_back(paQuest);
+}
+
+deque<Quest*>* QuestManager::Getnacitanequesty() {
+	return nacitaneQuesty;
+}
+
+Quest* QuestManager::Getzaciatocnyquestnpc(string menoNpc) {
+
+	for (int i = 0; i < nacitaneQuesty->size(); i++) {
+		if (nacitaneQuesty->at(i)->Getstartnpc() == menoNpc && nacitaneQuesty->at(i)->Getpredchadzajuci() == nullptr && nacitaneQuesty->at(i)->Getstav() == StavQuestu::NEPRIJATY) {
+			if (std::find(nedokonceneQuesty->begin(), nedokonceneQuesty->end(), nacitaneQuesty->at(i)) == nedokonceneQuesty->end()) {
+				return nacitaneQuesty->at(i);
+			}
+		}
+	}
+	return nullptr;
+}
+
+Quest* QuestManager::Getkonciaciquestnpc(string menoNpc) {
+	for (int i = 0; i < nedokonceneQuesty->size(); i++) {
+		if (nedokonceneQuesty->at(i)->Getendnpc() == menoNpc) {
+			return nedokonceneQuesty->at(i);
+		}
+	}
+	return nullptr;
 }

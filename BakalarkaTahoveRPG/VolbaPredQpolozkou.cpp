@@ -1,56 +1,29 @@
-#include "VolbaUpravaQuestu.h"
+#include "VolbaPredQpolozkou.h"
+
 #include "Quest.h"
 #include "QuestManager.h"
 #include "Hrac.h"
 #include "Loader.h"
 #include "Hra.h"
-#include "Stav.h"
-#include "PopupOkno.h"
 
-VolbaUpravaQuestu::VolbaUpravaQuestu(int dalsia, Quest* paQuest):DialogVolba("",dalsia)
+VolbaPredQpolozkou::VolbaPredQpolozkou(int dalsia, Quest* paQuest) :DialogVolba("", dalsia)
 {
 	this->quest = paQuest;
 }
 
 
-VolbaUpravaQuestu::~VolbaUpravaQuestu()
+VolbaPredQpolozkou::~VolbaPredQpolozkou()
 {
 }
 
 
 
-void VolbaUpravaQuestu::akcia(Hrac* hrac) {
-
-
-	if (!hrac->Getmanazerquestov()->maQuest(quest->Getnazov())) {
-		hrac->Getmanazerquestov()->pridajQuest(quest);
-	}
-	else {
-
-		Quest* quest = hrac->Getmanazerquestov()->getQuest(this->quest->Getnazov());
-
-		switch (quest->Getstav())
-		{
-		case StavQuestu::ROZROBENY:
-			
-			break;
-		case StavQuestu::SPLNENIE_POZIADAVIEK:
-			hrac->Getmanazerquestov()->dokoncenieQuestu(this->quest->Getnazov(), hrac);
-			break;
-		case StavQuestu::DOKONCENY:
-			
-			break;
-		default:
-			
-			break;
-		}
-
-	}
+void VolbaPredQpolozkou::akcia(Hrac* hrac) {
 
 }
 
-std::string VolbaUpravaQuestu::Gettext() {
-	
+std::string VolbaPredQpolozkou::Gettext() {
+
 	Hrac* hrac = Loader::Instance()->Gethra()->GetHrac();
 
 	if (!hrac->Getmanazerquestov()->maQuest(quest->Getnazov())) {
@@ -82,16 +55,16 @@ std::string VolbaUpravaQuestu::Gettext() {
 			return "Neznamy";
 			break;
 		}
-		
+
 
 	}
 	return "Neznamy";
 }
 
-void VolbaUpravaQuestu::vlozText(StavQuestu paStav, std::string paText) {
+void VolbaPredQpolozkou::vlozText(StavQuestu paStav, std::string paText) {
 	texty.insert_or_assign(paStav, paText);
 }
 
-Quest* VolbaUpravaQuestu::getQuest() {
+Quest* VolbaPredQpolozkou::getQuest() {
 	return quest;
 }

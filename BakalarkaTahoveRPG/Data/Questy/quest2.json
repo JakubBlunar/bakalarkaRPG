@@ -3,6 +3,9 @@
   "popis": "Mulroci ukradli bylinkakre kvetiny.\nPrines jej ich spet",
   "xp": 0,
   "zlato": 150,
+  "nasledujuci": "",
+  "startNpc": "",
+  "endNpc": "Bylinkarka",
   "predmety": [
     {
       "typTriedy": "elixir",
@@ -37,7 +40,42 @@
       "kolko": 1
     }
 
-  ]
+  ],
+
+  "volbaKuQuestu": {
+    "volbaTexty": [
+      "Nemas pre mna nejaky quest?",
+      "Jakub mi hovoril ze zhanas kvetinky... ",
+      "Nazbieral som už koneène všetky kvety.",
+      ""
+    ]
+  },
+
+  "polozkaTexty": [
+    "Ahoj pocestný.\nMurloci mi zobrali vsetky zasoby kvetin.\nMohol by si mi nejaké pohladat?\nStedro sa ti odmením.",
+    "Ano vidim ze sa snazis.\nVezmem si ich ale az ked budes mat vsetkych 5.\nNeboj sa aj odmenu potom dostanes.",
+    "Dakujem ti tu je tvoja odmena.\n",
+    ""
+  ],
+
+  "volby": {
+    "1": {
+      "kam": -1,
+      "text": "Nie.",
+      "typ": ""
+    },
+    "2": {
+      "kam": -1,
+      "text": "",
+      "volbaTexty": [
+        "Jasne rad to pre teba spravim.",
+        "Tak ja teda idem.",
+        "Dakujem (zobrat si odmenu)",
+        "Tak nic teda. Ahoj."
+      ],
+      "typ": "upravaQuestu"
+    }
+  }
 
 
 }

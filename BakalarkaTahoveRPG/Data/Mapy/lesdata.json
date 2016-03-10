@@ -1,22 +1,22 @@
-{ 
-"dvere": {
-  "1": {
-    "x": 0,
-    "y": 16,
-    "kam": "start",
-    "poziciaX": 10,
-    "poziciaY": 10,
-    "smerPohladu": 0
-  },
-  "2": {
-    "x": 0,
-    "y": 17,
-    "kam": "start",
-    "poziciaX": 10,
-    "poziciaY": 10,
-    "smerPohladu": 1
-  },
-  "3": {
+{
+  "dvere": {
+    "1": {
+      "x": 0,
+      "y": 16,
+      "kam": "start",
+      "poziciaX": 10,
+      "poziciaY": 10,
+      "smerPohladu": 0
+    },
+    "2": {
+      "x": 0,
+      "y": 17,
+      "kam": "start",
+      "poziciaX": 10,
+      "poziciaY": 10,
+      "smerPohladu": 1
+    },
+    "3": {
       "x": 0,
       "y": 18,
       "kam": "start",
@@ -28,5 +28,7 @@
   },
   "nepriatelia": [ "sliz1", "medved1", "murlock1" ],
   "hrobX": 10,
-  "hrobY": 10
+  "hrobY": 10,
+
+  "questy": [ ]
 }

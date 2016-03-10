@@ -7,6 +7,10 @@
 #include "Npc.h"
 #include "StavHranieHry.h"
 
+
+#include "QuestManager.h"
+#include "Quest.h"
+
 Mapa::Mapa(std::string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSirka) {
 	moznyNepriatelia = new std::vector<std::string>();
 	this->menoMapy = menoMapy;
@@ -23,6 +27,21 @@ Mapa::Mapa(std::string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSir
 		std::cout << "Chyba nahravania textury batohu" << std::endl;
 	}
 	batoh.setTexture(batohTextura);
+
+	if (!zltyOtaznikTextura.loadFromFile("./Data/Grafika/otaznik.png", sf::IntRect(0, 0, 32, 32))) {
+		std::cout << "Chyba nahravania textury" << std::endl;
+	}
+	zltyOtaznik.setTexture(zltyOtaznikTextura);
+
+	if (!zltyVykricnikTextura.loadFromFile("./Data/Grafika/vykricnik.png", sf::IntRect(0, 0, 32, 32))) {
+		std::cout << "Chyba nahravania textury" << std::endl;
+	}
+	zltyVykricnik.setTexture(zltyVykricnikTextura);
+
+	if (!sedyOtaznikTextura.loadFromFile("./Data/Grafika/sivy_otaznik.png", sf::IntRect(0, 0, 32, 32))) {
+		std::cout << "Chyba nahravania textury" << std::endl;
+	}
+	sedyOtaznik.setTexture(sedyOtaznikTextura);
 
 	mapa = new Policko**[sirka];
 	for (int i = 0; i < sirka; ++i) {
@@ -78,9 +97,9 @@ sf::Vector2i Mapa::Gethrobsuradnice() {
 }
 
 void Mapa::render(sf::RenderWindow* okno) {
-	view.reset(sf::FloatRect(posunX+0.f, posunY + 0.f, okno->getSize().x + 0.f, okno->getSize().y + 0.f));
+	view.reset(sf::FloatRect(posunX + 0.f, posunY + 0.f, okno->getSize().x + 0.f, okno->getSize().y + 0.f));
 	okno->setView(view);
-	
+
 	sf::Sprite* sprite;
 	for (int vrstva = 0; vrstva < 4; vrstva++) {
 
@@ -120,6 +139,38 @@ void Mapa::render(sf::RenderWindow* okno) {
 					}
 				}
 
+				if (vrstva == 3) {
+					if (mapa[i][j]->Getnpc() != nullptr) {
+						Npc* npc = mapa[i][j]->Getnpc();
+						QuestManager* mng = hrac->Getmanazerquestov();
+						Quest* quest = mng->Getzaciatocnyquestnpc(npc->Getmeno());
+
+						if (quest == nullptr) {
+							quest = mng->Getkonciaciquestnpc(npc->Getmeno());
+						}
+
+						if (quest != nullptr) {
+
+							switch (quest->Getstav())
+							{
+							case StavQuestu::NEPRIJATY:
+								zltyVykricnik.setPosition(sf::Vector2f(32.f * i, 32 - 48.f + 32.f* j - 32.f));
+								okno->draw(zltyVykricnik);
+								break;
+							case StavQuestu::ROZROBENY:
+								sedyOtaznik.setPosition(sf::Vector2f(32.f * i, 32 - 48.f + 32.f* j - 32.f));
+								okno->draw(sedyOtaznik);
+								break;
+							case StavQuestu::SPLNENIE_POZIADAVIEK:
+								zltyOtaznik.setPosition(sf::Vector2f(32.f * i, 32 - 48.f + 32.f* j - 32.f));
+								okno->draw(zltyOtaznik);
+								break;
+							}
+						}
+
+
+					}
+				}
 
 			}
 		}
@@ -128,7 +179,7 @@ void Mapa::render(sf::RenderWindow* okno) {
 }
 
 sf::FloatRect Mapa::Getzobrazenaoblast() {
-	return sf::FloatRect(posunX + 0.f,posunY + 0.f,view.getSize().x + 0.f,view.getSize().y + 0.f);
+	return sf::FloatRect(posunX + 0.f, posunY + 0.f, view.getSize().x + 0.f, view.getSize().y + 0.f);
 }
 
 void Mapa::update(double delta) {
@@ -189,9 +240,6 @@ void Mapa::update(double delta) {
 			pohybDelta = 0;
 		}
 		break;
-
-	default:
-		break;
 	}
 }
 
@@ -200,22 +248,22 @@ void Mapa::hracSkocilNaPolicko(int x, int y) {
 	mapa[x][y]->hracSkok(hrac);
 }
 
-void Mapa::posunHracaNaPolicko(int x, int y,int smerPohladu) {
-	
-	
-	int offsetHracaX = x*32;
-	int offsetHracaY = y*32;
+void Mapa::posunHracaNaPolicko(int x, int y, int smerPohladu) {
+
+
+	int offsetHracaX = x * 32;
+	int offsetHracaY = y * 32;
 	int posunMapyX = 0;
 	int posunMapyY = 0;
 
 	hrac->setPolickoX(x);
 	hrac->setPolickoY(y);
 	if (offsetHracaX > 350) {
-		posunMapyX = offsetHracaX-6*32;
+		posunMapyX = offsetHracaX - 6 * 32;
 	}
 
 	if (offsetHracaY > 350) {
-		posunMapyY = offsetHracaY - 5*32;
+		posunMapyY = offsetHracaY - 5 * 32;
 	}
 	hrac->setOffsetX(offsetHracaX);
 	hrac->setOffsetY(offsetHracaY);

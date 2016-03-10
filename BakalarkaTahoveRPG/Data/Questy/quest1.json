@@ -1,8 +1,11 @@
 {
-    "nazov": "Nebezpecni murloci.",
-    "popis": "Murloci si zacali dovolovat do ludi.\nChod a ukaz im kto je tu panom",
-    "xp": 15,
-    "zlato": 50,
+  "nazov": "Nebezpecni murloci.",
+  "popis": "Murloci si zacali dovolovat do ludi.\nChod a ukaz im kto je tu panom",
+  "xp": 15,
+  "zlato": 50,
+  "nasledujuci": "quest2",
+  "startNpc": "Jakub",
+  "endNpc": "Jakub",
   "poziadavky": [
     {
       "typ": "kill",
@@ -39,7 +42,42 @@
       "rychlostUtoku": 2000
     }
 
-  ]
+  ],
+
+  "volbaKuQuestu": {
+    "volbaTexty": [
+      "Nemas pre mna nejaky quest?",
+      "Ohladom toho questu... ",
+      "Už som to konecne dokoncil! ",
+      ""
+    ]
+  },
+
+  "polozkaTexty": [
+    "Ano mam jednu. Chod a zabi mi par priser. Dostanes... ",
+    "Ako vidím stale si nezabil dostatocné mnozstvo.",
+    "Vyborne splnil si zadanie ulohy.\nDostavas...",
+    "Dakujem už si pre mna spravil vela."
+  ],
+
+  "volby": {
+    "1": {
+      "kam": -1,
+      "text": "Nie!",
+      "typ": ""
+    },
+    "2": {
+      "kam": -1,
+      "text": "",
+      "volbaTexty": [
+        "Jasne rad to pre teba spravim.",
+        "Tak ja teda idem.",
+        "Dakujeem . ",
+        "Tak nic teda."
+      ],
+      "typ": "upravaQuestu"
+    }
+  }
 
 
 }

@@ -5,9 +5,6 @@
 #include <SFML\Graphics.hpp>
 #include <string>
 
-//#include "Npc dialog.h"
-//#include "DialogovyStrom.h"
-//#include "Animacia.h"
 class Animacia;
 class Hrac;
 class DialogovyStrom;

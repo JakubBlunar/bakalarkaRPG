@@ -10,12 +10,19 @@
 #include "Policko.h"
 #include "Poziadavka.h"
 
+#include "VolbaUpravaQuestu.h"
+#include "QuestPolozka.h"
+#include "DialogovyStrom.h"
 
-Quest::Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata)
+Quest::Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata, string paStartNpc, string paEndNpc)
 {
-	odmena = new QuestOdmena(pocetXp, pocetZlata);
+	this->predchadzajuci = nullptr;
+	this->nasledujuci = nullptr;
+	this->odmena = new QuestOdmena(pocetXp, pocetZlata);
 	this->nazov = paNazov;
 	this->popis = paPopis;
+	this->startNpc = paStartNpc;
+	this->endNpc = paEndNpc;
 	stav = StavQuestu::NEPRIJATY;
 }
 
@@ -79,7 +86,6 @@ void Quest::dokonciSa(Hrac* paHrac) {
 		inv->pridajZlato(odmena->Getpocetzlata());
 
 		vector<Predmet*>* predmety = odmena->getPredmety();
-		bool ajNaZem = false;
 		for (unsigned int i = 0; i < predmety->size(); i++) {
 			if (inv->pocetPredmetov() < inv->Getkapacita()) {
 				paHrac->Getinventar()->pridajPredmet(predmety->at(i));
@@ -87,13 +93,10 @@ void Quest::dokonciSa(Hrac* paHrac) {
 			else {// ak nemá kapacitu v inventary tak sa predmety vyhodia na mapu kde hrac stoji
 				Mapa* m = paHrac->getMapa();
 				m->GetPolicko(paHrac->GetpolickoX(), paHrac->GetpolickoY())->polozPredmet(predmety->at(i), m->aktCas() + sf::seconds(300));
-				ajNaZem = true;
+				
 			}
 		}
-
-		if (ajNaZem) {
-
-		}
+		
 	}
 }
 
@@ -117,13 +120,18 @@ string Quest::GetpopisOdmeny() {
 }
 
 void Quest::zabitieNpc(Nepriatel* nepriatel) {
-	for (unsigned int i = 0; i < poziadavky.size(); i++) poziadavky.at(i)->akcia(nepriatel);
-	kontrola();
+	if (stav == StavQuestu::ROZROBENY) {
+		for (unsigned int i = 0; i < poziadavky.size(); i++) poziadavky.at(i)->akcia(nepriatel);
+		kontrola();
+	}
 }
 
 void Quest::lootnutiePredmetu(Predmet* paPredmet) {
-	for (unsigned int i = 0; i < poziadavky.size(); i++) poziadavky.at(i)->akcia(paPredmet);
-	kontrola();
+	if (stav == StavQuestu::ROZROBENY) {
+		for (unsigned int i = 0; i < poziadavky.size(); i++) poziadavky.at(i)->akcia(paPredmet);
+		kontrola();
+	}
+	
 }
 
 void Quest::kontrola() {
@@ -144,4 +152,40 @@ void Quest::pridajPoziadavku(Poziadavka* poziadavka) {
 	poziadavky.push_back(poziadavka);
 }
 
+void Quest::Setnasledujuci(Quest* paQuest) {
+	nasledujuci = paQuest;
+}
 
+Quest* Quest::Getnasledujuci() {
+	return nasledujuci;
+}
+
+Quest* Quest::Getpredchadzajuci() {
+	return predchadzajuci;
+}
+
+string Quest::Getstartnpc() {
+	return startNpc;
+}
+
+string Quest::Getendnpc() {
+	return endNpc;
+}
+
+void Quest::Setpredchadzajuci(Quest* paQuest) {
+	predchadzajuci = paQuest;
+}
+
+void Quest::SetdialogPolozka(QuestPolozka* paPolozka) {
+	dialogPolozka = paPolozka;
+}
+void Quest::SetvolbaKuQuestu(DialogVolba* paVolba) {
+	volbaKuQuestu = paVolba;
+}
+
+QuestPolozka* Quest::GetdialogPolozka() {
+	return dialogPolozka;
+}
+DialogVolba* Quest::GetvolbaKuQuestu() {
+	return volbaKuQuestu;
+}

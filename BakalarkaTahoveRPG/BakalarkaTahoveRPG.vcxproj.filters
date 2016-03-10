@@ -232,6 +232,9 @@
       <Filter>Header Files\Stavy</Filter>
     </ClInclude>
     <ClInclude Include="Poziadavka.h">
+      <Filter>Header Files\Questy</Filter>
+    </ClInclude>
+    <ClInclude Include="VolbaPredQpolozkou.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -399,6 +402,9 @@
       <Filter>Source Files\Stavy</Filter>
     </ClCompile>
     <ClCompile Include="Poziadavka.cpp">
+      <Filter>Source Files\Questy</Filter>
+    </ClCompile>
+    <ClCompile Include="VolbaPredQpolozkou.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

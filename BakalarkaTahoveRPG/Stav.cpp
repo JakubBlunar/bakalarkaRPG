@@ -65,7 +65,7 @@ void Stav::render() {
 		pozadie.setSize(sf::Vector2f(okno->getSize().x-50.f, text.getGlobalBounds().height + 10.f));
 		pozadie.setOutlineColor(sf::Color::Red);
 		pozadie.setOutlineThickness(2);
-		pozadie.setPosition(sf::Vector2f(23, okno->getSize().y - pozadie.getSize().y - 50));
+		pozadie.setPosition(sf::Vector2f(23, okno->getSize().y - pozadie.getSize().y - 100));
 		
 		//ak sa text nezmesti na širku tak sa zmenší ve¾kos
 		if (text.getGlobalBounds().width > pozadie.getGlobalBounds().width-20) {

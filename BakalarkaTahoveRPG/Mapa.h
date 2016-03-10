@@ -79,6 +79,12 @@ private:
 	//textura ktorá sa vykresli ak je na policku nejaký predmet
 	sf::Texture batohTextura;
 	sf::Sprite batoh;
+	sf::Texture zltyVykricnikTextura;
+	sf::Sprite zltyVykricnik;
+	sf::Texture zltyOtaznikTextura;
+	sf::Sprite zltyOtaznik;
+	sf::Texture sedyOtaznikTextura;
+	sf::Sprite sedyOtaznik;
 };
 
 #endif

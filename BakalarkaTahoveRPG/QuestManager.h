@@ -2,6 +2,7 @@
 #define QuestManager_h
 #include <deque>
 
+class Quest;
 class Hrac;
 
 enum Event {
@@ -10,7 +11,7 @@ enum Event {
 	VYHODENIE_PREDMETU
 };
 
-class Quest;
+
 
 class QuestManager
 {
@@ -27,12 +28,17 @@ public:
 	Quest* getQuest(std::string paNazov);
 
 	void dokoncenieQuestu(std::string meno,Hrac* hrac);
-
+	void nacitanyQuest(Quest* paQuest);
+	std::deque<Quest*>* Getnacitanequesty();
+	
+	Quest* Getzaciatocnyquestnpc(std::string menoNpc);
+	Quest* Getkonciaciquestnpc(std::string menoNpc);
 private:
-
+	std::deque<Quest*>* nacitaneQuesty;
 	
 	std::deque<Quest*>* nedokonceneQuesty;
 	std::deque<Quest*>* dokonceneQuesty;
+
 };
 
 #endif

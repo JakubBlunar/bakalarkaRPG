@@ -21,5 +21,7 @@
 
   "nepriatelia": [ "sliz1" ],
   "hrobX": 5,
-  "hrobY": 5
+  "hrobY": 5,
+
+  "questy": [ ]
 }

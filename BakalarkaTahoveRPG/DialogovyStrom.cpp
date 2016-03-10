@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Loader.h"
 #include "Hra.h"
+#include "Quest.h"
+#include "QuestPolozka.h"
 
 DialogPolozka::DialogPolozka(string paText) {
 	text = paText;
@@ -39,6 +41,10 @@ string DialogVolba::Gettext() {
 	return text;
 }
 
+void DialogPolozka::zmazMoznost(DialogVolba* paVolba) {
+	dialogoveMoznosti.erase(std::remove(dialogoveMoznosti.begin(), dialogoveMoznosti.end(), paVolba), dialogoveMoznosti.end());
+}
+
 
 void DialogVolba::akcia(Hrac* hrac) {
 	
@@ -51,6 +57,7 @@ DialogVolba::DialogVolba(string paText, int dalsia) {
 
 DialogovyStrom::DialogovyStrom()
 {
+	dialogQuest = nullptr;
 	aktualnaPolozka = nullptr;
 	stav = DialogStav::VYTVORENY;
 }
@@ -82,6 +89,10 @@ int DialogovyStrom::zmenPolozku(int moznost) {
 		aktualnaPolozka->Getvolba(moznost)->akcia(loader->Gethra()->GetHrac());
 		if (aktualnaPolozka->Getvolba(moznost)->dalsia == -1) {
 			stav = DialogStav::SKONCIL;
+			if (dialogQuest != nullptr) {
+				zmazMoznost(dialogQuest->GetvolbaKuQuestu(), dialogQuest->GetdialogPolozka());
+				dialogQuest = nullptr;
+			}
 			return 0;
 		}
 
@@ -108,4 +119,22 @@ int DialogovyStrom::zacniDialog() {
 
 void DialogovyStrom::vlozPolozku(DialogPolozka* paPolozka) {
 	castiDialogu.push_back(paPolozka);
+}
+
+void DialogovyStrom::pridajMoznost(DialogVolba* paVolba,DialogPolozka* paPolozka){
+	castiDialogu[0]->pridajMoznost(paVolba);
+	castiDialogu.push_back(paPolozka);
+	int pos = find(castiDialogu.begin(), castiDialogu.end(), paPolozka) - castiDialogu.begin();
+	paVolba->dalsia = pos;
+	
+}
+
+void DialogovyStrom::zmazMoznost(DialogVolba* paVolba, DialogPolozka* paPolozka) {
+	castiDialogu[0]->zmazMoznost(paVolba);
+	castiDialogu.erase(std::remove(castiDialogu.begin(), castiDialogu.end(), paPolozka), castiDialogu.end());
+}
+
+void DialogovyStrom::Setdialogquest(Quest* paQuest) {
+	dialogQuest = paQuest;
+	pridajMoznost(paQuest->GetvolbaKuQuestu(), paQuest->GetdialogPolozka());
 }
