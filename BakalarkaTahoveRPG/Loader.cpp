@@ -290,7 +290,7 @@ void Loader::nacitajMapu(std::string paMeno, int posX, int posY, int smer) {
 
 	nacitajNpc(paMeno, novaMapa);
 
-	if (nacitaneMapy.size() > 10) {
+	if (nacitaneMapy.size() > 15) {
 		for (std::map<std::string, Mapa*>::iterator it = nacitaneMapy.begin(); it != nacitaneMapy.end(); ++it)
 		{
 			delete it->second;
@@ -655,160 +655,166 @@ Quest* Loader::nacitajQuest(string paMeno) {
 	}
 
 	std::string questNazov = jQuest["nazov"].asCString();
-	std::string questPopis = jQuest["popis"].asCString();
-	int odmenaXp = jQuest["xp"].asInt();
-	int odmenaZlato = jQuest["zlato"].asInt();
-	std::string startNpc = jQuest["startNpc"].asCString();
-	std::string endNpc = jQuest["endNpc"].asCString();
+	quest = hra->GetHrac()->Getmanazerquestov()->GetNacitanyQuest(questNazov);
 
-	quest = new Quest(questNazov, questPopis, odmenaXp, odmenaZlato, startNpc, endNpc);
+	if (quest == nullptr) {
 
-	//nacitanie polozky ktorá bude predstavova to èo bude rozprava npc o queste
-	QuestPolozka* polozka = new QuestPolozka(quest->Getnazov());
-	Json::Value polozkaTexty(Json::arrayValue);
-	polozkaTexty = jQuest["polozkaTexty"];
-	QuestPolozka* qp = (QuestPolozka*)polozka;
-	for (unsigned int i = 0; i < polozkaTexty.size(); i++) {
-		if (i == 0) {
-			qp->vlozText(StavQuestu::NEPRIJATY, polozkaTexty[i].asCString());
-		}
+		std::string questPopis = jQuest["popis"].asCString();
+		int odmenaXp = jQuest["xp"].asInt();
+		int odmenaZlato = jQuest["zlato"].asInt();
+		std::string startNpc = jQuest["startNpc"].asCString();
+		std::string endNpc = jQuest["endNpc"].asCString();
 
-		if (i == 1) {
-			qp->vlozText(StavQuestu::ROZROBENY, polozkaTexty[i].asCString());
-		}
+		quest = new Quest(questNazov, questPopis, odmenaXp, odmenaZlato, startNpc, endNpc);
 
-		if (i == 2) {
-			qp->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, polozkaTexty[i].asCString());
-		}
-
-		if (i == 3) {
-			qp->vlozText(StavQuestu::DOKONCENY, polozkaTexty[i].asCString());
-		}
-
-	}
-
-	// nacitanie volieb ked sa hráè dostane na quest polozku 
-	Json::Value volby(Json::objectValue);
-	volby = jQuest["volby"];
-
-	for (Json::Value::iterator it = volby.begin(); it != volby.end(); ++it) {
-		Json::Value volbaID = it.key();
-		Json::Value volbaData = (*it);
-
-
-		int dalsia = volbaData["kam"].asInt();
-		std::string volbaText = volbaData["text"].asCString();
-		std::string typ = volbaData["typ"].asCString();
-		if (typ == "") {
-			polozka->pridajMoznost(new DialogVolba(volbaText, dalsia));
-		}
-		else if (typ == "upravaQuestu") {
-
-			VolbaUpravaQuestu* volba = new VolbaUpravaQuestu(-1, quest);
-
-			Json::Value volbaTexty(Json::arrayValue);
-			volbaTexty = volbaData["volbaTexty"];
-
-			for (unsigned int i = 0; i < volbaTexty.size(); i++) {
-				if (i == 0) {
-					volba->vlozText(StavQuestu::NEPRIJATY, volbaTexty[i].asCString());
-				}
-
-				if (i == 1) {
-					volba->vlozText(StavQuestu::ROZROBENY, volbaTexty[i].asCString());
-				}
-
-				if (i == 2) {
-					volba->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, volbaTexty[i].asCString());
-				}
-
-				if (i == 3) {
-					volba->vlozText(StavQuestu::DOKONCENY, volbaTexty[i].asCString());
-				}
-
+		//nacitanie polozky ktorá bude predstavova to èo bude rozprava npc o queste
+		QuestPolozka* polozka = new QuestPolozka(quest->Getnazov());
+		Json::Value polozkaTexty(Json::arrayValue);
+		polozkaTexty = jQuest["polozkaTexty"];
+		QuestPolozka* qp = (QuestPolozka*)polozka;
+		for (unsigned int i = 0; i < polozkaTexty.size(); i++) {
+			if (i == 0) {
+				qp->vlozText(StavQuestu::NEPRIJATY, polozkaTexty[i].asCString());
 			}
 
-			polozka->pridajMoznost(volba);
-		}
-		else if (typ == "obchod") {
-			std::string aky = volbaData["aky"].asCString();
-			polozka->pridajMoznost(new VolbaObchodovanie(volbaText, dalsia, aky));
-		}
-		else if (typ == "liecenie") {
-			polozka->pridajMoznost(new VolbaVyliecenie(volbaText, dalsia));
+			if (i == 1) {
+				qp->vlozText(StavQuestu::ROZROBENY, polozkaTexty[i].asCString());
+			}
+
+			if (i == 2) {
+				qp->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, polozkaTexty[i].asCString());
+			}
+
+			if (i == 3) {
+				qp->vlozText(StavQuestu::DOKONCENY, polozkaTexty[i].asCString());
+			}
+
 		}
 
+		// nacitanie volieb ked sa hráè dostane na quest polozku 
+		Json::Value volby(Json::objectValue);
+		volby = jQuest["volby"];
+
+		for (Json::Value::iterator it = volby.begin(); it != volby.end(); ++it) {
+			Json::Value volbaID = it.key();
+			Json::Value volbaData = (*it);
+
+
+			int dalsia = volbaData["kam"].asInt();
+			std::string volbaText = volbaData["text"].asCString();
+			std::string typ = volbaData["typ"].asCString();
+			if (typ == "") {
+				polozka->pridajMoznost(new DialogVolba(volbaText, dalsia));
+			}
+			else if (typ == "upravaQuestu") {
+
+				VolbaUpravaQuestu* volba = new VolbaUpravaQuestu(-1, quest);
+
+				Json::Value volbaTexty(Json::arrayValue);
+				volbaTexty = volbaData["volbaTexty"];
+
+				for (unsigned int i = 0; i < volbaTexty.size(); i++) {
+					if (i == 0) {
+						volba->vlozText(StavQuestu::NEPRIJATY, volbaTexty[i].asCString());
+					}
+
+					if (i == 1) {
+						volba->vlozText(StavQuestu::ROZROBENY, volbaTexty[i].asCString());
+					}
+
+					if (i == 2) {
+						volba->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, volbaTexty[i].asCString());
+					}
+
+					if (i == 3) {
+						volba->vlozText(StavQuestu::DOKONCENY, volbaTexty[i].asCString());
+					}
+
+				}
+
+				polozka->pridajMoznost(volba);
+			}
+			else if (typ == "obchod") {
+				std::string aky = volbaData["aky"].asCString();
+				polozka->pridajMoznost(new VolbaObchodovanie(volbaText, dalsia, aky));
+			}
+			else if (typ == "liecenie") {
+				polozka->pridajMoznost(new VolbaVyliecenie(volbaText, dalsia));
+			}
+
+		}
+		quest->SetdialogPolozka(polozka);
+
+		// nacitanie volby ktorá sa zobrazi na zaciatku dialogu, a uvedie hraca na polozku z questom
+		Json::Value volbaKuQuestu(Json::objectValue);
+		volbaKuQuestu = jQuest["volbaKuQuestu"];
+
+		Json::Value volbaTexty(Json::arrayValue);
+		volbaTexty = volbaKuQuestu["volbaTexty"];
+
+		VolbaPredQpolozkou* volba = new VolbaPredQpolozkou(0, quest);
+
+		for (unsigned int i = 0; i < volbaTexty.size(); i++) {
+			if (i == 0) {
+				volba->vlozText(StavQuestu::NEPRIJATY, volbaTexty[i].asCString());
+			}
+
+			if (i == 1) {
+				volba->vlozText(StavQuestu::ROZROBENY, volbaTexty[i].asCString());
+			}
+
+			if (i == 2) {
+				volba->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, volbaTexty[i].asCString());
+			}
+
+			if (i == 3) {
+				volba->vlozText(StavQuestu::DOKONCENY, volbaTexty[i].asCString());
+			}
+
+		}
+
+		quest->SetvolbaKuQuestu(volba);
+
+		// nacitanie nasledujuceho questu
+		std::string dalsi = jQuest["nasledujuci"].asCString();
+		if (dalsi != "") {
+			Quest* dalsiQ = nacitajQuest(dalsi);
+			dalsiQ->Setpredchadzajuci(quest);
+			quest->Setnasledujuci(dalsiQ);
+		}
+
+		// poziadavky na splnenie questu
+		Json::Value questPoziadavky(Json::arrayValue);
+		questPoziadavky = jQuest["poziadavky"];
+		for (unsigned int i = 0; i < questPoziadavky.size(); i++) {
+			Json::Value poziadavka(Json::objectValue);
+			poziadavka = questPoziadavky[i];
+
+			string pTyp = poziadavka["typ"].asCString();
+			if (pTyp == "kill") {
+				std::string pKoho = poziadavka["co"].asCString();
+				int pKolko = poziadavka["kolko"].asInt();
+				std::string pKde = poziadavka["kde"].asCString();
+				quest->pridajPoziadavku(new PoziadavkaZabi(pKoho, pKolko, pKde));
+			}
+			else if (pTyp == "loot") {
+				std::string pCo = poziadavka["co"].asCString();
+				int pKolko = poziadavka["kolko"].asInt();
+				quest->pridajPoziadavku(new PoziadavkaLoot(pCo, pKolko));
+			}
+		}
+
+		// nacitanie predmetov ktoré su ako odmena za quest
+		Json::Value odmenaVeci(Json::arrayValue);
+		odmenaVeci = jQuest["predmety"];
+		for (unsigned int i = 0; i < odmenaVeci.size(); i++) {
+			Json::Value jPredmet(Json::objectValue);
+			jPredmet = odmenaVeci[i];
+			quest->pridajOdmenu(parsujPredmet(jPredmet));
+		}
+		hra->GetHrac()->Getmanazerquestov()->nacitanyQuest(quest);
 	}
-	quest->SetdialogPolozka(polozka);
-
-	// nacitanie volby ktorá sa zobrazi na zaciatku dialogu, a uvedie hraca na polozku z questom
-	Json::Value volbaKuQuestu(Json::objectValue);
-	volbaKuQuestu = jQuest["volbaKuQuestu"];
-
-	Json::Value volbaTexty(Json::arrayValue);
-	volbaTexty = volbaKuQuestu["volbaTexty"];
-
-	VolbaPredQpolozkou* volba = new VolbaPredQpolozkou(0, quest);
-
-	for (unsigned int i = 0; i < volbaTexty.size(); i++) {
-		if (i == 0) {
-			volba->vlozText(StavQuestu::NEPRIJATY, volbaTexty[i].asCString());
-		}
-
-		if (i == 1) {
-			volba->vlozText(StavQuestu::ROZROBENY, volbaTexty[i].asCString());
-		}
-
-		if (i == 2) {
-			volba->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, volbaTexty[i].asCString());
-		}
-
-		if (i == 3) {
-			volba->vlozText(StavQuestu::DOKONCENY, volbaTexty[i].asCString());
-		}
-
-	}
-
-	quest->SetvolbaKuQuestu(volba);
-
-	// nacitanie nasledujuceho questu
-	std::string dalsi = jQuest["nasledujuci"].asCString();
-	if (dalsi != "") {
-		Quest* dalsiQ = nacitajQuest(dalsi);
-		dalsiQ->Setpredchadzajuci(quest);
-		quest->Setnasledujuci(dalsiQ);
-	}
-
-	// poziadavky na splnenie questu
-	Json::Value questPoziadavky(Json::arrayValue);
-	questPoziadavky = jQuest["poziadavky"];
-	for (unsigned int i = 0; i < questPoziadavky.size(); i++) {
-		Json::Value poziadavka(Json::objectValue);
-		poziadavka = questPoziadavky[i];
-
-		string pTyp = poziadavka["typ"].asCString();
-		if (pTyp == "kill") {
-			std::string pKoho = poziadavka["co"].asCString();
-			int pKolko = poziadavka["kolko"].asInt();
-			std::string pKde = poziadavka["kde"].asCString();
-			quest->pridajPoziadavku(new PoziadavkaZabi(pKoho, pKolko, pKde));
-		}
-		else if (pTyp == "loot") {
-			std::string pCo = poziadavka["co"].asCString();
-			int pKolko = poziadavka["kolko"].asInt();
-			quest->pridajPoziadavku(new PoziadavkaLoot(pCo, pKolko));
-		}
-	}
-
-	// nacitanie predmetov ktoré su ako odmena za quest
-	Json::Value odmenaVeci(Json::arrayValue);
-	odmenaVeci = jQuest["predmety"];
-	for (unsigned int i = 0; i < odmenaVeci.size(); i++) {
-		Json::Value jPredmet(Json::objectValue);
-		jPredmet = odmenaVeci[i];
-		quest->pridajOdmenu(parsujPredmet(jPredmet));
-	}
-
-	hra->GetHrac()->Getmanazerquestov()->nacitanyQuest(quest);
+	
+	
 	return quest;
 }

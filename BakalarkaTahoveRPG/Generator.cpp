@@ -45,13 +45,13 @@ Predmet* Generator::nahodnyElixir() {
 
 	int lvl = 1;
 
-	int co = randomInt(1, 2);
-	if (co == 1) {
+	int p = randomInt(0, 99);
+	if (p < 70) {
 		nazov = "Hp elixir";
 		stat = "hp";
 		obrazok = "elixir";
 	}
-	else if (co == 2) {
+	else {
 		nazov = "Mp elixir";
 		stat = "mp";
 		obrazok = "manae";

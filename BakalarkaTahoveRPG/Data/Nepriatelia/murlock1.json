@@ -19,7 +19,7 @@
   "akcie": {
     "1": {
       "typ": "AkciaDmg",
-      "meno": "Poleptanie kyselinov",
+      "meno": "Frostbolt",
       "obrazok": "attack",
       "rychlostCastenia": 3000,
       "cooldown": 500,
@@ -27,7 +27,7 @@
       "popis": "",
       "stat": "magicka",
       "mana": 1,
-      "zakladnaHodnota": 1.2
+      "zakladnaHodnota": 1.1
     },
     "2": {
       "typ": "AkciaDmg",
@@ -43,14 +43,14 @@
     },
     "3": {
       "typ": "AkciaLiecenie",
-      "meno": "Slabé liecenie",
+      "meno": "Slabe liecenie",
       "obrazok": "attack",
-      "rychlostCastenia": 3500,
+      "rychlostCastenia": 4000,
       "cooldown": 1000,
       "trvanie": 0,
       "popis": "",
       "stat": "magicka",
-      "mana": 2,
+      "mana": 5,
       "zakladnaHodnota": 1
     }
   },

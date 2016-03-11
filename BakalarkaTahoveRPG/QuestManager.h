@@ -2,6 +2,8 @@
 #define QuestManager_h
 #include <deque>
 
+using namespace std;
+
 class Quest;
 class Hrac;
 
@@ -21,23 +23,25 @@ public:
 
 	//questy
 	void pridajQuest(Quest* quest);
-	std::deque<Quest*>* Getnedokoncenequesty();
-	std::deque<Quest*>* Getdokoncenequesty();
-	bool maQuest(std::string paNazovQuestu);
+	deque<Quest*>* Getnedokoncenequesty();
+	deque<Quest*>* Getdokoncenequesty();
+	bool maQuest(string paNazovQuestu);
 	void udalost(Event, void* param);
-	Quest* getQuest(std::string paNazov);
+	Quest* getQuest(string paNazov);
 
-	void dokoncenieQuestu(std::string meno,Hrac* hrac);
+	void dokoncenieQuestu(string meno,Hrac* hrac);
 	void nacitanyQuest(Quest* paQuest);
-	std::deque<Quest*>* Getnacitanequesty();
-	
-	Quest* Getzaciatocnyquestnpc(std::string menoNpc);
-	Quest* Getkonciaciquestnpc(std::string menoNpc);
+
+	Quest* GetNacitanyQuest(string paNazov);
+	deque<Quest*>* Getnacitanequesty();
+
+	Quest* Getzaciatocnyquestnpc(string menoNpc);
+	Quest* Getkonciaciquestnpc(string menoNpc);
 private:
-	std::deque<Quest*>* nacitaneQuesty;
+	deque<Quest*>* nacitaneQuesty;
 	
-	std::deque<Quest*>* nedokonceneQuesty;
-	std::deque<Quest*>* dokonceneQuesty;
+	deque<Quest*>* nedokonceneQuesty;
+	deque<Quest*>* dokonceneQuesty;
 
 };
 

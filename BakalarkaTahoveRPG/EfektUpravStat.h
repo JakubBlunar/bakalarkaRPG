@@ -5,6 +5,8 @@
 
 #include <string>
 
+class Statistika;
+
 class EfektUpravStat :
 	public Efekt
 {
@@ -14,8 +16,8 @@ public:
 
 	void aplikujSa(Statistika* paHrac);
 	void zrusUcinok(Statistika* statistika);
-	std::string popis();
-	int hodnotaEfektu();
+	std::string popis(Statistika* statistika);
+	int hodnotaEfektu(Statistika* statistika);
 private:
 	std::string co;
 	int zakladOkolko;

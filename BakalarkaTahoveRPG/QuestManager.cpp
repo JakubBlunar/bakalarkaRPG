@@ -128,7 +128,7 @@ deque<Quest*>* QuestManager::Getnacitanequesty() {
 
 Quest* QuestManager::Getzaciatocnyquestnpc(string menoNpc) {
 
-	for (int i = 0; i < nacitaneQuesty->size(); i++) {
+	for (unsigned int i = 0; i < nacitaneQuesty->size(); i++) {
 		if (nacitaneQuesty->at(i)->Getstartnpc() == menoNpc && nacitaneQuesty->at(i)->Getpredchadzajuci() == nullptr && nacitaneQuesty->at(i)->Getstav() == StavQuestu::NEPRIJATY) {
 			if (std::find(nedokonceneQuesty->begin(), nedokonceneQuesty->end(), nacitaneQuesty->at(i)) == nedokonceneQuesty->end()) {
 				return nacitaneQuesty->at(i);
@@ -139,10 +139,17 @@ Quest* QuestManager::Getzaciatocnyquestnpc(string menoNpc) {
 }
 
 Quest* QuestManager::Getkonciaciquestnpc(string menoNpc) {
-	for (int i = 0; i < nedokonceneQuesty->size(); i++) {
+	for (unsigned int i = 0; i < nedokonceneQuesty->size(); i++) {
 		if (nedokonceneQuesty->at(i)->Getendnpc() == menoNpc) {
 			return nedokonceneQuesty->at(i);
 		}
+	}
+	return nullptr;
+}
+
+Quest* QuestManager::GetNacitanyQuest(string paNazov){
+	for (unsigned int i = 0; i < nacitaneQuesty->size(); i++) {
+		if (nacitaneQuesty->at(i)->Getnazov() == paNazov) return nacitaneQuesty->at(i);
 	}
 	return nullptr;
 }

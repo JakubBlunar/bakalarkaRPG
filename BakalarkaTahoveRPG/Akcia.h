@@ -17,7 +17,7 @@ public:
 	Akcia(std::string meno, std::string obrazok, int casCastenia,int cooldown, int trvanie, std::string popis,int mana,AkciaTyp typ);
 	virtual ~Akcia();
 
-	std::string dajPopis();
+	virtual std::string dajPopis(Statistika* stat);
 	virtual int GetcasCastenia();
 	virtual int Getcooldown();
 	virtual int Getcenamany();

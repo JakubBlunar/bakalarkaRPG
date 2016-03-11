@@ -15,11 +15,8 @@
 #include "QuestManager.h"
 
 Inventar::Inventar() {
-	pocetZlata = 500;
-	kapacita = 18;
-
-	Pouzitelny* zbran = new Zbran("Admin - Katana", 9, "wp1", 100,1,100,100,500);
-	pridajPredmet(zbran,false);
+	pocetZlata = 170;
+	kapacita = 36;
 }
 
 

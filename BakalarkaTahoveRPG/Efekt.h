@@ -13,7 +13,7 @@ public:
 	virtual ~Efekt();
 	virtual void aplikujSa(Statistika* paHrac) = 0;
 	virtual void zrusUcinok(Statistika* statistika) = 0;
-	virtual std::string popis() = 0;
+	virtual std::string popis(Statistika* statistika) = 0;
 
 	sf::Time GettrvanieDo();
 	void setTrvanieDo(sf::Time paKoniec);

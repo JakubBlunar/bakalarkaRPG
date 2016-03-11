@@ -103,22 +103,38 @@ void StavVolbaZamerania::update(double delta) {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
-				Zameranie* zameranie = new Zameranie("Warrior",800,400,80,60,40);
+				Zameranie* zameranie;
+				if (oznacene == 1) {
+					zameranie = new Zameranie("Warrior", 600, 400, 80, 60, 40);
+					Efekt* efekt = new EfektUpravStat("shout", "sila", 25);
+					Efekt* efekt2 = new EfektUpravStat("shout", "sila", -25);
 
-				Efekt* efekt = new EfektUpravStat("shout","sila", 2);
-				Efekt* efekt2 = new EfektUpravStat("shout", "sila", -2);
+
+					zameranie->vlozAkciu(new AkciaPridanieEfektu("Bojovnikov rev", "shout", 500, 5000, 20000, "Zvysi tvoju silu.", 2, efekt, true), 5);
+					zameranie->vlozAkciu(new AkciaPridanieEfektu("Hrozivy rev", "shout", 500, 0, 15000, "Znizi silu nepriatela" , 2, efekt2, false),4);
+					zameranie->vlozAkciu(new AkciaLiecenie("Slabé liecenie:", "healing1", 3000, 10000, 20, "Vylieci ta!", 1, AkciaTyp::MAGICKA, 0.6), 7);
+					zameranie->vlozAkciu(new AkciaDmg("Bash", "attack", 1000, 3000, 0, "Postava silno buchne zbranou\nSposobi nepriatelovi velke skody.", 0, AkciaTyp::FYZICKA, 1), 2);
+
+					
 
 
-				zameranie->vlozAkciu(new AkciaPridanieEfektu("Bojovnikov rev", "shout", 500, 5000, 20000, efekt->popis(),3,efekt,true), 2);
-				zameranie->vlozAkciu(new AkciaPridanieEfektu("Hrozivy rev", "shout", 500, 0, 15000, "Znizi utocnikovu silu\n" + efekt2->popis(), 2, efekt2, false), 2);
-				zameranie->vlozAkciu(new AkciaLiecenie("Slabé liecenie:", "healing1", 3000, 10000, 20, "Vylieci ta!", 1,AkciaTyp::MAGICKA,1), 1);
-				zameranie->vlozAkciu(new AkciaDmg("Bash", "attack", 1000, 3000, 0, "Postava silno buchne zbranou\nSposobi nepriatelovi velke skody.",0,AkciaTyp::FYZICKA,1), 1);
+
+				}
+				else if (oznacene == 2) {
+					zameranie = new Zameranie("Mage", 500, 600, 40, 80, 60);
+					zameranie->vlozAkciu(new AkciaDmg("Fireball", "attack", 2000, 0, 0, "Postava vrhne po nepriatelovi ohnivu gulu.", 3, AkciaTyp::MAGICKA, 2), 2);
+					zameranie->vlozAkciu(new AkciaDmg("FireBlast", "attack", 500, 5000, 0, "Postava vrhne po nepriatelovi ohnivu gulu.", 3, AkciaTyp::MAGICKA, 3),4);
+					zameranie->vlozAkciu(new AkciaLiecenie("Liecenie:", "healing1", 3000, 3000, 20, "Vylieci ta!", 1, AkciaTyp::MAGICKA, 1), 6);
+
+				}
+				else {
+					zameranie = new Zameranie("Rogue", 500, 400, 60, 40, 80);
+
+				}
 
 				Hrac* hrac = new Hrac(zameranie);
 				hrac->Getstatistika()->vlozAkciu(new AkciaPoskodenieZbranou("Utok", "Bezny utok nasadenou zbranou", hrac->Getstatistika()));
 				hra->SetHrac(hrac);
-
-				
 
 				Loader* loader = Loader::Instance();
 				loader->nacitajMapu("start", 0, 2, 2);

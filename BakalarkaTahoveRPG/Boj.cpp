@@ -116,7 +116,7 @@ void Boj::update() {
 		{
 			if (it->second <= casovac.getElapsedTime()) {
 				hrac->Getstatistika()->zrusEfekt(it->first);
-				logBoja.push_front("Hrac: zrusenie efektu " + it->first->popis());
+				logBoja.push_front("Hrac: zrusenie efektu " + it->first->popis(npc->Getstatistika()));
 			}
 		}
 
@@ -127,7 +127,7 @@ void Boj::update() {
 		{
 			if (it->second <= casovac.getElapsedTime()) {
 				npc->Getstatistika()->zrusEfekt(it->first);
-				logBoja.push_front("Npc: zrusenie efektu " + it->first->popis());
+				logBoja.push_front("Npc: zrusenie efektu " + it->first->popis(hrac->Getstatistika()));
 			}
 		}
 
@@ -216,7 +216,7 @@ void Boj::vyhodnotenie() {
 			QuestManager* qm = hrac->Getmanazerquestov();
 			qm->udalost(Event::ZABITIE_NPC, npc);
 
-			if (rand() % 100 < 25) {// 25% že padne predmet
+			if (rand() % 100 < 35) {// 35% že padne predmet
 				int cislo = rand() % 100;
 				int lvlOd = npc->Getstatistika()->dajUroven() - 2;
 				int lvlDo = npc->Getstatistika()->dajUroven() + 2;

@@ -12,6 +12,7 @@ public:
 	AkciaPridanieEfektu(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis, int mana,Efekt* efekt, bool naHraca);
 	~AkciaPridanieEfektu();
 	std::string vykonajSa(Statistika* statHrac, Statistika* statNepriatel, sf::Time aktCas);
+	std::string dajPopis(Statistika* stat);
 private:
 	Efekt* efekt;
 	bool hrac;

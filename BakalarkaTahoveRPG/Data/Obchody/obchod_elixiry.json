@@ -5,7 +5,7 @@
       "meno": "Maly Hp elixir",
       "obrazok": "elixir",
       "typ": 12,
-      "cena": 20,
+      "cena": 15,
       "uroven": 1,
 
       "stat": "hp",
@@ -29,7 +29,7 @@
     "2": {
       "typTriedy": "zbran",
       "meno": "Maly mec",
-      "obrazok": "wp1",
+      "obrazok": "1",
       "typ": 9,
       "cena": 100,
       "uroven": 1,
@@ -69,7 +69,7 @@
       "intelektMult": 0,
       "rychlost": 0,
       "rychlostMult": 0,
-      "obrana": 0,
+      "obrana": 2,
       "obranaMult": 0
     }
   }

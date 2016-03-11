@@ -30,17 +30,20 @@ void Stav::update(double delta) {
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) stlacenaKlavesa = false;
 		
 		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-			
-			if (popupText->skoncil()) {
-				delete popupText;
-				popupText = nullptr;
-				stlacenaKlavesa = true;
-				stav = StavAkcia::NORMAL;
-				
+			if (popupText.size() > 0) {
+				if (popupText.at(0)->skoncil()) {
+					PopupOkno* skonceny = popupText.at(0);
+					popupText.pop_front();
+					delete skonceny;
+					stlacenaKlavesa = true;	
+				}
+				else {
+					stlacenaKlavesa = true;
+					popupText.at(0)->dajDalsi();
+				}
 			}
 			else {
-				stlacenaKlavesa = true;
-				popupText->dajDalsi();
+				stav = StavAkcia::NORMAL;
 			}
 		}
 	}
@@ -51,33 +54,41 @@ void Stav::update(double delta) {
 void Stav::render() {
 
 	if (stav == StavAkcia::ZOBRAZUJE_POPUP) {
-
-		sf::RectangleShape pozadie;
-		sf::Text text("", *font, 17);
-		if (!popupText->skoncil()) {
-			text.setString(popupText->aktualnaStrana() + "\n>>>");
+		if (popupText.size() == 0) {
+			stav = StavAkcia::NORMAL;
 		}
 		else {
-			text.setString(popupText->aktualnaStrana());
-		}
-		
 
-		pozadie.setSize(sf::Vector2f(okno->getSize().x-50.f, text.getGlobalBounds().height + 10.f));
-		pozadie.setOutlineColor(sf::Color::Red);
-		pozadie.setOutlineThickness(2);
-		pozadie.setPosition(sf::Vector2f(23, okno->getSize().y - pozadie.getSize().y - 100));
-		
-		//ak sa text nezmesti na širku tak sa zmenší ve¾kos
-		if (text.getGlobalBounds().width > pozadie.getGlobalBounds().width-20) {
-			text.setScale(sf::Vector2f((pozadie.getGlobalBounds().width-20) / text.getGlobalBounds().width, (pozadie.getGlobalBounds().width-20) / text.getGlobalBounds().width));
-			pozadie.setSize(sf::Vector2f(okno->getSize().x - 50.f, text.getGlobalBounds().height+10.f));
-			pozadie.setPosition(sf::Vector2f(23, okno->getSize().y - pozadie.getSize().y - 25));
-		}
 
-		okno->draw(pozadie);
-		text.setColor(sf::Color::Black);
-		text.setPosition(sf::Vector2f(pozadie.getGlobalBounds().left + 5, pozadie.getGlobalBounds().top + 5));
-		okno->draw(text);
+			sf::RectangleShape pozadie;
+			sf::Text text("", *font, 17);
+			PopupOkno* pop = popupText.at(0);
+
+			if (!pop->skoncil()) {
+				text.setString(pop->aktualnaStrana() + "\n>>>");
+			}
+			else {
+				text.setString(pop->aktualnaStrana());
+			}
+
+
+			pozadie.setSize(sf::Vector2f(okno->getSize().x - 50.f, text.getGlobalBounds().height + 10.f));
+			pozadie.setOutlineColor(sf::Color::Red);
+			pozadie.setOutlineThickness(2);
+			pozadie.setPosition(sf::Vector2f(23, okno->getSize().y - pozadie.getSize().y - 100));
+
+			//ak sa text nezmesti na širku tak sa zmenší ve¾kos
+			if (text.getGlobalBounds().width > pozadie.getGlobalBounds().width - 20) {
+				text.setScale(sf::Vector2f((pozadie.getGlobalBounds().width - 20) / text.getGlobalBounds().width, (pozadie.getGlobalBounds().width - 20) / text.getGlobalBounds().width));
+				pozadie.setSize(sf::Vector2f(okno->getSize().x - 50.f, text.getGlobalBounds().height + 10.f));
+				pozadie.setPosition(sf::Vector2f(23, okno->getSize().y - pozadie.getSize().y - 25));
+			}
+
+			okno->draw(pozadie);
+			text.setColor(sf::Color::Black);
+			text.setPosition(sf::Vector2f(pozadie.getGlobalBounds().left + 5, pozadie.getGlobalBounds().top + 5));
+			okno->draw(text);
+		}
 	}
 }
 
@@ -100,7 +111,7 @@ void Stav::Setnazov(std::string paNazov) {
 }
 
 void Stav::zobrazPopup(PopupOkno* paCo) {
-	popupText = paCo;
+	popupText.push_back(paCo);
 	stav = StavAkcia::ZOBRAZUJE_POPUP;
 }
 

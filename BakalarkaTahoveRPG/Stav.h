@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
+#include <deque>
 
 class Hra;
 class PopupOkno;
@@ -38,7 +39,7 @@ protected:
 	sf::RenderWindow* okno;
 	Hra* hra;
 
-	PopupOkno* popupText;
+	std::deque<PopupOkno*> popupText;
 
 	bool stlacenaKlavesa;
 	bool stlacenaMys;

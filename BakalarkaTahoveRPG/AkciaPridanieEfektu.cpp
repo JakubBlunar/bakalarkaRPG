@@ -2,6 +2,7 @@
 
 #include "Statistika.h"
 #include "Efekt.h"
+#include "EfektUpravStat.h"
 
 AkciaPridanieEfektu::AkciaPridanieEfektu(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis, int mana, Efekt* efekt, bool naHraca)
 	:Akcia(meno,obrazok,casCastenia,cooldown,trvanie,popis,mana,AkciaTyp::FYZICKA)
@@ -21,10 +22,14 @@ std::string AkciaPridanieEfektu::vykonajSa(Statistika* statHrac, Statistika* sta
 	Akcia::vykonajSa(statHrac, statNepriatel,aktCas);
 	if (hrac) {
 		statHrac->pridajEfekt(efekt, aktCas + sf::milliseconds(trvanie));
-		return meno + " aplikoval na npc efekt\n    " + efekt->popis();
+		return meno + " aplikoval na npc efekt\n    " + efekt->popis(statHrac);
 	}
 	else {
 		statNepriatel->pridajEfekt(efekt, aktCas + sf::milliseconds(trvanie));
-		return meno + " aplikoval na hraca efekt\n    " + efekt->popis();
+		return meno + " aplikoval na hraca efekt\n    " + efekt->popis(statNepriatel);
 	}
+}
+
+std::string AkciaPridanieEfektu::dajPopis(Statistika* stat) {
+	return popis+ "\n"+efekt->popis(stat);
 }
