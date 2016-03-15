@@ -359,7 +359,7 @@ void StavInfoHraca::render() {
 
 				text.setColor(sf::Color::Black);
 				std::string info = akcia->Getmeno();
-				info += "\n" + akcia->dajPopis(hrac->Getstatistika())+"\n";
+				info += "\n" + akcia->dajPopis()+"\n";
 
 				if (dynamic_cast<AkciaDmg*>(akcia) != NULL) {
 					AkciaDmg* dmgakcia = (AkciaDmg*)akcia;

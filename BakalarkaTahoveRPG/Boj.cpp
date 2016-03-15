@@ -97,7 +97,7 @@ bool Boj::maAkciaCooldown(Akcia* paAkcia) {
 		if (paAkcia->Getcenamany() > hrac->Getstatistika()->Getmp()) {
 			return true;
 		}
-		std::map<Akcia*, int>::iterator it = hracCooldowny.find(paAkcia);
+		map<Akcia*, int>::iterator it = hracCooldowny.find(paAkcia);
 		if (it != hracCooldowny.end())
 		{
 			return true;
@@ -111,29 +111,29 @@ void Boj::update() {
 		casovac.pause();
 
 		//bonusy hraca
-		std::map<Efekt*, sf::Time>* aktivneEfekty = hrac->Getstatistika()->Getaktivneefekty();
-		for (std::map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
+		map<Efekt*, sf::Time>* aktivneEfekty = hrac->Getstatistika()->Getaktivneefekty();
+		for (map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
 		{
 			if (it->second <= casovac.getElapsedTime()) {
 				hrac->Getstatistika()->zrusEfekt(it->first);
-				logBoja.push_front("Hrac: zrusenie efektu " + it->first->popis(npc->Getstatistika()));
+				logBoja.push_front("Hrac: zrusenie efektu " + it->first->popis());
 			}
 		}
 
 		//bonusy npc
 		aktivneEfekty = npc->Getstatistika()->Getaktivneefekty();
 
-		for (std::map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
+		for (map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
 		{
 			if (it->second <= casovac.getElapsedTime()) {
 				npc->Getstatistika()->zrusEfekt(it->first);
-				logBoja.push_front("Npc: zrusenie efektu " + it->first->popis(hrac->Getstatistika()));
+				logBoja.push_front("Npc: zrusenie efektu " + it->first->popis());
 			}
 		}
 
 
 		//aktualizuje cooldowny hraca
-		for (std::map<Akcia*, int>::iterator it = hracCooldowny.begin(); it != hracCooldowny.end(); ++it)
+		for (map<Akcia*, int>::iterator it = hracCooldowny.begin(); it != hracCooldowny.end(); ++it)
 		{
 			if (it->second <= casovac.getElapsedTime().asMilliseconds()) {
 				hracCooldowny.erase(it->first);
@@ -141,7 +141,7 @@ void Boj::update() {
 		}
 
 		//aktualizuje cooldowny npc
-		for (std::map<Akcia*, int>::iterator it = npcCooldowny.begin(); it != npcCooldowny.end(); ++it)
+		for (map<Akcia*, int>::iterator it = npcCooldowny.begin(); it != npcCooldowny.end(); ++it)
 		{
 			if (it->second <= casovac.getElapsedTime().asMilliseconds()) {
 				npcCooldowny.erase(it->first);
@@ -150,16 +150,16 @@ void Boj::update() {
 
 
 		if (casovac.getElapsedTime().asMilliseconds() > hracCasVykonaniaAkcie && hracAkcia != nullptr) {
-			std::string vysledok = hracAkcia->vykonajSa(hrac->Getstatistika(), npc->Getstatistika(), casovac.getElapsedTime());
+			string vysledok = hracAkcia->vykonajSa(hrac->Getstatistika(), npc->Getstatistika(), casovac.getElapsedTime());
 			logBoja.push_front("Hrac: " + vysledok);
-			hracCooldowny.insert(std::pair<Akcia*, int>(hracAkcia, casovac.getElapsedTime().asMilliseconds() + hracAkcia->Getcooldown()));
+			hracCooldowny.insert(pair<Akcia*, int>(hracAkcia, casovac.getElapsedTime().asMilliseconds() + hracAkcia->Getcooldown()));
 			hracAkcia = nullptr;
 		}
 
 		if (casovac.getElapsedTime().asMilliseconds() > npcCasVykonaniaAkcie && npcAkcia != nullptr) {
-			std::string vysledok = npcAkcia->vykonajSa(npc->Getstatistika(), hrac->Getstatistika(), casovac.getElapsedTime());
+			string vysledok = npcAkcia->vykonajSa(npc->Getstatistika(), hrac->Getstatistika(), casovac.getElapsedTime());
 			logBoja.push_front("Npc: " + vysledok);
-			npcCooldowny.insert(std::pair<Akcia*, int>(npcAkcia, casovac.getElapsedTime().asMilliseconds() + npcAkcia->Getcooldown()));
+			npcCooldowny.insert(pair<Akcia*, int>(npcAkcia, casovac.getElapsedTime().asMilliseconds() + npcAkcia->Getcooldown()));
 			npcAkcia = nullptr;
 		}
 
@@ -210,8 +210,8 @@ void Boj::vyhodnotenie() {
 			int ziskaneZlato = 2 * npc->Getstatistika()->dajUroven();
 			hrac->pridajSkusenosti(ziskaneXp);
 			hrac->Getinventar()->pridajZlato(ziskaneZlato);
-			std::string text = "Porazil si " + npc->Getmeno() + "\n";
-			text += "Ziskal si " + std::to_string(ziskaneXp) + " skusenosti a " + std::to_string(ziskaneZlato) + " zlata";
+			string text = "Porazil si " + npc->Getmeno() + "\n";
+			text += "Ziskal si " + to_string(ziskaneXp) + " skusenosti a " + to_string(ziskaneZlato) + " zlata";
 			stavHranieHry->zobrazPopup(new PopupOkno(text));
 			QuestManager* qm = hrac->Getmanazerquestov();
 			qm->udalost(Event::ZABITIE_NPC, npc);
@@ -237,8 +237,8 @@ void Boj::vyhodnotenie() {
 				}
 			}
 
-			std::deque<Quest*>* nedokonceneQuesty = hrac->Getmanazerquestov()->Getnedokoncenequesty();
-			std::map<std::string, Predmet*>* questDrop = npc->dropQuestPredmetov();
+			deque<Quest*>* nedokonceneQuesty = hrac->Getmanazerquestov()->Getnedokoncenequesty();
+			map<string, Predmet*>* questDrop = npc->dropQuestPredmetov();
 
 			for (unsigned int i = 0; i < nedokonceneQuesty->size(); i++) {
 				Quest* q = nedokonceneQuesty->at(i);
@@ -269,8 +269,8 @@ void Boj::vyhodnotenie() {
 		}
 
 		//zrusenie aktivnych bufov
-		std::map<Efekt*, sf::Time>* aktivneEfekty = hrac->Getstatistika()->Getaktivneefekty();
-		for (std::map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
+		map<Efekt*, sf::Time>* aktivneEfekty = hrac->Getstatistika()->Getaktivneefekty();
+		for (map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
 		{
 			hrac->Getstatistika()->zrusEfekt(it->first);
 		}
@@ -280,7 +280,7 @@ void Boj::vyhodnotenie() {
 	}
 }
 
-std::string Boj::Getlog(int paOd, int paDo) {
+string Boj::Getlog(int paOd, int paDo) {
 	int indexOd, indexDo;
 	if (paOd < 0) {
 		indexOd = 0;
@@ -292,7 +292,7 @@ std::string Boj::Getlog(int paOd, int paDo) {
 	}
 	else indexDo = paDo;
 
-	std::string log = "";
+	string log = "";
 	for (signed int i = indexOd; i <= indexDo; i++) {
 		log += logBoja.at(i) + "\n";
 	}

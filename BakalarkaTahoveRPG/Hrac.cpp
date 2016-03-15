@@ -322,7 +322,7 @@ void Hrac::pridajSkusenosti(int pocet) {
 			for (std::map<Akcia*, int>::iterator it = zameranie->Getspelly()->begin(); it != zameranie->Getspelly()->end(); ++it)
 			{
 				if (lvlPred < it->second && it->second <= statistika->dajUroven()) {
-					std::string info = it->first->Getmeno() +"\n\n" + it->first->dajPopis(this->statistika);
+					std::string info = it->first->Getmeno() +"\n\n" + it->first->dajPopis();
 					pop->pridajStranku(info);
 					statistika->vlozAkciu(it->first);
 				}

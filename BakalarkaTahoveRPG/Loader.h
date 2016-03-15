@@ -8,6 +8,8 @@
 #include "json-forwards.h"
 #include "json.h"
 
+using namespace std;
+
 class Npc;
 class Hra;
 class Mapa;
@@ -15,19 +17,26 @@ class DialogovyStrom;
 class Nepriatel;
 class Predmet;
 class Quest;
+class Zameranie;
 
 class Loader {
 public:
 	static Loader* Instance();
 	void setHra(Hra* paHra);
-	void nacitajMapu(std::string paMeno,int paX,int paY,int smer);
-	sf::Font* nacitajFont(std::string menoFontu);
-	DialogovyStrom* nacitajDialog(std::string paMeno);
-	Nepriatel* nacitajNepriatela(std::string paMeno);
-	std::vector<Predmet*>* nacitajObchod(std::string paMeno);
-	Quest* nacitajQuest(std::string paMeno);
+	void nacitajMapu(string paMeno,int paX,int paY,int smer);
+	sf::Font* nacitajFont(string menoFontu);
+	DialogovyStrom* nacitajDialog(string paMeno);
+	Nepriatel* nacitajNepriatela(string paMeno);
+	vector<Predmet*>* nacitajObchod(string paMeno);
+	Quest* nacitajQuest(string paMeno);
 	bool Getnacitava();
 	Hra* Gethra();
+	
+	Zameranie* nacitajZameranie(string paMeno);
+
+	void save();
+	void load();
+
 private:
 	Loader() {
 		nacitava = false;
@@ -39,12 +48,12 @@ private:
 	bool nacitava;
 
 	Hra* hra;
-	std::map<int, sf::Texture*> textury;
-	std::map<std::string, Mapa*> nacitaneMapy;
+	map<int, sf::Texture*> textury;
+	map<string, Mapa*> nacitaneMapy;
 	
-	void nacitajNpc(std::string menoMapy, Mapa* mapa);
+	void nacitajNpc(string menoMapy, Mapa* mapa);
 	
-	std::map<std::string, sf::Font*> nacitaneFonty;
+	map<string, sf::Font*> nacitaneFonty;
 	
 	Predmet* parsujPredmet(Json::Value jPredmet);
 

@@ -58,7 +58,7 @@ int Zameranie::GetrastSila() {
 
 int Zameranie::xpNaLevel(int level) {
 
-	return (int)round((5 * (level * level * level)) / 6);
+	return (int)round((7 * (level * level * level)) / 6);
 }
 
 std::map<std::string, int> Zameranie::lvlUpBonusy(int lvl){
@@ -82,5 +82,5 @@ std::map<Akcia*, int>*  Zameranie::Getspelly() {
 
 
 int Zameranie::statFunkcia(int lvl, int zaklad) {
-	return floor(floor((2 * zaklad) * lvl / 100 + 5));
+	return (int) floor(floor((2 * zaklad) * lvl / 100 + 5));
 }

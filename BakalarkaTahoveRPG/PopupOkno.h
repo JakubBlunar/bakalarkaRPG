@@ -3,17 +3,20 @@
 
 #include <string>
 #include <queue>
+
+using namespace std;
+
 class PopupOkno
 {
 public:
-	PopupOkno(std::string paText);
+	PopupOkno(string paText);
 	~PopupOkno();
-	void pridajStranku(std::string text);
-	std::string aktualnaStrana();
-	std::string dajDalsi();
+	void pridajStranku(string text);
+	string aktualnaStrana();
+	string dajDalsi();
 	bool skoncil();
 private:
-	std::queue<std::string> texty;
+	queue<string> texty;
 	bool koniec;
 };
 #endif

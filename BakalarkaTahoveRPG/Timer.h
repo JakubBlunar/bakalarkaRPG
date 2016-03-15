@@ -3,22 +3,24 @@
 
 #include <SFML/System/Clock.hpp>
 
+using namespace sf;
+
 class Timer{
 public:
-	Timer(sf::Time zaciatocnyCas = sf::Time::Zero);
+	Timer(Time zaciatocnyCas = Time::Zero);
 	~Timer();
 
-	sf::Time add(sf::Time paCas);
-	sf::Time reset(bool paStart = false);
-	sf::Time pause();
-	sf::Time resume();
-	sf::Time toggle();
+	Time add(Time paCas);
+	Time reset(bool paStart = false);
+	Time pause();
+	Time resume();
+	Time toggle();
 	bool Getbeziaci();
-	sf::Time getElapsedTime();
+	Time getElapsedTime();
 
 private:
 	enum { STOPNUTY, BEZIACI, POZASTAVENY } stav;
-	sf::Time akt_cas;                         
-	sf::Clock clock;                 
+	Time akt_cas;                         
+	Clock clock;                 
 };
 #endif

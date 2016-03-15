@@ -24,6 +24,7 @@ enum StavQuestu {
 class Quest
 {
 public:
+	Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata, string paStartNpc, string paEndNpc, string nazovSuboru);
 	void zabitieNpc(Nepriatel* nepriatel);
 	void lootnutiePredmetu(Predmet* paPredmet);
 	void kontrola();
@@ -34,7 +35,7 @@ public:
 	string Getnazov();
 	void pridajOdmenu(Predmet* paPredmet);
 	string GetpopisOdmeny();
-	Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata,string paStartNpc,string paEndNpc);
+	
 	void pridajPoziadavku(Poziadavka* poziadavka);
 
 	void Setpredchadzajuci(Quest* paQuest);
@@ -43,6 +44,7 @@ public:
 	Quest* Getpredchadzajuci();
 	string Getstartnpc();
 	string Getendnpc();
+	string Getnazovsuboru();
 
 	void SetdialogPolozka(QuestPolozka* paPolozka);
 	void SetvolbaKuQuestu(DialogVolba* paVolba);
@@ -62,6 +64,9 @@ private:
 	string startNpc = "";
 	string endNpc = "";
 
+	
+
+	string nazovSuboru;
 
 	QuestPolozka* dialogPolozka;
 	DialogVolba* volbaKuQuestu;

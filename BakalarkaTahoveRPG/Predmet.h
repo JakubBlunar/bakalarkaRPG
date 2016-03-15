@@ -23,6 +23,7 @@ public:
 	std::string Getmeno();
 	sf::Sprite* Getobrazok();
 	std::string Getstringovytyp();
+	std::string Getsobrazok();
 	void Settyp(int newVal);
 	void Setcena(int newVal);
 	void Setmeno(std::string newVal);

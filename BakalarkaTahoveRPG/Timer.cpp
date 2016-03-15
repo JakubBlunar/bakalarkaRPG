@@ -2,7 +2,7 @@
 
 
 
-Timer::Timer(sf::Time zaciatocnyCas)
+Timer::Timer(Time zaciatocnyCas)
 {
 	reset();
 	add(zaciatocnyCas);
@@ -13,21 +13,21 @@ Timer::~Timer()
 {
 }
 
-sf::Time Timer::add(sf::Time paCas) {
+Time Timer::add(Time paCas) {
 	akt_cas += paCas;
 	if (stav == STOPNUTY) stav = POZASTAVENY;
 	return getElapsedTime();
 }
 
-sf::Time Timer::reset(bool paStart) {
-	sf::Time time = getElapsedTime();
-	akt_cas = sf::Time::Zero;
+Time Timer::reset(bool paStart) {
+	Time time = getElapsedTime();
+	akt_cas = Time::Zero;
 	stav = STOPNUTY;
 	if (paStart) resume();
 	return time;
 }
 
-sf::Time Timer::pause() {
+Time Timer::pause() {
 	if (Getbeziaci()) {
 		stav = POZASTAVENY;
 		akt_cas += clock.getElapsedTime();
@@ -35,7 +35,7 @@ sf::Time Timer::pause() {
 	return getElapsedTime();
 }
 
-sf::Time Timer::resume() {
+Time Timer::resume() {
 	if (!Getbeziaci()) {
 		stav = BEZIACI;
 		clock.restart();
@@ -43,7 +43,7 @@ sf::Time Timer::resume() {
 	return getElapsedTime();
 }
 
-sf::Time Timer::toggle() {
+Time Timer::toggle() {
 	if (Getbeziaci()) {
 		pause();
 	}
@@ -55,10 +55,10 @@ bool Timer::Getbeziaci() {
 	return stav == BEZIACI;
 }
 
-sf::Time Timer::getElapsedTime() {
+Time Timer::getElapsedTime() {
 	switch (stav) {
 	case STOPNUTY:
-		return sf::Time::Zero;
+		return Time::Zero;
 	case BEZIACI:
 		return akt_cas + clock.getElapsedTime();
 	case POZASTAVENY:

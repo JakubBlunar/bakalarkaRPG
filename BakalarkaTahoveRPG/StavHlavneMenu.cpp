@@ -119,6 +119,11 @@ void StavHlavneMenu::update(double delta) {
 				stlacenaKlavesa = true;
 				hra->zmenStavRozhrania("volbaZamerania");
 			}
+			
+			if (oznacene == 1 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				Loader::Instance()->load();
+			}
 
 			if (oznacene == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
@@ -126,7 +131,7 @@ void StavHlavneMenu::update(double delta) {
 			}
 
 
-			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
 				stlacenaKlavesa = false;
 			}
 		}

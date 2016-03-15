@@ -166,3 +166,7 @@ std::string Predmet::Getstringovytyp() {
 Predmet* Predmet::copy() {
 	return new Predmet(meno, typ, sObrazok, cena, uroven);
 }
+
+std::string Predmet::Getsobrazok() {
+	return sObrazok;
+}

@@ -1,6 +1,3 @@
-#pragma once
-
-
 #if !defined(statistika_h)
 #define statistika_h
 
@@ -9,6 +6,8 @@
 #include <map>
 #include <vector>
 #include "Timer.h"
+
+using namespace std;
 
 class Predmet;
 class Akcia;
@@ -20,12 +19,12 @@ class Statistika
 
 public:
 	Statistika();
-	Statistika(int paUroven, int paHp, int paHpMax, int paMp, int mpMax,int paSila, int paIntelekt, int paRychlost, int paObrana,std::map<int, Predmet*>* paObleceneVeci = new std::map<int,Predmet*>());
+	Statistika(int paUroven, int paHp, int paHpMax, int paMp, int mpMax,int paSila, int paIntelekt, int paRychlost, int paObrana,map<int, Predmet*>* paObleceneVeci = new map<int,Predmet*>());
 	virtual ~Statistika();
 
-	std::map<Efekt*, sf::Time>* Getaktivneefekty();
-	std::map<int, Predmet*>* Getoblecene();
-	std::vector<Akcia*>* Getakcie();
+	map<Efekt*, sf::Time>* Getaktivneefekty();
+	map<int, Predmet*>* Getoblecene();
+	vector<Akcia*>* Getakcie();
 	void vlozAkciu(Akcia* paAkcia);
 	void pridajEfekt(Efekt* paEfekt, sf::Time aktivnyDo);
 	void zrusEfekt(Efekt* paEfekt);
@@ -44,7 +43,7 @@ public:
 	int Getrychlost();
 	int Getsila();
 	int Getskusenosti();
-	int Statistika::Getstat(std::string aky);
+	int Statistika::Getstat(string aky);
 	void Sethp(int novaHodnota);
 	void SethpMax(int novaHodnota);
 	void Setintelekt(int novaHodnota);
@@ -53,7 +52,7 @@ public:
 	void Setrychlost(int novaHodnota);
 	void Setsila(int novaHodnota);
 	void Setskusenosti(int novaHodnota);
-	void zvysStat(int kolko, std::string paCo);
+	void zvysStat(int kolko, string paCo);
 	void pridajXp(int pocet);
 	void setUroven(int paUroven);
 
@@ -76,9 +75,9 @@ private:
 	int minPoskodenie;
 	int maxPoskodenie;
 
-	std::vector<Akcia*>* akcie;
-	std::map<int, Predmet*>* oblecene;
-	std::map<Efekt*, sf::Time>* aktivneEfekty;
+	vector<Akcia*>* akcie;
+	map<int, Predmet*>* oblecene;
+	map<Efekt*, sf::Time>* aktivneEfekty;
 
 	Timer timerMp;
 	sf::Time poslednaObnova;

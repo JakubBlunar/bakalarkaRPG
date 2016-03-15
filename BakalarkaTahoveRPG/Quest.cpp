@@ -14,8 +14,9 @@
 #include "QuestPolozka.h"
 #include "DialogovyStrom.h"
 
-Quest::Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata, string paStartNpc, string paEndNpc)
+Quest::Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata, string paStartNpc, string paEndNpc, std::string nazovSuboru)
 {
+	this->nazovSuboru = nazovSuboru;
 	this->predchadzajuci = nullptr;
 	this->nasledujuci = nullptr;
 	this->odmena = new QuestOdmena(pocetXp, pocetZlata);
@@ -30,6 +31,10 @@ void Quest::setStav(StavQuestu paStav) {
 	stav = paStav;
 }
 
+string Quest::Getnazovsuboru() {
+	return nazovSuboru;
+}
+
 StavQuestu Quest::Getstav() {
 	return stav;
 }
@@ -39,10 +44,10 @@ string Quest::Getnazov() {
 }
 
 string Quest::getPopis() {
-	
-	
+
+
 	string popisQuestu = "";
-	
+
 	string ts = "";
 	switch (stav)
 	{
@@ -59,7 +64,7 @@ string Quest::getPopis() {
 		ts = "Dokonceny";
 		break;
 	}
-	popisQuestu+= "Stav: " + ts + "\n\n" + popis + "\n\n";
+	popisQuestu += "Stav: " + ts + "\n\n" + popis + "\n\n";
 
 	for (unsigned int i = 0; i < poziadavky.size(); i++) {
 		popisQuestu += poziadavky.at(i)->Getpopis() + "\n";
@@ -93,17 +98,17 @@ void Quest::dokonciSa(Hrac* paHrac) {
 			else {// ak nemá kapacitu v inventary tak sa predmety vyhodia na mapu kde hrac stoji
 				Mapa* m = paHrac->getMapa();
 				m->GetPolicko(paHrac->GetpolickoX(), paHrac->GetpolickoY())->polozPredmet(predmety->at(i), m->aktCas() + sf::seconds(300));
-				
+
 			}
 		}
-		
+
 	}
 }
 
 string Quest::GetpopisOdmeny() {
 	string popis = "Dostanes :\n\n";
 	if (odmena->Getpocetzlata() != 0) {
-		popis += "Zlato: " + std::to_string(odmena->Getpocetzlata())+"\n";
+		popis += "Zlato: " + std::to_string(odmena->Getpocetzlata()) + "\n";
 	}
 
 	if (odmena->Getpocetxp() != 0) {
@@ -131,7 +136,7 @@ void Quest::lootnutiePredmetu(Predmet* paPredmet) {
 		for (unsigned int i = 0; i < poziadavky.size(); i++) poziadavky.at(i)->akcia(paPredmet);
 		kontrola();
 	}
-	
+
 }
 
 void Quest::kontrola() {

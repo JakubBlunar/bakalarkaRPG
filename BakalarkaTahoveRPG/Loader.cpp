@@ -45,6 +45,10 @@
 #include "QuestManager.h"
 #include <random>
 
+#include "Inventar.h"
+#include "Zameranie.h"
+#include <deque>
+
 Loader* Loader::instancia = NULL;
 
 Loader* Loader::Instance()
@@ -67,18 +71,18 @@ Hra* Loader::Gethra() {
 	return hra;
 }
 
-DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
-	std::string cestaDialogy = "./Data/Npc/Dialogy/";
+DialogovyStrom* Loader::nacitajDialog(string paMeno) {
+	string cestaDialogy = "./Data/Npc/Dialogy/";
 
 	Json::Value root;
 	Json::Reader reader;
-	std::ifstream json(cestaDialogy + "" + paMeno + ".json", std::ifstream::binary);
+	ifstream json(cestaDialogy + "" + paMeno + ".json", ifstream::binary);
 
 	bool parsingSuccessful = reader.parse(json, root, false);
 
 	if (!parsingSuccessful)
 	{
-		std::cout << "Dialog " << paMeno << ".json neexistuje alebo chyba v parsovani" << std::endl;
+		cout << "Dialog " << paMeno << ".json neexistuje alebo chyba v parsovani" << endl;
 		DialogovyStrom* dialog;
 		dialog = new DialogovyStrom();
 		DialogPolozka *node0 = new DialogPolozka("Ahoj udatny bojovnik.");
@@ -96,11 +100,11 @@ DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
 		Json::Value key = it.key();
 		Json::Value polozkaData = (*it);
 
-		std::string typPolozky = polozkaData["typ"].asCString();
+		string typPolozky = polozkaData["typ"].asString();
 
 		DialogPolozka* polozka;
 		if (typPolozky == "normalVolba") {
-			std::string textPolozky = polozkaData["text"].asCString();
+			string textPolozky = polozkaData["text"].asString();
 			polozka = new DialogPolozka(textPolozky);
 		}
 
@@ -111,13 +115,13 @@ DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
 			Json::Value volbaID = it.key();
 			Json::Value volbaData = (*it);
 			int dalsia = volbaData["kam"].asInt();
-			std::string volbaText = volbaData["text"].asCString();
-			std::string typ = volbaData["typ"].asCString();
+			string volbaText = volbaData["text"].asString();
+			string typ = volbaData["typ"].asString();
 			if (typ == "") {
 				polozka->pridajMoznost(new DialogVolba(volbaText, dalsia));
 			}
 			else if (typ == "obchod") {
-				std::string aky = volbaData["aky"].asCString();
+				string aky = volbaData["aky"].asString();
 				polozka->pridajMoznost(new VolbaObchodovanie(volbaText, dalsia, aky));
 			}
 			else if (typ == "liecenie") {
@@ -132,7 +136,7 @@ DialogovyStrom* Loader::nacitajDialog(std::string paMeno) {
 }
 
 
-void Loader::nacitajMapu(std::string paMeno, int posX, int posY, int smer) {
+void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 	//nacitava = true;
 	hra->zmenStavRozhrania("stavLoading");
 	if (nacitaneMapy.find(paMeno) != nacitaneMapy.end()) {
@@ -155,8 +159,8 @@ void Loader::nacitajMapu(std::string paMeno, int posX, int posY, int smer) {
 
 	Mapa* novaMapa;
 
-	std::string cestaKMapam = "./Data/Mapy/";
-	std::string cestakTexturam = "./Data/Grafika/Textury/";
+	string cestaKMapam = "./Data/Mapy/";
+	string cestakTexturam = "./Data/Grafika/Textury/";
 
 	PolickoDvere*** polickoDvere;
 
@@ -166,13 +170,13 @@ void Loader::nacitajMapu(std::string paMeno, int posX, int posY, int smer) {
 		Json::Value mapaData;
 		Json::Value root;
 		Json::Reader reader;
-		std::ifstream test(cestaKMapam + "" + paMeno + ".json", std::ifstream::binary);
-		std::ifstream data(cestaKMapam + "" + paMeno + "data.json", std::ifstream::binary);
+		ifstream test(cestaKMapam + "" + paMeno + ".json", ifstream::binary);
+		ifstream data(cestaKMapam + "" + paMeno + "data.json", ifstream::binary);
 		bool parsingSuccessful = reader.parse(test, root, false);
 		parsingSuccessful = reader.parse(data, mapaData, false);
 		if (!parsingSuccessful)
 		{
-			std::cout << "chyba pri parsovani Jsonu mapy" << "\n";
+			cout << "chyba pri parsovani Jsonu mapy" << "\n";
 		}
 
 		int vyska = root["height"].asInt();
@@ -185,14 +189,14 @@ void Loader::nacitajMapu(std::string paMeno, int posX, int posY, int smer) {
 		nepriatelia = mapaData["nepriatelia"];
 
 		for (unsigned int i = 0; i < nepriatelia.size(); i++) {
-			novaMapa->pridajNepriatela(nepriatelia[i].asCString());
+			novaMapa->pridajNepriatela(nepriatelia[i].asString());
 		}
 
 		Json::Value questy(Json::arrayValue);
 		questy = mapaData["questy"];
 
 		for (unsigned int i = 0; i < questy.size(); i++) {
-			nacitajQuest(questy[i].asCString());
+			nacitajQuest(questy[i].asString());
 		}
 
 
@@ -219,7 +223,7 @@ void Loader::nacitajMapu(std::string paMeno, int posX, int posY, int smer) {
 			int posX = value["poziciaX"].asInt();
 			int posY = value["poziciaY"].asInt();
 			int smerPohladu = value["smerPohladu"].asInt();
-			std::string kam = value["kam"].asCString();
+			string kam = value["kam"].asString();
 
 			polickoDvere[x][y] = new PolickoDvere(true, kam, posX, posY, smerPohladu);
 		}
@@ -233,11 +237,11 @@ void Loader::nacitajMapu(std::string paMeno, int posX, int posY, int smer) {
 			Json::Value key = it.key();
 			Json::Value value = (*it);
 
-			std::string menoTextury = value["image"].asCString();
+			string menoTextury = value["image"].asString();
 			int id = atoi(key.asCString());
 			textury[id + 1] = new sf::Texture();
 			if (!textury[id + 1]->loadFromFile(cestakTexturam + "" + menoTextury, sf::IntRect(0, 0, 32, 32))) {
-				std::cout << "Chyba nahravania textury policka" << std::endl;
+				cout << "Chyba nahravania textury policka" << endl;
 			}
 		}
 
@@ -291,14 +295,14 @@ void Loader::nacitajMapu(std::string paMeno, int posX, int posY, int smer) {
 	nacitajNpc(paMeno, novaMapa);
 
 	if (nacitaneMapy.size() > 15) {
-		for (std::map<std::string, Mapa*>::iterator it = nacitaneMapy.begin(); it != nacitaneMapy.end(); ++it)
+		for (map<string, Mapa*>::iterator it = nacitaneMapy.begin(); it != nacitaneMapy.end(); ++it)
 		{
 			delete it->second;
 		}
 		nacitaneMapy.clear();
 	}
 
-	nacitaneMapy.insert(std::pair<std::string, Mapa*>(paMeno, novaMapa));
+	nacitaneMapy.insert(pair<string, Mapa*>(paMeno, novaMapa));
 
 	hra->GetHrac()->setMapa(novaMapa);
 	novaMapa->setHrac(hra->GetHrac());
@@ -323,9 +327,9 @@ void Loader::nacitajMapu(std::string paMeno, int posX, int posY, int smer) {
 }
 
 
-void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
-	std::string cestaKNpc = "./Data/Npc/";
-	std::string cestaNpcAnimacie = "./Data/Grafika/Npc/";
+void Loader::nacitajNpc(string menoMapy, Mapa* mapa) {
+	string cestaKNpc = "./Data/Npc/";
+	string cestaNpcAnimacie = "./Data/Grafika/Npc/";
 
 
 	bool alive = true;
@@ -333,13 +337,13 @@ void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
 
 		Json::Value root;
 		Json::Reader reader;
-		std::ifstream json(cestaKNpc + "" + menoMapy + "npc.json", std::ifstream::binary);
+		ifstream json(cestaKNpc + "" + menoMapy + "npc.json", ifstream::binary);
 
 		bool parsingSuccessful = reader.parse(json, root, false);
 
 		if (!parsingSuccessful)
 		{
-			std::cout << "chyba pri parsovani Jsonu npc " << "\n";
+			cout << "chyba pri parsovani Jsonu npc " << "\n";
 		}
 
 		Json::Value objekt(Json::objectValue);
@@ -352,14 +356,14 @@ void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
 
 			Json::Value value = (*it);
 
-			std::string meno = value["meno"].asCString();
+			string meno = value["meno"].asString();
 			int posX = value["posX"].asInt();
 			int posY = value["posY"].asInt();
-			std::string nazovDialogu = value["dialog"].asCString();
+			string nazovDialogu = value["dialog"].asString();
 
 			Json::Value animacia(Json::objectValue);
 			animacia = value["animacia"];
-			std::string animaciaMeno = animacia["nazov"].asCString();
+			string animaciaMeno = animacia["nazov"].asString();
 			int animaciaX = animacia["aniX"].asInt();
 			int animaciaY = animacia["aniY"].asInt();
 			int pocetSnimkov = animacia["pocet"].asInt();
@@ -396,7 +400,7 @@ void Loader::nacitajNpc(std::string menoMapy, Mapa* mapa) {
 
 }
 
-sf::Font* Loader::nacitajFont(std::string menoFontu) {
+sf::Font* Loader::nacitajFont(string menoFontu) {
 
 	if (nacitaneFonty.find(menoFontu) == nacitaneFonty.end()) {
 
@@ -405,7 +409,7 @@ sf::Font* Loader::nacitajFont(std::string menoFontu) {
 			exit(1);
 		};
 
-		nacitaneFonty.insert(std::pair<std::string, sf::Font*>(menoFontu, font));
+		nacitaneFonty.insert(pair<string, sf::Font*>(menoFontu, font));
 		return font;
 	}
 	else {
@@ -414,23 +418,23 @@ sf::Font* Loader::nacitajFont(std::string menoFontu) {
 
 }
 
-Nepriatel* Loader::nacitajNepriatela(std::string paMeno) {
-	std::string cestaKNepriatelom = "./Data/Nepriatelia/";
+Nepriatel* Loader::nacitajNepriatela(string paMeno) {
+	string cestaKNepriatelom = "./Data/Nepriatelia/";
 
 	Nepriatel* novyNepriatel;
 
 	Json::Value nepriatel;
 	Json::Reader reader;
-	std::ifstream json(cestaKNepriatelom + "" + paMeno + ".json", std::ifstream::binary);
+	ifstream json(cestaKNepriatelom + "" + paMeno + ".json", ifstream::binary);
 	bool parsingSuccessful = reader.parse(json, nepriatel, false);
 
 	if (!parsingSuccessful)
 	{
-		std::cout << "chyba pri parsovani Jsonu nepriatela " << "\n";
+		cout << "chyba pri parsovani Jsonu nepriatela " << "\n";
 	}
 
-	std::string meno = nepriatel["meno"].asCString();
-	std::string obrazok = nepriatel["obrazok"].asCString();
+	string meno = nepriatel["meno"].asString();
+	string obrazok = nepriatel["obrazok"].asString();
 
 	int levelOd = nepriatel["levelOd"].asInt();
 	int levelDo = nepriatel["levelDo"].asInt();
@@ -470,16 +474,16 @@ Nepriatel* Loader::nacitajNepriatela(std::string paMeno) {
 		Json::Value key = it.key();
 		Json::Value akcia = (*it);
 
-		std::string typAkcie = akcia["typ"].asCString();
-		std::string menoAkcie = akcia["meno"].asCString();
-		std::string obrazokAkcie = akcia["obrazok"].asCString();
+		string typAkcie = akcia["typ"].asString();
+		string menoAkcie = akcia["meno"].asString();
+		string obrazokAkcie = akcia["obrazok"].asString();
 		int rychlostCasteniaAkcie = akcia["rychlostCastenia"].asInt();
 		int cooldownAkcie = akcia["cooldown"].asInt();
 		int trvanieAkcie = akcia["trvanie"].asInt();
-		std::string popisAkcie = akcia["popis"].asCString();
+		string popisAkcie = akcia["popis"].asString();
 
 		AkciaTyp enumTypAkcie;
-		std::string statAkcie = akcia["stat"].asCString();
+		string statAkcie = akcia["stat"].asString();
 		if (statAkcie == "fyzicka") {
 			enumTypAkcie = AkciaTyp::FYZICKA;
 		}
@@ -496,9 +500,9 @@ Nepriatel* Loader::nacitajNepriatela(std::string paMeno) {
 		else if (typAkcie == "AkciaPridanieEfektu") {
 			Json::Value efekt(Json::objectValue);
 			efekt = akcia["efekt"];
-			std::string druh = efekt["druh"].asCString();
-			std::string obrazokEfektu = efekt["obrazok"].asCString();
-			std::string statEfektu = efekt["stat"].asCString();
+			string druh = efekt["druh"].asString();
+			string obrazokEfektu = efekt["obrazok"].asString();
+			string statEfektu = efekt["stat"].asString();
 			int oKolko = efekt["hodnota"].asInt();
 			bool naNpc = efekt["naSeba"].asBool();
 
@@ -526,13 +530,13 @@ Nepriatel* Loader::nacitajNepriatela(std::string paMeno) {
 		Json::Value key = it.key();
 		Json::Value predmet = (*it);
 
-		std::string meno = predmet["meno"].asCString();
-		std::string obrazok = predmet["obrazok"].asCString();
+		string meno = predmet["meno"].asString();
+		string obrazok = predmet["obrazok"].asString();
 		int typ = predmet["typ"].asInt();
 		int cena = predmet["cena"].asInt();
 		int uroven = predmet["uroven"].asInt();
 
-		novyNepriatel->pridajDropItem(key.asCString(), new Predmet(meno, typ, obrazok, cena, uroven));
+		novyNepriatel->pridajDropItem(key.asString(), new Predmet(meno, typ, obrazok, cena, uroven));
 
 	}
 
@@ -545,19 +549,19 @@ int Loader::nahodneCislo(int min, int max) {
 	return min + rand() % (max - min);
 }
 
-std::vector<Predmet*>* Loader::nacitajObchod(std::string paMeno) {
-	std::string cestaKObchodom = "./Data/Obchody/";
+vector<Predmet*>* Loader::nacitajObchod(string paMeno) {
+	string cestaKObchodom = "./Data/Obchody/";
 
-	std::vector<Predmet*>* obchod = new std::vector<Predmet*>();
+	vector<Predmet*>* obchod = new vector<Predmet*>();
 
 	Json::Value jObchod;
 	Json::Reader reader;
-	std::ifstream json(cestaKObchodom + "" + paMeno + ".json", std::ifstream::binary);
+	ifstream json(cestaKObchodom + "" + paMeno + ".json", ifstream::binary);
 	bool parsingSuccessful = reader.parse(json, jObchod, false);
 
 	if (!parsingSuccessful)
 	{
-		std::cout << "chyba pri parsovani Jsonu obchodu " << "\n";
+		cout << "chyba pri parsovani Jsonu obchodu " << "\n";
 	}
 
 	Json::Value polozky(Json::objectValue);
@@ -581,16 +585,16 @@ std::vector<Predmet*>* Loader::nacitajObchod(std::string paMeno) {
 Predmet* Loader::parsujPredmet(Json::Value jPredmet) {
 	Predmet* predmet = nullptr;
 
-	std::string typTriedy = jPredmet["typTriedy"].asCString();
+	string typTriedy = jPredmet["typTriedy"].asString();
 
-	std::string meno = jPredmet["meno"].asCString();
-	std::string obrazok = jPredmet["obrazok"].asCString();
+	string meno = jPredmet["meno"].asString();
+	string obrazok = jPredmet["obrazok"].asString();
 	int typ = jPredmet["typ"].asInt();
 	int cena = jPredmet["cena"].asInt();
 	int uroven = jPredmet["uroven"].asInt();
 
 	if (typTriedy == "elixir") {
-		std::string co = jPredmet["stat"].asCString();
+		string co = jPredmet["stat"].asString();
 		int oKolko = jPredmet["oKolko"].asInt();
 		predmet = new Elixir(meno, typ, obrazok, cena, uroven, co, oKolko);
 	}
@@ -642,30 +646,30 @@ Predmet* Loader::parsujPredmet(Json::Value jPredmet) {
 Quest* Loader::nacitajQuest(string paMeno) {
 
 	Quest* quest;
-	std::string cestaKuQuestom = "./Data/Questy/";
+	string cestaKuQuestom = "./Data/Questy/";
 
 	Json::Value jQuest;
 	Json::Reader reader;
-	std::ifstream json(cestaKuQuestom + "" + paMeno + ".json", std::ifstream::binary);
+	ifstream json(cestaKuQuestom + "" + paMeno + ".json", ifstream::binary);
 	bool parsingSuccessful = reader.parse(json, jQuest, false);
 
 	if (!parsingSuccessful)
 	{
-		std::cout << "chyba pri parsovani Jsonu questu " << paMeno << "\n";
+		cout << "chyba pri parsovani Jsonu questu " << paMeno << "\n";
 	}
 
-	std::string questNazov = jQuest["nazov"].asCString();
+	string questNazov = jQuest["nazov"].asString();
 	quest = hra->GetHrac()->Getmanazerquestov()->GetNacitanyQuest(questNazov);
 
 	if (quest == nullptr) {
 
-		std::string questPopis = jQuest["popis"].asCString();
+		string questPopis = jQuest["popis"].asString();
 		int odmenaXp = jQuest["xp"].asInt();
 		int odmenaZlato = jQuest["zlato"].asInt();
-		std::string startNpc = jQuest["startNpc"].asCString();
-		std::string endNpc = jQuest["endNpc"].asCString();
+		string startNpc = jQuest["startNpc"].asString();
+		string endNpc = jQuest["endNpc"].asString();
 
-		quest = new Quest(questNazov, questPopis, odmenaXp, odmenaZlato, startNpc, endNpc);
+		quest = new Quest(questNazov, questPopis, odmenaXp, odmenaZlato, startNpc, endNpc,paMeno);
 
 		//nacitanie polozky ktorá bude predstavova to èo bude rozprava npc o queste
 		QuestPolozka* polozka = new QuestPolozka(quest->Getnazov());
@@ -674,19 +678,19 @@ Quest* Loader::nacitajQuest(string paMeno) {
 		QuestPolozka* qp = (QuestPolozka*)polozka;
 		for (unsigned int i = 0; i < polozkaTexty.size(); i++) {
 			if (i == 0) {
-				qp->vlozText(StavQuestu::NEPRIJATY, polozkaTexty[i].asCString());
+				qp->vlozText(StavQuestu::NEPRIJATY, polozkaTexty[i].asString());
 			}
 
 			if (i == 1) {
-				qp->vlozText(StavQuestu::ROZROBENY, polozkaTexty[i].asCString());
+				qp->vlozText(StavQuestu::ROZROBENY, polozkaTexty[i].asString());
 			}
 
 			if (i == 2) {
-				qp->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, polozkaTexty[i].asCString());
+				qp->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, polozkaTexty[i].asString());
 			}
 
 			if (i == 3) {
-				qp->vlozText(StavQuestu::DOKONCENY, polozkaTexty[i].asCString());
+				qp->vlozText(StavQuestu::DOKONCENY, polozkaTexty[i].asString());
 			}
 
 		}
@@ -701,8 +705,8 @@ Quest* Loader::nacitajQuest(string paMeno) {
 
 
 			int dalsia = volbaData["kam"].asInt();
-			std::string volbaText = volbaData["text"].asCString();
-			std::string typ = volbaData["typ"].asCString();
+			string volbaText = volbaData["text"].asString();
+			string typ = volbaData["typ"].asString();
 			if (typ == "") {
 				polozka->pridajMoznost(new DialogVolba(volbaText, dalsia));
 			}
@@ -715,19 +719,19 @@ Quest* Loader::nacitajQuest(string paMeno) {
 
 				for (unsigned int i = 0; i < volbaTexty.size(); i++) {
 					if (i == 0) {
-						volba->vlozText(StavQuestu::NEPRIJATY, volbaTexty[i].asCString());
+						volba->vlozText(StavQuestu::NEPRIJATY, volbaTexty[i].asString());
 					}
 
 					if (i == 1) {
-						volba->vlozText(StavQuestu::ROZROBENY, volbaTexty[i].asCString());
+						volba->vlozText(StavQuestu::ROZROBENY, volbaTexty[i].asString());
 					}
 
 					if (i == 2) {
-						volba->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, volbaTexty[i].asCString());
+						volba->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, volbaTexty[i].asString());
 					}
 
 					if (i == 3) {
-						volba->vlozText(StavQuestu::DOKONCENY, volbaTexty[i].asCString());
+						volba->vlozText(StavQuestu::DOKONCENY, volbaTexty[i].asString());
 					}
 
 				}
@@ -735,7 +739,7 @@ Quest* Loader::nacitajQuest(string paMeno) {
 				polozka->pridajMoznost(volba);
 			}
 			else if (typ == "obchod") {
-				std::string aky = volbaData["aky"].asCString();
+				string aky = volbaData["aky"].asString();
 				polozka->pridajMoznost(new VolbaObchodovanie(volbaText, dalsia, aky));
 			}
 			else if (typ == "liecenie") {
@@ -756,19 +760,19 @@ Quest* Loader::nacitajQuest(string paMeno) {
 
 		for (unsigned int i = 0; i < volbaTexty.size(); i++) {
 			if (i == 0) {
-				volba->vlozText(StavQuestu::NEPRIJATY, volbaTexty[i].asCString());
+				volba->vlozText(StavQuestu::NEPRIJATY, volbaTexty[i].asString());
 			}
 
 			if (i == 1) {
-				volba->vlozText(StavQuestu::ROZROBENY, volbaTexty[i].asCString());
+				volba->vlozText(StavQuestu::ROZROBENY, volbaTexty[i].asString());
 			}
 
 			if (i == 2) {
-				volba->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, volbaTexty[i].asCString());
+				volba->vlozText(StavQuestu::SPLNENIE_POZIADAVIEK, volbaTexty[i].asString());
 			}
 
 			if (i == 3) {
-				volba->vlozText(StavQuestu::DOKONCENY, volbaTexty[i].asCString());
+				volba->vlozText(StavQuestu::DOKONCENY, volbaTexty[i].asString());
 			}
 
 		}
@@ -776,7 +780,7 @@ Quest* Loader::nacitajQuest(string paMeno) {
 		quest->SetvolbaKuQuestu(volba);
 
 		// nacitanie nasledujuceho questu
-		std::string dalsi = jQuest["nasledujuci"].asCString();
+		string dalsi = jQuest["nasledujuci"].asString();
 		if (dalsi != "") {
 			Quest* dalsiQ = nacitajQuest(dalsi);
 			dalsiQ->Setpredchadzajuci(quest);
@@ -790,15 +794,15 @@ Quest* Loader::nacitajQuest(string paMeno) {
 			Json::Value poziadavka(Json::objectValue);
 			poziadavka = questPoziadavky[i];
 
-			string pTyp = poziadavka["typ"].asCString();
+			string pTyp = poziadavka["typ"].asString();
 			if (pTyp == "kill") {
-				std::string pKoho = poziadavka["co"].asCString();
+				string pKoho = poziadavka["co"].asString();
 				int pKolko = poziadavka["kolko"].asInt();
-				std::string pKde = poziadavka["kde"].asCString();
+				string pKde = poziadavka["kde"].asString();
 				quest->pridajPoziadavku(new PoziadavkaZabi(pKoho, pKolko, pKde));
 			}
 			else if (pTyp == "loot") {
-				std::string pCo = poziadavka["co"].asCString();
+				string pCo = poziadavka["co"].asString();
 				int pKolko = poziadavka["kolko"].asInt();
 				quest->pridajPoziadavku(new PoziadavkaLoot(pCo, pKolko));
 			}
@@ -817,4 +821,311 @@ Quest* Loader::nacitajQuest(string paMeno) {
 	
 	
 	return quest;
+}
+
+
+Zameranie* Loader::nacitajZameranie(string paMeno) {
+	Zameranie* zameranie;
+
+	string cestaKuZameraniam = "./Data/Zameranie/";
+
+	Json::Value jZameranie;
+	Json::Reader reader;
+	ifstream json(cestaKuZameraniam + "" + paMeno + ".json", ifstream::binary);
+	bool parsingSuccessful = reader.parse(json, jZameranie, false);
+
+	if (!parsingSuccessful)
+	{
+		cout << "chyba pri parsovani Jsonu zamerania " << paMeno << "\n";
+	}
+
+	string nazov = jZameranie["nazov"].asString();
+	int rastHp = jZameranie["rastHp"].asInt();
+	int rastMp = jZameranie["rastMp"].asInt();
+	int rastSila = jZameranie["rastSila"].asInt();
+	int rastIntelekt = jZameranie["rastIntelekt"].asInt();
+	int rastRychlost = jZameranie["rastRychlost"].asInt();
+
+	zameranie = new Zameranie(nazov, rastHp, rastMp, rastSila, rastRychlost, rastIntelekt);
+	
+	Json::Value akcie(Json::objectValue);
+	akcie = jZameranie["akcie"];
+
+	for (Json::Value::iterator it = akcie.begin(); it != akcie.end(); ++it) {
+		Json::Value volbaID = it.key();
+		Json::Value jAkcia = (*it);
+	
+		Akcia* akcia;
+
+		string trieda = jAkcia["trieda"].asString();
+		string meno = jAkcia["meno"].asString();
+		string obrazok = jAkcia["obrazok"].asString();
+		int casCastenia = jAkcia["casCastenia"].asInt();
+		int cooldown = jAkcia["cooldown"].asInt();
+		int trvanie = jAkcia["trvanie"].asInt();
+		string popis = jAkcia["popis"].asString();
+		int mana = jAkcia["mana"].asInt();
+		string typ = jAkcia["typ"].asString();
+
+		if (trieda == "akciadmg") {
+			double zaklad = jAkcia["zaklad"].asDouble();
+			if (typ == "magicka") {
+				akcia = new AkciaDmg(meno, obrazok, casCastenia, cooldown, trvanie, popis, mana, AkciaTyp::MAGICKA, zaklad);
+			}
+			else {
+				akcia = new AkciaDmg(meno, obrazok, casCastenia, cooldown, trvanie, popis, mana, AkciaTyp::FYZICKA, zaklad);
+			}
+		}
+		else if (trieda == "akcialiecenie") {
+			double zaklad = jAkcia["zaklad"].asDouble();
+			if (typ == "magicka") {
+				akcia = new AkciaLiecenie(meno, obrazok, casCastenia, cooldown, trvanie, popis, mana, AkciaTyp::MAGICKA, zaklad);
+			}
+			else {
+				akcia = new AkciaLiecenie(meno, obrazok, casCastenia, cooldown, trvanie, popis, mana, AkciaTyp::FYZICKA, zaklad);
+			}
+		}
+		else {
+			Efekt* efekt;
+			Json::Value jEfekt(Json::objectValue);
+			jEfekt = jAkcia["efekt"];
+
+			string efektTyp = jEfekt["typ"].asString();
+			bool efektNaHraca = jEfekt["naHraca"].asBool();
+
+			if (efektTyp == "upravStat") {
+				string efektAky = jEfekt["stat"].asString();
+				int efektZaklad = jEfekt["zaklad"].asInt();
+				efekt = new EfektUpravStat(obrazok, efektAky, efektZaklad);
+			}
+
+
+			akcia = new AkciaPridanieEfektu(meno,obrazok,casCastenia,cooldown,trvanie,popis,mana,efekt,efektNaHraca);
+		}
+
+		int akciaLevel = jAkcia["uroven"].asInt();
+
+		if (akcia != nullptr) {
+			zameranie->vlozAkciu(akcia, akciaLevel);
+		}
+	}
+
+	return zameranie;
+
+
+}
+
+void Loader::save() {
+
+	Hrac* hrac = hra->GetHrac();
+	QuestManager* qm = hrac->Getmanazerquestov();
+	Inventar* inv = hrac->Getinventar();
+	Statistika* stat = hrac->Getstatistika();
+
+	Json::Value root;
+	
+	root["uroven"] = stat->dajUroven();
+	root["skusenosti"] = stat->Getskusenosti();
+	root["zameranie"] = hrac->GetZameranie()->Getnazov();
+	root["mapa"]["subor"] = hrac->getMapa()->Getmeno();
+	root["mapa"]["posX"] = hrac->GetpolickoX();
+	root["mapa"]["posY"] = hrac->GetpolickoY();
+	root["mapa"]["orientacia"] = hrac->GetSmerPohladu();
+
+	root["inventar"]["zlato"] = inv->Getzlato();
+	Json::Value predmety;
+	
+	for (int i = 0; i < inv->pocetPredmetov(); i++) {
+		Predmet* predmet = inv->dajPredmetNaIndexe(i);
+
+		Json::Value jPredmet;
+
+
+		jPredmet["meno"] = predmet->Getmeno();
+		jPredmet["obrazok"] = predmet->Getsobrazok();
+		jPredmet["typ"] = predmet->Gettyp();
+		jPredmet["cena"] = predmet->Getcena();
+		jPredmet["uroven"] = predmet->Geturoven();
+
+
+		if (dynamic_cast<Elixir*>(predmet) != NULL) {
+			jPredmet["typTriedy"] = "elixir";
+			Elixir* e = (Elixir*)predmet;
+			jPredmet["stat"] = e->Getstat();
+			jPredmet["oKolko"] = e->Getokolko();
+		}
+		else if (dynamic_cast<Zbran*>(predmet) != NULL) {
+			jPredmet["typTriedy"] = "zbran";
+			Zbran* z = (Zbran*)predmet;
+			jPredmet["minDmg"] = z->Getminposkodenie();
+			jPredmet["maxDmg"] = z->Getmaxposkodenie();
+			jPredmet["rychlostUtoku"] = z->GetrychlostUtoku();
+			jPredmet["hp"] = z->Gethp();
+			jPredmet["hpMult"] = z->GethpMult();
+			jPredmet["mp"] = z->Getmp();
+			jPredmet["mpMult"] = z->GetmpMult();
+			jPredmet["sila"] = z->Getsila();
+			jPredmet["silaMult"] = z->GetsilaMult();
+			jPredmet["intelekt"] = z->Getinteligencia();
+			jPredmet["intelektMult"] = z->GetinteligenciaMult();
+			jPredmet["rychlost"] = z->Getrychlost();
+			jPredmet["rychlostMult"] = z->GetrychlostMult();
+			jPredmet["obrana"] = z->Getarmor();
+			jPredmet["obranaMult"] = z->GetarmorMult();
+
+
+		}
+		else if(dynamic_cast<Oblecenie*>(predmet) != NULL) {
+			jPredmet["typTriedy"] = "oblecenie";
+
+			Oblecenie* o = (Oblecenie*)predmet;
+
+			jPredmet["hp"] = o->Gethp();
+			jPredmet["hpMult"] = o->GethpMult();
+			jPredmet["mp"] = o->Getmp();
+			jPredmet["mpMult"] = o->GetmpMult();
+			jPredmet["sila"] = o->Getsila();
+			jPredmet["silaMult"] = o->GetsilaMult();
+			jPredmet["intelekt"] = o->Getinteligencia();
+			jPredmet["intelektMult"] = o->GetinteligenciaMult();
+			jPredmet["rychlost"] = o->Getrychlost();
+			jPredmet["rychlostMult"] = o->GetrychlostMult();
+			jPredmet["obrana"] = o->Getarmor();
+			jPredmet["obranaMult"] = o->GetarmorMult();
+
+		}
+		else {
+			jPredmet["typTriedy"] = "normalny";
+		}
+		
+		
+		predmety.append(jPredmet);
+	}
+	
+	root["inventar"]["predmety"] = predmety;
+	
+	Json::Value jOblecene;
+	
+	map<int, Predmet*>* oblecene = stat->Getoblecene();
+	for (map<int,Predmet*>::iterator it = oblecene->begin(); it != oblecene->end(); ++it) {
+		Predmet* predmet = it->second;
+
+		Json::Value jPredmet;
+
+
+		jPredmet["meno"] = predmet->Getmeno();
+		jPredmet["obrazok"] = predmet->Getsobrazok();
+		jPredmet["typ"] = predmet->Gettyp();
+		jPredmet["cena"] = predmet->Getcena();
+		jPredmet["uroven"] = predmet->Geturoven();
+
+
+		if (dynamic_cast<Elixir*>(predmet) != NULL) {
+			jPredmet["typTriedy"] = "elixir";
+			Elixir* e = (Elixir*)predmet;
+			jPredmet["stat"] = e->Getstat();
+			jPredmet["oKolko"] = e->Getokolko();
+		}
+		else if (dynamic_cast<Zbran*>(predmet) != NULL) {
+			jPredmet["typTriedy"] = "zbran";
+			Zbran* z = (Zbran*)predmet;
+			jPredmet["minDmg"] = z->Getminposkodenie();
+			jPredmet["maxDmg"] = z->Getmaxposkodenie();
+			jPredmet["rychlostUtoku"] = z->GetrychlostUtoku();
+			jPredmet["hp"] = z->Gethp();
+			jPredmet["hpMult"] = z->GethpMult();
+			jPredmet["mp"] = z->Getmp();
+			jPredmet["mpMult"] = z->GetmpMult();
+			jPredmet["sila"] = z->Getsila();
+			jPredmet["silaMult"] = z->GetsilaMult();
+			jPredmet["intelekt"] = z->Getinteligencia();
+			jPredmet["intelektMult"] = z->GetinteligenciaMult();
+			jPredmet["rychlost"] = z->Getrychlost();
+			jPredmet["rychlostMult"] = z->GetrychlostMult();
+			jPredmet["obrana"] = z->Getarmor();
+			jPredmet["obranaMult"] = z->GetarmorMult();
+
+
+		}
+		else if (dynamic_cast<Oblecenie*>(predmet) != NULL) {
+			jPredmet["typTriedy"] = "oblecenie";
+
+			Oblecenie* o = (Oblecenie*)predmet;
+
+			jPredmet["hp"] = o->Gethp();
+			jPredmet["hpMult"] = o->GethpMult();
+			jPredmet["mp"] = o->Getmp();
+			jPredmet["mpMult"] = o->GetmpMult();
+			jPredmet["sila"] = o->Getsila();
+			jPredmet["silaMult"] = o->GetsilaMult();
+			jPredmet["intelekt"] = o->Getinteligencia();
+			jPredmet["intelektMult"] = o->GetinteligenciaMult();
+			jPredmet["rychlost"] = o->Getrychlost();
+			jPredmet["rychlostMult"] = o->GetrychlostMult();
+			jPredmet["obrana"] = o->Getarmor();
+			jPredmet["obranaMult"] = o->GetarmorMult();
+
+		}
+		else {
+			jPredmet["typTriedy"] = "normalny";
+		}
+
+
+		jOblecene.append(jPredmet);
+		
+
+
+	}
+	
+	root["oblecene"] = jOblecene;
+
+	Json::Value jNedokoncene;
+	deque < Quest*>* nedokonceneQuesty = qm->Getnedokoncenequesty();
+	for (unsigned int i = 0; i < nedokonceneQuesty->size(); i++) {
+		Quest* q = nedokonceneQuesty->at(i);
+		Json::Value jQuest;
+		jQuest["subor"] = q->Getnazov();
+		jNedokoncene.append(jQuest);
+	}
+	root["nedokonceneQuesty"] = jNedokoncene;
+
+	Json::Value jDokoncene;
+	deque < Quest*>* dokonceneQuesty = qm->Getdokoncenequesty();
+	for (unsigned int i = 0; i < dokonceneQuesty->size(); i++) {
+		Quest* q = dokonceneQuesty->at(i);
+		Json::Value jQuest(Json::objectValue);
+		jQuest["subor"] = q->Getnazovsuboru();
+		jDokoncene.append(jQuest);
+	}
+
+	root["dokonceneQuesty"] = jDokoncene;
+
+	Json::StyledWriter styledWriter;
+	cout << styledWriter.write(root);
+
+	std::ofstream subor;
+	subor.open("./Data/save");
+
+	subor << styledWriter.write(root);
+
+	subor.close();
+
+}
+
+void Loader::load() {
+
+	Json::Value save;
+	Json::Reader reader;
+	ifstream json("./Data/save", ifstream::binary);
+	bool parsingSuccessful = reader.parse(json, save, false);
+
+	if (!parsingSuccessful)
+	{
+		cout << "chyba pri parsovani savu\n";
+	}
+	else {
+		Json::StyledWriter styledWriter;
+		cout << styledWriter.write(save);
+	}
+
 }

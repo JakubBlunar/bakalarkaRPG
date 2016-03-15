@@ -31,3 +31,7 @@ void Efekt::setTrvanieDo(sf::Time paKoniec) {
 sf::Sprite* Efekt::Getobrazok() {
 	return obrazok;
 }
+
+void  Efekt::Setstatistikanapocitanie(Statistika* statistika) {
+	statistikaNaPocitanie = statistika;
+}

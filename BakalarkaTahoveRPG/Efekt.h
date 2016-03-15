@@ -13,17 +13,20 @@ public:
 	virtual ~Efekt();
 	virtual void aplikujSa(Statistika* paHrac) = 0;
 	virtual void zrusUcinok(Statistika* statistika) = 0;
-	virtual std::string popis(Statistika* statistika) = 0;
+	virtual std::string popis() = 0;
 
 	sf::Time GettrvanieDo();
 	void setTrvanieDo(sf::Time paKoniec);
 	sf::Sprite* Getobrazok();
 
-private:
+	void Setstatistikanapocitanie(Statistika* statistika);
+
+protected:
 	sf::Time trvanieDo;
 
 	sf::Texture textura;
 	sf::Sprite* obrazok;
+	Statistika* statistikaNaPocitanie;
 };
 
 #endif

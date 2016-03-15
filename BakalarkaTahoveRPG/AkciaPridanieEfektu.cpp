@@ -18,18 +18,22 @@ AkciaPridanieEfektu::~AkciaPridanieEfektu()
 	Akcia::~Akcia();
 }
 
-std::string AkciaPridanieEfektu::vykonajSa(Statistika* statHrac, Statistika* statNepriatel, sf::Time aktCas){
-	Akcia::vykonajSa(statHrac, statNepriatel,aktCas);
+std::string AkciaPridanieEfektu::vykonajSa(Statistika* stat1, Statistika* stat2, sf::Time aktCas){
+	Akcia::vykonajSa(stat1, stat2,aktCas);
 	if (hrac) {
-		statHrac->pridajEfekt(efekt, aktCas + sf::milliseconds(trvanie));
-		return meno + " aplikoval na npc efekt\n    " + efekt->popis(statHrac);
+		stat1->pridajEfekt(efekt, aktCas + sf::milliseconds(trvanie));
+		return meno + " dal na seba efekt\n    " + efekt->popis();
 	}
 	else {
-		statNepriatel->pridajEfekt(efekt, aktCas + sf::milliseconds(trvanie));
-		return meno + " aplikoval na hraca efekt\n    " + efekt->popis(statNepriatel);
+		stat2->pridajEfekt(efekt, aktCas + sf::milliseconds(trvanie));
+		return meno + " dal na protivnika efekt\n    " + efekt->popis();
 	}
 }
 
-std::string AkciaPridanieEfektu::dajPopis(Statistika* stat) {
-	return popis+ "\n"+efekt->popis(stat);
+std::string AkciaPridanieEfektu::dajPopis() {
+	return popis+ "\n"+ efekt->popis();
+}
+
+void AkciaPridanieEfektu::setStatistika(Statistika* statistika) {
+	efekt->Setstatistikanapocitanie(statistika);
 }

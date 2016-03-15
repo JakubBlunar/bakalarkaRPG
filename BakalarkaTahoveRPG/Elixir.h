@@ -18,6 +18,9 @@ public:
 	void pouzi(Hrac* hrac);
 	std::string dajInfo();
 	Elixir* copy();
+
+	std::string Getstat();
+	int Getokolko();
 private:
 	std::string stat;
 	int oKolko;

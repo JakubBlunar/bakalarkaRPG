@@ -105,20 +105,7 @@ void StavVolbaZamerania::update(double delta) {
 				stlacenaKlavesa = true;
 				Zameranie* zameranie;
 				if (oznacene == 1) {
-					zameranie = new Zameranie("Warrior", 600, 400, 80, 60, 40);
-					Efekt* efekt = new EfektUpravStat("shout", "sila", 25);
-					Efekt* efekt2 = new EfektUpravStat("shout", "sila", -25);
-
-
-					zameranie->vlozAkciu(new AkciaPridanieEfektu("Bojovnikov rev", "shout", 500, 5000, 20000, "Zvysi tvoju silu.", 2, efekt, true), 5);
-					zameranie->vlozAkciu(new AkciaPridanieEfektu("Hrozivy rev", "shout", 500, 0, 15000, "Znizi silu nepriatela" , 2, efekt2, false),4);
-					zameranie->vlozAkciu(new AkciaLiecenie("Slabé liecenie:", "healing1", 3000, 10000, 20, "Vylieci ta!", 1, AkciaTyp::MAGICKA, 0.6), 7);
-					zameranie->vlozAkciu(new AkciaDmg("Bash", "attack", 1000, 3000, 0, "Postava silno buchne zbranou\nSposobi nepriatelovi velke skody.", 0, AkciaTyp::FYZICKA, 1), 2);
-
-					
-
-
-
+					zameranie = Loader::Instance()->nacitajZameranie("Warrior");
 				}
 				else if (oznacene == 2) {
 					zameranie = new Zameranie("Mage", 500, 600, 40, 80, 60);

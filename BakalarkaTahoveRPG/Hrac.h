@@ -25,6 +25,8 @@ class Hrac
 {
 
 public:
+	static bool save(Hrac* paHrac);
+
 	Hrac(Zameranie* paZameranie);
 	virtual ~Hrac();
 
@@ -64,16 +66,15 @@ public:
 	void pridajSkusenosti(int pocet);
 	QuestManager* Getmanazerquestov();
 	
+	
 
 private:
 	Animacia* animaciaDole;
 	Animacia* animaciaHore;
 	Animacia* animaciaVlavo;
 	Animacia* animaciaVpravo;
-	//vector<Quest> dokonceneQuesty;
 	Inventar* inventar;
-	
-	//vector<Quest> questy;
+
 	SmerPohladu smerPohladu;
 	Statistika* statistika;
 	Zameranie* zameranie;

@@ -19,8 +19,6 @@ StavPauza::~StavPauza() {
 
 
 
-
-
 void StavPauza::onEnter() {
 	Stav::onEnter();
 }
@@ -77,13 +75,19 @@ void StavPauza::update(double delta) {
 				hra->zmenStavRozhrania("hranieHry");
 			}
 
+			if (oznacene == 1 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				Loader::Instance()->save();
+			}
+
+
 			if (oznacene == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
 				okno->close();
 			}
 
 
-			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
 				stlacenaKlavesa = false;
 			}
 		}

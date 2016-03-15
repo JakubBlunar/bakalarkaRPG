@@ -11,13 +11,13 @@ class EfektUpravStat :
 	public Efekt
 {
 public:
-	EfektUpravStat(std::string obrazok,std::string paCo, int paOkolko);
+	EfektUpravStat(std::string obrazok,std::string paCo, int paZaklad);
 	~EfektUpravStat();
 
 	void aplikujSa(Statistika* paHrac);
 	void zrusUcinok(Statistika* statistika);
-	std::string popis(Statistika* statistika);
-	int hodnotaEfektu(Statistika* statistika);
+	std::string popis();
+	int hodnotaEfektu();
 private:
 	std::string co;
 	int zakladOkolko;

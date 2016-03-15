@@ -1,6 +1,8 @@
 #if !defined(boj_h)
 #define boj_h
 
+using namespace std;
+
 #include <map>
 #include <deque>
 #include "Timer.h"
@@ -29,25 +31,25 @@ public:
 	void update();
 	bool maAkciaCooldown(Akcia* paAkcia);
 	float castBarProgres();
-	std::string Getlog(int paOd, int paDo);
+	string Getlog(int paOd, int paDo);
 	Nepriatel* Getnepriatel();
 private:
 	Hrac* hrac;
 	Akcia* hracAkcia;
-	std::map<Akcia*, int> hracCooldowny;
+	map<Akcia*, int> hracCooldowny;
 	int hracCasVykonaniaAkcie;
 
 	Nepriatel* npc;
 	Akcia* npcAkcia;
 	int npcCasVykonaniaAkcie;
-	std::map<Akcia*, int> npcCooldowny;
+	map<Akcia*, int> npcCooldowny;
 
 	bool vyber;
 	Timer casovac;
 	bool koniec;
 	bool boloVyhodnotenie;
 	void vyhodnotenie();
-	std::deque<std::string> logBoja;
+	deque<string> logBoja;
 
 };
 #endif

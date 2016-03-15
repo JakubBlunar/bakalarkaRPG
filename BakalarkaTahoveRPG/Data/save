@@ -1,0 +1,18 @@
+{
+   "dokonceneQuesty" : null,
+   "inventar" : {
+      "predmety" : null,
+      "zlato" : 170
+   },
+   "mapa" : {
+      "orientacia" : 1,
+      "posX" : 0,
+      "posY" : 4,
+      "subor" : "start"
+   },
+   "nedokonceneQuesty" : null,
+   "oblecene" : null,
+   "skusenosti" : 0,
+   "uroven" : 1,
+   "zameranie" : "Warrior"
+}

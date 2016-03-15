@@ -1,0 +1,70 @@
+{
+   "nazov":"Warrior",
+   "rastHp":600,
+   "rastMp":400,
+   "rastSila":80,
+   "rastRychlost":60,
+   "rastIntelekt":40,
+   "akcie":{
+      "1":{
+         "meno":"Bojovnikov rev",
+         "trieda":"pridanieEfektu",
+         "obrazok":"shout",
+         "casCastenia":500,
+         "cooldown":5000,
+         "trvanie":20000,
+         "popis":"Zvysi tvoju silu.",
+         "mana":2,
+         "efekt":{
+            "typ":"upravStat",
+            "stat":"sila",
+            "zaklad":30
+         },
+         "naHraca":true,
+         "uroven":5
+      },
+      "2":{
+         "trieda":"pridanieEfektu",
+         "meno":"Hrozivy rev",
+         "obrazok":"shout",
+         "casCastenia":500,
+         "cooldown":0,
+         "trvanie":15000,
+         "popis":"Znizi silu nepriatela",
+         "mana":4,
+         "efekt":{
+            "typ":"upravStat",
+            "stat":"sila",
+            "zaklad":-30
+         },
+         "naHraca":false,
+         "uroven":4
+      },
+      "3":{
+         "trieda":"akcialiecenie",
+         "meno":"Slabe Liecenie",
+         "obrazok":"healing1",
+         "casCastenia":3000,
+         "cooldown":5000,
+         "trvanie":20,
+         "popis":"Vylieci ti par HP",
+         "mana":7,
+         "typ":"magicka",
+         "zaklad":0.6,
+         "uroven":7
+      },
+      "4":{
+         "trieda":"akciadmg",
+         "meno":"Bash",
+         "obrazok":"attack",
+         "casCastenia":1000,
+         "cooldown":3000,
+         "trvanie":0,
+         "popis":"Postava silne buchne zbranou.\nSposobi nepriatelovi velke skody.",
+         "mana":3,
+         "typ":"fyzicka",
+         "zaklad":1,
+         "uroven":2
+      }
+   }
+}

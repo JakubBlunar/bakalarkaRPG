@@ -27,7 +27,7 @@ Akcia::~Akcia() {
 	delete textura;
 }
 
-std::string Akcia::dajPopis(Statistika* stat) {
+std::string Akcia::dajPopis() {
 
 	return  popis;
 }

@@ -235,7 +235,7 @@
       <Filter>Header Files\Questy</Filter>
     </ClInclude>
     <ClInclude Include="VolbaPredQpolozkou.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Dialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -405,7 +405,7 @@
       <Filter>Source Files\Questy</Filter>
     </ClCompile>
     <ClCompile Include="VolbaPredQpolozkou.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Dialog</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

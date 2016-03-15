@@ -2,10 +2,10 @@
 #include "Statistika.h"
 
 
-EfektUpravStat::EfektUpravStat(std::string obrazok,std::string paCo, int paOkolko):Efekt(obrazok)
+EfektUpravStat::EfektUpravStat(std::string obrazok,std::string paCo, int paZaklad):Efekt(obrazok)
 {
 	this->co = paCo;
-	this->zakladOkolko = paOkolko;
+	this->zakladOkolko = paZaklad;
 }
 
 
@@ -15,25 +15,26 @@ EfektUpravStat::~EfektUpravStat()
 }
 
 void EfektUpravStat::aplikujSa(Statistika* statistika) {
-	statistika->zvysStat(zakladOkolko, co);
+	statistika->zvysStat(hodnotaEfektu(), co);
 }
 
 void EfektUpravStat::zrusUcinok(Statistika* statistika) {
-	statistika->zvysStat(-zakladOkolko, co);
+	statistika->zvysStat(-hodnotaEfektu(), co);
 }
 
-int EfektUpravStat::hodnotaEfektu(Statistika* statistika) {
-	if (zakladOkolko > 1) {
-		return (int)floor(floor((2 * zakladOkolko)*statistika->dajUroven() / 100 + 1));
+int EfektUpravStat::hodnotaEfektu() {
+	if (zakladOkolko > 0) {
+		return (int)floor(floor((2 * zakladOkolko) * statistikaNaPocitanie->dajUroven() / 100 )) + 1;
 	}
-	else {
-		return (int)floor(floor((2 * zakladOkolko)*statistika->dajUroven() / 100 -1));
+	else if (zakladOkolko < 0) {
+		return (int)floor(floor((2 * zakladOkolko) * statistikaNaPocitanie->dajUroven() / 100)) -1;
 	}
+	else return 1;
 }
 
-std::string EfektUpravStat::popis(Statistika* statistika) {
+std::string EfektUpravStat::popis() {
 	//sila
-	int hodnota = hodnotaEfektu(statistika);
+	int hodnota = hodnotaEfektu();
 	if (  co== "sila") {
 		
 		if (hodnota > 0) {

@@ -6,9 +6,10 @@
 #include "Zbran.h"
 #include "Akcia.h"
 #include "Efekt.h"
+#include "AkciaPridanieEfektu.h"
 
 Statistika::Statistika() {
-	akcie = new std::vector<Akcia*>();
+	akcie = new vector<Akcia*>();
 	uroven = 1;
 	hp = 80;
 	hpMax = 80;
@@ -20,8 +21,8 @@ Statistika::Statistika() {
 	rychlost = 1;
 	obrana = 0;
 	skusenosti = 0;
-	oblecene = new std::map<int, Predmet*>();
-	aktivneEfekty = new std::map<Efekt*, sf::Time>();
+	oblecene = new map<int, Predmet*>();
+	aktivneEfekty = new map<Efekt*, sf::Time>();
 	prepocitajPoskodenia();
 	timerMp.reset();
 	combat = false;
@@ -29,7 +30,7 @@ Statistika::Statistika() {
 
 }
 
-Statistika::Statistika(int paUroven, int paHp, int paHpMax, int paMp, int paMpMax, int paSila, int paIntelekt, int paRychlost, int paObrana,std::map<int, Predmet*>* paObleceneVeci) {
+Statistika::Statistika(int paUroven, int paHp, int paHpMax, int paMp, int paMpMax, int paSila, int paIntelekt, int paRychlost, int paObrana,map<int, Predmet*>* paObleceneVeci) {
 	
 	skusenosti = 20;
 	uroven = paUroven;
@@ -42,8 +43,8 @@ Statistika::Statistika(int paUroven, int paHp, int paHpMax, int paMp, int paMpMa
 	rychlost = paRychlost;
 	obrana = paObrana;
 	oblecene = paObleceneVeci;
-	akcie = new std::vector<Akcia*>();
-	aktivneEfekty = new std::map<Efekt*, sf::Time>();
+	akcie = new vector<Akcia*>();
+	aktivneEfekty = new map<Efekt*, sf::Time>();
 	this->prepocitajPoskodenia();
 	timerMp.reset();
 	combat = false;
@@ -70,7 +71,7 @@ int Statistika::GethpMax() {
 	int bonus = 0;
 	double mult = 0;
 
-	typedef std::map<int, Predmet*>::iterator it_t;
+	typedef map<int, Predmet*>::iterator it_t;
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
@@ -87,7 +88,7 @@ int Statistika::Getintelekt() {
 	int bonus = 0;
 	double mult = 0;
 
-	typedef std::map<int, Predmet*>::iterator it_t;
+	typedef map<int, Predmet*>::iterator it_t;
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
@@ -120,7 +121,7 @@ int Statistika::GetmpMax() {
 	int bonus = 0;
 	double mult = 0;
 
-	typedef std::map<int, Predmet*>::iterator it_t;
+	typedef map<int, Predmet*>::iterator it_t;
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
@@ -138,7 +139,7 @@ int Statistika::Getobrana() {
 	int bonus = 0;
 	double mult = 0;
 
-	typedef std::map<int, Predmet*>::iterator it_t;
+	typedef map<int, Predmet*>::iterator it_t;
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
@@ -155,7 +156,7 @@ int Statistika::Getrychlost() {
 	int bonus = 0;
 	double mult = 0;
 
-	typedef std::map<int, Predmet*>::iterator it_t;
+	typedef map<int, Predmet*>::iterator it_t;
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
@@ -172,7 +173,7 @@ int Statistika::Getsila() {
 	int bonus = 0;
 	double mult = 0;
 
-	typedef std::map<int, Predmet*>::iterator it_t;
+	typedef map<int, Predmet*>::iterator it_t;
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
@@ -251,7 +252,7 @@ void Statistika::setCombat(bool paNa) {
 	}
 }
 
-void Statistika::zvysStat(int kolko, std::string paCo) {
+void Statistika::zvysStat(int kolko, string paCo) {
 
 	//hp
 	if (paCo == "hp") {
@@ -314,7 +315,7 @@ void Statistika::zvysStat(int kolko, std::string paCo) {
 	prepocitajPoskodenia();
 }
 
-int Statistika::Getstat(std::string paCo) {
+int Statistika::Getstat(string paCo) {
 
 	//hp
 	if (paCo == "hp") {
@@ -362,11 +363,11 @@ void Statistika::setUroven(int paUroven) {
 	uroven = paUroven;
 }
 
-std::map<int, Predmet*>* Statistika::Getoblecene() {
+map<int, Predmet*>* Statistika::Getoblecene() {
 	return oblecene;
 }
 
-std::vector<Akcia*>* Statistika::Getakcie() {
+vector<Akcia*>* Statistika::Getakcie() {
 	return akcie;
 }
 
@@ -408,7 +409,12 @@ int Statistika::Getmaxposkodenie() {
 
 void Statistika::vlozAkciu(Akcia* paAkcia) {
 
-	int pocet = std::count(akcie->begin(), akcie->end(), paAkcia);
+	if (dynamic_cast<AkciaPridanieEfektu *>(paAkcia) != NULL) {
+		AkciaPridanieEfektu* akc = (AkciaPridanieEfektu*)paAkcia;
+		akc->setStatistika(this);
+	}
+
+	int pocet = count(akcie->begin(), akcie->end(), paAkcia);
 	if (pocet == 0) {
 		akcie->push_back(paAkcia);
 	}
@@ -445,7 +451,7 @@ double Statistika::Getodolnostvociposkodeniu() {
 	return (double)obrana / (25 * uroven);
 }
 
-std::map<Efekt*, sf::Time>* Statistika::Getaktivneefekty() {
+map<Efekt*, sf::Time>* Statistika::Getaktivneefekty() {
 	return aktivneEfekty;
 }
 
@@ -454,7 +460,7 @@ void Statistika::pridajEfekt(Efekt* paEfekt, sf::Time aktivnyDo) {
 		aktivneEfekty->at(paEfekt) = aktivnyDo;
 	}
 	else {
-		aktivneEfekty->insert(std::pair<Efekt*, sf::Time>(paEfekt, aktivnyDo));
+		aktivneEfekty->insert(pair<Efekt*, sf::Time>(paEfekt, aktivnyDo));
 		paEfekt->aplikujSa(this);
 	}
 

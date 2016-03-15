@@ -350,7 +350,7 @@ void StavBoj::vykresliInfoAkcie(Akcia* akcia, sf::Vector2f pozicia) {
 	popisAkcie.setPosition(akciaInfo.getGlobalBounds().left + 3, akciaInfo.getGlobalBounds().top + 3);
 	okno->draw(popisAkcie);
 
-	std::string popis = akcia->dajPopis(hra->GetHrac()->Getstatistika()) + "\n";
+	std::string popis = akcia->dajPopis() + "\n";
 
 	if (akcia->Getcenamany() != 0) {
 		popis += "Mana: " + std::to_string(akcia->Getcenamany()) + "\n";

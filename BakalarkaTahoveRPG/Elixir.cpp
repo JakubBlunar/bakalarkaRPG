@@ -77,3 +77,11 @@ std::string Elixir::dajInfo() {
 Elixir* Elixir::copy() {
 	return new Elixir(meno,typ,sObrazok,cena,uroven,stat,oKolko);
 }
+
+std::string Elixir::Getstat() {
+	return stat;
+}
+
+int Elixir::Getokolko() {
+	return oKolko;
+}
