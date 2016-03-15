@@ -7,7 +7,7 @@ using namespace std;
 class Quest;
 class Hrac;
 
-enum Event {
+enum QuestEvent {
 	ZABITIE_NPC,
 	LOOTNUTIE_PREDMETU,
 	VYHODENIE_PREDMETU
@@ -26,7 +26,7 @@ public:
 	deque<Quest*>* Getnedokoncenequesty();
 	deque<Quest*>* Getdokoncenequesty();
 	bool maQuest(string paNazovQuestu);
-	void udalost(Event, void* param);
+	void udalost(QuestEvent e, void* param);
 	Quest* getQuest(string paNazov);
 
 	void dokoncenieQuestu(string meno,Hrac* hrac);

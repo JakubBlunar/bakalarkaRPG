@@ -40,26 +40,26 @@ std::deque<Quest*>* QuestManager::Getdokoncenequesty() {
 	return dokonceneQuesty;
 }
 
-void QuestManager::udalost(Event paEvent, void* param) {
+void QuestManager::udalost(QuestEvent paEvent, void* param) {
 
 	Nepriatel* nepriatel;
 	Predmet* predmet;
 
 	switch (paEvent)
 	{
-	case Event::ZABITIE_NPC:
+	case QuestEvent::ZABITIE_NPC:
 		nepriatel = (Nepriatel*)param;
 		for (unsigned int i = 0; i< nedokonceneQuesty->size(); i++) {
 			nedokonceneQuesty->at(i)->zabitieNpc(nepriatel);
 		}
 		break;
-	case Event::LOOTNUTIE_PREDMETU:
+	case QuestEvent::LOOTNUTIE_PREDMETU:
 		predmet = (Predmet*)param;
 		for (unsigned int i = 0; i< nedokonceneQuesty->size(); i++) {
 			nedokonceneQuesty->at(i)->lootnutiePredmetu(predmet);
 		}
 		break;
-	case Event::VYHODENIE_PREDMETU:
+	case QuestEvent::VYHODENIE_PREDMETU:
 		for (unsigned int i = 0; i< nedokonceneQuesty->size(); i++) {
 			nedokonceneQuesty->at(i)->kontrola();
 		}

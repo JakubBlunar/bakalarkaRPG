@@ -65,7 +65,7 @@ void Inventar::pridajPredmet(Predmet* predmet,bool loot){
 	if ((signed int)predmety.size() < kapacita) {
 		predmety.push_back(predmet);
 		if (loot) {
-			Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(Event::VYHODENIE_PREDMETU, predmet);
+			Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(QuestEvent::VYHODENIE_PREDMETU, predmet);
 		}
 	}
 	else {
@@ -76,7 +76,7 @@ void Inventar::pridajPredmet(Predmet* predmet,bool loot){
 
 void Inventar::zmazPredmet(Predmet* predmet) {
 	predmety.erase(std::remove(predmety.begin(), predmety.end(), predmet), predmety.end());
-	Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(Event::VYHODENIE_PREDMETU, predmet);
+	Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(QuestEvent::VYHODENIE_PREDMETU, predmet);
 }
 
 void Inventar::zmazPredmet(std::string nazovPredmetu) {
@@ -94,7 +94,7 @@ void Inventar::zmazPredmet(std::string nazovPredmetu) {
 		zmazPredmet(predmet);
 	}
 
-	Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(Event::VYHODENIE_PREDMETU, predmet);
+	Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(QuestEvent::VYHODENIE_PREDMETU, predmet);
 }
 
 Predmet* Inventar::dajPredmetNaIndexe(int i) {

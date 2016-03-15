@@ -214,7 +214,7 @@ void Boj::vyhodnotenie() {
 			text += "Ziskal si " + to_string(ziskaneXp) + " skusenosti a " + to_string(ziskaneZlato) + " zlata";
 			stavHranieHry->zobrazPopup(new PopupOkno(text));
 			QuestManager* qm = hrac->Getmanazerquestov();
-			qm->udalost(Event::ZABITIE_NPC, npc);
+			qm->udalost(QuestEvent::ZABITIE_NPC, npc);
 
 			if (rand() % 100 < 35) {// 35% že padne predmet
 				int cislo = rand() % 100;
