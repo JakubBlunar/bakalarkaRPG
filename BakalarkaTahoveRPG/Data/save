@@ -1,18 +1,125 @@
 {
-   "dokonceneQuesty" : null,
+   "dokonceneQuesty" : [
+      {
+         "subor" : "quest1"
+      }
+   ],
    "inventar" : {
-      "predmety" : null,
-      "zlato" : 170
+      "kapacita" : 36,
+      "predmety" : [
+         {
+            "cena" : 15,
+            "meno" : "Maly Hp elixir",
+            "oKolko" : 50,
+            "obrazok" : "elixir",
+            "stat" : "hp",
+            "typ" : 12,
+            "typTriedy" : "elixir",
+            "uroven" : 1
+         },
+         {
+            "cena" : 15,
+            "meno" : "Maly Hp elixir",
+            "oKolko" : 50,
+            "obrazok" : "elixir",
+            "stat" : "hp",
+            "typ" : 12,
+            "typTriedy" : "elixir",
+            "uroven" : 1
+         },
+         {
+            "cena" : 250,
+            "meno" : "Mp potion",
+            "oKolko" : 50,
+            "obrazok" : "manae",
+            "stat" : "mp",
+            "typ" : 12,
+            "typTriedy" : "elixir",
+            "uroven" : 1
+         },
+         {
+            "cena" : 100,
+            "hp" : 0,
+            "hpMult" : 0,
+            "intelekt" : 0,
+            "intelektMult" : 0,
+            "maxDmg" : 2,
+            "meno" : "Small sword",
+            "minDmg" : 1,
+            "mp" : 0,
+            "mpMult" : 0,
+            "obrana" : 0,
+            "obranaMult" : 0,
+            "obrazok" : "1",
+            "rychlost" : 0,
+            "rychlostMult" : 0,
+            "rychlostUtoku" : 2000,
+            "sila" : 0,
+            "silaMult" : 0,
+            "typ" : 9,
+            "typTriedy" : "zbran",
+            "uroven" : 1
+         }
+      ],
+      "zlato" : 1058
    },
    "mapa" : {
       "orientacia" : 3,
-      "posX" : 1,
-      "posY" : 2,
+      "posX" : 8,
+      "posY" : 8,
       "subor" : "start"
    },
-   "nedokonceneQuesty" : null,
-   "oblecene" : null,
-   "skusenosti" : 0,
-   "uroven" : 1,
+   "nedokonceneQuesty" : [
+      {
+         "poziadavky" : null,
+         "subor" : "quest2"
+      }
+   ],
+   "oblecene" : [
+      {
+         "cena" : 50,
+         "hp" : 5,
+         "hpMult" : 0,
+         "intelekt" : 0,
+         "intelektMult" : 0,
+         "meno" : "Brnenie",
+         "mp" : 2,
+         "mpMult" : 0,
+         "obrana" : 2,
+         "obranaMult" : 0,
+         "obrazok" : "ch1",
+         "rychlost" : 0,
+         "rychlostMult" : 0,
+         "sila" : 0,
+         "silaMult" : 0,
+         "typ" : 3,
+         "typTriedy" : "oblecenie",
+         "uroven" : 1
+      },
+      {
+         "cena" : 100,
+         "hp" : 0,
+         "hpMult" : 0,
+         "intelekt" : 0,
+         "intelektMult" : 0,
+         "maxDmg" : 2,
+         "meno" : "Maly mec",
+         "minDmg" : 1,
+         "mp" : 0,
+         "mpMult" : 0,
+         "obrana" : 0,
+         "obranaMult" : 0,
+         "obrazok" : "1",
+         "rychlost" : 0,
+         "rychlostMult" : 0,
+         "rychlostUtoku" : 2000,
+         "sila" : 0,
+         "silaMult" : 0,
+         "typ" : 9,
+         "typTriedy" : "zbran",
+         "uroven" : 1
+      }
+   ],
+   "skusenosti" : 29,
    "zameranie" : "Warrior"
 }

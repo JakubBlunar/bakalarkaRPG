@@ -30,12 +30,12 @@ sf::Sprite* Policko::dajObrazokVrstvy(int poradie) {
 }
 
 void Policko::hracSkok(Hrac* hrac) {
-	//std::cout << "Pocet predmetov na policku" << polozenePredmety->size() << std::endl;
+	
 }
 
 
 void Policko::interakcia(Hrac* hrac) {
-	//std::cout << "hrac interakcia policko" << std::endl;
+	
 }
 
 void Policko::Setpriechodne(bool paPriechodne) {

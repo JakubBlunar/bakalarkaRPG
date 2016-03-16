@@ -217,7 +217,7 @@ void StavBoj::render() {
 	}
 
 	text.setColor(sf::Color::White);
-	text.setString("cas" + floattostring(boj->Getcasvboji().asSeconds()) + "");
+	text.setString("Time:" + floattostring(boj->Getcasvboji().asSeconds()) + "");
 	text.setPosition(sf::Vector2f(310, 10));
 	okno->draw(text);
 
@@ -353,32 +353,32 @@ void StavBoj::vykresliInfoAkcie(Akcia* akcia, sf::Vector2f pozicia) {
 	std::string popis = akcia->dajPopis() + "\n";
 
 	if (akcia->Getcenamany() != 0) {
-		popis += "Mana: " + std::to_string(akcia->Getcenamany()) + "\n";
+		popis += "Mana needed: " + std::to_string(akcia->Getcenamany()) + "\n";
 	}
 
 	if (dynamic_cast<AkciaDmg*>(akcia) != NULL) {
 		AkciaDmg* dmgakcia = (AkciaDmg*)akcia;
-		popis += "Poskodenie:" + std::to_string(dmgakcia->minPoskodenie(boj->Gethracovastatistika())) + " - " + std::to_string(dmgakcia->maxPoskodenie(boj->Gethracovastatistika())) + "\n";
+		popis += "Damage:" + std::to_string(dmgakcia->minPoskodenie(boj->Gethracovastatistika())) + " - " + std::to_string(dmgakcia->maxPoskodenie(boj->Gethracovastatistika())) + "\n";
 	}
 
 	if (dynamic_cast<AkciaPoskodenieZbranou*>(akcia) != NULL) {
 		AkciaPoskodenieZbranou* dmgakcia = (AkciaPoskodenieZbranou*)akcia;
-		popis += "Poskodenie:" + std::to_string(dmgakcia->minPoskodenie()) + " - " + std::to_string(dmgakcia->maxPoskodenie()) + "\n";
+		popis += "Damage:" + std::to_string(dmgakcia->minPoskodenie()) + " - " + std::to_string(dmgakcia->maxPoskodenie()) + "\n";
 	}
 
 	if (dynamic_cast<AkciaLiecenie*>(akcia) != NULL) {
 		AkciaLiecenie* liecenieAkcia = (AkciaLiecenie*)akcia;
-		popis += "Liecenie:" + std::to_string(liecenieAkcia->minLiecenie(boj->Gethracovastatistika())) + " - " + std::to_string(liecenieAkcia->maxLiecenie(boj->Gethracovastatistika())) + "\n";
+		popis += "Healing:" + std::to_string(liecenieAkcia->minLiecenie(boj->Gethracovastatistika())) + " - " + std::to_string(liecenieAkcia->maxLiecenie(boj->Gethracovastatistika())) + "\n";
 	}
 
 
 	if (dynamic_cast<AkciaPridanieEfektu*>(akcia) != NULL) {
 		AkciaPridanieEfektu* efektAkcia = (AkciaPridanieEfektu*)akcia;
-		popis += "Trvanie: "+ floattostring(efektAkcia->Gettrvanie() / 1000.f)+" s\n";
+		popis += "Last: "+ floattostring(efektAkcia->Gettrvanie() / 1000.f)+" s\n";
 	}
 
 	if (akcia->GetcasCastenia() != 0) {
-		popis += "Cas castenia:" + floattostring(akcia->GetcasCastenia()/1000.f) + " s\n";
+		popis += "Casting time:" + floattostring(akcia->GetcasCastenia()/1000.f) + " s\n";
 	}
 	if (akcia->Getcooldown() != 0) {
 		popis += "Cooldown:" + floattostring(akcia->Getcooldown()/1000.f) + " s\n";

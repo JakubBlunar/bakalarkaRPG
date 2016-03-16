@@ -52,13 +52,13 @@ std::string VolbaPredQpolozkou::Gettext() {
 			}
 			break;
 		default:
-			return "Neznamy";
+			return "Undefined";
 			break;
 		}
 
 
 	}
-	return "Neznamy";
+	return "Undefined";
 }
 
 void VolbaPredQpolozkou::vlozText(StavQuestu paStav, std::string paText) {

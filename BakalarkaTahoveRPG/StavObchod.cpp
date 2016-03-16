@@ -12,6 +12,7 @@
 
 StavObchod::StavObchod(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra):StavInventar(paNazov,paOkno,paHra)
 {
+	typObchodu = PREDAJ;
 	nasirku = 18;
 	dostupnePredmety = new std::vector<Predmet*>();
 }
@@ -51,11 +52,11 @@ void StavObchod::render() {
 		int startY = 70;
 
 
-		text.setString("Kupa");
+		text.setString("Buy");
 		text.setPosition(sf::Vector2f(10.f, 10.f));
 		okno->draw(text);
 
-		text.setString("Pocet Zlata:  " + std::to_string(inventar->Getzlato()));
+		text.setString("Gold:  " + std::to_string(inventar->Getzlato()));
 		text.setPosition(500, 30);
 		text.setColor(sf::Color::Yellow);
 		text.setCharacterSize(20);
@@ -106,7 +107,7 @@ void StavObchod::render() {
 		obdlznik.setPosition(0.f, okno->getSize().y - 200.f);
 		okno->draw(obdlznik);
 
-		sf::Text text("Predaj", *font, 45U);
+		sf::Text text("Sell", *font, 45U);
 		text.setPosition(sf::Vector2f(10.f, 10.f));
 		okno->draw(text);
 
@@ -114,7 +115,7 @@ void StavObchod::render() {
 
 	}
 
-	text.setString("Tab - kupa/predaj\nEnter/E - kup/predaj predmet");
+	text.setString("Tab - change buying or selling\nEnter/E - buy/sell item");
 	text.setPosition(20.f, okno->getSize().y - 55.f);
 	text.setColor(sf::Color::Yellow);
 	text.setCharacterSize(20);
@@ -204,14 +205,14 @@ void StavObchod::update(double delta) {
 						if (inventar->Getkapacita() > inventar->pocetPredmetov()) {
 							inventar->Setzlato(inventar->Getzlato() - kopia->Getcena());
 							inventar->pridajPredmet(kopia);
-							zobrazPopup(new PopupOkno("Predmet " + kopia->Getmeno() + " bol uspesne kupeny!"));
+							zobrazPopup(new PopupOkno("You bought ' ' " + kopia->Getmeno() + " !"));
 						}
 						else {
-							zobrazPopup(new PopupOkno("Predmet " + kopia->Getmeno() + " sa nedá kupi! inventar je plný"));
+							zobrazPopup(new PopupOkno("Inventory is full! You can't buy " + kopia->Getmeno() + "."));
 						}
 					}
 					else {
-						zobrazPopup(new PopupOkno("Nemas dostatok zlata!"));
+						zobrazPopup(new PopupOkno("You cant't afford that!"));
 					}
 				}
 
@@ -274,7 +275,7 @@ void StavObchod::update(double delta) {
 						Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
 						inventar->zmazPredmet(p);
 						inventar->pridajZlato((int)round(p->Getcena()/2));
-						std::string info = "Predmet " + p->Getmeno() + " bol predany!";
+						std::string info = "You sold " + p->Getmeno() + ".";
 						delete p;
 						zobrazPopup(new PopupOkno(info));
 

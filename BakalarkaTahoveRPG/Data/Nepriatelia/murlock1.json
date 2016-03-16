@@ -31,7 +31,7 @@
     },
     "2": {
       "typ": "AkciaDmg",
-      "meno": "Poskriabanie",
+      "meno": "Scratch",
       "obrazok": "attack",
       "rychlostCastenia": 2000,
       "cooldown": 500,
@@ -43,7 +43,7 @@
     },
     "3": {
       "typ": "AkciaLiecenie",
-      "meno": "Slabe liecenie",
+      "meno": "Small Healing",
       "obrazok": "attack",
       "rychlostCastenia": 4000,
       "cooldown": 1000,
@@ -56,8 +56,8 @@
   },
 
   "questDrop": {
-    "Kvetinky pre bylinkarku.": {
-      "meno": "Kvet",
+    "Herbs for herbalist.": {
+      "meno": "Herb",
       "obrazok": "kvet",
       "typ": 13,
       "cena": 10,

@@ -2,7 +2,7 @@
   "polozky": {
     "1": {
       "typTriedy": "elixir",
-      "meno": "Maly Hp elixir",
+      "meno": "Small health potion",
       "obrazok": "elixir",
       "typ": 12,
       "cena": 15,
@@ -28,7 +28,7 @@
     },
     "2": {
       "typTriedy": "zbran",
-      "meno": "Maly mec",
+      "meno": "Small sword",
       "obrazok": "1",
       "typ": 9,
       "cena": 100,
@@ -53,7 +53,7 @@
     },
     "3": {
       "typTriedy": "oblecenie",
-      "meno": "Brnenie",
+      "meno": "Armor",
       "obrazok": "ch1",
       "typ": 3,
       "cena": 50,

@@ -27,7 +27,7 @@ void QuestManager::pridajQuest(Quest* quest) {
 	if (!maQuest(quest->Getnazov())) {
 		nedokonceneQuesty->push_front(quest);
 		quest->setStav(StavQuestu::ROZROBENY);
-		Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(new PopupOkno("Ziskal si novy quest " + quest->Getnazov()));
+		Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(new PopupOkno("You have got a new quest: " + quest->Getnazov()));
 	}
 }
 
@@ -152,4 +152,21 @@ Quest* QuestManager::GetNacitanyQuest(string paNazov){
 		if (nacitaneQuesty->at(i)->Getnazov() == paNazov) return nacitaneQuesty->at(i);
 	}
 	return nullptr;
+}
+
+void QuestManager::pridajDoNedokoncenych(Quest* paQuest) {
+	if (GetNacitanyQuest(paQuest->Getnazov()) == nullptr) {
+		nacitaneQuesty->push_back(paQuest);
+	}
+
+	nedokonceneQuesty->push_back(paQuest);
+
+}
+
+void QuestManager::pridajDoDokoncenych(Quest* paQuest) {
+	if (GetNacitanyQuest(paQuest->Getnazov()) == nullptr) {
+		nacitaneQuesty->push_back(paQuest);
+	}
+
+	dokonceneQuesty->push_back(paQuest);
 }

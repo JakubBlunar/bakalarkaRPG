@@ -1,5 +1,5 @@
 {
-  "meno": "Lepkavy sliz",
+  "meno": "Sticky slime",
   "obrazok": "slime",
   "levelOd": 1,
   "levelDo": 3,
@@ -19,7 +19,7 @@
   "akcie": {
     "1": {
       "typ": "AkciaDmg",
-      "meno": "Poleptanie kyselinov",
+      "meno": "Accidic touch",
       "obrazok": "attack",
       "rychlostCastenia": 2000,
       "cooldown": 500,
@@ -31,7 +31,7 @@
     },
     "2": {
       "typ": "AkciaPridanieEfektu",
-      "meno": "Prsknutie do oci",
+      "meno": "Aciddic spittle",
       "obrazok": "attack",
       "rychlostCastenia": 2000,
       "cooldown": 10000,

@@ -2,7 +2,7 @@
   "polozky": {
     "0": {
       "typ": "normalVolba",
-      "text": "Ahoj udatny bojovnik.",
+      "text": "Hi brave warrior.",
       "volby": {
         "1": {
           "kam": 1,
@@ -11,43 +11,31 @@
         },
         "2": {
           "kam": 2,
-          "text": "Ahoj",
+          "text": "Hi. Do you have something for sale ?",
           "typ": ""
         }
       }
     },
     "1": {
       "typ": "normalVolba",
-      "text": "Nechcem sa s tebou rozpravat!",
+      "text": "I don't want to speak to you!",
       "volby": {
         "1": {
           "kam": -1,
-          "text": "Dobre :(",
+          "text": "Okay :(",
           "typ": ""
         }
       }
     },
     "2": {
       "typ": "normalVolba",
-      "text": "Ponukam ti pekne veci.",
-      "volby": {
-        "1": {
-          "kam": 3,
-          "text": "Ukaz mi co predavas",
-          "typ": "obchod",
-          "aky": "obchod_elixiry"
-        }
-
-      }
-    },
-    "3": {
-      "typ": "normalVolba",
-      "text": "Dakujem tak sa maj.",
+      "text": "Yes i have some items here. Take a look.",
       "volby": {
         "1": {
           "kam": -1,
-          "text": "Ahoj!",
-          "typ": ""
+          "text": "Show me",
+          "typ": "obchod",
+          "aky": "obchod_elixiry"
         }
 
       }

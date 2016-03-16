@@ -120,7 +120,7 @@ void StavVolbaZamerania::update(double delta) {
 				}
 
 				Hrac* hrac = new Hrac(zameranie);
-				hrac->Getstatistika()->vlozAkciu(new AkciaPoskodenieZbranou("Utok", "Bezny utok nasadenou zbranou", hrac->Getstatistika()));
+				hrac->Getstatistika()->vlozAkciu(new AkciaPoskodenieZbranou("Attack", "Attack with equipped weapon.", hrac->Getstatistika()));
 				hra->SetHrac(hrac);
 
 				Loader* loader = Loader::Instance();

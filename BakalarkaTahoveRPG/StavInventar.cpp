@@ -53,12 +53,12 @@ void StavInventar::render() {
 	int startY = 70;
 	
 
-	sf::Text text("Inventar", *font, 45U);
+	sf::Text text("Inventory", *font, 45U);
 	text.setPosition(sf::Vector2f(10.f, 10.f));
 	okno->draw(text);
 
 
-	text.setString("Pocet Zlata:  " + std::to_string(inventar->Getzlato()));
+	text.setString("Gold: " + std::to_string(inventar->Getzlato()));
 	text.setPosition(500, 30);
 	text.setColor(sf::Color::Yellow);
 	text.setCharacterSize(20);
@@ -95,14 +95,14 @@ void StavInventar::render() {
 		vykresliOknoPredmetu(inventar->dajPredmetNaIndexe(oznacene), startX + (oznacene%nasirku) * 55 + 48, startY + (oznacene / nasirku) * 55 + 48, okno, true);
 	}
 
-	text.setString("Enter - pouzi oznaceny predmet\nX - vyhod predmet");
+	text.setString("Enter - use selected item\nX - drop selected item");
 	text.setPosition(20.f, okno->getSize().y - 55.f);
 	text.setColor(sf::Color::Yellow);
 	text.setCharacterSize(20);
 	okno->draw(text);
 
 	Stav::render();
-	//std::cout << oznacene << std::endl;
+
 }
 
 
@@ -226,7 +226,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	okno->draw(text);
 
 
-	text.setString("Potrebna uroven: " +std::to_string( predmet->Geturoven()));
+	text.setString("Level needed: " +std::to_string( predmet->Geturoven()));
 	text.setPosition(sf::Vector2f(posX + 5.f, posY + 35.f));
 	okno->draw(text);
 
@@ -239,10 +239,10 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 		std::string info = elixir->dajInfo();
 
 		if (predaj) {
-			info += "\n\nCena: " + std::to_string((int)round(elixir->Getcena() / 2));
+			info += "\n\nValue: " + std::to_string((int)round(elixir->Getcena() / 2));
 		}
 		else {
-			info += "\n\nCena: " + std::to_string(elixir->Getcena());
+			info += "\n\nValue: " + std::to_string(elixir->Getcena());
 		}
 
 		text.setPosition(sf::Vector2f(posX + 5.f, posY + 48.f));
@@ -264,17 +264,17 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 		{
 			Zbran* pom = (Zbran*)predmet;
 			if (pom->Gettyp() != 11) {
-				info += "DMG: ";
+				info += "Damage: ";
 				info += std::to_string(pom->Getminposkodenie()) + " - ";
 				info += std::to_string(pom->Getmaxposkodenie());
 				info += "\n";
-				info += "Rychlost utoku: " + std::to_string(pom->GetrychlostUtoku()) + " ms\n";
+				info += "Attack speed: " + std::to_string(pom->GetrychlostUtoku()) + " ms\n";
 			}
 		}
 
 
 		if (pouzitelny->Getarmor() != 0) {
-			info += "Obrana: ";
+			info += "Armor: ";
 			info += std::to_string(pouzitelny->Getarmor());
 			info += "\n";
 		}
@@ -292,25 +292,25 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 		}
 
 		if (pouzitelny->Getsila() != 0) {
-			info += "Sila: ";
+			info += "Strenght: ";
 			info += std::to_string(pouzitelny->Getsila());
 			info += "\n";
 		}
 
 		if (pouzitelny->Getrychlost() != 0) {
-			info += "Rychlost: ";
+			info += "Speed: ";
 			info += std::to_string(pouzitelny->Getrychlost());
 			info += "\n";
 		}
 
 		if (pouzitelny->Getinteligencia() != 0) {
-			info += "Intelekt: ";
+			info += "Intellect: ";
 			info += std::to_string(pouzitelny->Getinteligencia());
 			info += "\n";
 		}
 
 		if (pouzitelny->GetarmorMult() != 0) {
-			info += "Obrana: ";
+			info += "Armor: ";
 			info += std::to_string((int)round(pouzitelny->GetarmorMult() * 100));
 			info += " %\n";
 		}
@@ -328,28 +328,28 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 		}
 
 		if (pouzitelny->GetsilaMult() != 0) {
-			info += "Sila: ";
+			info += "Strenght: ";
 			info += std::to_string((int)round(pouzitelny->GetsilaMult() * 100));
 			info += " %\n";
 		}
 
 		if (pouzitelny->GetrychlostMult() != 0) {
-			info += "Rychlost: ";
+			info += "Speed: ";
 			info += std::to_string((int)round(pouzitelny->GetrychlostMult() * 100));
 			info += " %\n";
 		}
 
 		if (pouzitelny->GetinteligenciaMult() != 0) {
-			info += "Intelekt: ";
+			info += "Intellect: ";
 			info += std::to_string((int)round(pouzitelny->GetinteligenciaMult() * 100));
 			info += " %\n";
 		}
 
 		if (predaj) {
-			info += "\n\nCena: " + std::to_string((int)round(pouzitelny->Getcena() / 2));
+			info += "\n\nValue: " + std::to_string((int)round(pouzitelny->Getcena() / 2));
 		}
 		else {
-			info += "\n\nCena: " + std::to_string(pouzitelny->Getcena());
+			info += "\n\nValue: " + std::to_string(pouzitelny->Getcena());
 		}
 
 		text.setPosition(sf::Vector2f(posX + 5.f, posY + 48.f));

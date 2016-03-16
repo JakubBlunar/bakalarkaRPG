@@ -1,6 +1,8 @@
 #pragma once
 #include "Stav.h"
 
+class Tlacidlo;
+
 class StavPauza : public Stav
 {
 
@@ -14,6 +16,6 @@ public:
 	void update(double delta);
 
 private:
-	std::vector<std::string> moznosti;
+	std::vector<Tlacidlo*> tlacidla;
 	signed int oznacene;
 };

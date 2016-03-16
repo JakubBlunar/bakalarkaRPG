@@ -11,7 +11,7 @@ class Inventar
 {
 
 public:
-	Inventar();
+	Inventar(int kapacita = 36);
 	virtual ~Inventar();
 
 	int Getzlato();

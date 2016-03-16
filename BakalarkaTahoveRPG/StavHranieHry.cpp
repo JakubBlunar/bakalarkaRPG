@@ -50,7 +50,7 @@ void StavHranieHry::render() {
 	okno->draw(info);
 
 	sf::Text text(" ", *font, 20U);
-	text.setString("Pauza:Esc   Inventar:I   QuestLog:O   HracInfo:C   Pohyb:Sipky   Komunikacia/Loot:E/Enter");
+	text.setString("Pause:Esc   Inventory:I   QuestLog:O   PlayerInfo:C   Movement:Arrows   Interaction:E/Enter");
 	text.setPosition(3.f, info.getGlobalBounds().top + 3.f);
 	okno->draw(text);
 

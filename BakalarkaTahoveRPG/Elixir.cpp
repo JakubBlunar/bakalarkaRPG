@@ -27,11 +27,11 @@ std::string Elixir::dajInfo() {
 	std::string info ="";
 	//hp
 	if (stat == "hp") {
-		info += "Body zdravia";
+		info += "Health";
 	}
 	//hpMax
 	if (stat == "hpMax") {
-		info += "Max Hp";
+		info += "Max Health";
 	}
 
 	//mp
@@ -41,27 +41,27 @@ std::string Elixir::dajInfo() {
 
 	//mpMax
 	if (stat == "mpMax") {
-		info += "Max Mp";
+		info += "Max Mana";
 	}
 
 	//sila
 	if (stat == "sila") {
-		info += "Sila";
+		info += "Strenght";
 	}
 
 	//intel
 	if (stat == "intel") {
-		info += "Intelekt";
+		info += "Intellect";
 	}
 
 	//rychlost
 	if (stat == "rychlost") {
-		info += "Rychlost";
+		info += "Speed";
 	}
 
 	//obrana
 	if (stat == "obrana") {
-		info += "Obrana";
+		info += "Armor";
 	}
 	
 	if (oKolko >= 0) {

@@ -33,6 +33,7 @@
 #include "EfektUpravStat.h"
 #include "AkciaPridanieEfektu.h"
 #include "AkciaLiecenie.h"
+#include "AkciaPoskodenieZbranou.h"
 
 #include "Elixir.h"
 #include "Pouzitelny.h"
@@ -825,6 +826,9 @@ Quest* Loader::nacitajQuest(string paMeno) {
 
 
 Zameranie* Loader::nacitajZameranie(string paMeno) {
+
+	Json::Features::all();
+
 	Zameranie* zameranie;
 
 	string cestaKuZameraniam = "./Data/Zameranie/";
@@ -915,7 +919,7 @@ Zameranie* Loader::nacitajZameranie(string paMeno) {
 
 }
 
-void Loader::save() {
+bool Loader::save() {
 
 	Hrac* hrac = hra->GetHrac();
 	QuestManager* qm = hrac->Getmanazerquestov();
@@ -923,8 +927,7 @@ void Loader::save() {
 	Statistika* stat = hrac->Getstatistika();
 
 	Json::Value root;
-	
-	root["uroven"] = stat->dajUroven();
+
 	root["skusenosti"] = stat->Getskusenosti();
 	root["zameranie"] = hrac->GetZameranie()->Getnazov();
 	root["mapa"]["subor"] = hrac->getMapa()->Getmeno();
@@ -932,7 +935,9 @@ void Loader::save() {
 	root["mapa"]["posY"] = hrac->GetpolickoY();
 	root["mapa"]["orientacia"] = hrac->GetSmerPohladu();
 
+
 	root["inventar"]["zlato"] = inv->Getzlato();
+	root["inventar"]["kapacita"] = inv->Getkapacita();
 	Json::Value predmety;
 	
 	for (int i = 0; i < inv->pocetPredmetov(); i++) {
@@ -1083,8 +1088,32 @@ void Loader::save() {
 	deque < Quest*>* nedokonceneQuesty = qm->Getnedokoncenequesty();
 	for (unsigned int i = 0; i < nedokonceneQuesty->size(); i++) {
 		Quest* q = nedokonceneQuesty->at(i);
+		vector<Poziadavka*>* poziadavky = q->Getpoziadavky();
+
 		Json::Value jQuest;
-		jQuest["subor"] = q->Getnazov();
+		jQuest["subor"] = q->Getnazovsuboru();
+
+		Json::Value jPoziadavky;
+
+		for (unsigned int i = 0; i < poziadavky->size(); i++) {
+			Poziadavka* p = poziadavky->at(i);
+			if (dynamic_cast<PoziadavkaZabi*>(p) != NULL) {
+				PoziadavkaZabi* pz = (PoziadavkaZabi*)p;
+				Json::Value jPoziadavka;
+				jPoziadavka["typ"] = "kill";
+				jPoziadavka["koho"] = pz->Getkohozabit();
+				jPoziadavka["aktualnyPocet"] = pz->Getaktualnypocetzabitych();
+				jPoziadavky.append(jPoziadavka);
+			}
+			else if (dynamic_cast<PoziadavkaLoot*>(p) != NULL) {
+				// netereba niè , po nacitani sa predmety daju do inventara a tato požiadavka sa kontroluje z inventara
+			}
+			
+
+		}
+
+		jQuest["poziadavky"] = jPoziadavky;
+
 		jNedokoncene.append(jQuest);
 	}
 	root["nedokonceneQuesty"] = jNedokoncene;
@@ -1109,10 +1138,10 @@ void Loader::save() {
 	subor << styledWriter.write(root);
 
 	subor.close();
-
+	return true;
 }
 
-void Loader::load() {
+void Loader::load(){
 
 	Json::Value save;
 	Json::Reader reader;
@@ -1122,10 +1151,108 @@ void Loader::load() {
 	if (!parsingSuccessful)
 	{
 		cout << "chyba pri parsovani savu\n";
+		throw 1;
 	}
 	else {
-		Json::StyledWriter styledWriter;
-		cout << styledWriter.write(save);
+
+		int hracSkusenosti = save["skusenosti"].asInt();
+		string zameranie = save["zameranie"].asString();
+
+		Hrac* hrac = new Hrac(nacitajZameranie(zameranie));
+
+		hrac->Getstatistika()->vlozAkciu(new AkciaPoskodenieZbranou("Attack", "Attack with equipped weapon.", hrac->Getstatistika()));
+		hra->SetHrac(hrac);
+		hrac->pridajSkusenosti(hracSkusenosti, false);
+		
+
+		string mapa = save["mapa"]["subor"].asString();
+		int posX = save["mapa"]["posX"].asInt();
+		int posY = save["mapa"]["posY"].asInt();
+		int orientacia = save["mapa"]["orientacia"].asInt();
+		nacitajMapu(mapa, posX, posY, orientacia);
+		
+		Inventar* inv = hrac->Getinventar();
+		inv->Setzlato(save["inventar"]["zlato"].asInt());
+		inv->Setkapacita(save["inventar"]["kapacita"].asInt());
+
+		Json::Value oblecene(Json::arrayValue);
+		oblecene = save["oblecene"];
+		if (!oblecene.isNull()) {
+			for (unsigned int i = 0; i < oblecene.size(); i++) {
+				Predmet* p = parsujPredmet(oblecene[i]);
+				inv->pridajPredmet(p);
+				p->pouzi(hrac);
+			}
+				
+		}
+
+
+		Json::Value predmety(Json::arrayValue);
+		predmety = save["inventar"]["predmety"];
+		if (!predmety.isNull()) {
+			for (unsigned int i = 0; i < predmety.size(); i++) {
+				Predmet* p = parsujPredmet(predmety[i]);
+				inv->pridajPredmet(p);
+			}
+
+		}
+
+		QuestManager* mng = hrac->Getmanazerquestov();
+
+		Json::Value jDokonceneQuesty(Json::arrayValue);
+		jDokonceneQuesty = save["dokonceneQuesty"];
+		if (!jDokonceneQuesty.isNull()) {
+			for (unsigned int i = 0; i < jDokonceneQuesty.size(); i++) {
+				Quest* q = nacitajQuest(jDokonceneQuesty[i]["subor"].asString());
+				q->setStav(StavQuestu::DOKONCENY);
+				mng->pridajDoDokoncenych(q);
+			}
+
+		}
+
+
+		Json::Value jNedokonceneQuesty(Json::arrayValue);
+		jNedokonceneQuesty = save["nedokonceneQuesty"];
+		if (!jNedokonceneQuesty.isNull()) {
+			for (unsigned int i = 0; i < jNedokonceneQuesty.size(); i++) {
+				Quest* q = nacitajQuest(jNedokonceneQuesty[i]["subor"].asString());
+				vector<Poziadavka*>* poziadavky = q->Getpoziadavky();
+
+				Json::Value jPoziadavky(Json::arrayValue);
+				jPoziadavky = jNedokonceneQuesty[i]["poziadavky"];
+				if (!jPoziadavky.isNull()) {
+					for (unsigned int i = 0; i < jPoziadavky.size(); i++) {
+						Json::Value jPoziadavka(Json::objectValue);
+						jPoziadavka = jPoziadavky[i];
+						string typ = jPoziadavka["typ"].asString();
+						
+
+						if (typ == "kill") {
+							// pridanie poctu zabiti
+							int aktPocet = jPoziadavka["aktualnyPocet"].asInt();
+							
+							for (int i = 0; i < aktPocet; i++) {
+								for (unsigned int j = 0; j < poziadavky->size(); j++) {
+									poziadavky->at(j)->akcia(jPoziadavka["koho"].asString());
+								}
+
+							}
+							
+						}// iff kill
+
+
+					}
+				}
+
+				q->kontrola();
+				mng->pridajDoNedokoncenych(q);
+			}
+
+		}
+
+
+		hra->zmenStavRozhrania("hranieHry");
+
 	}
 
 }

@@ -79,13 +79,13 @@ std::string VolbaUpravaQuestu::Gettext() {
 			}
 			break;
 		default:
-			return "Neznamy";
+			return "Undefined";
 			break;
 		}
 		
 
 	}
-	return "Neznamy";
+	return "Undefined";
 }
 
 void VolbaUpravaQuestu::vlozText(StavQuestu paStav, std::string paText) {

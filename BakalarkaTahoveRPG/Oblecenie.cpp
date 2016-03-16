@@ -53,7 +53,7 @@ void Oblecenie::pouzi(Hrac* hrac) {
 			hrac->Getinventar()->pridajPredmet(this);
 		}
 		else {
-			Loader::Instance()->Gethra()->dajStav("")->zobrazPopup(new PopupOkno("Nedá sa vyzliec! inventar je plný !"));
+			Loader::Instance()->Gethra()->dajStav("")->zobrazPopup(new PopupOkno("Inventory is full!"));
 		}
 	}
 }

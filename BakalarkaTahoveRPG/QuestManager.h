@@ -37,6 +37,9 @@ public:
 
 	Quest* Getzaciatocnyquestnpc(string menoNpc);
 	Quest* Getkonciaciquestnpc(string menoNpc);
+
+	void pridajDoNedokoncenych(Quest* paQuest);
+	void pridajDoDokoncenych(Quest* paQuest);
 private:
 	deque<Quest*>* nacitaneQuesty;
 	

@@ -68,7 +68,7 @@ void StavInfoHraca::onExit() {
 void StavInfoHraca::render() {
 		
 
-		sf::Text text("Hrac info:",*font, 45U);
+		sf::Text text("Player info:",*font, 45U);
 		text.setPosition(sf::Vector2f(10.f, 10.f));
 		okno->draw(text);
 		
@@ -86,7 +86,7 @@ void StavInfoHraca::render() {
 		int xpTeraz = hrac->Getstatistika()->Getskusenosti();
 		int xpNaDalsi = hrac->GetZameranie()->xpNaLevel(lvl+1);
 		text.setCharacterSize(15U);
-		text.setString("Skusenosti: " + std::to_string(xpTeraz) + " / " + std::to_string(xpNaDalsi));
+		text.setString("Experience: " + std::to_string(xpTeraz) + " / " + std::to_string(xpNaDalsi));
 		text.setPosition(sf::Vector2f(15.f, 135.f));
 		okno->draw(text);
 
@@ -104,32 +104,32 @@ void StavInfoHraca::render() {
 		okno->draw(text);
 
 		int stat = hrac->Getstatistika()->Getsila();
-		text.setString("Sila: " + std::to_string(stat));
+		text.setString("Strength: " + std::to_string(stat));
 		text.setPosition(sf::Vector2f(15.f, 187.f));
 		okno->draw(text);
 
 		stat = hrac->Getstatistika()->Getintelekt();
-		text.setString("Intelekt: " + std::to_string(stat));
+		text.setString("Intellect: " + std::to_string(stat));
 		text.setPosition(sf::Vector2f(15.f, 204.f));
 		okno->draw(text);
 
 		stat = hrac->Getstatistika()->Getrychlost();
-		text.setString("Rychlost: " + std::to_string(stat));
+		text.setString("Speed: " + std::to_string(stat));
 		text.setPosition(sf::Vector2f(15.f, 221.f));
 		okno->draw(text);
 		
 		stat = hrac->Getstatistika()->Getobrana();
-		text.setString("Obrana: " + std::to_string(stat));
+		text.setString("Armor: " + std::to_string(stat));
 		text.setPosition(sf::Vector2f(15.f, 238.f));
 		okno->draw(text);
 
 		int pMin = hrac->Getstatistika()->Getminposkodenie();
 		int pMax = hrac->Getstatistika()->Getmaxposkodenie();
-		text.setString("Poskodenie: " + std::to_string(pMin) + " / " + std::to_string(pMax));
+		text.setString("Damage: " + std::to_string(pMin) + " / " + std::to_string(pMax));
 		text.setPosition(sf::Vector2f(15.f, 255.f));
 		okno->draw(text);
 
-		text.setString("Rychlost utoku: 1x za " + floattostring(hrac->Getstatistika()->Getrychlostutoku()/1000.f)+" s");
+		text.setString("Attack speed: 1x per " + floattostring(hrac->Getstatistika()->Getrychlostutoku()/1000.f)+" s");
 		text.setPosition(sf::Vector2f(15.f, 272.f));
 		okno->draw(text);
 
@@ -311,7 +311,7 @@ void StavInfoHraca::render() {
 		int nasirku = 9;
 		int riadok = 0;
 		
-		text.setString("Zrucnosti:");
+		text.setString("Spells:");
 		text.setCharacterSize(30);
 
 		text.setPosition(sf::Vector2f(kuzlaStartX, kuzlaStartY - 40));
@@ -363,33 +363,33 @@ void StavInfoHraca::render() {
 
 				if (dynamic_cast<AkciaDmg*>(akcia) != NULL) {
 					AkciaDmg* dmgakcia = (AkciaDmg*)akcia;
-					info += "Poskodenie:" + std::to_string(dmgakcia->minPoskodenie(hrac->Getstatistika())) + " - " + std::to_string(dmgakcia->maxPoskodenie(hrac->Getstatistika())) + "\n";
+					info += "Damage: " + std::to_string(dmgakcia->minPoskodenie(hrac->Getstatistika())) + " - " + std::to_string(dmgakcia->maxPoskodenie(hrac->Getstatistika())) + "\n";
 				}
 
 				if (dynamic_cast<AkciaPoskodenieZbranou*>(akcia) != NULL) {
 					AkciaPoskodenieZbranou* dmgakcia = (AkciaPoskodenieZbranou*)akcia;
-					info += "Poskodenie:" + std::to_string(dmgakcia->minPoskodenie()) + " - " + std::to_string(dmgakcia->maxPoskodenie()) + "\n";
+					info += "Damage: " + std::to_string(dmgakcia->minPoskodenie()) + " - " + std::to_string(dmgakcia->maxPoskodenie()) + "\n";
 				}
 
 				if (dynamic_cast<AkciaLiecenie*>(akcia) != NULL) {
 					AkciaLiecenie* liecenieAkcia = (AkciaLiecenie*)akcia;
-					info += "Liecenie:" + std::to_string(liecenieAkcia->minLiecenie(hrac->Getstatistika())) + " - " + std::to_string(liecenieAkcia->maxLiecenie(hrac->Getstatistika())) + "\n";
+					info += "Healing: " + std::to_string(liecenieAkcia->minLiecenie(hrac->Getstatistika())) + " - " + std::to_string(liecenieAkcia->maxLiecenie(hrac->Getstatistika())) + "\n";
 				}
 
 				if (dynamic_cast<AkciaPridanieEfektu*>(akcia) != NULL) {
 					AkciaPridanieEfektu* efektAkcia = (AkciaPridanieEfektu*)akcia;
-					info += "Trvanie: " + floattostring(akcia->Gettrvanie()/1000.f) + " s\n";
+					info += "Last: " + floattostring(akcia->Gettrvanie()/1000.f) + " s\n";
 				}
 
 				if (akcia->Getcenamany() != 0) {
-					info += "Potrebne mnozstvo many: " + std::to_string(hracoveAkcie->at(i)->Getcenamany())+ "\n";
+					info += "Mana needed: " + std::to_string(hracoveAkcie->at(i)->Getcenamany())+ "\n";
 				}
 
 				if (akcia->GetcasCastenia() != 0) {
-					info += "Cas castenia:" + floattostring(akcia->GetcasCastenia() / 1000.f) + "s\n";
+					info += "Casting time: " + floattostring(akcia->GetcasCastenia() / 1000.f) + "s\n";
 				}
 				if (akcia->Getcooldown() != 0) {
-					info += "Cooldown:" + floattostring(akcia->Getcooldown() / 1000.f) + " s\n";
+					info += "Cooldown: " + floattostring(akcia->Getcooldown() / 1000.f) + " s\n";
 				}
 
 				text.setCharacterSize(13);
@@ -520,7 +520,7 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 	okno->draw(text);
 
 
-	text.setString("Potrebna uroven: " + std::to_string(predmet->Geturoven()));
+	text.setString("Level needed: " + std::to_string(predmet->Geturoven()));
 	text.setPosition(sf::Vector2f(posX + 5.f, posY + 35.f));
 	okno->draw(text);
 
@@ -533,17 +533,17 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 		{
 			Zbran* pom = (Zbran*)predmet;
 			if (pom->Gettyp() != 11) {
-				bonusy += "DMG: ";
+				bonusy += "Damage: ";
 				bonusy += std::to_string(pom->Getminposkodenie()) + " - ";
 				bonusy += std::to_string(pom->Getmaxposkodenie());
 				bonusy += "\n";
-				bonusy += "Rychlost utoku: " + std::to_string(pom->GetrychlostUtoku()) + " ms\n";
+				bonusy += "Attack speed: " + std::to_string(pom->GetrychlostUtoku()) + " ms\n";
 			}
 		}
 
 
 		if (pouzitelny->Getarmor() != 0) {
-			bonusy += "Obrana: ";
+			bonusy += "Armor: ";
 			bonusy += std::to_string(pouzitelny->Getarmor());
 			bonusy += "\n";
 		}
@@ -561,25 +561,25 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 		}
 
 		if (pouzitelny->Getsila() != 0) {
-			bonusy += "Sila: ";
+			bonusy += "Strength: ";
 			bonusy += std::to_string(pouzitelny->Getsila());
 			bonusy += "\n";
 		}
 
 		if (pouzitelny->Getrychlost() != 0) {
-			bonusy += "Rychlost: ";
+			bonusy += "Speed: ";
 			bonusy += std::to_string(pouzitelny->Getrychlost());
 			bonusy += "\n";
 		}
 
 		if (pouzitelny->Getinteligencia() != 0) {
-			bonusy += "Intelekt: ";
+			bonusy += "Intellect: ";
 			bonusy += std::to_string(pouzitelny->Getinteligencia());
 			bonusy += "\n";
 		}
 
 		if (pouzitelny->GetarmorMult() != 0) {
-			bonusy += "Obrana: ";
+			bonusy += "Armor: ";
 			bonusy += std::to_string((int)round(pouzitelny->GetarmorMult() * 100));
 			bonusy += " %\n";
 		}
@@ -597,19 +597,19 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 		}
 
 		if (pouzitelny->GetsilaMult() != 0) {
-			bonusy += "Sila: ";
+			bonusy += "Strength: ";
 			bonusy += std::to_string((int)round(pouzitelny->GetsilaMult() * 100));
 			bonusy += " %\n";
 		}
 
 		if (pouzitelny->GetrychlostMult() != 0) {
-			bonusy += "Rychlost: ";
+			bonusy += "Speed: ";
 			bonusy += std::to_string((int)round(pouzitelny->GetrychlostMult() * 100));
 			bonusy += " %\n";
 		}
 
 		if (pouzitelny->GetinteligenciaMult() != 0) {
-			bonusy += "Intelekt: ";
+			bonusy += "Intellect: ";
 			bonusy += std::to_string((int)round(pouzitelny->GetinteligenciaMult() * 100));
 			bonusy += " %\n";
 		}

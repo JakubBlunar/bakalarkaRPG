@@ -1,15 +1,15 @@
 {
-  "nazov": "Kvetinky pre bylinkarku.",
-  "popis": "Mulroci ukradli bylinkakre kvetiny.\nPrines jej ich spet",
+  "nazov": "Herbs for herbalist.",
+  "popis": "Murlocks took all herbalist ingrediences. Go and find some for her.\n",
   "xp": 0,
   "zlato": 150,
   "nasledujuci": "",
   "startNpc": "",
-  "endNpc": "Bylinkarka",
+  "endNpc": "Herbalist",
   "predmety": [
     {
       "typTriedy": "elixir",
-      "meno": "Maly Hp elixir",
+      "meno": "Small health potion",
       "obrazok": "elixir",
       "typ": 12,
       "cena": 20,
@@ -36,7 +36,7 @@
   "poziadavky": [
     {
       "typ": "loot",
-      "co": "Kvet",
+      "co": "Herb",
       "kolko": 1
     }
 
@@ -44,34 +44,34 @@
 
   "volbaKuQuestu": {
     "volbaTexty": [
-      "Nemas pre mna nejaky quest?",
-      "Jakub mi hovoril ze zhanas kvetinky... ",
-      "Nazbieral som už koneène všetky kvety.",
+      "",
+      "Jacob told me that you need some ingrediences. ",
+      "I have everything you need now.",
       ""
     ]
   },
 
   "polozkaTexty": [
-    "Ahoj pocestný.\nMurloci mi zobrali vsetky zasoby kvetin.\nMohol by si mi nejaké pohladat?\nStedro sa ti odmením.",
-    "Ano vidim ze sa snazis.\nVezmem si ich ale az ked budes mat vsetkych 5.\nNeboj sa aj odmenu potom dostanes.",
-    "Dakujem ti tu je tvoja odmena.\n",
+    "",
+    "Yes brave warrior. Murlock stole all my ingrediences. Do you help me find some ?",
+    "Thank you very much. Here is potion from herbs that you have colected.\n",
     ""
   ],
 
   "volby": {
     "1": {
       "kam": -1,
-      "text": "Nie.",
+      "text": "(leave)",
       "typ": ""
     },
     "2": {
       "kam": -1,
       "text": "",
       "volbaTexty": [
-        "Jasne rad to pre teba spravim.",
-        "Tak ja teda idem.",
-        "Dakujem (zobrat si odmenu)",
-        "Tak nic teda. Ahoj."
+        "",
+        "Yes, i am going now.",
+        "Thank you. (take reward)",
+        ""
       ],
       "typ": "upravaQuestu"
     }

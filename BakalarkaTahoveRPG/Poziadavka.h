@@ -13,6 +13,7 @@ class Poziadavka
 {
 public:
 	virtual void akcia(Nepriatel* nepriatel);
+	virtual void akcia(string menoNepriatela);
 	virtual void akcia(Predmet* predmet);
 	virtual bool jeSplnena() = 0;
 	virtual string Getpopis() = 0;
@@ -26,8 +27,12 @@ class PoziadavkaZabi
 public:
 	PoziadavkaZabi(std::string paKohoZabit, int paKolkokrat,string kde);
 	void akcia(Nepriatel* paNepriatel);
+	void akcia(string menoNepriatela);
 	bool jeSplnena();
 	string Getpopis();
+	string Getkohozabit();
+	int Getaktualnypocetzabitych();
+	void Setpocetzabiti(int paPocet);
 private:
 	int kolkoZabit;
 	string kohoZabit;

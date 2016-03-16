@@ -37,7 +37,7 @@ std::string AkciaDmg::vykonajSa(Statistika* stat1, Statistika* stat2, sf::Time a
 	if (p >= stat2->Getsancanauhyb()*100) {
 		int konecnePoskodenie = (int)ceil(poskodenie*(1 - stat2->Getodolnostvociposkodeniu()));
 		stat2->Sethp(stat2->Gethp() - konecnePoskodenie);
-		return meno + "\nutoci s poskodenim " + std::to_string(konecnePoskodenie);
+		return meno + "\nattack dmg " + std::to_string(konecnePoskodenie);
 	}
 	else {
 		return meno + "\nmiss.";

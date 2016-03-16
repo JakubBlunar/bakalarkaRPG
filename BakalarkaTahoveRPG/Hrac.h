@@ -14,11 +14,11 @@ class QuestManager;
 
 enum SmerPohladu
 {
-	hore,
-	dole,
-	vlavo,
-	vpravo,
-	stoji
+	hore = 0,
+	dole = 1,
+	vlavo = 2,
+	vpravo = 3,
+	stoji = 4
 };
 
 class Hrac
@@ -63,7 +63,7 @@ public:
 	Inventar* Getinventar();
 	void vyhodPredmet(Predmet* predemet);
 
-	void pridajSkusenosti(int pocet);
+	void pridajSkusenosti(int pocet, bool oznamenie = true);
 	QuestManager* Getmanazerquestov();
 	
 	

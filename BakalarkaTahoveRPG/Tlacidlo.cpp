@@ -17,7 +17,6 @@ Tlacidlo::Tlacidlo(sf::Sprite* normalne, sf::Sprite* kliknute, std::string paTex
 void Tlacidlo::skontrolujKlik(sf::Vector2i mousePos) {
 	if (mousePos.x>pozicia.x && mousePos.x<(pozicia.x + velkost.x)) {
 		if (mousePos.y>pozicia.y && mousePos.y<(pozicia.y + velkost.y)) {
-			//std::cout << "Stlacene Tlacidlo" << text.getString().toAnsiString() << std::endl;
 			Setzakliknute(!zakliknute);
 		}
 	}

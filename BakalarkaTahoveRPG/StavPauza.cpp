@@ -1,11 +1,25 @@
 #include "StavPauza.h"
 #include "Loader.h"
 #include "Hra.h"
+#include "Tlacidlo.h"
+#include "PopupOkno.h"
 
 StavPauza::StavPauza(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
-	moznosti.push_back("Pokracovat");
-	moznosti.push_back("Ulozit");
-	moznosti.push_back("Koniec");
+	
+	sf::Texture texture;
+	texture.create(1000, 1000);
+
+	sf::Sprite* normalne = new sf::Sprite();
+	normalne->setTexture(texture);
+	normalne->setTextureRect(sf::IntRect(0, 0, 48, 48));
+	normalne->setColor(sf::Color(0, 0, 0, 255));
+
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Resume game", sf::Vector2f(10, 10), sf::Vector2f(500, 80), font, 75));
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Save game", sf::Vector2f(10, 100), sf::Vector2f(500, 80), font, 75));
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Exit game", sf::Vector2f(10, 190), sf::Vector2f(500, 80), font, 75));
+
+	stlacenaMys = true;
+	stlacenaKlavesa = true;
 
 	oznacene = 0;
 
@@ -14,13 +28,18 @@ StavPauza::StavPauza(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) 
 
 
 StavPauza::~StavPauza() {
-	moznosti.clear();
+	for each (Tlacidlo* tlacidlo in tlacidla)
+	{
+		delete tlacidlo;
+	}
 }
 
 
 
 void StavPauza::onEnter() {
 	Stav::onEnter();
+	stlacenaMys = true;
+	stlacenaKlavesa = true;
 }
 
 
@@ -30,9 +49,11 @@ void StavPauza::onExit() {
 
 
 void StavPauza::render() {
-	for (unsigned int i = 0; i < moznosti.size(); i++)
+	for (unsigned int i = 0; i < tlacidla.size(); i++)
 	{
-		sf::Text text(moznosti.at(i), *font, 75U);
+
+		okno->draw(*tlacidla.at(i)->Getsprite());
+		sf::Text text = tlacidla.at(i)->Gettext();
 
 		if (oznacene == i) {
 			text.setColor(sf::Color::Blue);
@@ -40,8 +61,6 @@ void StavPauza::render() {
 		else {
 			text.setColor(sf::Color::White);
 		}
-		text.setPosition(sf::Vector2f(sf::Vector2f(100.f, 100 + 75.f*i)));
-
 		okno->draw(text);
 	}
 
@@ -56,6 +75,42 @@ void StavPauza::update(double delta) {
 
 		if (stav == StavAkcia::NORMAL) {
 
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
+			{
+				sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+				for (unsigned int i = 0; i < tlacidla.size(); i++)
+				{
+					tlacidla[i]->skontrolujKlik(pozicia);
+					if (tlacidla[i]->Getzakliknute()) {
+						stlacenaMys = true;
+						
+						tlacidla[i]->Setzakliknute(false);
+						if (i == 0) {
+							hra->zmenStavRozhrania("hranieHry");
+						}
+
+						if (i == 1) {
+							if (Loader::Instance()->save()) {
+								Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Game has been saved!"));
+							}
+							else {
+								Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Error! Game has not been saved!"));
+							}
+						}
+
+						if (i == 2) {
+							okno->close();
+						}
+
+					}
+				}
+			}
+
+			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == true) {
+				stlacenaMys = false;
+			}
+
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
 				if (oznacene > 0) {
@@ -65,7 +120,7 @@ void StavPauza::update(double delta) {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
-				if (oznacene < (signed int)moznosti.size() - 1) {
+				if (oznacene < (signed int)tlacidla.size() - 1) {
 					oznacene++;
 				}
 			}
@@ -77,7 +132,12 @@ void StavPauza::update(double delta) {
 
 			if (oznacene == 1 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
-				Loader::Instance()->save();
+				if (Loader::Instance()->save()) {
+					Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Game has been saved!"));
+				}
+				else {
+					Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Error! Game has not been saved!"));
+				}
 			}
 
 

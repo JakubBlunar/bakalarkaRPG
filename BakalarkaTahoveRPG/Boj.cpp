@@ -115,8 +115,10 @@ void Boj::update() {
 		for (map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
 		{
 			if (it->second <= casovac.getElapsedTime()) {
-				hrac->Getstatistika()->zrusEfekt(it->first);
-				logBoja.push_front("Hrac: zrusenie efektu " + it->first->popis());
+				if (it != aktivneEfekty->end() || it->first != nullptr) {
+					hrac->Getstatistika()->zrusEfekt(it->first);
+				}
+				logBoja.push_front("Player: effect fade off\n" + it->first->popis());
 			}
 		}
 
@@ -126,8 +128,10 @@ void Boj::update() {
 		for (map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
 		{
 			if (it->second <= casovac.getElapsedTime()) {
-				npc->Getstatistika()->zrusEfekt(it->first);
-				logBoja.push_front("Npc: zrusenie efektu " + it->first->popis());
+				if (it != aktivneEfekty->end() || it->first != nullptr) {
+					npc->Getstatistika()->zrusEfekt(it->first);
+				}
+				logBoja.push_front("Npc: effect fade off\n" + it->first->popis());
 			}
 		}
 
@@ -151,7 +155,7 @@ void Boj::update() {
 
 		if (casovac.getElapsedTime().asMilliseconds() > hracCasVykonaniaAkcie && hracAkcia != nullptr) {
 			string vysledok = hracAkcia->vykonajSa(hrac->Getstatistika(), npc->Getstatistika(), casovac.getElapsedTime());
-			logBoja.push_front("Hrac: " + vysledok);
+			logBoja.push_front("Player: " + vysledok);
 			hracCooldowny.insert(pair<Akcia*, int>(hracAkcia, casovac.getElapsedTime().asMilliseconds() + hracAkcia->Getcooldown()));
 			hracAkcia = nullptr;
 		}
@@ -210,8 +214,8 @@ void Boj::vyhodnotenie() {
 			int ziskaneZlato = 2 * npc->Getstatistika()->dajUroven();
 			hrac->pridajSkusenosti(ziskaneXp);
 			hrac->Getinventar()->pridajZlato(ziskaneZlato);
-			string text = "Porazil si " + npc->Getmeno() + "\n";
-			text += "Ziskal si " + to_string(ziskaneXp) + " skusenosti a " + to_string(ziskaneZlato) + " zlata";
+			string text = "You succesfully defeat " + npc->Getmeno() + "\n";
+			text += "Reward: " + to_string(ziskaneXp) + " xp and " + to_string(ziskaneZlato) + " gold";
 			stavHranieHry->zobrazPopup(new PopupOkno(text));
 			QuestManager* qm = hrac->Getmanazerquestov();
 			qm->udalost(QuestEvent::ZABITIE_NPC, npc);
@@ -265,7 +269,7 @@ void Boj::vyhodnotenie() {
 			}
 
 			mapa->posunHracaNaPolicko(mapa->Gethrobsuradnice().x, mapa->Gethrobsuradnice().y, 0);
-			stavHranieHry->zobrazPopup(new PopupOkno("Upadol si do bezvedomia ! Zobudil si sa a zistil si ze si stratil všetky veci."));
+			stavHranieHry->zobrazPopup(new PopupOkno("You Lost! Your items has been dropped where you die."));
 		}
 
 		//zrusenie aktivnych bufov

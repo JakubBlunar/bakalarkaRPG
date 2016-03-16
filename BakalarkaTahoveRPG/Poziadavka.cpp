@@ -8,8 +8,9 @@
 #include "Inventar.h"
 
 void Poziadavka::akcia(Nepriatel* nepriatel){}
+void Poziadavka::akcia(string paMenoNepriatela) {}
 void Poziadavka::akcia(Predmet* nepriatel) {}
-void Poziadavka::dokoncenie(Hrac* paHrac) {};
+void Poziadavka::dokoncenie(Hrac* paHrac) {}
 
 PoziadavkaZabi::PoziadavkaZabi(std::string paKohoZabit, int paKolkokrat, string kde) {
 	this->kohoZabit = paKohoZabit;
@@ -30,6 +31,11 @@ void PoziadavkaZabi::akcia(Nepriatel* nepriatel) {
 	}
 }
 
+void PoziadavkaZabi::akcia(string paMenoNepriatela) {
+	if (paMenoNepriatela == kohoZabit) {
+			pocetZabiti++;
+	}
+}
 
 bool PoziadavkaZabi::jeSplnena() {
 	if (pocetZabiti == kolkoZabit) {
@@ -38,8 +44,20 @@ bool PoziadavkaZabi::jeSplnena() {
 	else return false;
 }
 
+string PoziadavkaZabi::Getkohozabit() {
+	return kohoZabit;
+}
+int PoziadavkaZabi::Getaktualnypocetzabitych() {
+	return pocetZabiti;
+}
+
+void PoziadavkaZabi::Setpocetzabiti(int paPocet) {
+	pocetZabiti = paPocet;
+}
+
+
 string PoziadavkaZabi::Getpopis() {
-	return "Progres: " + kohoZabit + " - " + std::to_string(pocetZabiti) + " z " + std::to_string(kolkoZabit);
+	return "Progres: " + kohoZabit + " - " + std::to_string(pocetZabiti) + " / " + std::to_string(kolkoZabit);
 }
 
 
@@ -66,7 +84,7 @@ bool PoziadavkaLoot::jeSplnena() {
 string PoziadavkaLoot::Getpopis() {
 	Inventar* inv = Loader::Instance()->Gethra()->GetHrac()->Getinventar();
 	int aktPocet = inv->pocetPredmetov(menoPredmetu);
-	return "Progres: " + menoPredmetu + " - " + std::to_string(aktPocet) + " z " + std::to_string(potrebneMnozstvo);	
+	return "Progres: " + menoPredmetu + " - " + std::to_string(aktPocet) + " / " + std::to_string(potrebneMnozstvo);	
 }
 
 void PoziadavkaLoot::dokoncenie(Hrac* paHrac) {

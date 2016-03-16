@@ -65,7 +65,7 @@ Akcia* Nepriatel::vyberAkciu(std::map<Akcia*,int>* cooldowny) {
 		}
 	}
 	else {
-		return new Akcia("Neznama akcia", "neznamy", 1000, 0, 0, "Neznamy spell", 0,AkciaTyp::MAGICKA);
+		return new Akcia("Unknown spell", "neznamy", 1000, 0, 0, "Unknown spell", 0,AkciaTyp::MAGICKA);
 	}
 
 	

@@ -205,7 +205,7 @@ void Zbran::pouzi(Hrac* hrac) {
 						oblecene->erase(i);
 					}
 					else {
-						Loader::Instance()->Gethra()->dajStav("")->zobrazPopup(new PopupOkno("Nedá sa vyzliec! inventar je plný !"));
+						Loader::Instance()->Gethra()->dajStav("")->zobrazPopup(new PopupOkno("Inventory is full!"));
 					}
 
 				}

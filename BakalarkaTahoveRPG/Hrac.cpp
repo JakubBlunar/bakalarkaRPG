@@ -54,7 +54,6 @@ Hrac::~Hrac() {
 	delete statistika;
 	delete zameranie;
 	delete manazerQuestov;
-	std::cout << "Hrac zmazany" << std::endl;
 }
 
 
@@ -262,7 +261,7 @@ Inventar* Hrac::Getinventar() {
 	return inventar;
 }
 
-void Hrac::pridajSkusenosti(int pocet) {
+void Hrac::pridajSkusenosti(int pocet, bool oznamenie) {
 	
 	int ostatok = pocet;
 
@@ -307,18 +306,18 @@ void Hrac::pridajSkusenosti(int pocet) {
 	if (lvlPred < statistika->dajUroven()) {
 		std::map<std::string, int> bonusy = zameranie->lvlUpBonusy(lvlPred);
 
-		std::string text = "Gratulujem! Postupil si na uroven " + std::to_string(statistika->dajUroven()) + "\n";
+		std::string text = "Congratulation! You have advanced to new level " + std::to_string(statistika->dajUroven()) + "\n";
 		text += "Max Hp = " + std::to_string(statistika->GethpMax()) + " ( +" + std::to_string(statistika->GethpMax() - bonusy.at("hpMax")) + " )\n";
 		text += "Max mana = " + std::to_string(statistika->GetmpMax()) + " ( +" + std::to_string(statistika->GetmpMax() - bonusy.at("mpMax")) + " )\n";
-		text += "Sila = " + std::to_string(statistika->Getsila()) + " ( +" + std::to_string(statistika->Getsila() - bonusy.at("sila")) + " )\n";
-		text += "Intelekt = " + std::to_string(statistika->Getintelekt()) + " ( +" + std::to_string(statistika->Getintelekt() - bonusy.at("intel")) + " )\n";
-		text += "Rychlost = " + std::to_string(statistika->Getrychlost()) + " ( +" + std::to_string(statistika->Getrychlost() - bonusy.at("rychlost")) + " )\n";
-		text += "Zdravie a mana boli doplnene!";
+		text += "Strenght = " + std::to_string(statistika->Getsila()) + " ( +" + std::to_string(statistika->Getsila() - bonusy.at("sila")) + " )\n";
+		text += "Intellect = " + std::to_string(statistika->Getintelekt()) + " ( +" + std::to_string(statistika->Getintelekt() - bonusy.at("intel")) + " )\n";
+		text += "Speed = " + std::to_string(statistika->Getrychlost()) + " ( +" + std::to_string(statistika->Getrychlost() - bonusy.at("rychlost")) + " )\n";
+		text += "Your health and mana has been restored!";
 
 		PopupOkno* pop = new PopupOkno(text);
 
 		if (statistika->Getakcie()->size() > pocetAkciiPred) {
-			pop->pridajStranku("Ziskal si nove kuzla! \n");
+			pop->pridajStranku("You have got a new spell! \n");
 			for (std::map<Akcia*, int>::iterator it = zameranie->Getspelly()->begin(); it != zameranie->Getspelly()->end(); ++it)
 			{
 				if (lvlPred < it->second && it->second <= statistika->dajUroven()) {
@@ -328,7 +327,12 @@ void Hrac::pridajSkusenosti(int pocet) {
 				}
 			}
 		}
-		Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(pop);
+		if (oznamenie) {
+			Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(pop);
+		}
+		else {
+			delete pop;
+		}
 	}
 	
 	

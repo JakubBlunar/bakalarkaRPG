@@ -1,11 +1,11 @@
 {
-  "nazov": "Nebezpecni murloci.",
-  "popis": "Murloci si zacali dovolovat do ludi.\nChod a ukaz im kto je tu panom",
+  "nazov": "Dangerous murlocks",
+  "popis": "There are murlocks nearby. hey are threatening people \nso somenone have to take care of them.",
   "xp": 15,
   "zlato": 50,
   "nasledujuci": "quest2",
-  "startNpc": "Jakub",
-  "endNpc": "Jakub",
+  "startNpc": "Jacob",
+  "endNpc": "Jacob",
   "poziadavky": [
     {
       "typ": "kill",
@@ -18,7 +18,7 @@
 
     {
       "typTriedy": "zbran",
-      "meno": "Maly mec",
+      "meno": "Small sword",
       "obrazok": "1",
       "typ": 9,
       "cena": 100,
@@ -46,34 +46,34 @@
 
   "volbaKuQuestu": {
     "volbaTexty": [
-      "Nemas pre mna nejaky quest?",
-      "Ohladom toho questu... ",
-      "Už som to konecne dokoncil! ",
+      "Don't you have some quest for me ?",
+      "I am working on that quest. ",
+      "I have finally finished it! ",
       ""
     ]
   },
 
   "polozkaTexty": [
-    "Ano mam jednu. Chod a zabi mi par priser. Dostanes... ",
-    "Ako vidím stale si nezabil dostatocné mnozstvo.",
-    "Vyborne splnil si zadanie ulohy.\nDostavas...",
+    "Yes, i have got one. There is a lot of murlocks here and they threat people \non they journey. ",
+    "As I see , there is still a lot of murlocks.\n Go and kill some more.",
+    "Thank you. You help us a lot. Here , I give you my old sword.\n I hope it will serve you well. ",
     "Dakujem už si pre mna spravil vela."
   ],
 
   "volby": {
     "1": {
       "kam": -1,
-      "text": "Nie!",
+      "text": "(leave)",
       "typ": ""
     },
     "2": {
       "kam": -1,
       "text": "",
       "volbaTexty": [
-        "Jasne rad to pre teba spravim.",
-        "Tak ja teda idem.",
-        "Dakujeem . ",
-        "Tak nic teda."
+        "Sure I would like to help you.",
+        "So i will go now.",
+        "Thank you. ",
+        ""
       ],
       "typ": "upravaQuestu"
     }

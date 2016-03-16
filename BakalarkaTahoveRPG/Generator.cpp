@@ -47,17 +47,16 @@ Predmet* Generator::nahodnyElixir() {
 
 	int p = randomInt(0, 99);
 	if (p < 70) {
-		nazov = "Hp elixir";
+		nazov = "Hp potion";
 		stat = "hp";
 		obrazok = "elixir";
 	}
 	else {
-		nazov = "Mp elixir";
+		nazov = "Mp potion";
 		stat = "mp";
 		obrazok = "manae";
 	}
 
-	cout << nazov << "  " << stat << " " << kolko << endl;
 	elixir = new Elixir(nazov, 12, obrazok, 5 * kolko, lvl, stat, kolko);
 	return elixir;
 
@@ -141,9 +140,7 @@ Predmet* Generator::nahodneOblecenie(int paUroven) {
 	}
 
 	string nazov = pridmeno + classa + menoOblecenia + dodatok;
-	cout << nazov << endl;
 	int cena = randomInt(paUroven * 45, paUroven * 75);
-
 	oblecenie = new Oblecenie(nazov, typ, obrazok, cena, paUroven);
 
 	generujStatistiky(oblecenie);
@@ -211,11 +208,9 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 		if (typ == 10) {
 			menoZbrane = pridmeno + classa + twoHand.at(randomInt(0, twoHand.size()-1)) + dodatok;
 		}
-		cout << menoZbrane << endl;
 	}
 	else {
 		menoZbrane = pridmeno + classa + "Shield" + dodatok;
-		cout << menoZbrane << endl;
 	}
 	
 	int cena = randomInt(paUroven * 45, paUroven * 75);
@@ -238,18 +233,12 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 
 		int rychlost = randomInt(2, 5) * 500;
 
-		cout << minPoskodenie << " -- " << maxPoskodenie << " speed:" << rychlost << endl;
 		zbran = new Zbran(menoZbrane, typ, obrazok, cena,paUroven,minPoskodenie,maxPoskodenie,rychlost);
 	}
 	else {
 		zbran = new Zbran(menoZbrane, typ, obrazok, cena, paUroven, 0,0, 2000000);
 	}
-	cout << obrazok << endl;
 	generujStatistiky(zbran);
-	
-
-
-	cout << endl;
 
 	return zbran;
 }
@@ -263,24 +252,19 @@ void Generator::generujStatistiky(Pouzitelny* paPredmet) {
 		switch (aky)
 		{
 		case 0:
-			std::cout << "Sila " << stat << endl;
 			paPredmet->Setsila(stat);
 			break;
 		case 1:
-			std::cout << "Rychlost " << stat << endl;
 			paPredmet->Setrychlost(stat);
 			break;
 		case 2:
 			paPredmet->Setinteligencia(stat);
-			std::cout << "Intelekt " << stat << endl;
 			break;
 		case 3:
 			paPredmet->Sethp(stat*5);
-			std::cout << "Hp: " << stat * 5 << endl;
 			break;
 		case 4:
 			paPredmet->Setmp(stat*5);
-			std::cout << "Mana: " << stat * 5 << endl;
 			break;
 		default:
 			break;
@@ -292,24 +276,19 @@ void Generator::generujStatistiky(Pouzitelny* paPredmet) {
 		switch (aky)
 		{
 		case 0:
-			std::cout << "Sila Mult" << stat / 100 << endl;
 			paPredmet->SetsilaMult(stat / 100);
 			break;
 		case 1:
-			std::cout << "Rychlost Mult " << stat / 100 << endl;
 			paPredmet->SetrychlostMult(stat / 100);
 			break;
 		case 2:
 			paPredmet->SetinteligenciaMult(stat/100);
-			std::cout << "Intelekt Mult" << stat / 100 << endl;
 			break;
 		case 3:
 			paPredmet->SethpMult(stat / 100);
-			std::cout << "Hp: Mult" << stat / 100 << endl;
 			break;
 		case 4:
 			paPredmet->SetmpMult(stat / 100);
-			std::cout << "Mana: Mult" << stat / 100 << endl;
 			break;
 		default:
 			break;
@@ -321,14 +300,12 @@ void Generator::generujStatistiky(Pouzitelny* paPredmet) {
 	if ((paPredmet->Gettyp() < 5 && paPredmet->Gettyp() > 0) || (paPredmet->Gettyp() == 7 || paPredmet->Gettyp() == 8)) {
 		int armor = randomInt(1, paPredmet->Geturoven() * 3);
 		paPredmet->Setarmor(armor);
-		std::cout << "Armor " << armor << endl;
 	}
 
 	//stit
 	if (paPredmet->Gettyp() == 11) {
 		int armor = randomInt(1, paPredmet->Geturoven() * 6);
 		paPredmet->Setarmor(armor);
-		std::cout << "Armor " << armor << endl;
 	}
 
 }

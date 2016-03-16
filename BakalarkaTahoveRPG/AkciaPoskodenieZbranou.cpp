@@ -47,7 +47,7 @@ std::string AkciaPoskodenieZbranou::vykonajSa(Statistika* statHrac, Statistika* 
 	if (p >= statNepriatel->Getsancanauhyb()) {
 		int konecnePoskodenie = (int)ceil(poskodenie*(1 - statNepriatel->Getodolnostvociposkodeniu()));
 		statNepriatel->Sethp(statNepriatel->Gethp() - konecnePoskodenie);
-		return meno + " - utoci s poskodenim " + std::to_string(konecnePoskodenie);
+		return meno + " - attack dmg " + std::to_string(konecnePoskodenie);
 	}
 	else {
 		return meno + " - miss.";
@@ -68,6 +68,6 @@ std::string AkciaPoskodenieZbranou::Getmeno() {
 		return statistika->Getoblecene()->at(9)->Getmeno();
 	}
 	else {
-		return Akcia::Getmeno()+ " holymi rukami";
+		return Akcia::Getmeno()+ " with bare hands";
 	}
 }

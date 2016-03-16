@@ -14,9 +14,9 @@
 #include "Hrac.h"
 #include "QuestManager.h"
 
-Inventar::Inventar() {
-	pocetZlata = 170;
-	kapacita = 36;
+Inventar::Inventar(int kapacita) {
+	this->pocetZlata = 170;
+	this->kapacita = 36;
 }
 
 
@@ -69,7 +69,7 @@ void Inventar::pridajPredmet(Predmet* predmet,bool loot){
 		}
 	}
 	else {
-		Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(new PopupOkno("Inventar je plny!"));
+		Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(new PopupOkno("Inventory is full!"));
 		throw 1;
 	}
 }

@@ -34,7 +34,7 @@ public:
 	
 	Zameranie* nacitajZameranie(string paMeno);
 
-	void save();
+	bool save();
 	void load();
 
 private:

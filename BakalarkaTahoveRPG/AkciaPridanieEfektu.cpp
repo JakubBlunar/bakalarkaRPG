@@ -22,11 +22,11 @@ std::string AkciaPridanieEfektu::vykonajSa(Statistika* stat1, Statistika* stat2,
 	Akcia::vykonajSa(stat1, stat2,aktCas);
 	if (hrac) {
 		stat1->pridajEfekt(efekt, aktCas + sf::milliseconds(trvanie));
-		return meno + " dal na seba efekt\n    " + efekt->popis();
+		return meno + " apply effect \n    " + efekt->popis();
 	}
 	else {
 		stat2->pridajEfekt(efekt, aktCas + sf::milliseconds(trvanie));
-		return meno + " dal na protivnika efekt\n    " + efekt->popis();
+		return meno + " apply effect on enemy\n    " + efekt->popis();
 	}
 }
 

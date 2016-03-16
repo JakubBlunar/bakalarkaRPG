@@ -132,33 +132,33 @@ std::string Predmet::Getstringovytyp() {
 	switch (typ)
 	{
 	case (1) :
-		return "Helma";
+		return "Helm";
 	case (2) :
-		return "Ramena";
+		return "Shoulders";
 	case (3) :
-		return "Brnenie";
+		return "Chest";
 	case (4) :
-		return "Nohavice";
+		return "Legs";
 	case (5) :
-		return "Nahrdelnik";
+		return "Necklace";
 	case (6) :
-		return "Prsten";
+		return "Ring";
 	case (7) :
-		return "Rukavice";
+		return "Hands";
 	case (8) :
-		return "Topanky";
+		return "Boots";
 	case (9) :
-		return "Zbran (1h)";
+		return "Weapon (1h)";
 	case (10) :
-		return "Zbran (2h)";
+		return "Weapon (2h)";
 	case (11) :
-		return "Stit";
+		return "Shield";
 	case(12) :
-		return "Elixir";
+		return "Potion";
 	case(13) :
-		return "Ulohovy predmet";
+		return "Quest item";
 	default:
-		return "ine";
+		return "Other";
 		break;
 	}
 }

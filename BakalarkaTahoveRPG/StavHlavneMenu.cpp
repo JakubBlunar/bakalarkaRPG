@@ -2,6 +2,7 @@
 #include "Loader.h"
 #include "Hra.h"
 #include "Tlacidlo.h"
+#include "PopupOkno.h"
 
 StavHlavneMenu::StavHlavneMenu(std::string paNazov, sf::RenderWindow* paOkno,Hra* paHra): Stav(paNazov,paOkno,paHra){
 
@@ -13,9 +14,9 @@ StavHlavneMenu::StavHlavneMenu(std::string paNazov, sf::RenderWindow* paOkno,Hra
 	normalne->setTextureRect(sf::IntRect(0, 0, 48, 48));
 	normalne->setColor(sf::Color(0, 0, 0, 255));
 
-	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Nova hra", sf::Vector2f(10, 10), sf::Vector2f(500, 80), font, 75));
-	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Nacitaj", sf::Vector2f(10, 100), sf::Vector2f(500, 80), font,75));
-	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Koniec", sf::Vector2f(10, 190), sf::Vector2f(500, 80), font, 75));
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "New game", sf::Vector2f(10, 10), sf::Vector2f(500, 80), font, 75));
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Load save", sf::Vector2f(10, 100), sf::Vector2f(500, 80), font,75));
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Exit", sf::Vector2f(10, 190), sf::Vector2f(500, 80), font, 75));
 	
 	stlacenaMys = true;
 	oznacene = 0;
@@ -86,6 +87,16 @@ void StavHlavneMenu::update(double delta) {
 						if (i == 0) {
 							hra->zmenStavRozhrania("volbaZamerania");
 						}
+
+						if (i == 1) {
+							try {
+								Loader::Instance()->load();
+							}
+							catch (...) {
+								Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Error! Save is corupted or isn't exist."));
+							}
+						}
+
 						if (i == 2) {
 							okno->close();
 						}
@@ -122,7 +133,12 @@ void StavHlavneMenu::update(double delta) {
 			
 			if (oznacene == 1 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
-				Loader::Instance()->load();
+				try {
+					Loader::Instance()->load();
+				}
+				catch (...) {
+					Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Error! Save is corupted or isn't exist."));
+				}
 			}
 
 			if (oznacene == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {

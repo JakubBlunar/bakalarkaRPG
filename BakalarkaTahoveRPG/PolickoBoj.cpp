@@ -50,7 +50,7 @@ void PolickoBoj::hracSkok(Hrac* paHrac) {
 			StavBoj* stavBoj = (StavBoj*)hra->dajStav("stavBoj");
 			stavBoj->setBoj(new Boj(paHrac, nepriatel));
 
-			stavHranieHry->zobrazPopup(new PopupOkno("Napdol ta " + nepriatel->Getmeno() + " urovne " + std::to_string(nepriatel->Getstatistika()->dajUroven()) + "."));
+			stavHranieHry->zobrazPopup(new PopupOkno(nepriatel->Getmeno() + " level " + std::to_string(nepriatel->Getstatistika()->dajUroven()) + " appeared!."));
 			hra->zmenStavRozhrania("stavBoj");
 		}
 	}

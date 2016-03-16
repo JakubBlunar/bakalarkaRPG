@@ -2,38 +2,38 @@
   "polozky": {
     "0": {
       "typ": "normalVolba",
-      "text": "Ahoj bojovnik !\nVyzeras ubolene.\nAk chces mozem ta osetrit.",
+      "text": "Hi traveller!\nYou looks exhausted.\nIf you want i can heal your wounds.",
       "volby": {
         "1": {
           "kam": 1,
-          "text": "To by som bol rád.",
+          "text": "I would like to.",
           "typ": "liecenie"
         },
         "2": {
           "kam": 2,
-          "text": "Dakujem ale neprosim si.",
+          "text": "Thank you but i don't want it.",
           "typ": ""
         }
       }
     },
     "1": {
       "typ": "normalVolba",
-      "text": "Abraka dabra nech sa ti polepsi.",
+      "text": "Come again when you will not feel well.",
       "volby": {
         "1": {
           "kam": -1,
-          "text": "Dakujem!",
+          "text": "Thank you, bye.",
           "typ": ""
         }
       }
     },
     "2": {
       "typ": "normalVolba",
-      "text": "Tak ako povies.\nAk by si potreboval pomoc budem tu.",
+      "text": "As you wish. I will be here.",
       "volby": {
         "1": {
           "kam": -1,
-          "text": "Dobre. Maj sa zatial.",
+          "text": "Okay. See you soon.",
           "typ": ""
         }
       }

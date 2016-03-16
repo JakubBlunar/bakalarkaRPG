@@ -41,14 +41,14 @@ std::string QuestPolozka::Gettext() {
 			}
 			break;
 		default:
-			return "Neznamy";
+			return "Undefined";
 			break;
 		}
 	}
 	else {
 		return texty.at(StavQuestu::NEPRIJATY);
 	}
-	return "Neznamy";
+	return "Undefined";
 }
 
 void QuestPolozka::vlozText(StavQuestu paStav, std::string paText) {

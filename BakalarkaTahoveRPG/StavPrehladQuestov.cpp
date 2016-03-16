@@ -57,7 +57,7 @@ void StavPrehladQuestov::onExit() {
 
 void StavPrehladQuestov::render() {
 
-	sf::Text text("Prehlad Questov", *font, 45U);
+	sf::Text text("Quest log", *font, 45U);
 	text.setPosition(sf::Vector2f(10.f, 10.f));
 	okno->draw(text);
 

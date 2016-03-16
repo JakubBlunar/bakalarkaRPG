@@ -272,20 +272,17 @@ void Mapa::posunHracaNaPolicko(int x, int y, int smerPohladu) {
 
 	switch (smerPohladu)
 	{
-	case 0:
+	case SmerPohladu::dole :
 		hrac->zmenSmerPohladu(SmerPohladu::dole);
 		break;
-	case 1:
+	case SmerPohladu::vpravo:
 		hrac->zmenSmerPohladu(SmerPohladu::vpravo);
 		break;
-	case 2:
+	case SmerPohladu::hore:
 		hrac->zmenSmerPohladu(SmerPohladu::hore);
 		break;
-	case 3:
+	case SmerPohladu::vlavo:
 		hrac->zmenSmerPohladu(SmerPohladu::vlavo);
-		break;
-	default:
-		hrac->zmenSmerPohladu(SmerPohladu::dole);
 		break;
 	}
 

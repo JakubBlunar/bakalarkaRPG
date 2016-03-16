@@ -1,5 +1,5 @@
 {
-  "meno": "Hnedy medved",
+  "meno": "Grisly bear",
   "obrazok": "hnedymedved",
   "levelOd": 1,
   "levelDo": 3,
@@ -19,7 +19,7 @@
   "akcie": {
     "1": {
       "typ": "AkciaDmg",
-      "meno": "Mocna laba",
+      "meno": "Maul",
       "obrazok": "attack",
       "rychlostCastenia": 2000,
       "cooldown": 500,
@@ -31,7 +31,7 @@
     },
     "2": {
       "typ": "AkciaPridanieEfektu",
-      "meno": "Mocný rev",
+      "meno": "Scary roar",
       "obrazok": "attack",
       "rychlostCastenia": 500,
       "cooldown": 15000,
@@ -51,7 +51,7 @@
     },
     "3": {
       "typ": "AkciaDmg",
-      "meno": "Zahryznutie",
+      "meno": "Bite",
       "obrazok": "attack",
       "rychlostCastenia": 500,
       "cooldown": 5000,

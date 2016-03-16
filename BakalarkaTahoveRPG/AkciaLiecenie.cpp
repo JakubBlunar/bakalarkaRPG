@@ -23,7 +23,7 @@ std::string AkciaLiecenie::vykonajSa(Statistika* statHrac, Statistika* statNepri
 	std::uniform_int_distribution<int> uni(minLiecenie(statHrac), maxLiecenie(statHrac));
 	int healing = uni(generator);
 	statHrac->zvysStat(healing, "hp");
-	return meno + " - lieci sa za " + std::to_string(healing);
+	return meno + " - heal by " + std::to_string(healing);
 }
 
 int AkciaLiecenie::minLiecenie(Statistika* statistika) {

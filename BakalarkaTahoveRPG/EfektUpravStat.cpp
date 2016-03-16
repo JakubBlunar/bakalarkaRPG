@@ -38,51 +38,51 @@ std::string EfektUpravStat::popis() {
 	if (  co== "sila") {
 		
 		if (hodnota > 0) {
-			return "Zvysi silu o " + std::to_string(hodnota);
+			return "Strenght increased by " + std::to_string(hodnota);
 		}
 		else {
-			return "Znizi silu o " + std::to_string(-hodnota);
+			return "Strenght decreased by " + std::to_string(-hodnota);
 		}
 	}
 
 	if (co == "hpMax") {
 		if (hodnota > 0) {
-			return "Zvysi maxHp o " + std::to_string(hodnota);
+			return "Max hp increased by " + std::to_string(hodnota);
 		}
 		else {
-			return "Znizi maxHp o " + std::to_string(-hodnota);
+			return "Max hp decreased by " + std::to_string(-hodnota);
 		}
 	}
 
 	//intel
 	if (co == "intel") {
 		if (hodnota > 0) {
-			return "Zvysi intelekt o " + std::to_string(hodnota);
+			return "Intellect increased by " + std::to_string(hodnota);
 		}
 		else {
-			return "Znizi intelekt o " + std::to_string(-hodnota);
+			return "Intellect decreased by " + std::to_string(-hodnota);
 		}
 	}
 
 	//rychlost
 	if (co == "rychlost") {
 		if (hodnota > 0) {
-			return "Zvysi rychlost o " + std::to_string(hodnota);
+			return "Speed increased by " + std::to_string(hodnota);
 		}
 		else {
-			return "Znizi rychlost o " + std::to_string(-hodnota);
+			return "Speed decreased by " + std::to_string(-hodnota);
 		}
 	}
 
 	//obrana
 	if (co == "obrana") {
 		if (hodnota > 0) {
-			return "Zvysi obranu o " + std::to_string(hodnota);
+			return "Armor increased by " + std::to_string(hodnota);
 		}
 		else {
-			return "Znizi obranu o " + std::to_string(-hodnota);
+			return "Armor decreased by" + std::to_string(-hodnota);
 		}
 	}
 
-	else return "neznamy efekt";
+	else return "Unknown effect";
 }

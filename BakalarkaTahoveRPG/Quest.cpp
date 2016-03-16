@@ -16,6 +16,7 @@
 
 Quest::Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata, string paStartNpc, string paEndNpc, std::string nazovSuboru)
 {
+	this->poziadavky = new vector<Poziadavka*>();
 	this->nazovSuboru = nazovSuboru;
 	this->predchadzajuci = nullptr;
 	this->nasledujuci = nullptr;
@@ -25,6 +26,10 @@ Quest::Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata, string
 	this->startNpc = paStartNpc;
 	this->endNpc = paEndNpc;
 	stav = StavQuestu::NEPRIJATY;
+}
+
+Quest::~Quest() {
+	delete poziadavky;
 }
 
 void Quest::setStav(StavQuestu paStav) {
@@ -52,22 +57,22 @@ string Quest::getPopis() {
 	switch (stav)
 	{
 	case StavQuestu::NEPRIJATY:
-		ts = "Neprijaty";
+		ts = "";
 		break;
 	case StavQuestu::ROZROBENY:
-		ts = "Aktivny";
+		ts = "Active";
 		break;
 	case StavQuestu::SPLNENIE_POZIADAVIEK:
-		ts = "Caka na odovzdanie";
+		ts = "Waiting for return";
 		break;
 	case StavQuestu::DOKONCENY:
-		ts = "Dokonceny";
+		ts = "Complete";
 		break;
 	}
-	popisQuestu += "Stav: " + ts + "\n\n" + popis + "\n\n";
+	popisQuestu += "State: " + ts + "\n\n" + popis + "\n\n";
 
-	for (unsigned int i = 0; i < poziadavky.size(); i++) {
-		popisQuestu += poziadavky.at(i)->Getpopis() + "\n";
+	for (unsigned int i = 0; i < poziadavky->size(); i++) {
+		popisQuestu += poziadavky->at(i)->Getpopis() + "\n";
 	}
 
 	popisQuestu += "\n" + GetpopisOdmeny();
@@ -83,7 +88,7 @@ void Quest::dokonciSa(Hrac* paHrac) {
 	if (stav == StavQuestu::SPLNENIE_POZIADAVIEK) {
 		stav = StavQuestu::DOKONCENY;
 
-		for (unsigned int i = 0; i < poziadavky.size(); i++) poziadavky.at(i)->dokoncenie(paHrac);
+		for (unsigned int i = 0; i < poziadavky->size(); i++) poziadavky->at(i)->dokoncenie(paHrac);
 
 		paHrac->pridajSkusenosti(odmena->Getpocetxp());
 
@@ -106,17 +111,17 @@ void Quest::dokonciSa(Hrac* paHrac) {
 }
 
 string Quest::GetpopisOdmeny() {
-	string popis = "Dostanes :\n\n";
+	string popis = "You will recieve:\n\n";
 	if (odmena->Getpocetzlata() != 0) {
-		popis += "Zlato: " + std::to_string(odmena->Getpocetzlata()) + "\n";
+		popis += "Gold: " + std::to_string(odmena->Getpocetzlata()) + "\n";
 	}
 
 	if (odmena->Getpocetxp() != 0) {
-		popis += "Skusenosti: " + std::to_string(odmena->Getpocetxp()) + "\n";
+		popis += "Experience : " + std::to_string(odmena->Getpocetxp()) + "\n";
 	}
 
 	if (odmena->getPredmety()->size() != 0) {
-		popis += "Predmety:\n";
+		popis += "Items:\n";
 		for (unsigned int i = 0; i < odmena->getPredmety()->size(); i++) {
 			popis += odmena->getPredmety()->at(i)->Getmeno() + "\n";
 		}
@@ -126,14 +131,15 @@ string Quest::GetpopisOdmeny() {
 
 void Quest::zabitieNpc(Nepriatel* nepriatel) {
 	if (stav == StavQuestu::ROZROBENY) {
-		for (unsigned int i = 0; i < poziadavky.size(); i++) poziadavky.at(i)->akcia(nepriatel);
+		for (unsigned int i = 0; i < poziadavky->size(); i++) poziadavky->at(i)->akcia(nepriatel);
 		kontrola();
 	}
 }
 
+
 void Quest::lootnutiePredmetu(Predmet* paPredmet) {
 	if (stav == StavQuestu::ROZROBENY) {
-		for (unsigned int i = 0; i < poziadavky.size(); i++) poziadavky.at(i)->akcia(paPredmet);
+		for (unsigned int i = 0; i < poziadavky->size(); i++) poziadavky->at(i)->akcia(paPredmet);
 		kontrola();
 	}
 
@@ -141,8 +147,8 @@ void Quest::lootnutiePredmetu(Predmet* paPredmet) {
 
 void Quest::kontrola() {
 	bool splnene = true;
-	for (unsigned int i = 0; i < poziadavky.size(); i++) {
-		if (!poziadavky.at(i)->jeSplnena()) splnene = false;
+	for (unsigned int i = 0; i < poziadavky->size(); i++) {
+		if (!poziadavky->at(i)->jeSplnena()) splnene = false;
 	}
 
 	if (splnene && stav != StavQuestu::DOKONCENY) {
@@ -154,7 +160,7 @@ void Quest::kontrola() {
 }
 
 void Quest::pridajPoziadavku(Poziadavka* poziadavka) {
-	poziadavky.push_back(poziadavka);
+	poziadavky->push_back(poziadavka);
 }
 
 void Quest::Setnasledujuci(Quest* paQuest) {
@@ -193,4 +199,8 @@ QuestPolozka* Quest::GetdialogPolozka() {
 }
 DialogVolba* Quest::GetvolbaKuQuestu() {
 	return volbaKuQuestu;
+}
+
+vector<Poziadavka*>* Quest::Getpoziadavky() {
+	return poziadavky;
 }
