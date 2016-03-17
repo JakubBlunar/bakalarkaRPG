@@ -93,7 +93,7 @@ void StavHlavneMenu::update(double delta) {
 								Loader::Instance()->load();
 							}
 							catch (...) {
-								Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Error! Save is corupted or isn't exist."));
+								zobrazPopup(new PopupOkno("Error! Save is corupted or isn't exist."));
 							}
 						}
 
@@ -137,7 +137,7 @@ void StavHlavneMenu::update(double delta) {
 					Loader::Instance()->load();
 				}
 				catch (...) {
-					Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Error! Save is corupted or isn't exist."));
+					zobrazPopup(new PopupOkno("Error! Save is corupted or isn't exist."));
 				}
 			}
 

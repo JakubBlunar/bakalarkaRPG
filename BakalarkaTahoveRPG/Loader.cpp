@@ -83,7 +83,6 @@ DialogovyStrom* Loader::nacitajDialog(string paMeno) {
 
 	if (!parsingSuccessful)
 	{
-		cout << "Dialog " << paMeno << ".json neexistuje alebo chyba v parsovani" << endl;
 		DialogovyStrom* dialog;
 		dialog = new DialogovyStrom();
 		DialogPolozka *node0 = new DialogPolozka("Ahoj udatny bojovnik.");
@@ -1130,7 +1129,6 @@ bool Loader::save() {
 	root["dokonceneQuesty"] = jDokoncene;
 
 	Json::StyledWriter styledWriter;
-	cout << styledWriter.write(root);
 
 	std::ofstream subor;
 	subor.open("./Data/save");

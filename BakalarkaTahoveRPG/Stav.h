@@ -7,6 +7,7 @@
 
 class Hra;
 class PopupOkno;
+class Tlacidlo;
 
 enum StavAkcia {
 	NORMAL,
@@ -43,6 +44,8 @@ protected:
 
 	bool stlacenaKlavesa;
 	bool stlacenaMys;
+
+	Tlacidlo* popDalej;
 
 	std::string floattostring(float cislo);
 };

@@ -14,6 +14,14 @@ Tlacidlo::Tlacidlo(sf::Sprite* normalne, sf::Sprite* kliknute, std::string paTex
 	text.setCharacterSize(velkostPisma);
 	text.setPosition(pozicia.x + 3, pozicia.y + 3);
 }
+
+Tlacidlo::~Tlacidlo() {
+	delete normalne;
+	if (kliknute != nullptr) {
+		delete kliknute;
+	}
+}
+
 void Tlacidlo::skontrolujKlik(sf::Vector2i mousePos) {
 	if (mousePos.x>pozicia.x && mousePos.x<(pozicia.x + velkost.x)) {
 		if (mousePos.y>pozicia.y && mousePos.y<(pozicia.y + velkost.y)) {
@@ -42,6 +50,7 @@ sf::Sprite* Tlacidlo::Getsprite() {
 }
 
 sf::Text Tlacidlo::Gettext() {
+	text.setPosition(pozicia);
 	return text;
 }
 
@@ -60,5 +69,16 @@ sf::Vector2f Tlacidlo::getPosition() {
 }
 
 sf::FloatRect Tlacidlo::getGlobalBounds() {
-	return aktualne->getGlobalBounds();
+	return sf::FloatRect(pozicia.x, pozicia.y, velkost.x, velkost.y);
+}
+
+sf::RectangleShape Tlacidlo::Getramcek() {
+	sf::RectangleShape ramcek(velkost);
+	ramcek.setPosition(pozicia);
+	ramcek.setOutlineThickness(1);
+	return ramcek;
+}
+
+void Tlacidlo::Setpozicia(sf::Vector2f paPozicia) {
+	pozicia = paPozicia;
 }

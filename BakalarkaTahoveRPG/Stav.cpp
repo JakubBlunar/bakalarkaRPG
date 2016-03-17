@@ -3,6 +3,8 @@
 #include "PopupOkno.h"
 #include "Loader.h"
 
+#include "Tlacidlo.h"
+
 #include <sstream>
 #include <iomanip>  
 
@@ -15,6 +17,10 @@ Stav::Stav(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) {
 	stlacenaMys = true;
 	stlacenaKlavesa = true;
 	font = Loader::Instance()->nacitajFont("font2.ttf");
+
+	sf::Sprite* s = new sf::Sprite();
+	popDalej = new Tlacidlo(s, s, "-->", sf::Vector2f(0.f,0.f), sf::Vector2f(30.f, 25.f), font, 20U);
+
 }
 
 
@@ -27,9 +33,24 @@ Stav::~Stav() {
 void Stav::update(double delta) {
 
 	if (stav == StavAkcia::ZOBRAZUJE_POPUP) {
+		
+
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) stlacenaKlavesa = false;
 		
-		if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
+		{
+			sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+			popDalej->skontrolujKlik(pozicia);
+
+		}
+
+		if ((!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) || popDalej->Getzakliknute() ) {
+
+			if (popDalej->Getzakliknute()) {
+				stlacenaMys = true;
+				popDalej->Setzakliknute(false);
+			}
+
 			if (popupText.size() > 0) {
 				if (popupText.at(0)->skoncil()) {
 					PopupOkno* skonceny = popupText.at(0);
@@ -45,6 +66,10 @@ void Stav::update(double delta) {
 			else {
 				stav = StavAkcia::NORMAL;
 			}
+		}
+
+		if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			stlacenaMys = false;
 		}
 	}
 
@@ -65,7 +90,7 @@ void Stav::render() {
 			PopupOkno* pop = popupText.at(0);
 
 			if (!pop->skoncil()) {
-				text.setString(pop->aktualnaStrana() + "\n>>>");
+				text.setString(pop->aktualnaStrana() + "\n\n>>>");
 			}
 			else {
 				text.setString(pop->aktualnaStrana());
@@ -88,6 +113,18 @@ void Stav::render() {
 			text.setColor(sf::Color::Black);
 			text.setPosition(sf::Vector2f(pozadie.getGlobalBounds().left + 5, pozadie.getGlobalBounds().top + 5));
 			okno->draw(text);
+
+			// tlacidlo -->
+			popDalej->Setpozicia(sf::Vector2f(pozadie.getGlobalBounds().left + pozadie.getGlobalBounds().width - popDalej->getGlobalBounds().width -1,
+				pozadie.getGlobalBounds().top - popDalej->getGlobalBounds().height));
+
+			sf::RectangleShape ramcek = popDalej->Getramcek();
+			ramcek.setOutlineColor(sf::Color::Red);
+			okno->draw(ramcek);
+			text = popDalej->Gettext();
+			text.setColor(sf::Color::Black);
+			okno->draw(text);
+
 		}
 	}
 }

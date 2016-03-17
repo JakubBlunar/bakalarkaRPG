@@ -8,6 +8,7 @@
 class Hrac;
 class Inventar;
 class Predmet;
+class Tlacidlo;
 
 class StavInventar : public Stav
 {
@@ -21,6 +22,8 @@ public:
 	virtual void render();
 	virtual void update(double delta);
 
+	void Setzboja(bool paNa);
+
 protected:
 	void vykresliOknoPredmetu(Predmet* predmet, int x, int y, sf::RenderWindow* okno, bool predaj);
 
@@ -28,6 +31,9 @@ protected:
 	sf::RectangleShape ukazovatel;
 	int nasirku;
 
+	bool otvoreneZboja;
+
+	Tlacidlo* tlacidloSpat;
 	Inventar* inventar;
 	Hrac* hrac;
 };

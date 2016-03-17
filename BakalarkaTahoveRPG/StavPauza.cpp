@@ -91,10 +91,10 @@ void StavPauza::update(double delta) {
 
 						if (i == 1) {
 							if (Loader::Instance()->save()) {
-								Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Game has been saved!"));
+								zobrazPopup(new PopupOkno("Game has been saved!"));
 							}
 							else {
-								Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Error! Game has not been saved!"));
+								zobrazPopup(new PopupOkno("Error! Game has not been saved!"));
 							}
 						}
 
@@ -133,10 +133,10 @@ void StavPauza::update(double delta) {
 			if (oznacene == 1 && sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
 				if (Loader::Instance()->save()) {
-					Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Game has been saved!"));
+					zobrazPopup(new PopupOkno("Game has been saved!"));
 				}
 				else {
-					Loader::Instance()->Gethra()->dajStav("stavPauza")->zobrazPopup(new PopupOkno("Error! Game has not been saved!"));
+					zobrazPopup(new PopupOkno("Error! Game has not been saved!"));
 				}
 			}
 

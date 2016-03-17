@@ -15,6 +15,7 @@
 #include "Efekt.h"
 #include "Nepriatel.h"
 #include <math.h>
+#include "StavInventar.h"
 
 StavBoj::StavBoj(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra):Stav(paNazov,paOkno,paHra)
 {
@@ -31,8 +32,10 @@ StavBoj::StavBoj(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra):Stav
 			tlacidla[i][j] = new Tlacidlo(normalne,normalne, "", sf::Vector2f(280.f + j * 50, okno->getSize().y - 200.f + 20.f + i * 50), sf::Vector2f(48, 48), font, 35U);
 		}
 	}
-
-
+	
+	sf::Sprite* spr = new sf::Sprite();
+	doInventara = new Tlacidlo(spr, spr, "Inventory", sf::Vector2f(90, 600), sf::Vector2f(120,35), font, 25U);
+	
 }
 
 
@@ -286,8 +289,20 @@ void StavBoj::render() {
 		okno->draw(castPredny);
 	}
 
+	sf::RectangleShape invRamcek = doInventara->Getramcek();
+	invRamcek.setOutlineColor(sf::Color::Black);
+	if (boj->cakaNaVybratieAkcie()) {
+		invRamcek.setFillColor(sf::Color::White);
+	}
+	else {
+		invRamcek.setFillColor(sf::Color::Red);
+	}
 
-
+	okno->draw(invRamcek);
+	
+	text = doInventara->Gettext();
+	text.setColor(sf::Color::Black);
+	okno->draw(text);
 
 	Stav::render();
 }
@@ -304,6 +319,15 @@ void StavBoj::update(double delta) {
 			{
 				sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
 				if (boj->cakaNaVybratieAkcie() && !boj->koniecBoja()) {
+					
+					doInventara->skontrolujKlik(pozicia);
+					if (doInventara->Getzakliknute()) {
+						doInventara->Setzakliknute(false);
+						StavInventar* s = (StavInventar*)hra->dajStav("stavInventar");
+						s->Setzboja(true);
+						hra->zmenStavRozhrania("stavInventar");
+					}
+
 					for (int i = 0; i < 3; i++) {
 						for (int j = 0; j < 9; j++) {
 							unsigned int index = i * 9 + j;

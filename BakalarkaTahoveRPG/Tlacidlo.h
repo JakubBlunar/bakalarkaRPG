@@ -5,6 +5,7 @@
 class Tlacidlo {
 public:
 	Tlacidlo(sf::Sprite* normal, sf::Sprite* clicked, std::string, sf::Vector2f pozicia, sf::Vector2f velkost, sf::Font *font, unsigned int velkostPisma);
+	~Tlacidlo();
 	void skontrolujKlik(sf::Vector2i pozicia);
 	void Setzakliknute(bool);
 	void Settext(std::string);
@@ -14,6 +15,10 @@ public:
 	bool hover(sf::Vector2i pozicia);
 	sf::Vector2f getPosition();
 	sf::FloatRect getGlobalBounds();
+	sf::RectangleShape Getramcek();
+
+	void Setpozicia(sf::Vector2f paPozicia);
+
 private:
 	sf::Sprite* normalne;
 	sf::Sprite* kliknute;

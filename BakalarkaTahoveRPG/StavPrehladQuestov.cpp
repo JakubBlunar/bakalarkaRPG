@@ -34,7 +34,7 @@ StavPrehladQuestov::StavPrehladQuestov(std::string paNazov, sf::RenderWindow* pa
 		tlacidla.push_back(new Tlacidlo(normalne, zakliknute, "", sf::Vector2f(30.f,85.f+i*50), sf::Vector2f(300.f, 50.f), font, 35U));
 	}
 
-	tlacidloSpat = new Tlacidlo(normalne, normalne, "<--", sf::Vector2f(okno->getSize().x -60.f, 10.f), sf::Vector2f(45.f, 25.f), font, 20U);
+	tlacidloSpat = new Tlacidlo(normalne, normalne, "<--", sf::Vector2f(okno->getSize().x -60.f, 10.f), sf::Vector2f(30.f, 25.f), font, 20U);
 
 }
 
@@ -140,10 +140,9 @@ void StavPrehladQuestov::render() {
 
 	}
 
-
-	okno->draw(*tlacidloSpat->Getsprite());
+	okno->draw(tlacidloSpat->Getramcek());
 	sf::Text tt = tlacidloSpat->Gettext();
-	tt.setColor(sf::Color::Yellow);
+	tt.setColor(sf::Color::Black);
 	okno->draw(tt);
 
 	Stav::render();

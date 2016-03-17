@@ -12,7 +12,7 @@
 
 StavObchod::StavObchod(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra):StavInventar(paNazov,paOkno,paHra)
 {
-	typObchodu = PREDAJ;
+	typObchodu = KUPA;
 	nasirku = 18;
 	dostupnePredmety = new std::vector<Predmet*>();
 }

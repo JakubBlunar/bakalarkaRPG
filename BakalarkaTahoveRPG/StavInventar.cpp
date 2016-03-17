@@ -12,6 +12,8 @@
 #include "Pouzitelny.h"
 #include "Zbran.h"
 #include "Elixir.h"
+#include "PopupOkno.h"
+#include "Tlacidlo.h"
 
 
 StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
@@ -20,10 +22,15 @@ StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* p
 	ukazovatel.setFillColor(sf::Color(255, 0, 0, 128));
 	oznacene = 0;
 	nasirku =18;
+	otvoreneZboja = false;
+
+	sf::Sprite* s = new sf::Sprite();
+	tlacidloSpat = new Tlacidlo(s, s, "<--", sf::Vector2f(okno->getSize().x - 60.f, 10.f), sf::Vector2f(30, 25.f), font, 20U);
 }
 
 
 StavInventar::~StavInventar() {
+	delete tlacidloSpat;
 }
 
 
@@ -95,6 +102,12 @@ void StavInventar::render() {
 		vykresliOknoPredmetu(inventar->dajPredmetNaIndexe(oznacene), startX + (oznacene%nasirku) * 55 + 48, startY + (oznacene / nasirku) * 55 + 48, okno, true);
 	}
 
+	okno->draw(tlacidloSpat->Getramcek());
+	sf::Text tt = tlacidloSpat->Gettext();
+	tt.setColor(sf::Color::Black);
+	okno->draw(tt);
+
+
 	text.setString("Enter - use selected item\nX - drop selected item");
 	text.setPosition(20.f, okno->getSize().y - 55.f);
 	text.setColor(sf::Color::Yellow);
@@ -111,6 +124,32 @@ void StavInventar::update(double delta) {
 		Stav::update(delta);
 
 		if (stav == StavAkcia::NORMAL) {
+
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
+			{
+				sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+
+
+				tlacidloSpat->skontrolujKlik(pozicia);
+				if (tlacidloSpat->Getzakliknute()) {
+					tlacidloSpat->Setzakliknute(false);
+					if (otvoreneZboja) {
+						otvoreneZboja = false;
+						hra->zmenStavRozhrania("stavBoj");
+					}
+					else {
+						hra->zmenStavRozhrania("hranieHry");
+					}
+				}
+
+
+
+			}
+
+			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				stlacenaMys = false;
+			}
+
 
 			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 				stlacenaKlavesa = true;
@@ -152,7 +191,17 @@ void StavInventar::update(double delta) {
 				stlacenaKlavesa = true;
 				if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
 					Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
-					p->pouzi(hrac);
+					if(otvoreneZboja){
+						if (dynamic_cast<Elixir*>(p) != NULL) {
+							p->pouzi(hrac);
+						}
+						else {
+							zobrazPopup(new PopupOkno("You can't equip your items while you are fighting!"));
+						}
+					}
+					else {
+						p->pouzi(hrac);
+					}
 				}
 			}
 
@@ -164,7 +213,13 @@ void StavInventar::update(double delta) {
 			}
 
 			if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::I))) {
-				hra->zmenStavRozhrania("hranieHry");
+				if (otvoreneZboja) {
+					otvoreneZboja = false;
+					hra->zmenStavRozhrania("stavBoj");
+				}
+				else {
+					hra->zmenStavRozhrania("hranieHry");
+				}
 			}
 
 			if (stlacenaKlavesa && !sf::Keyboard::isKeyPressed(sf::Keyboard::I)
@@ -360,4 +415,8 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 
 	}
 
+}
+
+void StavInventar::Setzboja(bool paNa) {
+	otvoreneZboja = paNa;
 }

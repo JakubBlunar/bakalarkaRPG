@@ -27,6 +27,7 @@ private:
 	Tlacidlo* tlacidla[3][9];
 	std::vector<Akcia*>* hracoveAkcie;
 	Tlacidlo* logHranice;
+	Tlacidlo* doInventara;
 };
 
 #endif
