@@ -261,11 +261,20 @@ void Boj::vyhodnotenie() {
 			s->Sethp(s->GethpMax());
 			s->Setmp(s->GetmpMax());
 
-			while (hrac->Getinventar()->pocetPredmetov() != 0) {
+			int pocet = 0;
 
-				Predmet * p = hrac->Getinventar()->dajPredmetNaIndexe(hrac->Getinventar()->pocetPredmetov() - 1);
-				hrac->Getinventar()->zmazPredmet(p);
-				mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(p, mapa->aktCas());
+			while (hrac->Getinventar()->pocetPredmetov() != pocet) {
+
+				Predmet * p = hrac->Getinventar()->dajPredmetNaIndexe(hrac->Getinventar()->pocetPredmetov() - 1 - pocet);
+				if (p->Gettyp() == 13) {
+					pocet++;
+				}
+				else
+				{
+					hrac->Getinventar()->zmazPredmet(p);
+					mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(p, mapa->aktCas());
+				}
+				
 			}
 
 			mapa->posunHracaNaPolicko(mapa->Gethrobsuradnice().x, mapa->Gethrobsuradnice().y, 0);

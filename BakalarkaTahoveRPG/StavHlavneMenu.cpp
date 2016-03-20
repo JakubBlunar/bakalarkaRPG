@@ -14,9 +14,9 @@ StavHlavneMenu::StavHlavneMenu(std::string paNazov, sf::RenderWindow* paOkno,Hra
 	normalne->setTextureRect(sf::IntRect(0, 0, 48, 48));
 	normalne->setColor(sf::Color(0, 0, 0, 255));
 
-	tlacidla.push_back(new Tlacidlo(normalne, normalne, "New game", sf::Vector2f(10, 10), sf::Vector2f(500, 80), font, 75));
-	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Load save", sf::Vector2f(10, 100), sf::Vector2f(500, 80), font,75));
-	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Exit", sf::Vector2f(10, 190), sf::Vector2f(500, 80), font, 75));
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "New game", sf::Vector2f(10, 10), sf::Vector2f(500, 80), font, 85));
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Load save", sf::Vector2f(10, 110), sf::Vector2f(500, 80), font,85));
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Exit", sf::Vector2f(10, 200), sf::Vector2f(500, 80), font, 85));
 	
 	stlacenaMys = true;
 	oznacene = 0;

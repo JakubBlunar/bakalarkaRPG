@@ -187,7 +187,6 @@
     <ClInclude Include="StavHranieHry.h" />
     <ClInclude Include="StavInfoHraca.h" />
     <ClInclude Include="StavInventar.h" />
-    <ClInclude Include="StavLoading.h" />
     <ClInclude Include="StavObchod.h" />
     <ClInclude Include="StavPauza.h" />
     <ClInclude Include="StavPrehladQuestov.h" />
@@ -245,7 +244,6 @@
     <ClCompile Include="StavHranieHry.cpp" />
     <ClCompile Include="StavInfoHraca.cpp" />
     <ClCompile Include="StavInventar.cpp" />
-    <ClCompile Include="StavLoading.cpp" />
     <ClCompile Include="StavObchod.cpp" />
     <ClCompile Include="StavPauza.cpp" />
     <ClCompile Include="StavPrehladQuestov.cpp" />

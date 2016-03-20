@@ -6,7 +6,6 @@
 #include "StavHlavneMenu.h"
 #include "StavHranieHry.h"
 #include "StavPauza.h"
-#include "StavLoading.h"
 #include "StavInfoHraca.h"
 #include "StavInventar.h"
 #include "StavDialog.h"
@@ -38,10 +37,6 @@ Hra::Hra() {
 	std::string nazov4 = "stavPauza";
 	Stav* stav4 = new StavPauza(nazov4, okno, this);
 	stavRozhraniaHry->pridajStav(stav4);
-
-	std::string nazov5 = "stavLoading";
-	Stav* stav5 = new StavLoading(nazov5, okno, this);
-	stavRozhraniaHry->pridajStav(stav5);
 
 	std::string nazov6 = "stavInfoHraca";
 	Stav* stav6 = new StavInfoHraca(nazov6, okno, this);
@@ -140,7 +135,7 @@ void Hra::init() {
 	loader = Loader::Instance();
 	focus = true;
 
-	okno = new sf::RenderWindow(sf::VideoMode(1024, 768), NAZOV,sf::Style::Titlebar|sf::Style::Close);
+	okno = new sf::RenderWindow(sf::VideoMode(1024, 730), NAZOV,sf::Style::Titlebar|sf::Style::Close);
 	okno->setFramerateLimit(60);
 	okno->setVerticalSyncEnabled(true);
 }

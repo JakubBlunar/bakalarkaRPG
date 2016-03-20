@@ -85,8 +85,8 @@ DialogovyStrom* Loader::nacitajDialog(string paMeno) {
 	{
 		DialogovyStrom* dialog;
 		dialog = new DialogovyStrom();
-		DialogPolozka *node0 = new DialogPolozka("Ahoj udatny bojovnik.");
-		node0->pridajMoznost(new DialogVolba("Ahoj.", -1));
+		DialogPolozka *node0 = new DialogPolozka("Hi brave warrior.");
+		node0->pridajMoznost(new DialogVolba("Hi.", -1));
 		dialog->vlozPolozku(node0);
 		return dialog;
 	}
@@ -138,7 +138,7 @@ DialogovyStrom* Loader::nacitajDialog(string paMeno) {
 
 void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 	//nacitava = true;
-	hra->zmenStavRozhrania("stavLoading");
+
 	if (nacitaneMapy.find(paMeno) != nacitaneMapy.end()) {
 		Mapa* novaMapa = nacitaneMapy.at(paMeno);
 		hra->GetHrac()->setMapa(novaMapa);
@@ -933,7 +933,8 @@ bool Loader::save() {
 	root["mapa"]["posX"] = hrac->GetpolickoX();
 	root["mapa"]["posY"] = hrac->GetpolickoY();
 	root["mapa"]["orientacia"] = hrac->GetSmerPohladu();
-
+	root["hp"] = stat->Gethp();
+	root["mp"] = stat->Getmp();
 
 	root["inventar"]["zlato"] = inv->Getzlato();
 	root["inventar"]["kapacita"] = inv->Getkapacita();
@@ -1162,6 +1163,9 @@ void Loader::load(){
 		hra->SetHrac(hrac);
 		hrac->pridajSkusenosti(hracSkusenosti, false);
 		
+		hrac->Getstatistika()->Sethp(save["hp"].asInt());
+		hrac->Getstatistika()->Setmp(save["mp"].asInt());
+
 
 		string mapa = save["mapa"]["subor"].asString();
 		int posX = save["mapa"]["posX"].asInt();

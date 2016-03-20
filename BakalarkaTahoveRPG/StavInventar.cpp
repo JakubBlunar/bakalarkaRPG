@@ -252,7 +252,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	posY = y -5.f;
 
 	// tu už je samotny vypis infa
-	sf::Text text(predmet->Getmeno(), *font, 14U);//vypisanie mena
+	sf::Text text(predmet->Getmeno(), *font, 18U);//vypisanie mena
 	if (text.getGlobalBounds().width > obdlznik.getGlobalBounds().width - 5) {
 		obdlznik.setSize(sf::Vector2f(text.getGlobalBounds().width+20, 200));
 	}
@@ -275,7 +275,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	okno->draw(text);
 
 	text.setScale(1,1);
-	text.setCharacterSize(10U);
+	text.setCharacterSize(14U);
 	text.setString(predmet->Getstringovytyp());
 	text.setPosition(sf::Vector2f(posX+5.f, posY+23.f));
 	okno->draw(text);
@@ -287,7 +287,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 
 	if (dynamic_cast<Elixir*>(predmet) != NULL) {
 		text.setColor(sf::Color::Black);
-		text.setCharacterSize(13U);
+		text.setCharacterSize(14U);
 
 		Elixir* elixir = (Elixir*)predmet;
 
@@ -311,7 +311,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	
 	if (dynamic_cast<Pouzitelny*>(predmet) != NULL) {
 		text.setColor(sf::Color::Black);
-		text.setCharacterSize(13U);
+		text.setCharacterSize(14U);
 		Pouzitelny* pouzitelny = (Pouzitelny*)predmet;
 		std::string info = "";
 

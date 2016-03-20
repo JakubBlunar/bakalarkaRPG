@@ -78,14 +78,14 @@ void StavInfoHraca::render() {
 		okno->draw(text);
 
 		int lvl = hrac->Getstatistika()->dajUroven();
-		text.setCharacterSize(30U);
+		text.setCharacterSize(33U);
 		text.setString("Level: " + std::to_string(lvl));
 		text.setPosition(sf::Vector2f(38.f, 91.f));
 		okno->draw(text);
 
 		int xpTeraz = hrac->Getstatistika()->Getskusenosti();
 		int xpNaDalsi = hrac->GetZameranie()->xpNaLevel(lvl+1);
-		text.setCharacterSize(15U);
+		text.setCharacterSize(18U);
 		text.setString("Experience: " + std::to_string(xpTeraz) + " / " + std::to_string(xpNaDalsi));
 		text.setPosition(sf::Vector2f(15.f, 135.f));
 		okno->draw(text);
@@ -392,7 +392,7 @@ void StavInfoHraca::render() {
 					info += "Cooldown: " + floattostring(akcia->Getcooldown() / 1000.f) + " s\n";
 				}
 
-				text.setCharacterSize(13);
+				text.setCharacterSize(17);
 				text.setString(info);
 				text.setPosition(sf::Vector2f(kuzlaStartX + 5, kuzlaStartY + 205));
 				okno->draw(text);
@@ -499,7 +499,7 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 
 	obdlznik.setPosition(sf::Vector2f(posX, posY));
 	// tu už je samotny vypis infa
-	sf::Text text(predmet->Getmeno(), *font, 14U);//vypisanie mena
+	sf::Text text(predmet->Getmeno(), *font, 18U);//vypisanie mena
 	if (text.getGlobalBounds().width > obdlznik.getGlobalBounds().width - 5) {
 		obdlznik.setSize(sf::Vector2f(text.getGlobalBounds().width + 20, 200));
 	}
@@ -514,7 +514,7 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 	okno->draw(text);
 
 
-	text.setCharacterSize(10U);
+	text.setCharacterSize(14U);
 	text.setString(predmet->Getstringovytyp());
 	text.setPosition(sf::Vector2f(posX + 5.f, posY + 23.f));
 	okno->draw(text);
@@ -525,7 +525,7 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 	okno->draw(text);
 
 		text.setColor(sf::Color::Black);
-		text.setCharacterSize(13U);
+		text.setCharacterSize(14U);
 		Pouzitelny* pouzitelny = (Pouzitelny*)predmet;
 		std::string bonusy = "";
 

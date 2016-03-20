@@ -126,9 +126,6 @@
     <ClInclude Include="Statistika.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StavLoading.h">
-      <Filter>Header Files\Stavy</Filter>
-    </ClInclude>
     <ClInclude Include="Predmet.h">
       <Filter>Header Files\Inventar</Filter>
     </ClInclude>
@@ -291,9 +288,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StavInfoHraca.cpp">
-      <Filter>Source Files\Stavy</Filter>
-    </ClCompile>
-    <ClCompile Include="StavLoading.cpp">
       <Filter>Source Files\Stavy</Filter>
     </ClCompile>
     <ClCompile Include="Loader.cpp">

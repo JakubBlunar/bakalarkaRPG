@@ -4,6 +4,7 @@
          "subor" : "quest1"
       }
    ],
+   "hp" : 1,
    "inventar" : {
       "kapacita" : 36,
       "predmety" : [
@@ -59,16 +60,70 @@
             "typ" : 9,
             "typTriedy" : "zbran",
             "uroven" : 1
+         },
+         {
+            "cena" : 64,
+            "hp" : 0,
+            "hpMult" : 0,
+            "intelekt" : 0,
+            "intelektMult" : 0,
+            "maxDmg" : 0,
+            "meno" : "mage Shield of war ",
+            "minDmg" : 0,
+            "mp" : 0,
+            "mpMult" : 0,
+            "obrana" : 4,
+            "obranaMult" : 0,
+            "obrazok" : "9",
+            "rychlost" : 0,
+            "rychlostMult" : 0,
+            "rychlostUtoku" : 2000000,
+            "sila" : 0,
+            "silaMult" : 0,
+            "typ" : 11,
+            "typTriedy" : "zbran",
+            "uroven" : 1
+         },
+         {
+            "cena" : 625,
+            "meno" : "Hp potion",
+            "oKolko" : 125,
+            "obrazok" : "elixir",
+            "stat" : "hp",
+            "typ" : 12,
+            "typTriedy" : "elixir",
+            "uroven" : 1
+         },
+         {
+            "cena" : 10,
+            "hp" : 0,
+            "hpMult" : 0,
+            "intelekt" : 0,
+            "intelektMult" : 0,
+            "meno" : "Herb",
+            "mp" : 0,
+            "mpMult" : 0,
+            "obrana" : 0,
+            "obranaMult" : 0,
+            "obrazok" : "kvet",
+            "rychlost" : 0,
+            "rychlostMult" : 0,
+            "sila" : 0,
+            "silaMult" : 0,
+            "typ" : 13,
+            "typTriedy" : "oblecenie",
+            "uroven" : 1
          }
       ],
-      "zlato" : 1058
+      "zlato" : 1076
    },
    "mapa" : {
-      "orientacia" : 3,
-      "posX" : 8,
-      "posY" : 8,
+      "orientacia" : 1,
+      "posX" : 17,
+      "posY" : 13,
       "subor" : "start"
    },
+   "mp" : 29,
    "nedokonceneQuesty" : [
       {
          "poziadavky" : null,
@@ -120,6 +175,6 @@
          "uroven" : 1
       }
    ],
-   "skusenosti" : 29,
+   "skusenosti" : 34,
    "zameranie" : "Warrior"
 }

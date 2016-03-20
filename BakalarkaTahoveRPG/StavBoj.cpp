@@ -34,7 +34,7 @@ StavBoj::StavBoj(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra):Stav
 	}
 	
 	sf::Sprite* spr = new sf::Sprite();
-	doInventara = new Tlacidlo(spr, spr, "Inventory", sf::Vector2f(90, 600), sf::Vector2f(120,35), font, 25U);
+	doInventara = new Tlacidlo(spr, spr, " Inventory", sf::Vector2f(90, 600), sf::Vector2f(120,35), font, 25U);
 	
 }
 
@@ -99,7 +99,7 @@ void StavBoj::render() {
 	for (std::map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
 	{
 		sf::Sprite* obrazok = it->first->Getobrazok();
-		obrazok->setPosition(310.f + (obrazok->getGlobalBounds().width +3)*i, okno->getSize().y - obrazok->getGlobalBounds().height - 5.f-200.f);
+		obrazok->setPosition(310.f + (obrazok->getGlobalBounds().width +3)*i, okno->getSize().y - obrazok->getGlobalBounds().height - 210.f);
 		sf::Text trvanie(floattostring(-(boj->Getcasvboji().asSeconds() - it->second.asSeconds())),*font,13U);
 		trvanie.setPosition(obrazok->getGlobalBounds().left, obrazok->getGlobalBounds().top + obrazok->getGlobalBounds().height - trvanie.getGlobalBounds().height-1);
 		trvanie.setColor(sf::Color::White);
@@ -164,7 +164,7 @@ void StavBoj::render() {
 	okno->draw(mpBarZadny);
 	okno->draw(mpBarPredny);
 
-	sf::Text text("", *font, 18U);
+	sf::Text text("", *font, 22U);
 	text.setColor(sf::Color::Black);
 
 	text.setString(std::to_string(hracHp) + "/" + std::to_string(hracMaxHp));
@@ -365,14 +365,9 @@ void StavBoj::vykresliInfoAkcie(Akcia* akcia, sf::Vector2f pozicia) {
 	akciaInfo.setFillColor(sf::Color::White);
 	akciaInfo.setOutlineThickness(2);
 	akciaInfo.setOutlineColor(sf::Color::Red);
-	akciaInfo.setSize(sf::Vector2f(300, 180));
-	akciaInfo.setPosition(pozicia.x +40, pozicia.y  - akciaInfo.getSize().y + 10);
-	okno->draw(akciaInfo);
+	akciaInfo.setPosition(pozicia.x + 40, pozicia.y - akciaInfo.getSize().y + 10);
 
-	sf::Text popisAkcie(akcia->Getmeno(), *font, 18U);
-	popisAkcie.setColor(sf::Color::Black);
-	popisAkcie.setPosition(akciaInfo.getGlobalBounds().left + 3, akciaInfo.getGlobalBounds().top + 3);
-	okno->draw(popisAkcie);
+
 
 	std::string popis = akcia->dajPopis() + "\n";
 
@@ -408,11 +403,25 @@ void StavBoj::vykresliInfoAkcie(Akcia* akcia, sf::Vector2f pozicia) {
 		popis += "Cooldown:" + floattostring(akcia->Getcooldown()/1000.f) + " s\n";
 	}
 
+	sf::Text popisAkcie(akcia->Getmeno(), *font, 18U);
 
+	
 
-	popisAkcie.setString(popis);
+	popisAkcie.setColor(sf::Color::Black);
+	
+	popisAkcie.setString(akcia->Getmeno()+"\n"+popis);
 	popisAkcie.setCharacterSize(14);
-	popisAkcie.setPosition(akciaInfo.getGlobalBounds().left + 3, akciaInfo.getGlobalBounds().top + 25);
+	
+
+	akciaInfo.setSize(sf::Vector2f(popisAkcie.getGlobalBounds().width + 15.f, popisAkcie.getGlobalBounds().height + 20.f));
+
+	if (akciaInfo.getGlobalBounds().left + akciaInfo.getGlobalBounds().width >= okno->getSize().x) {
+		akciaInfo.setPosition(akciaInfo.getPosition().x - akciaInfo.getGlobalBounds().width, akciaInfo.getPosition().y);
+	}
+
+	popisAkcie.setPosition(akciaInfo.getGlobalBounds().left + 5, akciaInfo.getGlobalBounds().top + 3);
+	okno->draw(akciaInfo);
+
 	okno->draw(popisAkcie);
 
 }

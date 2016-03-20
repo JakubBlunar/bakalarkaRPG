@@ -86,7 +86,7 @@ void Stav::render() {
 
 
 			sf::RectangleShape pozadie;
-			sf::Text text("", *font, 17);
+			sf::Text text("", *font, 20);
 			PopupOkno* pop = popupText.at(0);
 
 			if (!pop->skoncil()) {
@@ -97,7 +97,7 @@ void Stav::render() {
 			}
 
 
-			pozadie.setSize(sf::Vector2f(okno->getSize().x - 50.f, text.getGlobalBounds().height + 10.f));
+			pozadie.setSize(sf::Vector2f(okno->getSize().x - 50.f, text.getGlobalBounds().height + 25.f));
 			pozadie.setOutlineColor(sf::Color::Red);
 			pozadie.setOutlineThickness(2);
 			pozadie.setPosition(sf::Vector2f(23, okno->getSize().y - pozadie.getSize().y - 100));

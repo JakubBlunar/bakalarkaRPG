@@ -46,13 +46,13 @@ void StavDialog::render() {
 
 	if (dialog != nullptr) {
 
-		sf::Text text(npc->Getmeno() +"(npc): " + dialog->Getaktualnapolozka()->Gettext(), *font, 25U);
+		sf::Text text(npc->Getmeno() +" (npc): " + dialog->Getaktualnapolozka()->Gettext(), *font, 28U);
 		text.setPosition(sf::Vector2f(10.f, 10.f));
 		okno->draw(text);
 
 		float y = 15.f + text.getGlobalBounds().height;
 
-		text.setCharacterSize(20U);
+		text.setCharacterSize(23U);
 		for (int i = 0; i < dialog->Getaktualnapolozka()->pocetMoznosti(); i++) {
 			if (oznacene == i) {
 				text.setColor(sf::Color::Green);
