@@ -194,6 +194,7 @@
     <ClInclude Include="StavVolbaZamerania.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Tlacidlo.h" />
+    <ClInclude Include="VolbaBoj.h" />
     <ClInclude Include="VolbaObchodovanie.h" />
     <ClInclude Include="VolbaPredQpolozkou.h" />
     <ClInclude Include="VolbaUpravaQuestu.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="StavVolbaZamerania.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Tlacidlo.cpp" />
+    <ClCompile Include="VolbaBoj.cpp" />
     <ClCompile Include="VolbaObchodovanie.cpp" />
     <ClCompile Include="VolbaPredQpolozkou.cpp" />
     <ClCompile Include="VolbaUpravaQuestu.cpp" />

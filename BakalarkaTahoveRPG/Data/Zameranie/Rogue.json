@@ -1,0 +1,72 @@
+{
+  "nazov": "Rogue",
+  "rastHp": 475,
+  "rastMp": 450,
+  "rastSila": 60,
+  "rastRychlost": 80,
+  "rastIntelekt": 40,
+  "akcie": {
+    "1": {
+      "meno": "Assassin's Reflexes",
+      "trieda": "pridanieEfektu",
+      "obrazok": "9",
+      "casCastenia": 500,
+      "cooldown": 5000,
+      "trvanie": 20000,
+      "popis": "Your speed will be increased.",
+      "mana": 5,
+      "efekt": {
+        "typ": "upravStat",
+        "stat": "rychlost",
+        "zaklad": 40,
+        "naHraca": true
+      },
+
+      "uroven": 4
+    },
+    "2": {
+      "trieda": "pridanieEfektu",
+      "meno": "Kick",
+      "obrazok": "5",
+      "casCastenia": 500,
+      "cooldown": 0,
+      "trvanie": 15000,
+      "popis": "Rogue kick enemy to decrease his speed.",
+      "mana": 4,
+      "efekt": {
+        "typ": "upravStat",
+        "stat": "rychlost",
+        "zaklad": -30,
+        "naHraca": false
+      },
+
+      "uroven": 6
+    },
+    "3": {
+      "trieda": "akcialiecenie",
+      "meno": "First aid",
+      "obrazok": "healing1",
+      "casCastenia": 3000,
+      "cooldown": 5000,
+      "trvanie": 20,
+      "popis": "Heal you for small amount of Health",
+      "mana": 7,
+      "typ": "magicka",
+      "zaklad": 0.5,
+      "uroven": 7
+    },
+    "4": {
+      "trieda": "akciadmg",
+      "meno": "Sinister Strike",
+      "obrazok": "3",
+      "casCastenia": 1000,
+      "cooldown": 2000,
+      "trvanie": 0,
+      "popis": "Power attack with your weapon dealing masive damage to your enemy.",
+      "mana": 3,
+      "typ": "fyzicka",
+      "zaklad": 1,
+      "uroven": 2
+    }
+  }
+}

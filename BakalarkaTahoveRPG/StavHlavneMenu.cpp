@@ -14,10 +14,18 @@ StavHlavneMenu::StavHlavneMenu(std::string paNazov, sf::RenderWindow* paOkno,Hra
 	normalne->setTextureRect(sf::IntRect(0, 0, 48, 48));
 	normalne->setColor(sf::Color(0, 0, 0, 255));
 
-	tlacidla.push_back(new Tlacidlo(normalne, normalne, "New game", sf::Vector2f(10, 10), sf::Vector2f(500, 80), font, 85));
-	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Load save", sf::Vector2f(10, 110), sf::Vector2f(500, 80), font,85));
-	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Exit", sf::Vector2f(10, 200), sf::Vector2f(500, 80), font, 85));
+
+
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "New game", sf::Vector2f(0, 150), sf::Vector2f(500, 0), font, 85));
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Load save", sf::Vector2f(0, 260), sf::Vector2f(500, 0), font,85));
+	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Exit", sf::Vector2f(0, 350), sf::Vector2f(500, 0), font, 85));
 	
+	for (int i = 0; i < tlacidla.size(); i++) {
+		Tlacidlo* t = tlacidla.at(i);
+		t->setSize(sf::Vector2f(t->Gettext().getGlobalBounds().width, t->Gettext().getGlobalBounds().height));
+		t->Setpozicia(sf::Vector2f(paOkno->getSize().x / 2 - t->getSize().x/2,t->Gettext().getPosition().y));
+	}
+
 	stlacenaMys = true;
 	oznacene = 0;
 
@@ -49,10 +57,8 @@ void StavHlavneMenu::render() {
 
 	for (unsigned int i = 0; i < tlacidla.size(); i++)
 	{
-		
-		okno->draw(*tlacidla.at(i)->Getsprite());
 		sf::Text text = tlacidla.at(i)->Gettext();
-
+		text.setPosition(text.getPosition().x, text.getPosition().y - text.getCharacterSize()/2 +3);
 		if(oznacene == i){
 			text.setColor(sf::Color::Blue);
 		}

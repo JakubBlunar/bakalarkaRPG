@@ -1,0 +1,17 @@
+{
+  "dvere": {
+     "1": {
+      "x": 68,
+      "y": 12,
+      "kam": "jaskyna",
+      "poziciaX": 13,
+      "poziciaY": 19,
+      "smerPohladu": 0
+    }
+  },
+  "nepriatelia": [ ],
+  "hrobX": 14,
+  "hrobY": 8,
+
+  "questy": [ ]
+}

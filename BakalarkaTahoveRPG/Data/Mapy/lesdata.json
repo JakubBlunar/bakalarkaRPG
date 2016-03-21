@@ -1,34 +1,66 @@
 {
   "dvere": {
     "1": {
-      "x": 0,
-      "y": 16,
-      "kam": "start",
-      "poziciaX": 10,
-      "poziciaY": 10,
+      "x": 13,
+      "y": 25,
+      "kam": "jaskyna",
+      "poziciaX": 140,
+      "poziciaY": 67,
       "smerPohladu": 0
     },
-    "2": {
-      "x": 0,
-      "y": 17,
-      "kam": "start",
-      "poziciaX": 10,
-      "poziciaY": 10,
+     "2": {
+      "x": 57,
+      "y": 71,
+      "kam": "stvrta",
+      "poziciaX": 13,
+      "poziciaY": 7,
       "smerPohladu": 1
     },
     "3": {
-      "x": 0,
-      "y": 18,
-      "kam": "start",
-      "poziciaX": 10,
-      "poziciaY": 10,
-      "smerPohladu": 2
+      "x": 14,
+      "y": 6,
+      "kam": "stvrta",
+      "poziciaX": 14,
+      "poziciaY": 7,
+      "smerPohladu": 1
+    },
+    "4": {
+      "x": 59,
+      "y": 71,
+      "kam": "stvrta",
+      "poziciaX": 15,
+      "poziciaY": 7,
+      "smerPohladu": 1
+    },
+    "5": {
+      "x": 60,
+      "y": 71,
+      "kam": "stvrta",
+      "poziciaX": 16,
+      "poziciaY": 7,
+      "smerPohladu": 1
+    },
+    "6": {
+      "x": 61,
+      "y": 71,
+      "kam": "stvrta",
+      "poziciaX": 17,
+      "poziciaY": 7,
+      "smerPohladu": 1
+    },
+    "7": {
+      "x": 62,
+      "y": 71,
+      "kam": "stvrta",
+      "poziciaX": 18,
+      "poziciaY": 7,
+      "smerPohladu": 1
     }
 
   },
   "nepriatelia": [ "sliz1", "medved1", "murlock1" ],
-  "hrobX": 10,
-  "hrobY": 10,
+  "hrobX": 14,
+  "hrobY": 26,
 
   "questy": [ ]
 }

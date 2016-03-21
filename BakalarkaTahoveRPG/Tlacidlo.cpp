@@ -79,6 +79,14 @@ sf::RectangleShape Tlacidlo::Getramcek() {
 	return ramcek;
 }
 
+void Tlacidlo::setSize(sf::Vector2f paVelkost) {
+	velkost = paVelkost;
+}
+
 void Tlacidlo::Setpozicia(sf::Vector2f paPozicia) {
 	pozicia = paPozicia;
+}
+
+sf::Vector2f Tlacidlo::getSize() {
+	return velkost;
 }

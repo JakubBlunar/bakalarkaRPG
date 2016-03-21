@@ -1,0 +1,86 @@
+{
+  "nazov": "Mage",
+  "rastHp": 400,
+  "rastMp": 550,
+  "rastSila": 40,
+  "rastRychlost": 60,
+  "rastIntelekt": 80,
+  "akcie": {
+    "1": {
+      "meno": "Arcane brilance",
+      "trieda": "pridanieEfektu",
+      "obrazok": "13",
+      "casCastenia": 500,
+      "cooldown": 5000,
+      "trvanie": 20000,
+      "popis": "Your intellect will be increased.",
+      "mana": 6,
+      "efekt": {
+        "typ": "upravStat",
+        "stat": "intel",
+        "zaklad": 30,
+        "naHraca": true
+      },
+
+      "uroven": 7
+    },
+    "2": {
+      "trieda": "pridanieEfektu",
+      "meno": "Daemonic curse",
+      "obrazok": "22",
+      "casCastenia": 500,
+      "cooldown": 0,
+      "trvanie": 15000,
+      "popis": "Decrease strenght of enemy.",
+      "mana": 5,
+      "efekt": {
+        "typ": "upravStat",
+        "stat": "sila",
+        "zaklad": -30,
+        "naHraca": false
+      },
+
+      "uroven": 6
+    },
+    "3": {
+      "trieda": "akcialiecenie",
+      "meno": "Flash heal",
+      "obrazok": "2",
+      "casCastenia": 3000,
+      "cooldown": 5000,
+      "trvanie": 20,
+      "popis": "Heal you for small amount of Health",
+      "mana": 7,
+      "typ": "magicka",
+      "zaklad": 0.3,
+      "uroven": 4
+    },
+    "4": {
+      "trieda": "akciadmg",
+      "meno": "Fireball",
+      "obrazok": "15",
+      "casCastenia": 1500,
+      "cooldown": 0,
+      "trvanie": 0,
+      "popis": "Mage create big fireball and throw it to enemy.",
+      "mana": 2,
+      "typ": "magicka",
+      "zaklad": 1,
+      "uroven": 2
+    },
+    "5": {
+      "trieda": "akciadmg",
+      "meno": "Fireblast",
+      "obrazok": "11",
+      "casCastenia": 1000,
+      "cooldown": 5000,
+      "trvanie": 0,
+      "popis": "Mage blasts enemy with fire.",
+      "mana": 5,
+      "typ": "magicka",
+      "zaklad": 1.3,
+      "uroven": 3
+    }
+
+  }
+}

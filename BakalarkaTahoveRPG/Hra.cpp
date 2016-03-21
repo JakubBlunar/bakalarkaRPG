@@ -106,6 +106,8 @@ void Hra::hlavnaSlucka() {
 			okno->clear();
 			stavRozhraniaHry->render();
 		}
+
+
 		okno->display();
 	}
 

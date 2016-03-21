@@ -24,6 +24,7 @@
 #include "PolickoBoj.h"
 #include "VolbaUpravaQuestu.h"
 #include "VolbaPredQpolozkou.h"
+#include "VolbaBoj.h"
 
 #include "Statistika.h"
 #include "Akcia.h"
@@ -126,6 +127,10 @@ DialogovyStrom* Loader::nacitajDialog(string paMeno) {
 			}
 			else if (typ == "liecenie") {
 				polozka->pridajMoznost(new VolbaVyliecenie(volbaText, dalsia));
+			}
+			else if (typ == "boj") {
+				string nepriatel = volbaData["nepriatel"].asString();
+				polozka->pridajMoznost(new VolbaBoj(volbaText, dalsia, nepriatel));
 			}
 		}
 
@@ -245,18 +250,18 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 			}
 		}
 
-		for (int i = 0; i < vyska; i++) {
-			for (int j = 0; j < sirka; j++) {
+		for (int i = 0; i < sirka; i++) {
+			for (int j = 0; j < vyska; j++) {
 
-				int idTextury1 = root["Vrstva1"][i*vyska + j].asInt();
-				int idTextury2 = root["Vrstva2"][i*vyska + j].asInt();
-				int idTextury3 = root["Vrstva3"][i*vyska + j].asInt();
-				int idTextury4 = root["boj"][i*vyska + j].asInt();
+				int idTextury1 = root["Vrstva1"][j*sirka + i].asInt();
+				int idTextury2 = root["Vrstva2"][j*sirka + i].asInt();
+				int idTextury3 = root["Vrstva3"][j*sirka + i].asInt();
+				int idTextury4 = root["boj"][j*sirka + i].asInt();
 
 				Policko* policko = nullptr;
 
-				if (polickoDvere[j][i] != nullptr) {
-					policko = polickoDvere[j][i];
+				if (polickoDvere[i][j] != nullptr) {
+					policko = polickoDvere[i][j];
 
 				}
 				else {
@@ -283,7 +288,7 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 					policko->nastavTexturu(textury[idTextury3], 2);
 				}
 
-				novaMapa->nastavPolicko(j, i, policko);
+				novaMapa->nastavPolicko(i,j, policko);
 
 			}
 

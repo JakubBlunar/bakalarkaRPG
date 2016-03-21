@@ -35,7 +35,7 @@ void PolickoBoj::hracSkok(Hrac* paHrac) {
 	std::uniform_real_distribution<double> real(0, 1);
 	double p = real(generator);
 
-	if (0.1 >= p) {
+	if (0.15 >= p) {
 
 		std::vector<std::string>* moznyNepriatelia = mapa->Getmoznynepriatelia();
 		if (moznyNepriatelia->size() > 0) {

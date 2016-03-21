@@ -80,7 +80,7 @@ void StavInfoHraca::render() {
 		int lvl = hrac->Getstatistika()->dajUroven();
 		text.setCharacterSize(33U);
 		text.setString("Level: " + std::to_string(lvl));
-		text.setPosition(sf::Vector2f(38.f, 91.f));
+		text.setPosition(sf::Vector2f(32.f, 91.f));
 		okno->draw(text);
 
 		int xpTeraz = hrac->Getstatistika()->Getskusenosti();

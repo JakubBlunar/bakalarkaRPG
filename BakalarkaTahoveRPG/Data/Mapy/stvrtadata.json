@@ -1,0 +1,59 @@
+{
+  "dvere": {
+    "1": {
+      "x": 13,
+      "y": 6,
+      "kam": "les",
+      "poziciaX": 57,
+      "poziciaY": 70,
+      "smerPohladu": 0
+    },
+    "2": {
+      "x": 14,
+      "y": 6,
+      "kam": "les",
+      "poziciaX": 58,
+      "poziciaY": 70,
+      "smerPohladu": 0
+    },
+    "3": {
+      "x": 15,
+      "y": 6,
+      "kam": "les",
+      "poziciaX": 59,
+      "poziciaY": 70,
+      "smerPohladu": 0
+    },
+    "4": {
+      "x": 16,
+      "y": 6,
+      "kam": "les",
+      "poziciaX": 60,
+      "poziciaY": 70,
+      "smerPohladu": 0
+    },
+    "5": {
+      "x": 17,
+      "y": 6,
+      "kam": "les",
+      "poziciaX": 61,
+      "poziciaY": 70,
+      "smerPohladu": 0
+    },
+    "6": {
+      "x": 18,
+      "y": 6,
+      "kam": "les",
+      "poziciaX": 62,
+      "poziciaY": 70,
+      "smerPohladu": 0
+    }
+
+
+  },
+  "nepriatelia": [ ],
+  "hrobX": 18,
+  "hrobY": 8,
+
+  "questy": [ ]
+}

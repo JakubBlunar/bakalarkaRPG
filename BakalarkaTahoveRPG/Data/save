@@ -1,180 +1,20 @@
 {
-   "dokonceneQuesty" : [
-      {
-         "subor" : "quest1"
-      }
-   ],
-   "hp" : 1,
+   "dokonceneQuesty" : null,
+   "hp" : 61,
    "inventar" : {
       "kapacita" : 36,
-      "predmety" : [
-         {
-            "cena" : 15,
-            "meno" : "Maly Hp elixir",
-            "oKolko" : 50,
-            "obrazok" : "elixir",
-            "stat" : "hp",
-            "typ" : 12,
-            "typTriedy" : "elixir",
-            "uroven" : 1
-         },
-         {
-            "cena" : 15,
-            "meno" : "Maly Hp elixir",
-            "oKolko" : 50,
-            "obrazok" : "elixir",
-            "stat" : "hp",
-            "typ" : 12,
-            "typTriedy" : "elixir",
-            "uroven" : 1
-         },
-         {
-            "cena" : 250,
-            "meno" : "Mp potion",
-            "oKolko" : 50,
-            "obrazok" : "manae",
-            "stat" : "mp",
-            "typ" : 12,
-            "typTriedy" : "elixir",
-            "uroven" : 1
-         },
-         {
-            "cena" : 100,
-            "hp" : 0,
-            "hpMult" : 0,
-            "intelekt" : 0,
-            "intelektMult" : 0,
-            "maxDmg" : 2,
-            "meno" : "Small sword",
-            "minDmg" : 1,
-            "mp" : 0,
-            "mpMult" : 0,
-            "obrana" : 0,
-            "obranaMult" : 0,
-            "obrazok" : "1",
-            "rychlost" : 0,
-            "rychlostMult" : 0,
-            "rychlostUtoku" : 2000,
-            "sila" : 0,
-            "silaMult" : 0,
-            "typ" : 9,
-            "typTriedy" : "zbran",
-            "uroven" : 1
-         },
-         {
-            "cena" : 64,
-            "hp" : 0,
-            "hpMult" : 0,
-            "intelekt" : 0,
-            "intelektMult" : 0,
-            "maxDmg" : 0,
-            "meno" : "mage Shield of war ",
-            "minDmg" : 0,
-            "mp" : 0,
-            "mpMult" : 0,
-            "obrana" : 4,
-            "obranaMult" : 0,
-            "obrazok" : "9",
-            "rychlost" : 0,
-            "rychlostMult" : 0,
-            "rychlostUtoku" : 2000000,
-            "sila" : 0,
-            "silaMult" : 0,
-            "typ" : 11,
-            "typTriedy" : "zbran",
-            "uroven" : 1
-         },
-         {
-            "cena" : 625,
-            "meno" : "Hp potion",
-            "oKolko" : 125,
-            "obrazok" : "elixir",
-            "stat" : "hp",
-            "typ" : 12,
-            "typTriedy" : "elixir",
-            "uroven" : 1
-         },
-         {
-            "cena" : 10,
-            "hp" : 0,
-            "hpMult" : 0,
-            "intelekt" : 0,
-            "intelektMult" : 0,
-            "meno" : "Herb",
-            "mp" : 0,
-            "mpMult" : 0,
-            "obrana" : 0,
-            "obranaMult" : 0,
-            "obrazok" : "kvet",
-            "rychlost" : 0,
-            "rychlostMult" : 0,
-            "sila" : 0,
-            "silaMult" : 0,
-            "typ" : 13,
-            "typTriedy" : "oblecenie",
-            "uroven" : 1
-         }
-      ],
-      "zlato" : 1076
+      "predmety" : null,
+      "zlato" : 41170
    },
    "mapa" : {
-      "orientacia" : 1,
-      "posX" : 17,
-      "posY" : 13,
-      "subor" : "start"
+      "orientacia" : 2,
+      "posX" : 14,
+      "posY" : 8,
+      "subor" : "prva"
    },
-   "mp" : 29,
-   "nedokonceneQuesty" : [
-      {
-         "poziadavky" : null,
-         "subor" : "quest2"
-      }
-   ],
-   "oblecene" : [
-      {
-         "cena" : 50,
-         "hp" : 5,
-         "hpMult" : 0,
-         "intelekt" : 0,
-         "intelektMult" : 0,
-         "meno" : "Brnenie",
-         "mp" : 2,
-         "mpMult" : 0,
-         "obrana" : 2,
-         "obranaMult" : 0,
-         "obrazok" : "ch1",
-         "rychlost" : 0,
-         "rychlostMult" : 0,
-         "sila" : 0,
-         "silaMult" : 0,
-         "typ" : 3,
-         "typTriedy" : "oblecenie",
-         "uroven" : 1
-      },
-      {
-         "cena" : 100,
-         "hp" : 0,
-         "hpMult" : 0,
-         "intelekt" : 0,
-         "intelektMult" : 0,
-         "maxDmg" : 2,
-         "meno" : "Maly mec",
-         "minDmg" : 1,
-         "mp" : 0,
-         "mpMult" : 0,
-         "obrana" : 0,
-         "obranaMult" : 0,
-         "obrazok" : "1",
-         "rychlost" : 0,
-         "rychlostMult" : 0,
-         "rychlostUtoku" : 2000,
-         "sila" : 0,
-         "silaMult" : 0,
-         "typ" : 9,
-         "typTriedy" : "zbran",
-         "uroven" : 1
-      }
-   ],
-   "skusenosti" : 34,
-   "zameranie" : "Warrior"
+   "mp" : 82,
+   "nedokonceneQuesty" : null,
+   "oblecene" : null,
+   "skusenosti" : 410,
+   "zameranie" : "Mage"
 }

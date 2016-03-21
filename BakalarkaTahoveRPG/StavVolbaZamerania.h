@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 #include "Stav.h"
-
+#include <SFML\Graphics.hpp>
 
 class Zameranie;
 
@@ -19,4 +19,20 @@ public:
 	void update(double delta);
 private:
 	signed int oznacene;
+
+	float scale;
+	bool setnuteScale;
+
+	Tlacidlo* tlacidla[3];
+
+	sf::Texture warriorTextura;
+	sf::Sprite warriorObrazok;
+
+	sf::Texture mageTextura;
+	sf::Sprite mageObrazok;
+
+	sf::Texture rogueTextura;
+	sf::Sprite rogueObrazok;
+
+	void zvoleneZameranie(int paIndex);
 };

@@ -15,7 +15,7 @@ Mapa::Mapa(std::string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSir
 	moznyNepriatelia = new std::vector<std::string>();
 	this->menoMapy = menoMapy;
 	this->hrac = paHrac;
-	this->hra = nullptr;
+	this->hra = hram;
 	posunX = 0;
 	posunY = 0;
 	vyska = paVyska;
@@ -100,12 +100,22 @@ void Mapa::render(sf::RenderWindow* okno) {
 	view.reset(sf::FloatRect(posunX + 0.f, posunY + 0.f, okno->getSize().x + 0.f, okno->getSize().y + 0.f));
 	okno->setView(view);
 
+	int odX = posunX / 32 - 2;
+	int doX = (posunX + okno->getSize().x) / 32 + 2;
+	int odY = posunY / 32 - 2;
+	int doY = (posunY + okno->getSize().y) / 32 + 2;
+
+	if (odX < 0) odX = 0;
+	if (doX > sirka) doX = sirka;
+	if (odY < 0) odY = 0;
+	if (doY > vyska) doY = vyska;
+
 	sf::Sprite* sprite;
 	for (int vrstva = 0; vrstva < 4; vrstva++) {
 
-		for (int i = 0; i < sirka; i++)
+		for (int i = odX; i < doX; i++)
 		{
-			for (int j = 0; j < vyska; j++)
+			for (int j = odY; j < doY; j++)
 			{
 
 				sprite = mapa[i][j]->dajObrazokVrstvy(vrstva);
@@ -258,6 +268,7 @@ void Mapa::posunHracaNaPolicko(int x, int y, int smerPohladu) {
 
 	hrac->setPolickoX(x);
 	hrac->setPolickoY(y);
+	
 	if (offsetHracaX > 350) {
 		posunMapyX = offsetHracaX - 6 * 32;
 	}
@@ -265,6 +276,17 @@ void Mapa::posunHracaNaPolicko(int x, int y, int smerPohladu) {
 	if (offsetHracaY > 350) {
 		posunMapyY = offsetHracaY - 5 * 32;
 	}
+
+	if (posunMapyX + hra->okno->getSize().x > sirka * 32) {
+		posunMapyX = sirka * 32 - hra->okno->getSize().x;
+	}
+
+	if (posunMapyY + hra->okno->getSize().y > vyska * 32) {
+		posunMapyY = vyska * 32 - hra->okno->getSize().y;
+	}
+
+
+
 	hrac->setOffsetX(offsetHracaX);
 	hrac->setOffsetY(offsetHracaY);
 	posunX = posunMapyX;

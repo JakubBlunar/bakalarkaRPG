@@ -1,6 +1,6 @@
 {
   "nazov": "Warrior",
-  "rastHp": 600,
+  "rastHp": 500,
   "rastMp": 400,
   "rastSila": 80,
   "rastRychlost": 60,
@@ -44,7 +44,7 @@
     },
     "3": {
       "trieda": "akcialiecenie",
-      "meno": "Slabe Liecenie",
+      "meno": "First aid",
       "obrazok": "healing1",
       "casCastenia": 3000,
       "cooldown": 5000,

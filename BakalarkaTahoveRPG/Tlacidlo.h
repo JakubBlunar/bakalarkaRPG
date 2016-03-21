@@ -14,10 +14,12 @@ public:
 	sf::Text Gettext();
 	bool hover(sf::Vector2i pozicia);
 	sf::Vector2f getPosition();
+	sf::Vector2f getSize();
 	sf::FloatRect getGlobalBounds();
 	sf::RectangleShape Getramcek();
 
 	void Setpozicia(sf::Vector2f paPozicia);
+	void setSize(sf::Vector2f paVelkost);
 
 private:
 	sf::Sprite* normalne;

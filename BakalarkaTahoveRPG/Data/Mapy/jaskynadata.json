@@ -1,0 +1,25 @@
+{
+  "dvere": {
+    "1": {
+      "x": 13,
+      "y": 20,
+      "kam": "prva",
+      "poziciaX": 68,
+      "poziciaY": 13,
+      "smerPohladu": 1
+    },
+    "2": {
+      "x": 140,
+      "y": 68,
+      "kam": "les",
+      "poziciaX": 13,
+      "poziciaY": 26,
+      "smerPohladu": 1
+    }
+  },
+  "nepriatelia": [ ],
+  "hrobX": 14,
+  "hrobY": 19,
+
+  "questy": [ ]
+}
