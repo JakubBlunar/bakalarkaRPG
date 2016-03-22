@@ -114,11 +114,13 @@ void Boj::update() {
 		map<Efekt*, sf::Time>* aktivneEfekty = hrac->Getstatistika()->Getaktivneefekty();
 		for (map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
 		{
+			Efekt* e = it->first;
 			if (it->second <= casovac.getElapsedTime()) {
-				if (it != aktivneEfekty->end() || it->first != nullptr) {
-					hrac->Getstatistika()->zrusEfekt(it->first);
+				if (e != nullptr) {
+					hrac->Getstatistika()->zrusEfekt(e);
+					logBoja.push_front("Player: effect fade off\n" + e->popis());
 				}
-				logBoja.push_front("Player: effect fade off\n" + it->first->popis());
+				
 			}
 		}
 
@@ -127,11 +129,13 @@ void Boj::update() {
 
 		for (map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
 		{
+			Efekt* e = it->first;
 			if (it->second <= casovac.getElapsedTime()) {
-				if (it != aktivneEfekty->end() || it->first != nullptr) {
-					npc->Getstatistika()->zrusEfekt(it->first);
+				if (e != nullptr) {
+					npc->Getstatistika()->zrusEfekt(e);
+					logBoja.push_front("Npc: effect fade off\n" + e->popis());
 				}
-				logBoja.push_front("Npc: effect fade off\n" + it->first->popis());
+				
 			}
 		}
 

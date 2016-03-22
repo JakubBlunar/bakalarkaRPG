@@ -49,12 +49,9 @@ StavVolbaZamerania::StavVolbaZamerania(std::string paNazov, sf::RenderWindow* pa
 	normalne->setTextureRect(sf::IntRect(0, 0, 48, 48));
 	normalne->setColor(sf::Color(0, 0, 0, 255));
 
-
 	tlacidla[0] = new Tlacidlo(normalne, normalne, "", sf::Vector2f(0, 150), sf::Vector2f(500, 0), font, 85);
 	tlacidla[1] = new Tlacidlo(normalne, normalne, "", sf::Vector2f(0, 260), sf::Vector2f(500, 0), font, 85);
 	tlacidla[2] = new Tlacidlo(normalne, normalne, "", sf::Vector2f(0, 350), sf::Vector2f(500, 0), font, 85);
-
-
 }
 
 
@@ -232,12 +229,6 @@ void StavVolbaZamerania::zvoleneZameranie(int paIndex) {
 		zameranie = Loader::Instance()->nacitajZameranie("Warrior");
 	}
 	else if (paIndex == 2) {
-		/*
-		zameranie = new Zameranie("Mage", 500, 600, 40, 80, 60);
-		zameranie->vlozAkciu(new AkciaDmg("Fireball", "attack", 2000, 0, 0, "Postava vrhne po nepriatelovi ohnivu gulu.", 3, AkciaTyp::MAGICKA, 2), 2);
-		zameranie->vlozAkciu(new AkciaDmg("FireBlast", "attack", 500, 5000, 0, "Postava vrhne po nepriatelovi ohnivu gulu.", 3, AkciaTyp::MAGICKA, 3), 4);
-		zameranie->vlozAkciu(new AkciaLiecenie("Liecenie:", "healing1", 3000, 3000, 20, "Vylieci ta!", 1, AkciaTyp::MAGICKA, 1), 6);
-		*/
 		zameranie = Loader::Instance()->nacitajZameranie("Mage");
 	}
 	else {

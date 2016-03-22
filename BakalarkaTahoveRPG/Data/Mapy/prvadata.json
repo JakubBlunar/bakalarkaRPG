@@ -9,7 +9,7 @@
       "smerPohladu": 0
     }
   },
-  "nepriatelia": [ ],
+  "nepriatelia": [ "sliz1", "medved1", "murlock1" ],
   "hrobX": 14,
   "hrobY": 8,
 
