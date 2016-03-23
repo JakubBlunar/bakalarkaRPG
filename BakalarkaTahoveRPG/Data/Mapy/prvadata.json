@@ -1,6 +1,6 @@
 {
   "dvere": {
-     "1": {
+    "1": {
       "x": 68,
       "y": 12,
       "kam": "jaskyna",
@@ -9,9 +9,20 @@
       "smerPohladu": 0
     }
   },
-  "nepriatelia": [ "sliz1", "medved1", "murlock1" ],
+
   "hrobX": 14,
   "hrobY": 8,
 
-  "questy": [ ]
+  "questy": [ "quest1", "quest2" ],
+
+  "oblasti": [
+    {
+      "x1": 0,
+      "y1": 0,
+      "x2": 200,
+      "y2": 200,
+      "nepriatelia": [ "sliz1", "medved1", "murlock1" ]
+    }
+  ]
+
 }

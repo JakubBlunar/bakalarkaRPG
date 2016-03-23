@@ -137,7 +137,10 @@ void Hra::init() {
 	loader = Loader::Instance();
 	focus = true;
 
-	okno = new sf::RenderWindow(sf::VideoMode(1024, 730), NAZOV,sf::Style::Titlebar|sf::Style::Close);
+	okno = new sf::RenderWindow(sf::VideoMode(1024, 700), NAZOV,sf::Style::Titlebar|sf::Style::Close);
 	okno->setFramerateLimit(60);
 	okno->setVerticalSyncEnabled(true);
+	if (sf::VideoMode::getDesktopMode().height < 769) {
+		okno->setPosition(sf::Vector2i(okno->getPosition().x, 0));
+	}
 }

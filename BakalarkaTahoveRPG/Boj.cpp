@@ -111,50 +111,71 @@ void Boj::update() {
 		casovac.pause();
 
 		//bonusy hraca
+
+
+		vector<Efekt* >trebaZmazatEfekty;
+
 		map<Efekt*, sf::Time>* aktivneEfekty = hrac->Getstatistika()->Getaktivneefekty();
 		for (map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
 		{
-			Efekt* e = it->first;
 			if (it->second <= casovac.getElapsedTime()) {
-				if (e != nullptr) {
-					hrac->Getstatistika()->zrusEfekt(e);
-					logBoja.push_front("Player: effect fade off\n" + e->popis());
-				}
-				
+				trebaZmazatEfekty.push_back(it->first);
 			}
 		}
+
+		for (auto e : trebaZmazatEfekty) {
+			hrac->Getstatistika()->zrusEfekt(e);
+			logBoja.push_front("Player: effect fade off\n" + e->popis());
+		}
+
+		trebaZmazatEfekty.clear();
+
+
 
 		//bonusy npc
 		aktivneEfekty = npc->Getstatistika()->Getaktivneefekty();
 
 		for (map<Efekt*, sf::Time>::iterator it = aktivneEfekty->begin(); it != aktivneEfekty->end(); ++it)
 		{
-			Efekt* e = it->first;
 			if (it->second <= casovac.getElapsedTime()) {
-				if (e != nullptr) {
-					npc->Getstatistika()->zrusEfekt(e);
-					logBoja.push_front("Npc: effect fade off\n" + e->popis());
-				}
-				
+				trebaZmazatEfekty.push_back(it->first);	
 			}
 		}
 
+		for (auto e : trebaZmazatEfekty) {
+			npc->Getstatistika()->zrusEfekt(e);
+			logBoja.push_front("Npc: effect fade off\n" + e->popis());
+		}
 
+		trebaZmazatEfekty.clear();
+
+		
+		vector<Akcia* >trebaZmazatAkcie;
 		//aktualizuje cooldowny hraca
 		for (map<Akcia*, int>::iterator it = hracCooldowny.begin(); it != hracCooldowny.end(); ++it)
 		{
 			if (it->second <= casovac.getElapsedTime().asMilliseconds()) {
-				hracCooldowny.erase(it->first);
+				trebaZmazatAkcie.push_back(it->first);
 			}
 		}
+
+		for (auto e : trebaZmazatAkcie) {
+			hracCooldowny.erase(e);
+		}
+		hracCooldowny.clear();
 
 		//aktualizuje cooldowny npc
 		for (map<Akcia*, int>::iterator it = npcCooldowny.begin(); it != npcCooldowny.end(); ++it)
 		{
 			if (it->second <= casovac.getElapsedTime().asMilliseconds()) {
-				npcCooldowny.erase(it->first);
+				trebaZmazatAkcie.push_back(it->first);
 			}
 		}
+
+		for (auto e : trebaZmazatAkcie) {
+			hracCooldowny.erase(e);
+		}
+		hracCooldowny.clear();
 
 
 		if (casovac.getElapsedTime().asMilliseconds() > hracCasVykonaniaAkcie && hracAkcia != nullptr) {

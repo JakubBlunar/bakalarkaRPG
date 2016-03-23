@@ -10,7 +10,7 @@
     {
       "typ": "kill",
       "co": "Murlock",
-      "kolko": 2,
+      "kolko": 4,
       "kde": ""
     }
   ],
@@ -56,7 +56,7 @@
   "polozkaTexty": [
     "Yes, i have got one. There is a lot of murlocks here and they threat people \non they journey. ",
     "As I see , there is still a lot of murlocks.\n Go and kill some more.",
-    "Thank you. You help us a lot. Here , I give you my old sword.\n I hope it will serve you well. ",
+    "Thank you. You help us a lot. Here , I give you my old sword.\n I hope it will serve you well.\nMy friend Karonnka need some herbs.Go and find her some.\nThen deliver them to her she will be happy. ",
     ""
   ],
 
@@ -72,7 +72,7 @@
       "volbaTexty": [
         "Sure I would like to help you.",
         "So i will go now.",
-        "Thank you. ",
+        "Thank you. So i will help Karonnka ",
         ""
       ],
       "typ": "upravaQuestu"

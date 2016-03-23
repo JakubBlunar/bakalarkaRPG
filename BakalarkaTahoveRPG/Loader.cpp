@@ -50,6 +50,7 @@
 #include "Inventar.h"
 #include "Zameranie.h"
 #include <deque>
+#include "Oblast.h"
 
 Loader* Loader::instancia = NULL;
 
@@ -189,12 +190,31 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 		novaMapa = new Mapa(paMeno, this->hra->GetHrac(), this->hra, sirka, vyska);
 
 		novaMapa->setHrobSuradnice(sf::Vector2i(mapaData["hrobX"].asInt(), mapaData["hrobY"].asInt()));
-
+		/*
 		Json::Value nepriatelia(Json::arrayValue);
 		nepriatelia = mapaData["nepriatelia"];
-
+		
 		for (unsigned int i = 0; i < nepriatelia.size(); i++) {
 			novaMapa->pridajNepriatela(nepriatelia[i].asString());
+		}
+		*/
+
+		
+		Json::Value oblasti(Json::arrayValue);
+		oblasti = mapaData["oblasti"];
+		for (unsigned int i = 0; i < oblasti.size(); i++) {
+			Json::Value jOblast(Json::objectValue);
+			jOblast = oblasti[i];
+
+			Oblast o(jOblast["x1"].asInt(), jOblast["y1"].asInt(), jOblast["x2"].asInt(), jOblast["y2"].asInt());
+			
+			Json::Value nepriatelia(Json::arrayValue);
+			nepriatelia = jOblast["nepriatelia"];
+
+			for (unsigned int i = 0; i < nepriatelia.size(); i++) {
+				novaMapa->pridajNepriatela(o,nepriatelia[i].asString());
+			}
+			
 		}
 
 		Json::Value questy(Json::arrayValue);

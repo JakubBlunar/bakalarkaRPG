@@ -1,20 +1,68 @@
 {
    "dokonceneQuesty" : null,
-   "hp" : 61,
+   "hp" : 12,
    "inventar" : {
-      "kapacita" : 36,
-      "predmety" : null,
-      "zlato" : 41170
+      "kapacita" : 54,
+      "predmety" : [
+         {
+            "cena" : 100,
+            "hp" : 0,
+            "hpMult" : 0,
+            "intelekt" : 0,
+            "intelektMult" : 0,
+            "maxDmg" : 200,
+            "meno" : "gm",
+            "minDmg" : 100,
+            "mp" : 0,
+            "mpMult" : 0,
+            "obrana" : 0,
+            "obranaMult" : 0,
+            "obrazok" : "1",
+            "rychlost" : 0,
+            "rychlostMult" : 0,
+            "rychlostUtoku" : 500,
+            "sila" : 0,
+            "silaMult" : 0,
+            "typ" : 9,
+            "typTriedy" : "zbran",
+            "uroven" : 1
+         }
+      ],
+      "zlato" : 4
    },
    "mapa" : {
-      "orientacia" : 2,
-      "posX" : 14,
-      "posY" : 8,
+      "orientacia" : 1,
+      "posX" : 26,
+      "posY" : 21,
       "subor" : "prva"
    },
-   "mp" : 82,
+   "mp" : 16,
    "nedokonceneQuesty" : null,
-   "oblecene" : null,
-   "skusenosti" : 410,
+   "oblecene" : [
+      {
+         "cena" : 51,
+         "hp" : 0,
+         "hpMult" : 0,
+         "intelekt" : 1,
+         "intelektMult" : 0,
+         "maxDmg" : 1,
+         "meno" : "noble Greatsword",
+         "minDmg" : 1,
+         "mp" : 0,
+         "mpMult" : 0,
+         "obrana" : 0,
+         "obranaMult" : 0,
+         "obrazok" : "4",
+         "rychlost" : 0,
+         "rychlostMult" : 0,
+         "rychlostUtoku" : 1000,
+         "sila" : 0,
+         "silaMult" : 0,
+         "typ" : 10,
+         "typTriedy" : "zbran",
+         "uroven" : 1
+      }
+   ],
+   "skusenosti" : 1,
    "zameranie" : "Mage"
 }

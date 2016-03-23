@@ -18,9 +18,12 @@
     }
 
   },
-  "nepriatelia": [ "sliz1", "medved1", "murlock1" ],
+  
   "hrobX": 3,
   "hrobY": 20,
 
-  "questy": [ "quest1", "quest2" ]
+  "questy": [ "quest1", "quest2" ],
+   "oblasti" :[
+   
+  ]
 }

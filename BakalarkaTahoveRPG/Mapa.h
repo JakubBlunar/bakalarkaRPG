@@ -4,10 +4,13 @@
 #include <SFML\Graphics.hpp>
 #include <string>
 
+using namespace std;
+
 class Policko;
 class Hrac;
 class Hra;
 class StavHranieHry;
+class Oblast;
 
 enum PohybMapy {
 	STOJI = 0,
@@ -21,7 +24,7 @@ class Mapa
 {
 
 public:
-	Mapa(std::string menoMapy, Hrac* paHrac,Hra* hram,int paVyska , int paSirka);
+	Mapa(string menoMapy, Hrac* paHrac,Hra* hram,int paVyska , int paSirka);
 	~Mapa();
 	
 	void hracInterakcia(StavHranieHry* paStav, void(StavHranieHry::*callbackFunkcia)());
@@ -44,25 +47,29 @@ public:
 	void render(sf::RenderWindow* okno);
 	void update(double delta);
 
-	std::string Getmeno();
+	string Getmeno();
 	Policko* GetPolicko(int x, int y);
 	void nastavPolicko(int x, int y, Policko*);
 	sf::FloatRect Getzobrazenaoblast();
 	sf::Time aktCas();
-	void pridajNepriatela(std::string meno);
-	std::vector<std::string>* Getmoznynepriatelia();
+	void pridajNepriatela(string meno);
+	vector<string>* Getmoznynepriatelia();
+
+
+	void pridajNepriatela(Oblast paOblast, string paCo);
 
 	void setHrobSuradnice(sf::Vector2i);
 	sf::Vector2i Gethrobsuradnice();
 private:
 
+	vector<Oblast*> oblasti;
 	sf::Vector2i hrobSuradnice;
 
 	Hra* hra;
 	Hrac* hrac;
 	Policko*** mapa;
-	std::vector<std::string>* moznyNepriatelia;
-	std::string menoMapy;
+	vector<string>* moznyNepriatelia;
+	string menoMapy;
 
 	int sirka;
 	int vyska;

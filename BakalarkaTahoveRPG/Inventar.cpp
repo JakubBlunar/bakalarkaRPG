@@ -15,8 +15,9 @@
 #include "QuestManager.h"
 
 Inventar::Inventar(int kapacita) {
-	this->pocetZlata = 170;
-	this->kapacita = 36;
+	this->pocetZlata = 0;
+	this->kapacita = 54;
+	this->pridajPredmet(new Zbran("gm", 9, "1", 100, 1, 100, 200, 500),false);
 }
 
 

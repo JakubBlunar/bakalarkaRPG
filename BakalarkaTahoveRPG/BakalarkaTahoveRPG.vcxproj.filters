@@ -237,6 +237,9 @@
     <ClInclude Include="VolbaBoj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Oblast.h">
+      <Filter>Header Files\Mapa</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -406,6 +409,9 @@
     </ClCompile>
     <ClCompile Include="VolbaBoj.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Oblast.cpp">
+      <Filter>Source Files\Mapa</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

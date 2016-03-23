@@ -8,7 +8,7 @@
       "poziciaY": 67,
       "smerPohladu": 0
     },
-     "2": {
+    "2": {
       "x": 57,
       "y": 71,
       "kam": "stvrta",
@@ -58,9 +58,13 @@
     }
 
   },
-  "nepriatelia": [],
+
   "hrobX": 14,
   "hrobY": 26,
 
-  "questy": [ ]
+  "questy": [ ],
+
+  "oblasti": [
+
+  ]
 }

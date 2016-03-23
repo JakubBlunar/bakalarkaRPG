@@ -17,9 +17,13 @@
       "smerPohladu": 1
     }
   },
-  "nepriatelia": [ ],
+
   "hrobX": 14,
   "hrobY": 19,
 
-  "questy": [ ]
+  "questy": [ ],
+
+  "oblasti": [
+
+  ]
 }

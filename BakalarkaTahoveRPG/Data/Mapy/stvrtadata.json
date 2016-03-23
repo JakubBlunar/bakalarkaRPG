@@ -51,9 +51,11 @@
 
 
   },
-  "nepriatelia": [ ],
   "hrobX": 18,
   "hrobY": 8,
 
-  "questy": [ ]
+  "questy": [ ],
+   "oblasti" :[
+   
+  ]
 }

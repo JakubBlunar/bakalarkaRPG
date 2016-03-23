@@ -1,11 +1,11 @@
 {
-  "nazov": "Herbs for herbalist.",
-  "popis": "Murlocks took all herbalist ingrediences. Go and find some for her.\n",
-  "xp": 0,
+  "nazov": "Herbs for Karonnka.",
+  "popis": "Murlocks took all Karonka's herbs. Go and find some for her.\n",
+  "xp": 10,
   "zlato": 150,
   "nasledujuci": "",
   "startNpc": "",
-  "endNpc": "Herbalist",
+  "endNpc": "Karonnka",
   "predmety": [
     {
       "typTriedy": "elixir",
@@ -37,7 +37,7 @@
     {
       "typ": "loot",
       "co": "Herb",
-      "kolko": 1
+      "kolko": 2
     }
 
   ],
@@ -45,7 +45,7 @@
   "volbaKuQuestu": {
     "volbaTexty": [
       "",
-      "Jacob told me that you need some ingrediences. ",
+      "Jacob told me that you need some herbs. ",
       "I have everything you need now.",
       ""
     ]
@@ -53,7 +53,7 @@
 
   "polozkaTexty": [
     "",
-    "Yes brave warrior. Murlock stole all my ingrediences. Do you help me find some ?",
+    "Yes brave warrior. Murlock stole all my herbs. Do you help me find some ?",
     "Thank you very much. Here is potion from herbs that you have colected.\n",
     ""
   ],

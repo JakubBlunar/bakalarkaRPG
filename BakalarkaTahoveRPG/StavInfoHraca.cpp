@@ -488,14 +488,14 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 
 	// vykreslenie obdlznika na ktorom sa bude vypisovat info predmetu 
 	sf::RectangleShape obdlznik;
-	obdlznik.setSize(sf::Vector2f(230.f, 200.f));// vyska a sirka okienka
+	obdlznik.setSize(sf::Vector2f(230.f, 195.f));// vyska a sirka okienka
 	obdlznik.setOutlineColor(sf::Color::Red);
 	obdlznik.setOutlineThickness(2);
 
 
 	float posX, posY;
-	posX = x + 38.f;
-	posY = y +38.f;
+	posX = x + 30.f;
+	posY = y +20.f;
 
 	obdlznik.setPosition(sf::Vector2f(posX, posY));
 	// tu už je samotny vypis infa

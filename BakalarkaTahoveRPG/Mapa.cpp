@@ -6,13 +6,13 @@
 #include "Hra.h"
 #include "Npc.h"
 #include "StavHranieHry.h"
-
+#include "Oblast.h"
 
 #include "QuestManager.h"
 #include "Quest.h"
 
-Mapa::Mapa(std::string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSirka) {
-	moznyNepriatelia = new std::vector<std::string>();
+Mapa::Mapa(string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSirka) {
+	moznyNepriatelia = new vector<string>();
 	this->menoMapy = menoMapy;
 	this->hrac = paHrac;
 	this->hra = hram;
@@ -24,22 +24,22 @@ Mapa::Mapa(std::string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSir
 	smerPohybu = PohybMapy::STOJI;
 
 	if (!batohTextura.loadFromFile("./Data/Grafika/Predmety/batoh.png", sf::IntRect(0, 0, 32, 32))) {
-		std::cout << "Chyba nahravania textury batohu" << std::endl;
+		cout << "Chyba nahravania textury batohu" << endl;
 	}
 	batoh.setTexture(batohTextura);
 
 	if (!zltyOtaznikTextura.loadFromFile("./Data/Grafika/otaznik.png", sf::IntRect(0, 0, 32, 32))) {
-		std::cout << "Chyba nahravania textury" << std::endl;
+		cout << "Chyba nahravania textury" << endl;
 	}
 	zltyOtaznik.setTexture(zltyOtaznikTextura);
 
 	if (!zltyVykricnikTextura.loadFromFile("./Data/Grafika/vykricnik.png", sf::IntRect(0, 0, 32, 32))) {
-		std::cout << "Chyba nahravania textury" << std::endl;
+		cout << "Chyba nahravania textury" << endl;
 	}
 	zltyVykricnik.setTexture(zltyVykricnikTextura);
 
 	if (!sedyOtaznikTextura.loadFromFile("./Data/Grafika/sivy_otaznik.png", sf::IntRect(0, 0, 32, 32))) {
-		std::cout << "Chyba nahravania textury" << std::endl;
+		cout << "Chyba nahravania textury" << endl;
 	}
 	sedyOtaznik.setTexture(sedyOtaznikTextura);
 
@@ -59,6 +59,11 @@ Mapa::Mapa(std::string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSir
 }
 
 Mapa::~Mapa() {
+	for (int i = 0; i < oblasti.size(); i++) {
+		delete oblasti[i];
+	}
+
+	
 	for (int i = 0; i < sirka; i++)
 	{
 		for (int j = 0; j < vyska; j++)
@@ -67,14 +72,14 @@ Mapa::~Mapa() {
 		}
 	}
 
-	for (int i = 0; i < sirka; ++i) {
+	for (int i = 0; i < sirka; i++) {
 		delete[] mapa[i];
 	}
 
 	delete[] mapa;
 }
 
-std::string Mapa::Getmeno() {
+string Mapa::Getmeno() {
 	return menoMapy;
 }
 
@@ -416,9 +421,33 @@ sf::Time Mapa::aktCas() {
 	return casovac.getElapsedTime();
 }
 
-void Mapa::pridajNepriatela(std::string meno) {
-	moznyNepriatelia->push_back(meno);
-}
-std::vector<std::string>* Mapa::Getmoznynepriatelia() {
+vector<string>* Mapa::Getmoznynepriatelia() {
+	moznyNepriatelia->clear();
+	sf::Vector2i pos(hrac->GetpolickoX(), hrac->GetpolickoY());
+	for (auto oblast : oblasti) {
+		if (oblast->obsahujeSuradnicu(pos)) {
+			for (auto s : oblast->Getnepriatelia()) {
+				if (find(moznyNepriatelia->begin(), moznyNepriatelia->end(), s) == moznyNepriatelia->end())
+				{
+					moznyNepriatelia->push_back(s);
+				}
+			}
+		}
+	}
+
 	return moznyNepriatelia;
+}
+
+void Mapa::pridajNepriatela(Oblast paOblast, string paMeno) {
+	Oblast* oblast = nullptr;
+	for (auto o : oblasti) {
+		if (o->jeRovnaka(paOblast)) oblast = o;
+	}
+
+	if (oblast == nullptr) {
+		Oblast* n = new Oblast(paOblast.x, paOblast.y, paOblast.w, paOblast.h);
+		oblasti.push_back(n);
+		oblast = n;
+	}
+	oblast->pridajNepriatela(paMeno);
 }

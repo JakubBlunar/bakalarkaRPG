@@ -167,6 +167,7 @@
     <ClInclude Include="Mapa.h" />
     <ClInclude Include="Nepriatel.h" />
     <ClInclude Include="Npc.h" />
+    <ClInclude Include="Oblast.h" />
     <ClInclude Include="Oblecenie.h" />
     <ClInclude Include="Policko.h" />
     <ClInclude Include="PolickoBoj.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="Mapa.cpp" />
     <ClCompile Include="Nepriatel.cpp" />
     <ClCompile Include="Npc.cpp" />
+    <ClCompile Include="Oblast.cpp" />
     <ClCompile Include="Oblecenie.cpp" />
     <ClCompile Include="Policko.cpp" />
     <ClCompile Include="PolickoBoj.cpp" />

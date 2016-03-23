@@ -249,12 +249,12 @@ void StavHranieHry::update(double delta) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && !stlacenaKlavesa) {
 				hra->zmenStavRozhrania("stavInventar");
 			}
-
+			/*
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !stlacenaKlavesa) { // cheat :D
 				stlacenaKlavesa = true;
 				hrac->pridajSkusenosti(10);
 				hrac->Getinventar()->pridajZlato(1000);
-			}
+			}*/
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::E) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
