@@ -59,7 +59,7 @@ Mapa::Mapa(string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSirka) {
 }
 
 Mapa::~Mapa() {
-	for (int i = 0; i < oblasti.size(); i++) {
+	for (unsigned int i = 0; i < oblasti.size(); i++) {
 		delete oblasti[i];
 	}
 
@@ -282,11 +282,11 @@ void Mapa::posunHracaNaPolicko(int x, int y, int smerPohladu) {
 		posunMapyY = offsetHracaY - 5 * 32;
 	}
 
-	if (posunMapyX + hra->okno->getSize().x > sirka * 32) {
+	if ((int)posunMapyX + (int)hra->okno->getSize().x > sirka * 32) {
 		posunMapyX = sirka * 32 - hra->okno->getSize().x;
 	}
 
-	if (posunMapyY + hra->okno->getSize().y > vyska * 32) {
+	if ((int)posunMapyY + (int)hra->okno->getSize().y > vyska * 32) {
 		posunMapyY = vyska * 32 - hra->okno->getSize().y;
 	}
 

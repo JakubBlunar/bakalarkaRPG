@@ -51,6 +51,7 @@
 #include "Zameranie.h"
 #include <deque>
 #include "Oblast.h"
+#include "StavRozhrania.h"
 
 Loader* Loader::instancia = NULL;
 
@@ -143,7 +144,8 @@ DialogovyStrom* Loader::nacitajDialog(string paMeno) {
 
 
 void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
-	//nacitava = true;
+
+	zobrazLoadingScreen();
 
 	if (nacitaneMapy.find(paMeno) != nacitaneMapy.end()) {
 		Mapa* novaMapa = nacitaneMapy.at(paMeno);
@@ -190,15 +192,6 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 		novaMapa = new Mapa(paMeno, this->hra->GetHrac(), this->hra, sirka, vyska);
 
 		novaMapa->setHrobSuradnice(sf::Vector2i(mapaData["hrobX"].asInt(), mapaData["hrobY"].asInt()));
-		/*
-		Json::Value nepriatelia(Json::arrayValue);
-		nepriatelia = mapaData["nepriatelia"];
-		
-		for (unsigned int i = 0; i < nepriatelia.size(); i++) {
-			novaMapa->pridajNepriatela(nepriatelia[i].asString());
-		}
-		*/
-
 		
 		Json::Value oblasti(Json::arrayValue);
 		oblasti = mapaData["oblasti"];
@@ -426,7 +419,6 @@ void Loader::nacitajNpc(string menoMapy, Mapa* mapa) {
 }
 
 sf::Font* Loader::nacitajFont(string menoFontu) {
-
 	if (nacitaneFonty.find(menoFontu) == nacitaneFonty.end()) {
 
 		sf::Font* font = new sf::Font();
@@ -444,6 +436,8 @@ sf::Font* Loader::nacitajFont(string menoFontu) {
 }
 
 Nepriatel* Loader::nacitajNepriatela(string paMeno) {
+
+	zobrazLoadingScreen();
 	string cestaKNepriatelom = "./Data/Nepriatelia/";
 
 	Nepriatel* novyNepriatel;
@@ -851,10 +845,9 @@ Quest* Loader::nacitajQuest(string paMeno) {
 
 Zameranie* Loader::nacitajZameranie(string paMeno) {
 
-	Json::Features::all();
+	zobrazLoadingScreen();
 
 	Zameranie* zameranie;
-
 	string cestaKuZameraniam = "./Data/Zameranie/";
 
 	Json::Value jZameranie;
@@ -1167,6 +1160,8 @@ bool Loader::save() {
 
 void Loader::load(){
 
+	zobrazLoadingScreen();
+
 	Json::Value save;
 	Json::Reader reader;
 	ifstream json("./Data/save", ifstream::binary);
@@ -1282,4 +1277,11 @@ void Loader::load(){
 
 	}
 
+}
+
+
+void Loader::zobrazLoadingScreen() {
+	hra->okno->clear();
+	hra->dajStav("stavLoading")->render();
+	hra->okno->display();
 }

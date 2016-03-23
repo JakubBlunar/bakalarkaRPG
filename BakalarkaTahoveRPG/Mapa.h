@@ -52,9 +52,7 @@ public:
 	void nastavPolicko(int x, int y, Policko*);
 	sf::FloatRect Getzobrazenaoblast();
 	sf::Time aktCas();
-	void pridajNepriatela(string meno);
 	vector<string>* Getmoznynepriatelia();
-
 
 	void pridajNepriatela(Oblast paOblast, string paCo);
 

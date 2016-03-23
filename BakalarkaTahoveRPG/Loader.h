@@ -58,6 +58,7 @@ private:
 	Predmet* parsujPredmet(Json::Value jPredmet);
 
 	int  nahodneCislo(int min, int max);
+	void zobrazLoadingScreen();
 };
 
 #endif // LOADER.H

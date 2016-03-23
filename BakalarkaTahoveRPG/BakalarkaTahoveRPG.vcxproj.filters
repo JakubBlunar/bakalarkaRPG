@@ -240,6 +240,9 @@
     <ClInclude Include="Oblast.h">
       <Filter>Header Files\Mapa</Filter>
     </ClInclude>
+    <ClInclude Include="StavLoading.h">
+      <Filter>Header Files\Stavy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -412,6 +415,9 @@
     </ClCompile>
     <ClCompile Include="Oblast.cpp">
       <Filter>Source Files\Mapa</Filter>
+    </ClCompile>
+    <ClCompile Include="StavLoading.cpp">
+      <Filter>Source Files\Stavy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

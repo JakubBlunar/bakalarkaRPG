@@ -61,8 +61,15 @@ void StavRozhrania::zmenStav(std::string stav) {
 
 
 Stav* StavRozhrania::dajStav(std::string stav) {
+
 	if (stav == "") {
 		return aktualnyStav;
 	}
-	return stavy.at(stav) == nullptr ? nullptr : stavy.at(stav);
+
+	if (stavy.find(stav) == stavy.end()) {
+		return nullptr;
+	}
+	else {
+		return stavy.at(stav);
+	}
 }

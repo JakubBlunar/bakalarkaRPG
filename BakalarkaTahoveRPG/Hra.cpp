@@ -12,14 +12,18 @@
 #include "StavBoj.h"
 #include "StavObchod.h"
 #include "StavPrehladQuestov.h"
+#include "StavLoading.h"
 
 #define NAZOV "Moje Rpg"
 
 
 Hra::Hra() {
 	hrac = nullptr;
+	stavRozhraniaHry = nullptr;
+	
 	init();
 	loader->setHra(this);
+	
 
 	std::string nazov = "hlavneMenu";
 	Stav* stav1 = new StavHlavneMenu(nazov, okno, this);
@@ -37,6 +41,10 @@ Hra::Hra() {
 	std::string nazov4 = "stavPauza";
 	Stav* stav4 = new StavPauza(nazov4, okno, this);
 	stavRozhraniaHry->pridajStav(stav4);
+
+	std::string nazov5 = "stavLoading";
+	Stav* stav5 = new StavLoading(nazov5, okno, this);
+	stavRozhraniaHry->pridajStav(stav5);
 
 	std::string nazov6 = "stavInfoHraca";
 	Stav* stav6 = new StavInfoHraca(nazov6, okno, this);
@@ -61,7 +69,8 @@ Hra::Hra() {
 	std::string nazov11 = "stavPrehladQuestov";
 	Stav* stav11 = new StavPrehladQuestov(nazov11, okno, this);
 	stavRozhraniaHry->pridajStav(stav11);
-
+	
+	
 }
 
 Hra::~Hra() {
