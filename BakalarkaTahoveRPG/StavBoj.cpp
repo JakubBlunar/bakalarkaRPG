@@ -22,6 +22,13 @@ StavBoj::StavBoj(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra):Stav
 	boj = nullptr;
 	hracoveAkcie = nullptr;
 
+	ukazovatel.setSize(sf::Vector2f(48, 48));
+	ukazovatel.setOutlineColor(sf::Color::Yellow);
+	ukazovatel.setOutlineThickness(3);
+	ukazovatel.setFillColor(sf::Color::Transparent);
+
+	oznacene = 0;
+
 	sf::Sprite* logPozadie = new sf::Sprite();
 	logHranice = new Tlacidlo(logPozadie, logPozadie, "", sf::Vector2f(0, 0), sf::Vector2f(300.f, okno->getSize().y-200.f), font, 35U);
 
@@ -55,6 +62,9 @@ StavBoj::~StavBoj()
 void StavBoj::onEnter() {
 	
 	Stav::onEnter();
+
+	oznacene = 0;
+
 	if (boj == nullptr) {
 		hra->zmenStavRozhrania("hranieHry");
 	}
@@ -206,18 +216,29 @@ void StavBoj::render() {
 			}
 		}
 	}
-
+	
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 9; j++) {
+			unsigned int index = i * 9 + j;
+			if (oznacene == index) {
+				ukazovatel.setPosition(tlacidla[i][j]->getPosition());
+				okno->draw(ukazovatel);
+			}
+		}
+	}
+	
 	//okno s infom predmetu
 	sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
 	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 9; j++) {
-			
+		for (int j = 0; j < 9; j++) {	
 			unsigned int index = i * 9 + j;
 			if (tlacidla[i][j]->hover(pozicia) && index < hracoveAkcie->size()) {
 				vykresliInfoAkcie(hracoveAkcie->at(index), tlacidla[i][j]->getPosition());
 			}
 		}
 	}
+
+
 
 	text.setColor(sf::Color::White);
 	text.setString("Time:" + floattostring(boj->Getcasvboji().asSeconds()) + "");
@@ -347,7 +368,74 @@ void StavBoj::update(double delta) {
 			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == true) {
 				stlacenaMys = false;
 			}
-	
+		
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				if (oznacene > 0) {
+					oznacene--;
+				}
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				if (oznacene < hracoveAkcie->size() - 1) {
+					oznacene++;
+				}
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				if (oznacene + 9 < hracoveAkcie->size() - 1) {
+					oznacene += 9;
+				}
+				else {
+					oznacene = hracoveAkcie->size() - 1;
+				}
+
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				if (oznacene - 9 >= 0) {
+					oznacene -= 9;
+				}
+				else {
+					oznacene = 0;
+				}
+			}
+
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && !stlacenaKlavesa) {
+				if (boj->cakaNaVybratieAkcie() && !boj->koniecBoja()) {
+					StavInventar* s = (StavInventar*)hra->dajStav("stavInventar");
+					s->Setzboja(true);
+					hra->zmenStavRozhrania("stavInventar");
+				}
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				if (boj->cakaNaVybratieAkcie() && !boj->koniecBoja()) {
+					if (!boj->maAkciaCooldown(boj->Gethracovastatistika()->Getakcie()->at(oznacene))) {
+						boj->hracVybralAkciu(boj->Gethracovastatistika()->Getakcie()->at(oznacene));
+					}
+				}
+
+			}
+
+			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::I)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+				stlacenaKlavesa = false;
+			}
+
+
+
+
 		}
 	}
 }

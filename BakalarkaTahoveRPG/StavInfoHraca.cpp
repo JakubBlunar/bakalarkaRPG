@@ -17,6 +17,7 @@ StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 	
 	ukazovatel.setSize(sf::Vector2f(48, 48));
 	ukazovatel.setFillColor(sf::Color(255, 0, 0, 128));
+
 	oznacene = 1;
 
 

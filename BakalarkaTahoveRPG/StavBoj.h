@@ -28,6 +28,9 @@ private:
 	std::vector<Akcia*>* hracoveAkcie;
 	Tlacidlo* logHranice;
 	Tlacidlo* doInventara;
+	
+	int oznacene;
+	sf::RectangleShape ukazovatel;
 };
 
 #endif

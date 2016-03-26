@@ -217,7 +217,7 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 			nacitajQuest(questy[i].asString());
 		}
 
-
+		
 		// inicializacia mapy dveri
 		polickoDvere = new PolickoDvere**[sirka];
 		for (int i = 0; i < sirka; i++) {
@@ -230,7 +230,7 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 			}
 		}
 
-
+		
 		Json::Value dvere(Json::objectValue);
 		dvere = mapaData["dvere"];
 		int i = 0;
@@ -245,7 +245,7 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 
 			polickoDvere[x][y] = new PolickoDvere(true, kam, posX, posY, smerPohladu);
 		}
-
+		
 		Json::Value objekt(Json::objectValue);
 		objekt = root["tiles"];
 
@@ -263,18 +263,19 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 			}
 		}
 
-		for (int i = 0; i < sirka; i++) {
-			for (int j = 0; j < vyska; j++) {
 
-				int idTextury1 = root["Vrstva1"][j*sirka + i].asInt();
-				int idTextury2 = root["Vrstva2"][j*sirka + i].asInt();
-				int idTextury3 = root["Vrstva3"][j*sirka + i].asInt();
-				int idTextury4 = root["boj"][j*sirka + i].asInt();
+		for (int riadok = 0; riadok < vyska; riadok++) {
+			for (int stlpec = 0; stlpec < sirka; stlpec++) {
+
+				int idTextury1 = root["Vrstva1"][riadok*sirka + stlpec].asInt();
+				int idTextury2 = root["Vrstva2"][riadok*sirka + stlpec].asInt();
+				int idTextury3 = root["Vrstva3"][riadok*sirka + stlpec].asInt();
+				int idTextury4 = root["boj"][riadok*sirka + stlpec].asInt();
 
 				Policko* policko = nullptr;
 
-				if (polickoDvere[i][j] != nullptr) {
-					policko = polickoDvere[i][j];
+				if (polickoDvere[stlpec][riadok] != nullptr) {
+					policko = polickoDvere[stlpec][riadok];
 
 				}
 				else {
@@ -301,7 +302,7 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 					policko->nastavTexturu(textury[idTextury3], 2);
 				}
 
-				novaMapa->nastavPolicko(i,j, policko);
+				novaMapa->nastavPolicko(stlpec,riadok, policko);
 
 			}
 
@@ -437,7 +438,6 @@ sf::Font* Loader::nacitajFont(string menoFontu) {
 
 Nepriatel* Loader::nacitajNepriatela(string paMeno) {
 
-	zobrazLoadingScreen();
 	string cestaKNepriatelom = "./Data/Nepriatelia/";
 
 	Nepriatel* novyNepriatel;

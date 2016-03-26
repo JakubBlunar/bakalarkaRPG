@@ -28,17 +28,41 @@
             "uroven" : 1
          }
       ],
-      "zlato" : 0
+      "zlato" : 6
    },
    "mapa" : {
-      "orientacia" : 2,
-      "posX" : 14,
-      "posY" : 8,
-      "subor" : "prva"
+      "orientacia" : 1,
+      "posX" : 19,
+      "posY" : 16,
+      "subor" : "les"
    },
    "mp" : 13,
    "nedokonceneQuesty" : null,
-   "oblecene" : null,
-   "skusenosti" : 0,
+   "oblecene" : [
+      {
+         "cena" : 100,
+         "hp" : 0,
+         "hpMult" : 0,
+         "intelekt" : 0,
+         "intelektMult" : 0,
+         "maxDmg" : 200,
+         "meno" : "gm",
+         "minDmg" : 100,
+         "mp" : 0,
+         "mpMult" : 0,
+         "obrana" : 0,
+         "obranaMult" : 0,
+         "obrazok" : "1",
+         "rychlost" : 0,
+         "rychlostMult" : 0,
+         "rychlostUtoku" : 500,
+         "sila" : 0,
+         "silaMult" : 0,
+         "typ" : 9,
+         "typTriedy" : "zbran",
+         "uroven" : 1
+      }
+   ],
+   "skusenosti" : 2,
    "zameranie" : "Warrior"
 }

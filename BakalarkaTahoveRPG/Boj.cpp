@@ -162,7 +162,7 @@ void Boj::update() {
 		for (auto e : trebaZmazatAkcie) {
 			hracCooldowny.erase(e);
 		}
-		hracCooldowny.clear();
+		trebaZmazatAkcie.clear();
 
 		//aktualizuje cooldowny npc
 		for (map<Akcia*, int>::iterator it = npcCooldowny.begin(); it != npcCooldowny.end(); ++it)
@@ -173,9 +173,9 @@ void Boj::update() {
 		}
 
 		for (auto e : trebaZmazatAkcie) {
-			hracCooldowny.erase(e);
+			npcCooldowny.erase(e);
 		}
-		hracCooldowny.clear();
+		trebaZmazatAkcie.clear();
 
 
 		if (casovac.getElapsedTime().asMilliseconds() > hracCasVykonaniaAkcie && hracAkcia != nullptr) {

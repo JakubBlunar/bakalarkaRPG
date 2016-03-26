@@ -11,7 +11,7 @@
 #include "QuestManager.h"
 #include "Quest.h"
 
-Mapa::Mapa(string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSirka) {
+Mapa::Mapa(string menoMapy, Hrac* paHrac, Hra* hram, int paSirka, int paVyska) {
 	moznyNepriatelia = new vector<string>();
 	this->menoMapy = menoMapy;
 	this->hrac = paHrac;
@@ -55,7 +55,7 @@ Mapa::Mapa(string menoMapy, Hrac* paHrac, Hra* hram, int paVyska, int paSirka) {
 	}
 
 	hrobSuradnice = sf::Vector2i(0, 0);
-
+	minimapa = false;
 }
 
 Mapa::~Mapa() {
@@ -191,6 +191,54 @@ void Mapa::render(sf::RenderWindow* okno) {
 		}
 	}
 	okno->setView(okno->getDefaultView());
+	if (minimapa) {
+
+		int sirkaRamceka = okno->getSize().x - 60;
+		int vyskaRamceka = okno->getSize().y - 70;
+		
+		sf::RectangleShape pozadie;
+		pozadie.setPosition(sf::Vector2f(30.f, 30.f));
+		pozadie.setSize(sf::Vector2f(sirkaRamceka+0.f,vyskaRamceka+0.f));
+		pozadie.setFillColor(sf::Color(0, 0, 0, 75));
+		okno->draw(pozadie);
+
+		int sirkaPolicka = sirkaRamceka / sirka;
+		int vyskaPolicka = vyskaRamceka / vyska;
+
+		if (sirkaPolicka > vyskaPolicka) {
+			sirkaPolicka = vyskaPolicka;
+		}
+		sf::RectangleShape policko;
+		policko.setSize(sf::Vector2f(sirkaPolicka, vyskaPolicka));
+	
+		for(int i = 0; i < sirka; i++)
+		{
+			for (int j = 0; j < vyska; j++)
+			{
+				if (mapa[i][j]->jePrechodne()) {
+					
+					if (dynamic_cast<PolickoDvere*>(mapa[i][j]) == NULL) {
+						policko.setFillColor(sf::Color(255, 0, 0, 75));
+					}
+					else {
+						policko.setFillColor(sf::Color::White);
+					}
+
+				}else{
+					policko.setFillColor(sf::Color::Transparent);
+				}
+
+				if (i == hrac->GetpolickoX() && j == hrac->GetpolickoY()) {
+					policko.setFillColor(sf::Color::Yellow);
+				}
+
+				policko.setPosition(sf::Vector2f( 30.f+ i*sirkaPolicka,30.f+j*vyskaPolicka ));
+				okno->draw(policko);
+
+			}
+		}
+
+	}
 }
 
 sf::FloatRect Mapa::Getzobrazenaoblast() {
@@ -450,4 +498,8 @@ void Mapa::pridajNepriatela(Oblast paOblast, string paMeno) {
 		oblast = n;
 	}
 	oblast->pridajNepriatela(paMeno);
+}
+
+void Mapa::toogleMinimapa() {
+	minimapa = !minimapa;
 }

@@ -58,6 +58,8 @@ public:
 
 	void setHrobSuradnice(sf::Vector2i);
 	sf::Vector2i Gethrobsuradnice();
+
+	void toogleMinimapa();
 private:
 
 	vector<Oblast*> oblasti;
@@ -90,6 +92,8 @@ private:
 	sf::Sprite zltyOtaznik;
 	sf::Texture sedyOtaznikTextura;
 	sf::Sprite sedyOtaznik;
+
+	bool minimapa;
 };
 
 #endif

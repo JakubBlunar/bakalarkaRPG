@@ -266,7 +266,6 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	}
 	okno->draw(obdlznik);
 
-
 	text.setColor(sf::Color::Black);
 	
 	if (hrac->Getstatistika()->dajUroven() < predmet->Geturoven()) text.setColor(sf::Color::Red);

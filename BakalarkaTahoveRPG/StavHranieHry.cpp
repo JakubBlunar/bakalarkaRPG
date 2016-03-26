@@ -50,7 +50,7 @@ void StavHranieHry::render() {
 	okno->draw(info);
 
 	sf::Text text(" ", *font, 20U);
-	text.setString("Pause:Esc   Inventory:I   QuestLog:O   PlayerInfo:C   Movement:Arrows   Interaction:E/Enter");
+	text.setString("Pause:Esc   Inventory:I   QuestLog:O   PlayerInfo:C   Movement:Arrows   Interaction:E/Enter  Minimap:M");
 	text.setPosition(3.f, info.getGlobalBounds().top + 3.f);
 	okno->draw(text);
 
@@ -249,12 +249,12 @@ void StavHranieHry::update(double delta) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && !stlacenaKlavesa) {
 				hra->zmenStavRozhrania("stavInventar");
 			}
-			/*
+			
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !stlacenaKlavesa) { // cheat :D
 				stlacenaKlavesa = true;
 				hrac->pridajSkusenosti(10);
 				hrac->Getinventar()->pridajZlato(1000);
-			}*/
+			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::E) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
@@ -264,11 +264,18 @@ void StavHranieHry::update(double delta) {
 
 			}
 
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)&& !stlacenaKlavesa) {
+				stlacenaKlavesa = true;
+				mapa->toogleMinimapa();
+
+			}
+
 			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::C)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::X)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::I)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::E)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::M)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
 				stlacenaKlavesa = false;
