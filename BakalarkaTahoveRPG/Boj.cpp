@@ -245,7 +245,7 @@ void Boj::vyhodnotenie() {
 			QuestManager* qm = hrac->Getmanazerquestov();
 			qm->udalost(QuestEvent::ZABITIE_NPC, npc);
 
-			if (rand() % 100 < 35) {// 35% že padne predmet
+			if (rand() % 100 < 100) {// 35% že padne predmet
 				int cislo = rand() % 100;
 				int lvlOd = npc->Getstatistika()->dajUroven() - 2;
 				int lvlDo = npc->Getstatistika()->dajUroven() + 2;

@@ -21,7 +21,7 @@ StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* p
 	ukazovatel.setSize(sf::Vector2f(48, 48));
 	ukazovatel.setFillColor(sf::Color(255, 0, 0, 128));
 	oznacene = 0;
-	nasirku =18;
+	nasirku =13;
 	otvoreneZboja = false;
 
 	sf::Sprite* s = new sf::Sprite();
@@ -98,9 +98,49 @@ void StavInventar::render() {
 		}
 	}
 
+	sf::Text toblecene("Equipped:", *font, 20U);
+	toblecene.setPosition(okno->getSize().x - 250.f, 80.f);
+	
+
 	if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
 		vykresliOknoPredmetu(inventar->dajPredmetNaIndexe(oznacene), startX + (oznacene%nasirku) * 55 + 48, startY + (oznacene / nasirku) * 55 + 48, okno, true);
+
+		Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
+		
+		if (dynamic_cast<Pouzitelny*>(p) != NULL) {
+			if (dynamic_cast<Elixir*>(p) == NULL) {
+				Statistika* s = hrac->Getstatistika();
+				if (p->Gettyp() > 8 && p->Gettyp() < 12) {
+					if (p->Gettyp() != 11) {// nie je to stit
+						if (s->Getoblecene()->count(9) > 0) {//je oblecena zbran
+							vykresliOknoPredmetu(s->Getoblecene()->at(9), okno->getSize().x, 130.f, okno, true);
+						}
+						else {
+							toblecene.setString(toblecene.getString() + "\nNothing");
+						}
+					}
+					else {//stit
+						if (s->Getoblecene()->count(10) > 0) {//je oblecene daco v 10 slote
+							vykresliOknoPredmetu(s->Getoblecene()->at(10), okno->getSize().x, 130.f, okno, true);
+						}
+						else {
+							toblecene.setString(toblecene.getString() + "\nNothing");
+						}
+					}
+				}
+				else {//je to oblecenie
+					if (s->Getoblecene()->count(p->Gettyp()) > 0) {//je oblecene daco v 10 slote
+						vykresliOknoPredmetu(s->Getoblecene()->at(p->Gettyp()), okno->getSize().x, 130.f, okno, true);
+					}
+					else {
+						toblecene.setString(toblecene.getString() + "\nNothing");
+					}
+				}
+			}
+		}
 	}
+
+	okno->draw(toblecene);
 
 	okno->draw(tlacidloSpat->Getramcek());
 	sf::Text tt = tlacidloSpat->Gettext();
@@ -257,7 +297,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 		obdlznik.setSize(sf::Vector2f(text.getGlobalBounds().width+20, 200));
 	}
 
-	if ((signed int)posX < (signed int)okno->getSize().x - (obdlznik.getSize().x +20)) {
+	if ((signed int)posX < (signed int)okno->getSize().x - (2*obdlznik.getSize().x +20)) {
 		obdlznik.setPosition(posX, posY);
 	}
 	else {

@@ -150,26 +150,77 @@ Predmet* Generator::nahodneOblecenie(int paUroven) {
 }
 
 
+
+
 Predmet* Generator::nahodnaZbran(int paUroven) {
 
 	int typ = randomInt(9,11);
+	ZbranTyp enumTyp;
 
+	std::string obrazok;
 	string cesta = "./Data/Grafika/Predmety/";
 	if (typ == 9) {
+		enumTyp = static_cast<ZbranTyp>(randomInt(0, 3));
 		cesta += "Zbran1h/";	
+		switch (enumTyp)
+		{
+		case 0:
+			obrazok += "Onehand_Axe/";
+			cesta += "Onehand_Axe/";
+			break;
+		case 1:
+
+			obrazok += "Onehand_Sword/";
+			cesta += "Onehand_Sword/";
+			break;
+		case 2:
+			obrazok += "Dagger/";
+			cesta += "Dagger/";
+			break;
+		case 3:
+			obrazok += "Onehand_Mace/";
+			cesta += "Onehand_Mace/";
+			break;
+		}
+
 	}
 	else if (typ == 10) {
+		enumTyp = static_cast<ZbranTyp>(randomInt(4, 8));
 		cesta += "Zbran2h/";
+		switch (enumTyp)
+		{
+		case 4:
+			obrazok += "Twohand_Mace/";
+			cesta += "Twohand_Mace/";
+			break;
+		case 5:
+			obrazok += "Stave/";
+			cesta += "Stave/";
+			break;
+		case 6:
+			obrazok += "Polearm/";
+			cesta += "Polearm/";
+			break;
+		case 7:
+			obrazok += "Twohand_Axe/";
+			cesta += "Twohand_Axe/";
+			break;
+		case 8:
+			obrazok += "Twohand_Sword/";
+			cesta += "Twohand_Sword/";
+			break;
+		}
 	}else{ 
+		enumTyp = ZbranTyp::SHIELD;
 		cesta += "Stit/";
 	}
 	cesta += "*.png";
 	vector<string>* obrazky;
 	obrazky = najdiSubory(cesta);
 
-	std::string obrazok = obrazky->at(randomInt(0, obrazky->size() - 1));
-	size_t lastindex = obrazok.find_last_of(".");
-	obrazok = obrazok.substr(0, lastindex);
+	std::string menoobrazku = obrazky->at(randomInt(0, obrazky->size() - 1));
+	size_t lastindex = menoobrazku.find_last_of(".");
+	obrazok += menoobrazku.substr(0, lastindex);
 
 
 	delete obrazky;
@@ -196,8 +247,45 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 		dodatok = " " + list3.at(randomInt(0, list3.size()-1)) + " ";
 	}
 	
+	
+	string menoZbrane = pridmeno + classa;
 
-	string menoZbrane = "";
+	switch (enumTyp)
+	{
+	case 0:
+		menoZbrane += "Axe";
+		break;
+	case 1:
+		menoZbrane += "Sword";
+		break;
+	case 2:
+		menoZbrane += "Dagger";
+		break;
+	case 3:
+		menoZbrane += "Mace";
+		break;
+	case 4:
+		menoZbrane += "Warhammer";
+		break;
+	case 5:
+		menoZbrane += "Stave";
+		break;
+	case 6:
+		menoZbrane += "Polearm";
+		break;
+	case 7:
+		menoZbrane += "Greataxe";
+		break;
+	case 8:
+		menoZbrane += "Greatsword";
+		break;
+	case 9:
+		menoZbrane += "Shield";
+		break;
+	}
+
+	menoZbrane += dodatok;
+	/*
 	if (typ != 11) {
 		vector<string> oneHand = { "Sword", "Axe", "Dagger","Mace" };
 		vector<string> twoHand = { "Greatsword","Greataxe","Polearm","Staff","Warhammer" };
@@ -211,7 +299,7 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 	}
 	else {
 		menoZbrane = pridmeno + classa + "Shield" + dodatok;
-	}
+	}*/
 	
 	int cena = randomInt(paUroven * 45, paUroven * 75);
 
@@ -231,7 +319,12 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 		minPoskodenie = randomInt(poskOd, paUroven);
 		maxPoskodenie = randomInt(paUroven, paUroven + 2);
 
-		int rychlost = randomInt(2, 5) * 500;
+		if (typ == 10) {
+			minPoskodenie = (int)round(minPoskodenie*1.3);
+			maxPoskodenie = (int)round(maxPoskodenie*1.3);
+		}
+
+		int rychlost = randomInt(1, 5) * 500;
 
 		zbran = new Zbran(menoZbrane, typ, obrazok, cena,paUroven,minPoskodenie,maxPoskodenie,rychlost);
 	}
