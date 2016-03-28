@@ -1,13 +1,9 @@
 #include "StavInventar.h"
 
 #include <math.h>
-#include <typeinfo>
-
-#include "Loader.h"
 #include "Hra.h"
 #include "Hrac.h"
 #include "Statistika.h"
-#include "Zameranie.h"
 #include "Inventar.h"
 #include "Pouzitelny.h"
 #include "Zbran.h"
@@ -23,6 +19,9 @@ StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* p
 	oznacene = 0;
 	nasirku =13;
 	otvoreneZboja = false;
+
+	inventar = nullptr;
+	hrac = nullptr;
 
 	sf::Sprite* s = new sf::Sprite();
 	tlacidloSpat = new Tlacidlo(s, s, "<--", sf::Vector2f(okno->getSize().x - 60.f, 10.f), sf::Vector2f(30, 25.f), font, 20U);
@@ -78,21 +77,21 @@ void StavInventar::render() {
 	sf::Sprite* predmetObrazok;
 	for (int i = 0; i < inventar->Getkapacita(); i++) {
 		
-		rectangle.setPosition((float)startX + (i%nasirku)*55 , (float)startY + (i/nasirku)*55);
+		rectangle.setPosition((startX) + (i%nasirku)*55.f , (startY) + (i/nasirku)*55.f);
 		okno->draw(rectangle);
 
 		if (i < inventar->pocetPredmetov()) {
 			
 			predmetObrazok = inventar->dajPredmetNaIndexe(i)->Getobrazok();
 			predmetObrazok->setScale(sf::Vector2f(1.5f, 1.5f));
-			predmetObrazok->setPosition(sf::Vector2f((float)startX + (i%nasirku) * 55, (float)startY + (i / nasirku) * 55));
+			predmetObrazok->setPosition(sf::Vector2f(startX + (i%nasirku) * 55.f, startY + (i / nasirku) * 55.f));
 
 			okno->draw(*predmetObrazok);
 		}
 
 
 		if (i == oznacene) {
-			ukazovatel.setPosition(sf::Vector2f((float)startX + (i%nasirku) * 55, (float)startY + (i / nasirku) * 55));
+			ukazovatel.setPosition(sf::Vector2f(startX + (i%nasirku) * 55.f, startY + (i / nasirku) * 55.f));
 			okno->draw(ukazovatel);
 			
 		}
@@ -107,13 +106,13 @@ void StavInventar::render() {
 
 		Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
 		
-		if (dynamic_cast<Pouzitelny*>(p) != NULL) {
-			if (dynamic_cast<Elixir*>(p) == NULL) {
+		if (dynamic_cast<Pouzitelny*>(p) != nullptr) {
+			if (dynamic_cast<Elixir*>(p) == nullptr) {
 				Statistika* s = hrac->Getstatistika();
 				if (p->Gettyp() > 8 && p->Gettyp() < 12) {
 					if (p->Gettyp() != 11) {// nie je to stit
 						if (s->Getoblecene()->count(9) > 0) {//je oblecena zbran
-							vykresliOknoPredmetu(s->Getoblecene()->at(9), okno->getSize().x, 130.f, okno, true);
+							vykresliOknoPredmetu(s->Getoblecene()->at(9), okno->getSize().x, 130, okno, true);
 						}
 						else {
 							toblecene.setString(toblecene.getString() + "\nNothing");
@@ -121,7 +120,7 @@ void StavInventar::render() {
 					}
 					else {//stit
 						if (s->Getoblecene()->count(10) > 0) {//je oblecene daco v 10 slote
-							vykresliOknoPredmetu(s->Getoblecene()->at(10), okno->getSize().x, 130.f, okno, true);
+							vykresliOknoPredmetu(s->Getoblecene()->at(10), okno->getSize().x, 130, okno, true);
 						}
 						else {
 							toblecene.setString(toblecene.getString() + "\nNothing");
@@ -130,7 +129,7 @@ void StavInventar::render() {
 				}
 				else {//je to oblecenie
 					if (s->Getoblecene()->count(p->Gettyp()) > 0) {//je oblecene daco v 10 slote
-						vykresliOknoPredmetu(s->Getoblecene()->at(p->Gettyp()), okno->getSize().x, 130.f, okno, true);
+						vykresliOknoPredmetu(s->Getoblecene()->at(p->Gettyp()), okno->getSize().x, 130, okno, true);
 					}
 					else {
 						toblecene.setString(toblecene.getString() + "\nNothing");
@@ -232,7 +231,7 @@ void StavInventar::update(double delta) {
 				if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
 					Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
 					if(otvoreneZboja){
-						if (dynamic_cast<Elixir*>(p) != NULL) {
+						if (dynamic_cast<Elixir*>(p) != nullptr) {
 							p->pouzi(hrac);
 						}
 						else {
@@ -278,7 +277,8 @@ void StavInventar::update(double delta) {
 }
 
 
-void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::RenderWindow* okno, bool predaj) {
+void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::RenderWindow* okno, bool predaj) const
+{
 	
 	// vykreslenie obdlznika na ktorom sa bude vypisovat info predmetu 
 	sf::RectangleShape obdlznik;
@@ -297,7 +297,7 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 		obdlznik.setSize(sf::Vector2f(text.getGlobalBounds().width+20, 200));
 	}
 
-	if ((signed int)posX < (signed int)okno->getSize().x - (2*obdlznik.getSize().x +20)) {
+	if (static_cast<signed int>(posX) < static_cast<signed int>(okno->getSize().x) - (2*obdlznik.getSize().x +20)) {
 		obdlznik.setPosition(posX, posY);
 	}
 	else {
@@ -324,16 +324,16 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 	text.setPosition(sf::Vector2f(posX + 5.f, posY + 35.f));
 	okno->draw(text);
 
-	if (dynamic_cast<Elixir*>(predmet) != NULL) {
+	if (dynamic_cast<Elixir*>(predmet) != nullptr) {
 		text.setColor(sf::Color::Black);
 		text.setCharacterSize(14U);
 
-		Elixir* elixir = (Elixir*)predmet;
+		Elixir* elixir = static_cast<Elixir*>(predmet);
 
 		std::string info = elixir->dajInfo();
 
 		if (predaj) {
-			info += "\n\nValue: " + std::to_string((int)round(elixir->Getcena() / 2));
+			info += "\n\nValue: " + std::to_string(static_cast<int>(round(elixir->Getcena() / 2)));
 		}
 		else {
 			info += "\n\nValue: " + std::to_string(elixir->Getcena());
@@ -348,15 +348,15 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 
 
 	
-	if (dynamic_cast<Pouzitelny*>(predmet) != NULL) {
+	if (dynamic_cast<Pouzitelny*>(predmet) != nullptr) {
 		text.setColor(sf::Color::Black);
 		text.setCharacterSize(14U);
-		Pouzitelny* pouzitelny = (Pouzitelny*)predmet;
+		Pouzitelny* pouzitelny = static_cast<Pouzitelny*>(predmet);
 		std::string info = "";
 
-		if (dynamic_cast<Zbran*>(predmet) != NULL)
+		if (dynamic_cast<Zbran*>(predmet) != nullptr)
 		{
-			Zbran* pom = (Zbran*)predmet;
+			Zbran* pom = static_cast<Zbran*>(predmet);
 			if (pom->Gettyp() != 11) {
 				info += "Damage: ";
 				info += std::to_string(pom->Getminposkodenie()) + " - ";
@@ -405,42 +405,42 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 
 		if (pouzitelny->GetarmorMult() != 0) {
 			info += "Armor: ";
-			info += std::to_string((int)round(pouzitelny->GetarmorMult() * 100));
+			info += std::to_string(static_cast<int>(round(pouzitelny->GetarmorMult() * 100)));
 			info += " %\n";
 		}
 
 		if (pouzitelny->GethpMult() != 0) {
 			info += "Hp: ";
-			info += std::to_string((int)round(pouzitelny->GethpMult() * 100));
+			info += std::to_string(static_cast<int>(round(pouzitelny->GethpMult() * 100)));
 			info += " %\n";
 		}
 
 		if (pouzitelny->GetmpMult() != 0) {
 			info += "Mp: ";
-			info += std::to_string((int)round(pouzitelny->GetmpMult()*100));
+			info += std::to_string(static_cast<int>(round(pouzitelny->GetmpMult()*100)));
 			info += " %\n";
 		}
 
 		if (pouzitelny->GetsilaMult() != 0) {
 			info += "Strenght: ";
-			info += std::to_string((int)round(pouzitelny->GetsilaMult() * 100));
+			info += std::to_string(static_cast<int>(round(pouzitelny->GetsilaMult() * 100)));
 			info += " %\n";
 		}
 
 		if (pouzitelny->GetrychlostMult() != 0) {
 			info += "Speed: ";
-			info += std::to_string((int)round(pouzitelny->GetrychlostMult() * 100));
+			info += std::to_string(static_cast<int>(round(pouzitelny->GetrychlostMult() * 100)));
 			info += " %\n";
 		}
 
 		if (pouzitelny->GetinteligenciaMult() != 0) {
 			info += "Intellect: ";
-			info += std::to_string((int)round(pouzitelny->GetinteligenciaMult() * 100));
+			info += std::to_string(static_cast<int>(round(pouzitelny->GetinteligenciaMult() * 100)));
 			info += " %\n";
 		}
 
 		if (predaj) {
-			info += "\n\nValue: " + std::to_string((int)round(pouzitelny->Getcena() / 2));
+			info += "\n\nValue: " + std::to_string(static_cast<int>(round(pouzitelny->Getcena() / 2)));
 		}
 		else {
 			info += "\n\nValue: " + std::to_string(pouzitelny->Getcena());

@@ -1,6 +1,5 @@
 #include "Quest.h"
 
-#include <iostream>
 #include "Hrac.h"
 #include "Nepriatel.h"
 #include "QuestOdmena.h"
@@ -10,7 +9,6 @@
 #include "Policko.h"
 #include "Poziadavka.h"
 
-#include "VolbaUpravaQuestu.h"
 #include "QuestPolozka.h"
 #include "DialogovyStrom.h"
 
@@ -26,6 +24,8 @@ Quest::Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata, string
 	this->startNpc = paStartNpc;
 	this->endNpc = paEndNpc;
 	stav = StavQuestu::NEPRIJATY;
+	dialogPolozka = nullptr;
+	volbaKuQuestu = nullptr;
 }
 
 Quest::~Quest() {
@@ -36,15 +36,18 @@ void Quest::setStav(StavQuestu paStav) {
 	stav = paStav;
 }
 
-string Quest::Getnazovsuboru() {
+string Quest::Getnazovsuboru() const
+{
 	return nazovSuboru;
 }
 
-StavQuestu Quest::Getstav() {
+StavQuestu Quest::Getstav() const
+{
 	return stav;
 }
 
-string Quest::Getnazov() {
+string Quest::Getnazov() const
+{
 	return nazov;
 }
 
@@ -80,7 +83,8 @@ string Quest::getPopis() {
 	return popisQuestu;
 }
 
-void Quest::pridajOdmenu(Predmet* paPredmet) {
+void Quest::pridajOdmenu(Predmet* paPredmet) const
+{
 	odmena->pridajPredmet(paPredmet);
 }
 
@@ -110,7 +114,8 @@ void Quest::dokonciSa(Hrac* paHrac) {
 	}
 }
 
-string Quest::GetpopisOdmeny() {
+string Quest::GetpopisOdmeny() const
+{
 	string popis = "You will recieve:\n\n";
 	if (odmena->Getpocetzlata() != 0) {
 		popis += "Gold: " + std::to_string(odmena->Getpocetzlata()) + "\n";
@@ -159,7 +164,8 @@ void Quest::kontrola() {
 	}
 }
 
-void Quest::pridajPoziadavku(Poziadavka* poziadavka) {
+void Quest::pridajPoziadavku(Poziadavka* poziadavka) const
+{
 	poziadavky->push_back(poziadavka);
 }
 
@@ -167,19 +173,23 @@ void Quest::Setnasledujuci(Quest* paQuest) {
 	nasledujuci = paQuest;
 }
 
-Quest* Quest::Getnasledujuci() {
+Quest* Quest::Getnasledujuci() const
+{
 	return nasledujuci;
 }
 
-Quest* Quest::Getpredchadzajuci() {
+Quest* Quest::Getpredchadzajuci() const
+{
 	return predchadzajuci;
 }
 
-string Quest::Getstartnpc() {
+string Quest::Getstartnpc() const
+{
 	return startNpc;
 }
 
-string Quest::Getendnpc() {
+string Quest::Getendnpc() const
+{
 	return endNpc;
 }
 
@@ -194,13 +204,16 @@ void Quest::SetvolbaKuQuestu(DialogVolba* paVolba) {
 	volbaKuQuestu = paVolba;
 }
 
-QuestPolozka* Quest::GetdialogPolozka() {
+QuestPolozka* Quest::GetdialogPolozka() const
+{
 	return dialogPolozka;
 }
-DialogVolba* Quest::GetvolbaKuQuestu() {
+DialogVolba* Quest::GetvolbaKuQuestu() const
+{
 	return volbaKuQuestu;
 }
 
-vector<Poziadavka*>* Quest::Getpoziadavky() {
+vector<Poziadavka*>* Quest::Getpoziadavky() const
+{
 	return poziadavky;
 }

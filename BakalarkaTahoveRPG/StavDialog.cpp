@@ -1,7 +1,5 @@
 #include "StavDialog.h"
-#include "Loader.h"
 #include "Hra.h"
-#include "Hrac.h"
 #include "DialogovyStrom.h"
 #include <string>
 #include "Npc.h"
@@ -40,9 +38,6 @@ void StavDialog::onExit() {
 
 
 void StavDialog::render() {
-
-	int startX = 20;
-	int startY = 70;
 
 	if (dialog != nullptr) {
 

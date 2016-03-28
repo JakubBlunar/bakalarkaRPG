@@ -10,7 +10,7 @@ class VolbaObchodovanie :public DialogVolba
 public:
 	VolbaObchodovanie(string paText, int dalsia,std::string akyObchod);
 	~VolbaObchodovanie();
-	void akcia(Hrac* hrac);
+	void akcia(Hrac* hrac) override;
 private:
 	std::string obchod;
 };

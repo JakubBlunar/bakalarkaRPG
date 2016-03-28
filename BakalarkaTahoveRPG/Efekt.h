@@ -15,9 +15,9 @@ public:
 	virtual void zrusUcinok(Statistika* statistika) = 0;
 	virtual std::string popis() = 0;
 
-	sf::Time GettrvanieDo();
+	sf::Time GettrvanieDo() const;
 	void setTrvanieDo(sf::Time paKoniec);
-	sf::Sprite* Getobrazok();
+	sf::Sprite* Getobrazok() const;
 
 	void Setstatistikanapocitanie(Statistika* statistika);
 

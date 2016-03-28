@@ -13,10 +13,10 @@ public:
 	StavVolbaZamerania(std::string paNazov,sf::RenderWindow* paOkno, Hra* paHra);
 	virtual ~StavVolbaZamerania();
 
-	void onEnter();
-	void onExit();
-	void render();
-	void update(double delta);
+	void onEnter() override;
+	void onExit() override;
+	void render() override;
+	void update(double delta) override;
 private:
 	signed int oznacene;
 
@@ -34,5 +34,5 @@ private:
 	sf::Texture rogueTextura;
 	sf::Sprite rogueObrazok;
 
-	void zvoleneZameranie(int paIndex);
+	void zvoleneZameranie(int paIndex) const;
 };

@@ -1,0 +1,73 @@
+{
+  "meno": "Harpy",
+  "obrazok": "harpy",
+  "levelOd": 11,
+  "levelDo": 14,
+  "hpOd": 165,
+  "hpDo": 195,
+  "mpOd": 40,
+  "mpDo": 60,
+  "silaOd": 18,
+  "silaDo": 25,
+  "intelektOd": 18,
+  "intelektDo": 25,
+  "redukciaMin": 20,
+  "redukciaMax": 25,
+  "uhybMin": 30,
+  "uhybMax": 35,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Scratch",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1.0
+    },
+    "2": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Fast wings",
+      "obrazok": "attack",
+      "rychlostCastenia": 1000,
+      "cooldown": 8000,
+      "trvanie": 5000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 7,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "shout",
+        "stat": "rychlost",
+        "hodnota": 5,
+        "naSeba": true
+      }
+
+    },
+
+    "3": {
+      "typ": "AkciaDmg",
+      "meno": "Slicing wind",
+      "obrazok": "attack",
+      "rychlostCastenia": 1000,
+      "cooldown": 2000,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "magicka",
+      "mana": 6,
+      "zakladnaHodnota": 1.2
+    }
+
+  },
+
+  "questDrop": {
+
+  }
+
+}

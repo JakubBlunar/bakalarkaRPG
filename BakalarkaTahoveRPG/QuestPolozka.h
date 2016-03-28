@@ -11,7 +11,7 @@ class QuestPolozka :
 public:
 	QuestPolozka(std::string paNazovQuestu);
 	~QuestPolozka();
-	std::string Gettext();
+	std::string Gettext() override;
 	void vlozText(StavQuestu paStav, std::string paText);
 
 private:

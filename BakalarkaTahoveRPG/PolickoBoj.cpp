@@ -1,7 +1,6 @@
 #include "PolickoBoj.h"
 #include "Hrac.h"
 #include "Hra.h"
-#include <iostream>
 #include <string>
 #include "Mapa.h"
 #include "StavHranieHry.h"
@@ -26,7 +25,7 @@ PolickoBoj::~PolickoBoj()
 void PolickoBoj::hracSkok(Hrac* paHrac) {
 
 	Hra* hra = Loader::Instance()->Gethra();
-	StavHranieHry* stavHranieHry = (StavHranieHry*) Loader::Instance()->Gethra()->dajStav("hranieHry");
+	StavHranieHry* stavHranieHry = static_cast<StavHranieHry*>(Loader::Instance()->Gethra()->dajStav("hranieHry"));
 	Mapa* mapa = stavHranieHry->getMapa();
 
 
@@ -47,7 +46,7 @@ void PolickoBoj::hracSkok(Hrac* paHrac) {
 			*/
 
 			Nepriatel* nepriatel = Loader::Instance()->nacitajNepriatela(moznyNepriatelia->at(id));
-			StavBoj* stavBoj = (StavBoj*)hra->dajStav("stavBoj");
+			StavBoj* stavBoj = static_cast<StavBoj*>(hra->dajStav("stavBoj"));
 			stavBoj->setBoj(new Boj(paHrac, nepriatel));
 
 			stavHranieHry->zobrazPopup(new PopupOkno(nepriatel->Getmeno() + " level " + std::to_string(nepriatel->Getstatistika()->dajUroven()) + " appeared!."));

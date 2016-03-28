@@ -21,10 +21,12 @@ Zbran::~Zbran() {
 }
 
 
-int Zbran::Getminposkodenie() {
+int Zbran::Getminposkodenie() const
+{
 	return minPoskodenie;
 }
-int Zbran::Getmaxposkodenie() {
+int Zbran::Getmaxposkodenie() const
+{
 	return maxPoskodenie;
 }
 
@@ -71,7 +73,7 @@ void Zbran::pouzi(Hrac* hrac) {
 		if (moznost == 1) { // daèo je na prvom slote
 
 			if(typ == 9){
-				docasny1 = (Pouzitelny*)oblecene->at(9);
+				docasny1 = static_cast<Pouzitelny*>(oblecene->at(9));
 				if (docasny1->Gettyp() == 10) {
 					oblecene->erase(9);
 					oblecene->insert(std::pair<int, Predmet*>(9, this));
@@ -88,7 +90,7 @@ void Zbran::pouzi(Hrac* hrac) {
 				}
 			}
 			else if (typ == 10) {
-				docasny1 = (Pouzitelny*)oblecene->at(9);
+				docasny1 = static_cast<Pouzitelny*>(oblecene->at(9));
 				oblecene->erase(9);
 				oblecene->insert(std::pair<int, Predmet*>(9, this));
 				hrac->Getinventar()->zmazPredmet(this);
@@ -98,7 +100,7 @@ void Zbran::pouzi(Hrac* hrac) {
 				Pouzitelny::Setobleceny(true);
 			}
 			else {
-				docasny1 = (Pouzitelny*)oblecene->at(9);
+				docasny1 = static_cast<Pouzitelny*>(oblecene->at(9));
 				if (docasny1->Gettyp() == 10) {
 					oblecene->erase(9);
 					oblecene->insert(std::pair<int, Predmet*>(10, this));
@@ -126,7 +128,7 @@ void Zbran::pouzi(Hrac* hrac) {
 				hrac->Getinventar()->zmazPredmet(this);
 			}
 			else if (typ == 10) {
-				docasny1 = (Pouzitelny*)oblecene->at(10);
+				docasny1 = static_cast<Pouzitelny*>(oblecene->at(10));
 				oblecene->erase(10);
 				oblecene->insert(std::pair<int, Predmet*>(9, this));
 				hrac->Getinventar()->zmazPredmet(this);
@@ -137,7 +139,7 @@ void Zbran::pouzi(Hrac* hrac) {
 			}
 			else {
 
-				docasny1 = (Pouzitelny*)oblecene->at(10);
+				docasny1 = static_cast<Pouzitelny*>(oblecene->at(10));
 				oblecene->erase(10);
 				oblecene->insert(std::pair<int, Predmet*>(10, this));
 				hrac->Getinventar()->zmazPredmet(this);
@@ -152,7 +154,7 @@ void Zbran::pouzi(Hrac* hrac) {
 		if (moznost == 3) { // daèo je na prvom a druhom slote 
 
 			if (typ == 9) {
-				docasny1 = (Pouzitelny*)oblecene->at(9);
+				docasny1 = static_cast<Pouzitelny*>(oblecene->at(9));
 				oblecene->erase(9);
 				oblecene->insert(std::pair<int, Predmet*>(9, this));
 				hrac->Getinventar()->zmazPredmet(this);
@@ -163,8 +165,8 @@ void Zbran::pouzi(Hrac* hrac) {
 			}
 			else if (typ == 10) {
 				
-				docasny1 = (Pouzitelny*)oblecene->at(9);
-				docasny2 = (Pouzitelny*)oblecene->at(10);
+				docasny1 = static_cast<Pouzitelny*>(oblecene->at(9));
+				docasny2 = static_cast<Pouzitelny*>(oblecene->at(10));
 
 				oblecene->erase(9);
 				oblecene->erase(10);
@@ -181,7 +183,7 @@ void Zbran::pouzi(Hrac* hrac) {
 			}
 			else {
 
-				docasny1 = (Pouzitelny*)oblecene->at(10);
+				docasny1 = static_cast<Pouzitelny*>(oblecene->at(10));
 				oblecene->erase(10);
 				oblecene->insert(std::pair<int, Predmet*>(10, this));
 				hrac->Getinventar()->zmazPredmet(this);
@@ -217,7 +219,8 @@ void Zbran::pouzi(Hrac* hrac) {
 	hrac->Getstatistika()->prepocitajPoskodenia();
 }
 
-int Zbran::GetrychlostUtoku() {
+int Zbran::GetrychlostUtoku() const
+{
 	return rychlostUtoku;
 }
 

@@ -3,7 +3,6 @@
 #if !defined(inventar_h)
 #define inventar_h
 
-#include <string>
 #include "Predmet.h"
 
 
@@ -14,15 +13,15 @@ public:
 	Inventar(int kapacita = 36);
 	virtual ~Inventar();
 
-	int Getzlato();
+	int Getzlato() const;
 	void Setzlato(int paPocet);
 	void pridajZlato(int paPocet);
-	bool maDostatokZlata(int aktualneZlato);
+	bool maDostatokZlata(int aktualneZlato) const;
 	
-	int Getkapacita();
+	int Getkapacita() const;
 	void Setkapacita(int paNova);
 	int pocetPredmetov(std::string meno);
-	int pocetPredmetov();
+	int pocetPredmetov() const;
 	void pridajPredmet(Predmet* predmet,bool loot = true);
 	void zmazPredmet(Predmet* predmet);
 	void zmazPredmet(std::string paNazovPredmetu);

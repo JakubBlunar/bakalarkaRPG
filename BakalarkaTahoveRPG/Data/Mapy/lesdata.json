@@ -65,6 +65,19 @@
   "questy": [ ],
 
   "oblasti": [
-
+    {
+      "x1": 0,
+      "y1": 0,
+      "x2": 74,
+      "y2": 74,
+      "nepriatelia": [ "basilisk", "medved2", "vlk" ]
+    },
+    {
+      "x1": 32,
+      "y1": 46,
+      "x2": 74,
+      "y2": 74,
+      "nepriatelia": [ "harpia" ]
+    }
   ]
 }

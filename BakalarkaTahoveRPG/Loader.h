@@ -2,10 +2,8 @@
 #define loader_h
 #include <SFML\Graphics.hpp>
 #include <map>
-#include <string>
 #include <vector>
 
-#include "json-forwards.h"
 #include "json.h"
 
 using namespace std;
@@ -25,24 +23,29 @@ public:
 	void setHra(Hra* paHra);
 	void nacitajMapu(string paMeno,int paX,int paY,int smer);
 	sf::Font* nacitajFont(string menoFontu);
-	DialogovyStrom* nacitajDialog(string paMeno);
-	Nepriatel* nacitajNepriatela(string paMeno);
-	vector<Predmet*>* nacitajObchod(string paMeno);
-	Quest* nacitajQuest(string paMeno);
-	bool Getnacitava();
-	Hra* Gethra();
+	DialogovyStrom* nacitajDialog(string paMeno) const;
+	Nepriatel* nacitajNepriatela(string paMeno) const;
+	vector<Predmet*>* nacitajObchod(string paMeno) const;
+	Quest* nacitajQuest(string paMeno) const;
+	bool Getnacitava() const;
+	Hra* Gethra() const;
 	
-	Zameranie* nacitajZameranie(string paMeno);
+	Zameranie* nacitajZameranie(string paMeno) const;
 
-	bool save();
+	bool save() const;
 	void load();
 
 private:
-	Loader() {
+	Loader(): hra(nullptr)
+	{
 		nacitava = false;
 	};
-	Loader(Loader const&) {};
-	Loader& operator=(Loader const&) {};
+	Loader(Loader const&): nacitava(false), hra(nullptr)
+	{};
+	Loader& operator=(Loader const&) const
+	{
+		return *instancia;
+	};
 	static Loader* instancia;
 
 	bool nacitava;
@@ -51,14 +54,14 @@ private:
 	map<int, sf::Texture*> textury;
 	map<string, Mapa*> nacitaneMapy;
 	
-	void nacitajNpc(string menoMapy, Mapa* mapa);
+	void nacitajNpc(string menoMapy, Mapa* mapa) const;
 	
 	map<string, sf::Font*> nacitaneFonty;
 	
-	Predmet* parsujPredmet(Json::Value jPredmet);
+	Predmet* parsujPredmet(Json::Value jPredmet) const;
 
-	int  nahodneCislo(int min, int max);
-	void zobrazLoadingScreen();
+	int  nahodneCislo(int min, int max) const;
+	void zobrazLoadingScreen() const;
 };
 
 #endif // LOADER.H

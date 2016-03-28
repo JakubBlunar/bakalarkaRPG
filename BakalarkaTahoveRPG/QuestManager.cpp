@@ -7,9 +7,6 @@
 #include "Stav.h"
 #include "PopupOkno.h"
 
-#include <algorithm>
-
-
 QuestManager::QuestManager()
 {
 	nedokonceneQuesty = new std::deque<Quest*>();
@@ -32,15 +29,18 @@ void QuestManager::pridajQuest(Quest* quest) {
 }
 
 
-std::deque<Quest*>* QuestManager::Getnedokoncenequesty() {
+std::deque<Quest*>* QuestManager::Getnedokoncenequesty() const
+{
 	return nedokonceneQuesty;
 }
 
-std::deque<Quest*>* QuestManager::Getdokoncenequesty() {
+std::deque<Quest*>* QuestManager::Getdokoncenequesty() const
+{
 	return dokonceneQuesty;
 }
 
-void QuestManager::udalost(QuestEvent paEvent, void* param) {
+void QuestManager::udalost(QuestEvent paEvent, void* param) const
+{
 
 	Nepriatel* nepriatel;
 	Predmet* predmet;
@@ -48,13 +48,13 @@ void QuestManager::udalost(QuestEvent paEvent, void* param) {
 	switch (paEvent)
 	{
 	case QuestEvent::ZABITIE_NPC:
-		nepriatel = (Nepriatel*)param;
+		nepriatel = static_cast<Nepriatel*>(param);
 		for (unsigned int i = 0; i< nedokonceneQuesty->size(); i++) {
 			nedokonceneQuesty->at(i)->zabitieNpc(nepriatel);
 		}
 		break;
 	case QuestEvent::LOOTNUTIE_PREDMETU:
-		predmet = (Predmet*)param;
+		predmet = static_cast<Predmet*>(param);
 		for (unsigned int i = 0; i< nedokonceneQuesty->size(); i++) {
 			nedokonceneQuesty->at(i)->lootnutiePredmetu(predmet);
 		}
@@ -68,7 +68,8 @@ void QuestManager::udalost(QuestEvent paEvent, void* param) {
 
 }
 
-bool QuestManager::maQuest(std::string paNazov) {
+bool QuestManager::maQuest(std::string paNazov) const
+{
 	bool ma = false;
 
 	for (unsigned int i = 0; i< nedokonceneQuesty->size(); i++) {
@@ -85,7 +86,8 @@ bool QuestManager::maQuest(std::string paNazov) {
 	return ma;
 }
 
-Quest* QuestManager::getQuest(std::string paNazov) {
+Quest* QuestManager::getQuest(std::string paNazov) const
+{
 	for (unsigned int i = 0; i< nedokonceneQuesty->size(); i++) {
 		if (nedokonceneQuesty->at(i)->Getnazov() == paNazov) {
 			return nedokonceneQuesty->at(i);
@@ -118,15 +120,18 @@ void QuestManager::dokoncenieQuestu(std::string meno, Hrac* hrac) {
 
 }
 
-void QuestManager::nacitanyQuest(Quest* paQuest) {
+void QuestManager::nacitanyQuest(Quest* paQuest) const
+{
 	nacitaneQuesty->push_back(paQuest);
 }
 
-deque<Quest*>* QuestManager::Getnacitanequesty() {
+deque<Quest*>* QuestManager::Getnacitanequesty() const
+{
 	return nacitaneQuesty;
 }
 
-Quest* QuestManager::Getzaciatocnyquestnpc(string menoNpc) {
+Quest* QuestManager::Getzaciatocnyquestnpc(string menoNpc) const
+{
 
 	for (unsigned int i = 0; i < nacitaneQuesty->size(); i++) {
 		if (nacitaneQuesty->at(i)->Getstartnpc() == menoNpc && nacitaneQuesty->at(i)->Getpredchadzajuci() == nullptr && nacitaneQuesty->at(i)->Getstav() == StavQuestu::NEPRIJATY) {
@@ -138,7 +143,8 @@ Quest* QuestManager::Getzaciatocnyquestnpc(string menoNpc) {
 	return nullptr;
 }
 
-Quest* QuestManager::Getkonciaciquestnpc(string menoNpc) {
+Quest* QuestManager::Getkonciaciquestnpc(string menoNpc) const
+{
 	for (unsigned int i = 0; i < nedokonceneQuesty->size(); i++) {
 		if (nedokonceneQuesty->at(i)->Getendnpc() == menoNpc) {
 			return nedokonceneQuesty->at(i);
@@ -147,14 +153,16 @@ Quest* QuestManager::Getkonciaciquestnpc(string menoNpc) {
 	return nullptr;
 }
 
-Quest* QuestManager::GetNacitanyQuest(string paNazov){
+Quest* QuestManager::GetNacitanyQuest(string paNazov) const
+{
 	for (unsigned int i = 0; i < nacitaneQuesty->size(); i++) {
 		if (nacitaneQuesty->at(i)->Getnazov() == paNazov) return nacitaneQuesty->at(i);
 	}
 	return nullptr;
 }
 
-void QuestManager::pridajDoNedokoncenych(Quest* paQuest) {
+void QuestManager::pridajDoNedokoncenych(Quest* paQuest) const
+{
 	if (GetNacitanyQuest(paQuest->Getnazov()) == nullptr) {
 		nacitaneQuesty->push_back(paQuest);
 	}
@@ -163,7 +171,8 @@ void QuestManager::pridajDoNedokoncenych(Quest* paQuest) {
 
 }
 
-void QuestManager::pridajDoDokoncenych(Quest* paQuest) {
+void QuestManager::pridajDoDokoncenych(Quest* paQuest) const
+{
 	if (GetNacitanyQuest(paQuest->Getnazov()) == nullptr) {
 		nacitaneQuesty->push_back(paQuest);
 	}

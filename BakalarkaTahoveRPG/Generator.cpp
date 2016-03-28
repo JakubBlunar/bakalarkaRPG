@@ -4,10 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <time.h>
-#include <random>
 #include <math.h>
 #include <io.h>
-#include <time.h>
 
 #include "Pouzitelny.h"
 #include "Zbran.h"
@@ -19,29 +17,31 @@ Generator* Generator::instancia = NULL;
 Generator* Generator::Instance()
 {
 	if (!instancia) {
-		srand((unsigned int)time(NULL));
+		srand(static_cast<unsigned int>(time(NULL)));
 		instancia = new Generator();
 	}
 	return instancia;
 }
 
 
-int Generator::randomInt(int min, int max) {
+int Generator::randomInt(int min, int max) const
+{
 	if (min == max) {
 		return min;
 	}
 	return min + (rand() % (int)(max - min + 1));
 }
 
-Predmet* Generator::nahodnyElixir() {
+Predmet* Generator::nahodnyElixir() const
+{
 
 	Elixir* elixir;
 
 	int kolko = randomInt(1, 6) * 25;
 
-	string obrazok = "";
-	string stat = "";
-	string nazov = "";
+	string obrazok;
+	string stat;
+	string nazov;
 
 	int lvl = 1;
 
@@ -181,6 +181,13 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 			obrazok += "Onehand_Mace/";
 			cesta += "Onehand_Mace/";
 			break;
+		case TWOHAND_MACE: break;
+		case STAVE: break;
+		case POLEARM: break;
+		case TWOHAND_AXE: break;
+		case TWOHAND_SWORD: break;
+		case SHIELD: break;
+		default: break;
 		}
 
 	}
@@ -209,6 +216,12 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 			obrazok += "Twohand_Sword/";
 			cesta += "Twohand_Sword/";
 			break;
+		case ONEHAND_AXE: break;
+		case ONEHAND_SWORD: break;
+		case DAGGER: break;
+		case ONEHAND_MACE: break;
+		case SHIELD: break;
+		default: break;
 		}
 	}else{ 
 		enumTyp = ZbranTyp::SHIELD;
@@ -306,8 +319,8 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 
 	Zbran* zbran;
 	if (typ != 11) {
-		int minPoskodenie = 0;
-		int maxPoskodenie = 0;
+		int minPoskodenie;
+		int maxPoskodenie;
 		int poskOd;
 		if (paUroven <= 7) {
 			poskOd = 1;
@@ -320,8 +333,8 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 		maxPoskodenie = randomInt(paUroven, paUroven + 2);
 
 		if (typ == 10) {
-			minPoskodenie = (int)round(minPoskodenie*1.3);
-			maxPoskodenie = (int)round(maxPoskodenie*1.3);
+			minPoskodenie = static_cast<int>(round(minPoskodenie*1.3));
+			maxPoskodenie = static_cast<int>(round(maxPoskodenie*1.3));
 		}
 
 		int rychlost = randomInt(1, 5) * 500;
@@ -336,7 +349,8 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 	return zbran;
 }
 
-void Generator::generujStatistiky(Pouzitelny* paPredmet) {
+void Generator::generujStatistiky(Pouzitelny* paPredmet) const
+{
 
 
 	if (paPredmet->Gettyp() != 5  && paPredmet->Gettyp() != 6) {
@@ -404,7 +418,8 @@ void Generator::generujStatistiky(Pouzitelny* paPredmet) {
 }
 
 
-vector<string>* Generator::najdiSubory(string cesta) {
+vector<string>* Generator::najdiSubory(string cesta) const
+{
 	vector<string> *subory = new vector<string>();
 
 	_finddata_t data;

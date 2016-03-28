@@ -1,7 +1,7 @@
 #if !defined(akcia_h)
 #define akcia_h
+
 #include "SFML\Graphics.hpp"
-#include <string>
 
 class Statistika;
 
@@ -23,7 +23,7 @@ public:
 	virtual int Getcenamany();
 	virtual std::string Getmeno();
 	virtual sf::Sprite* Getobrazok();
-	int Gettrvanie();
+	int Gettrvanie() const;
 	virtual std::string vykonajSa(Statistika* statHrac,Statistika* statNepriatel, sf::Time aktCas);
 
 protected:

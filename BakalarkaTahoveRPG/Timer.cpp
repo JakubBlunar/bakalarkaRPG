@@ -51,11 +51,13 @@ Time Timer::toggle() {
 	return getElapsedTime();
 }
 
-bool Timer::Getbeziaci() {
+bool Timer::Getbeziaci() const
+{
 	return stav == BEZIACI;
 }
 
-Time Timer::getElapsedTime() {
+Time Timer::getElapsedTime() const
+{
 	switch (stav) {
 	case STOPNUTY:
 		return Time::Zero;

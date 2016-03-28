@@ -22,12 +22,13 @@ void EfektUpravStat::zrusUcinok(Statistika* statistika) {
 	statistika->zvysStat(-hodnotaEfektu(), co);
 }
 
-int EfektUpravStat::hodnotaEfektu() {
+int EfektUpravStat::hodnotaEfektu() const
+{
 	if (zakladOkolko > 0) {
-		return (int)floor(floor((2 * zakladOkolko) * statistikaNaPocitanie->dajUroven() / 100 )) + 1;
+		return static_cast<int>(floor(floor((2 * zakladOkolko) * statistikaNaPocitanie->dajUroven() / 100 ))) + 1;
 	}
 	else if (zakladOkolko < 0) {
-		return (int)floor(floor((2 * zakladOkolko) * statistikaNaPocitanie->dajUroven() / 100)) -1;
+		return static_cast<int>(floor(floor((2 * zakladOkolko) * statistikaNaPocitanie->dajUroven() / 100))) -1;
 	}
 	else return 1;
 }

@@ -20,12 +20,14 @@ Vrstva::~Vrstva() {
 }
 
 
-sf::Sprite* Vrstva::Getobrazok() {
+sf::Sprite* Vrstva::Getobrazok() const
+{
 	return obrazok;
 }
 
 
-void Vrstva::Setobrazok(sf::Texture* newVal) {
+void Vrstva::Setobrazok(sf::Texture* newVal) const
+{
 	obrazok->setTexture(*newVal);
 	obrazok->setTextureRect(sf::IntRect(0, 0, velkost, velkost));
 }

@@ -13,10 +13,10 @@ public:
 public:
 	Oblast(int paX, int paY, int paW, int paH);
 
-	bool jeRovnaka(Oblast paOblast);
-	bool obsahujeSuradnicu(sf::Vector2i paPos);
+	bool jeRovnaka(Oblast paOblast) const;
+	bool obsahujeSuradnicu(sf::Vector2i paPos) const;
 	void pridajNepriatela(string paMeno);
-	vector<string> Getnepriatelia();
+	vector<string> Getnepriatelia() const;
 
 	const int x;
 	const int y;

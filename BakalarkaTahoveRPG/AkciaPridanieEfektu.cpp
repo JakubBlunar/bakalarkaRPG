@@ -2,7 +2,6 @@
 
 #include "Statistika.h"
 #include "Efekt.h"
-#include "EfektUpravStat.h"
 
 AkciaPridanieEfektu::AkciaPridanieEfektu(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis, int mana, Efekt* efekt, bool naHraca)
 	:Akcia(meno,obrazok,casCastenia,cooldown,trvanie,popis,mana,AkciaTyp::FYZICKA)
@@ -34,6 +33,7 @@ std::string AkciaPridanieEfektu::dajPopis() {
 	return popis+ "\n"+ efekt->popis();
 }
 
-void AkciaPridanieEfektu::setStatistika(Statistika* statistika) {
+void AkciaPridanieEfektu::setStatistika(Statistika* statistika) const
+{
 	efekt->Setstatistikanapocitanie(statistika);
 }

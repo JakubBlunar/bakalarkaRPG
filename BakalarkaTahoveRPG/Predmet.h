@@ -4,7 +4,6 @@
 #define predmet_h
 
 #include <SFML\Graphics.hpp>
-#include <string>
 
 class Hrac;
 
@@ -17,13 +16,13 @@ public:
 
 	virtual void pouzi(Hrac* hrac);
 
-	int Geturoven();
-	int Getcena();
-	int Gettyp();
-	std::string Getmeno();
-	sf::Sprite* Getobrazok();
-	std::string Getstringovytyp();
-	std::string Getsobrazok();
+	int Geturoven() const;
+	int Getcena() const;
+	int Gettyp() const;
+	std::string Getmeno() const;
+	sf::Sprite* Getobrazok() const;
+	std::string Getstringovytyp() const;
+	std::string Getsobrazok() const;
 	void Settyp(int newVal);
 	void Setcena(int newVal);
 	void Setmeno(std::string newVal);

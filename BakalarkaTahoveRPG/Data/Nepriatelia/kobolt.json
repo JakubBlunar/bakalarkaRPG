@@ -1,0 +1,63 @@
+{
+  "meno": "Kobolt",
+  "obrazok": "kobolt",
+  "levelOd": 16,
+  "levelDo": 19,
+  "hpOd": 175,
+  "hpDo": 210,
+  "mpOd": 70,
+  "mpDo": 90,
+  "silaOd": 28,
+  "silaDo": 33,
+  "intelektOd": 30,
+  "intelektDo": 35,
+  "redukciaMin": 15,
+  "redukciaMax": 20,
+  "uhybMin": 25,
+  "uhybMax": 30,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Attack",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1.0
+    },
+     "2": {
+      "typ": "AkciaLiecenie",
+      "meno": "Healing touch",
+      "obrazok": "16",
+      "rychlostCastenia": 4000,
+      "cooldown": 1000,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "magicka",
+      "mana": 8,
+      "zakladnaHodnota": 0.8
+    },
+    "4": {
+      "typ": "AkciaDmg",
+      "meno": "Fireblast",
+      "obrazok": "attack",
+      "rychlostCastenia": 1000,
+      "cooldown": 2000,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "magicka",
+      "mana": 12,
+      "zakladnaHodnota": 1.1
+    }
+
+  },
+
+  "questDrop": {
+
+  }
+
+}

@@ -19,10 +19,25 @@
     {
       "x1": 0,
       "y1": 0,
-      "x2": 200,
-      "y2": 200,
-      "nepriatelia": [ "sliz1", "medved1", "murlock1" ]
+      "x2": 41,
+      "y2": 41,
+      "nepriatelia": [ "sliz1" ]
+    },
+    {
+      "x1": 3,
+      "y1": 22,
+      "x2": 41,
+      "y2": 41,
+      "nepriatelia": [ "murlock1" ]
+    },
+    {
+      "x1": 40,
+      "y1": 0,
+      "x2": 85,
+      "y2": 45,
+      "nepriatelia": [ "sliz2","medved1"]
     }
+
   ]
 
 }

@@ -9,7 +9,7 @@ public:
 	PolickoDvere(bool paPriechodne,std::string kam, int posX, int posY, int smerPohladu);
 	~PolickoDvere();
 	
-	void hracSkok(Hrac* paHrac);
+	void hracSkok(Hrac* paHrac) override;
 
 private:
 	std::string menoMapy;

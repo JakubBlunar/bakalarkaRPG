@@ -1,10 +1,6 @@
 #include "PolickoDvere.h"
 #include "Hrac.h"
 #include "Hra.h"
-#include <iostream>
-#include <string>
-#include "Mapa.h"
-#include "StavHranieHry.h"
 #include "Loader.h"
 
 PolickoDvere::PolickoDvere(bool paPriechodne, std::string kam, int posX,int posY,int smerPohladu):Policko(paPriechodne)

@@ -56,18 +56,20 @@ Statistika::~Statistika() {
 }
 
 
-int Statistika::dajUroven() {
-
+int Statistika::dajUroven() const
+{
 	return uroven;
 }
 
 
-int Statistika::Gethp() {
+int Statistika::Gethp() const
+{
 	return hp;
 }
 
 
-int Statistika::GethpMax() {
+int Statistika::GethpMax() const
+{
 	int bonus = 0;
 	double mult = 0;
 
@@ -75,15 +77,16 @@ int Statistika::GethpMax() {
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
-		Pouzitelny* p = (Pouzitelny*)it->second;
+		Pouzitelny* p = static_cast<Pouzitelny*>(it->second);
 		bonus += p->Gethp();
 		mult += p->GethpMult();
 	}
-	return (int)round((hpMax+bonus)*(1+mult));
+	return static_cast<int>(round((hpMax+bonus)*(1+mult)));
 }
 
 
-int Statistika::Getintelekt() {
+int Statistika::Getintelekt() const
+{
 
 	int bonus = 0;
 	double mult = 0;
@@ -92,11 +95,11 @@ int Statistika::Getintelekt() {
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
-		Pouzitelny* p = (Pouzitelny*)it->second;
+		Pouzitelny* p = static_cast<Pouzitelny*>(it->second);
 		bonus += p->Getinteligencia();
 		mult += p->GetinteligenciaMult();
 	}
-	return (int)round((intelekt + bonus)*(1 + mult));
+	return static_cast<int>(round((intelekt + bonus)*(1 + mult)));
 }
 
 
@@ -104,7 +107,7 @@ int Statistika::Getmp() {
 	if (!combat) {
 		timerMp.pause();
 		int pocetObnov = timerMp.getElapsedTime().asMilliseconds() / 10000;
-		int obnova = (int)round(0.5*intelekt);
+		int obnova = static_cast<int>(round(0.5*intelekt));
 
 		zvysStat(pocetObnov* obnova, "mp");
 
@@ -116,7 +119,8 @@ int Statistika::Getmp() {
 	return mp;
 }
 
-int Statistika::GetmpMax() {
+int Statistika::GetmpMax() const
+{
 
 	int bonus = 0;
 	double mult = 0;
@@ -125,16 +129,17 @@ int Statistika::GetmpMax() {
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
-		Pouzitelny* p = (Pouzitelny*)it->second;
+		Pouzitelny* p = static_cast<Pouzitelny*>(it->second);
 		bonus += p->Getmp();
 		mult += p->GetmpMult();
 	}
-	return (int)round((mpMax + bonus)*(1 + mult));
+	return static_cast<int>(round((mpMax + bonus)*(1 + mult)));
 }
 
 
 
-int Statistika::Getobrana() {
+int Statistika::Getobrana() const
+{
 
 	int bonus = 0;
 	double mult = 0;
@@ -143,15 +148,16 @@ int Statistika::Getobrana() {
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
-		Pouzitelny* p = (Pouzitelny*)it->second;
+		Pouzitelny* p = static_cast<Pouzitelny*>(it->second);
 		bonus += p->Getarmor();
 		mult += p->GetarmorMult();
 	}
-	return (int)round((obrana + bonus)*(1 + mult));
+	return static_cast<int>(round((obrana + bonus)*(1 + mult)));
 }
 
 
-int Statistika::Getrychlost() {
+int Statistika::Getrychlost() const
+{
 
 	int bonus = 0;
 	double mult = 0;
@@ -160,15 +166,16 @@ int Statistika::Getrychlost() {
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
-		Pouzitelny* p = (Pouzitelny*)it->second;
+		Pouzitelny* p = static_cast<Pouzitelny*>(it->second);
 		bonus += p->Getrychlost();
 		mult += p->GetrychlostMult();
 	}
-	return (int)round((rychlost + bonus)*(1 + mult));
+	return static_cast<int>(round((rychlost + bonus)*(1 + mult)));
 }
 
 
-int Statistika::Getsila() {
+int Statistika::Getsila() const
+{
 
 	int bonus = 0;
 	double mult = 0;
@@ -177,15 +184,16 @@ int Statistika::Getsila() {
 
 	for (it_t it = oblecene->begin(); it != oblecene->end(); ++it)
 	{
-		Pouzitelny* p = (Pouzitelny*)it->second;
+		Pouzitelny* p = static_cast<Pouzitelny*>(it->second);
 		bonus += p->Getsila();
 		mult += p->GetsilaMult();
 	}
-	return (int)round((sila + bonus)*(1 + mult));
+	return static_cast<int>(round((sila + bonus)*(1 + mult)));
 }
 
 
-int Statistika::Getskusenosti() {
+int Statistika::Getskusenosti() const
+{
 
 	return skusenosti;
 }
@@ -315,7 +323,8 @@ void Statistika::zvysStat(int kolko, string paCo) {
 	prepocitajPoskodenia();
 }
 
-int Statistika::Getstat(string paCo) {
+int Statistika::Getstat(string paCo) const
+{
 
 	//hp
 	if (paCo == "hp") {
@@ -363,54 +372,58 @@ void Statistika::setUroven(int paUroven) {
 	uroven = paUroven;
 }
 
-map<int, Predmet*>* Statistika::Getoblecene() {
+map<int, Predmet*>* Statistika::Getoblecene() const
+{
 	return oblecene;
 }
 
-vector<Akcia*>* Statistika::Getakcie() {
+vector<Akcia*>* Statistika::Getakcie() const
+{
 	return akcie;
 }
 
 void Statistika::prepocitajPoskodenia() {
 	if (oblecene->count(9)) {
-		Zbran* zbran1 =(Zbran*)oblecene->at(9);
+		Zbran* zbran1 =static_cast<Zbran*>(oblecene->at(9));
 		if (oblecene->count(10)) {
-			Zbran* zbran2 = (Zbran*)oblecene->at(10);
+			Zbran* zbran2 = static_cast<Zbran*>(oblecene->at(10));
 			if (zbran2->Gettyp() != 11) {
-				int sucet = (int)floor(zbran1->Getminposkodenie() + 0.75*zbran2->Getminposkodenie());
+				int sucet = static_cast<int>(floor(zbran1->Getminposkodenie() + 0.75*zbran2->Getminposkodenie()));
 				
-				minPoskodenie = (int)floor(2 * sila / 10 + 1) * sucet;
-				sucet = (int)floor(zbran1->Getmaxposkodenie() + 0.75*zbran2->Getmaxposkodenie());
-				maxPoskodenie = (int)floor(2 * sila / 10 + 1) * sucet;
+				minPoskodenie = static_cast<int>(floor(2 * sila / 10 + 1)) * sucet;
+				sucet = static_cast<int>(floor(zbran1->Getmaxposkodenie() + 0.75*zbran2->Getmaxposkodenie()));
+				maxPoskodenie = static_cast<int>(floor(2 * sila / 10 + 1)) * sucet;
 			}
 			else {
-				minPoskodenie = (int)floor(2 * sila / 10 + 1) * zbran1->Getminposkodenie();
-				maxPoskodenie = (int)floor(2 * sila / 10 + 1) * zbran1->Getmaxposkodenie();
+				minPoskodenie = static_cast<int>(floor(2 * sila / 10 + 1)) * zbran1->Getminposkodenie();
+				maxPoskodenie = static_cast<int>(floor(2 * sila / 10 + 1)) * zbran1->Getmaxposkodenie();
 			}
 		}
 		else {
-			minPoskodenie = (int)floor(2 * sila / 10 + 1) * zbran1->Getminposkodenie();
-			maxPoskodenie = (int)floor(2 * sila / 10 + 1) * zbran1->Getmaxposkodenie();
+			minPoskodenie = static_cast<int>(floor(2 * sila / 10 + 1)) * zbran1->Getminposkodenie();
+			maxPoskodenie = static_cast<int>(floor(2 * sila / 10 + 1)) * zbran1->Getmaxposkodenie();
 		}
 	}
 	else {
 		
-		minPoskodenie = (int)floor(2 * sila / 10 + 1);
-		maxPoskodenie = (int)floor(2 * sila / 10 + 1);
+		minPoskodenie = static_cast<int>(floor(2 * sila / 10 + 1));
+		maxPoskodenie = static_cast<int>(floor(2 * sila / 10 + 1));
 	}
 }
 
-int Statistika::Getminposkodenie() {
+int Statistika::Getminposkodenie() const
+{
 	return minPoskodenie;
 }
-int Statistika::Getmaxposkodenie() {
+int Statistika::Getmaxposkodenie() const
+{
 	return maxPoskodenie;
 }
 
 void Statistika::vlozAkciu(Akcia* paAkcia) {
 
-	if (dynamic_cast<AkciaPridanieEfektu *>(paAkcia) != NULL) {
-		AkciaPridanieEfektu* akc = (AkciaPridanieEfektu*)paAkcia;
+	if (dynamic_cast<AkciaPridanieEfektu *>(paAkcia) != nullptr) {
+		AkciaPridanieEfektu* akc = static_cast<AkciaPridanieEfektu*>(paAkcia);
 		akc->setStatistika(this);
 	}
 
@@ -421,11 +434,12 @@ void Statistika::vlozAkciu(Akcia* paAkcia) {
 		
 }
 
-int Statistika::Getrychlostutoku() {
+int Statistika::Getrychlostutoku() const
+{
 	if (oblecene->count(9)) {
-		Zbran* zbran1 = (Zbran*)oblecene->at(9);
+		Zbran* zbran1 = static_cast<Zbran*>(oblecene->at(9));
 		if (oblecene->count(10)) {
-			Zbran* zbran2 = (Zbran*)oblecene->at(10);
+			Zbran* zbran2 = static_cast<Zbran*>(oblecene->at(10));
 			if (zbran2->Gettyp() == 9) {
 				return (zbran1->GetrychlostUtoku() + zbran2->GetrychlostUtoku())/2;
 			}
@@ -442,16 +456,19 @@ int Statistika::Getrychlostutoku() {
 	}
 }
 
-double Statistika::Getsancanauhyb() {
-	if ((double)rychlost / (6 * uroven) > 0.50) return 0.50;
-	return (double) rychlost / (6 * uroven);
+double Statistika::Getsancanauhyb() const
+{
+	if (static_cast<double>(rychlost) / (6 * uroven) > 0.50) return 0.50;
+	return static_cast<double>(rychlost) / (6 * uroven);
 }
 
-double Statistika::Getodolnostvociposkodeniu() {
-	return (double)obrana / (25 * uroven);
+double Statistika::Getodolnostvociposkodeniu() const
+{
+	return static_cast<double>(obrana) / (25 * uroven);
 }
 
-map<Efekt*, sf::Time>* Statistika::Getaktivneefekty() {
+map<Efekt*, sf::Time>* Statistika::Getaktivneefekty() const
+{
 	return aktivneEfekty;
 }
 

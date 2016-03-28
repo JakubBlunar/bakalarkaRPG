@@ -21,11 +21,11 @@ public:
 	sf::RenderWindow* okno;
 	void start();
 	void hlavnaSlucka();
-	void zmenStavRozhrania(std::string paStav);
+	void zmenStavRozhrania(std::string paStav) const;
 	void SetHrac(Hrac* paHrac);
-	Hrac* GetHrac();
-	Stav* dajStav(std::string stav);
-	bool maFocus();
+	Hrac* GetHrac() const;
+	Stav* dajStav(std::string stav) const;
+	bool maFocus() const;
 
 private:
 	Hrac* hrac;

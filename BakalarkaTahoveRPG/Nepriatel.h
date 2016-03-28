@@ -5,7 +5,6 @@
 
 #include "Npc.h"
 #include <map>
-#include <string>
 
 class Predmet;
 
@@ -16,12 +15,12 @@ public:
 	Nepriatel(std::string paMeno,std::string obrazok, DialogovyStrom* dialog, Statistika* paStatistika);
 	virtual ~Nepriatel();
 
-	Statistika* Getstatistika();
+	Statistika* Getstatistika() const;
 	void Setstatistika(Statistika* newVal);
-	Akcia* vyberAkciu(std::map<Akcia*,int>* cooldowny);
-	sf::Sprite* Getobrazok();
-	void pridajDropItem(std::string, Predmet*);
-	std::map< std::string, Predmet*>* dropQuestPredmetov();
+	Akcia* vyberAkciu(std::map<Akcia*,int>* cooldowny) const;
+	sf::Sprite* Getobrazok() const;
+	void pridajDropItem(std::string, Predmet*) const;
+	std::map< std::string, Predmet*>* dropQuestPredmetov() const;
 private:
 	Statistika* statistika;
 	sf::Texture textura;

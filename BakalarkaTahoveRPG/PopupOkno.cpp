@@ -13,7 +13,8 @@ PopupOkno::~PopupOkno()
 {
 }
 
-bool PopupOkno::skoncil() {
+bool PopupOkno::skoncil() const
+{
 	return (texty.size() > 1) ? false :true;
 }
 

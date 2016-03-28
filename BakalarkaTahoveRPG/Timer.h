@@ -15,8 +15,8 @@ public:
 	Time pause();
 	Time resume();
 	Time toggle();
-	bool Getbeziaci();
-	Time getElapsedTime();
+	bool Getbeziaci() const;
+	Time getElapsedTime() const;
 
 private:
 	enum { STOPNUTY, BEZIACI, POZASTAVENY } stav;

@@ -1,6 +1,5 @@
 #pragma once
 #include <map>
-#include <iostream>
 
 #include "Stav.h"
 
@@ -11,11 +10,10 @@ public:
 	StavRozhrania(Stav* pociatocnyStav);
 	~StavRozhrania();
 
-	void zmenMapu();
-	void render();
+	void render() const;
 	void update(double cas);
 	void pridajStav(Stav* stav);
-	Stav* GetaktualnyStav();
+	Stav* GetaktualnyStav() const;
 	void zmenStav(std::string stav);
 	Stav* dajStav(std::string stav);
 

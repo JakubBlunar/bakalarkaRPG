@@ -11,10 +11,10 @@ class QuestOdmena
 public:
 	QuestOdmena(int pocetXp,int pocetZlata);
 	~QuestOdmena();
-	vector<Predmet*>* getPredmety();
-	void pridajPredmet(Predmet* paPredmet);
-	int Getpocetzlata();
-	int Getpocetxp();
+	vector<Predmet*>* getPredmety() const;
+	void pridajPredmet(Predmet* paPredmet) const;
+	int Getpocetzlata() const;
+	int Getpocetxp() const;
 private:
 	int pocetZlata;
 	int pocetXp;

@@ -8,10 +8,9 @@ Policko::Policko(bool paPriechodne) {
 	priechodne = paPriechodne;
 	npc = nullptr;
 	polozenePredmety = new std::vector<Predmet*>();
+	casMazaniaPredmetov = NULL;
 
-	int kedyZmazatPredmety = -1; // nemazaù
-
-	for (unsigned int i = 0; i < (unsigned int)vrstvy.size(); i++) {
+	for (unsigned int i = 0; i < static_cast<unsigned int>(vrstvy.size()); i++) {
 		vrstvy[i] = new Vrstva(32);
 	}
 }
@@ -19,7 +18,7 @@ Policko::Policko(bool paPriechodne) {
 
 
 Policko::~Policko() {
-	for (unsigned int i = 0; i < (unsigned int)vrstvy.size(); i++) {
+	for (unsigned int i = 0; i < static_cast<unsigned int>(vrstvy.size()); i++) {
 		delete(vrstvy[i]);
 	}
 	delete polozenePredmety;
@@ -42,7 +41,8 @@ void Policko::Setpriechodne(bool paPriechodne) {
 	priechodne = paPriechodne;
 }
 
-bool Policko::jePrechodne() {
+bool Policko::jePrechodne() const
+{
 	return priechodne;
 }
 
@@ -54,7 +54,8 @@ void Policko::Setnpc(Npc* paNpc) {
 	npc = paNpc;
 }
 
-Npc* Policko::Getnpc() {
+Npc* Policko::Getnpc() const
+{
 	return npc;
 }
 
@@ -63,20 +64,22 @@ void Policko::polozPredmet(Predmet* paPredmet,sf::Time kedy) {
 	polozenePredmety->push_back(paPredmet);
 }
 
-std::vector<Predmet*>* Policko::dajPolozenePredmety() {
+std::vector<Predmet*>* Policko::dajPolozenePredmety() const
+{
 	return polozenePredmety;
 }
 
-bool Policko::polozenyPredmet() {
+bool Policko::polozenyPredmet() const
+{
 	return (polozenePredmety->size() > 0) ? true : false;
 }
 
-float Policko::kedyZmazatPredmety() {
+float Policko::kedyZmazatPredmety() const
+{
 	return casMazaniaPredmetov;
 }
 
-void Policko::zmazPolozenePredmety() {
-	// neviem Ëi vola deötruktory predmetov
+void Policko::zmazPolozenePredmety(){
 	polozenePredmety->clear();
 	casMazaniaPredmetov = -1;
 }

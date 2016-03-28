@@ -32,28 +32,28 @@ public:
 	string getPopis();
 	void dokonciSa(Hrac* hrac);
 	void setStav(StavQuestu paStav);
-	StavQuestu Getstav();
-	string Getnazov();
-	void pridajOdmenu(Predmet* paPredmet);
-	string GetpopisOdmeny();
+	StavQuestu Getstav() const;
+	string Getnazov() const;
+	void pridajOdmenu(Predmet* paPredmet) const;
+	string GetpopisOdmeny() const;
 	
-	void pridajPoziadavku(Poziadavka* poziadavka);
+	void pridajPoziadavku(Poziadavka* poziadavka) const;
 
 	void Setpredchadzajuci(Quest* paQuest);
 	void Setnasledujuci(Quest* paQuest);
-	Quest* Getnasledujuci();
-	Quest* Getpredchadzajuci();
-	string Getstartnpc();
-	string Getendnpc();
-	string Getnazovsuboru();
+	Quest* Getnasledujuci() const;
+	Quest* Getpredchadzajuci() const;
+	string Getstartnpc() const;
+	string Getendnpc() const;
+	string Getnazovsuboru() const;
 
 	void SetdialogPolozka(QuestPolozka* paPolozka);
 	void SetvolbaKuQuestu(DialogVolba* paVolba);
 
-	QuestPolozka* GetdialogPolozka();
-	DialogVolba* GetvolbaKuQuestu();
+	QuestPolozka* GetdialogPolozka() const;
+	DialogVolba* GetvolbaKuQuestu() const;
 
-	vector<Poziadavka*>* Getpoziadavky();
+	vector<Poziadavka*>* Getpoziadavky() const;
 
 private:
 	Quest* predchadzajuci;

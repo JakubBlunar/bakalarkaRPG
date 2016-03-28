@@ -3,7 +3,8 @@
 #include "Statistika.h"
 
 
-VolbaVyliecenie::VolbaVyliecenie(string paText, int dalsia):DialogVolba(paText, dalsia)
+VolbaVyliecenie::VolbaVyliecenie(string paText, int dalsia)
+	:DialogVolba(paText, dalsia)
 {	
 }
 

@@ -26,11 +26,11 @@ public:
 	virtual void render();
 	virtual void onEnter();
 	virtual void onExit();
-	std::string Getnazov();
+	std::string Getnazov() const;
 	void Setnazov(std::string paNazov);
 	void zobrazPopup(PopupOkno* paCo);
 
-	bool GetzobrazujePopup();
+	bool GetzobrazujePopup() const;
 
 protected:
 	StavAkcia stav;
@@ -47,5 +47,5 @@ protected:
 
 	Tlacidlo* popDalej;
 
-	std::string floattostring(float cislo);
+	static std::string floattostring(float cislo);
 };

@@ -1,9 +1,7 @@
 #include "StavBoj.h"
 #include "Hra.h"
 #include "Boj.h"
-#include "Loader.h"
 #include "Tlacidlo.h"
-#include "Hrac.h"
 
 #include "Statistika.h"
 #include "Akcia.h"
@@ -14,7 +12,6 @@
 #include "AkciaPridanieEfektu.h"
 #include "Efekt.h"
 #include "Nepriatel.h"
-#include <math.h>
 #include "StavInventar.h"
 
 StavBoj::StavBoj(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra):Stav(paNazov,paOkno,paHra)
@@ -133,8 +130,6 @@ void StavBoj::render() {
 	}
 
 
-	int startX = 20;
-	int startY = 70;
 
 	sf::RectangleShape pozadieAkcie;
 	pozadieAkcie.setFillColor(sf::Color(211, 211, 211));
@@ -344,7 +339,7 @@ void StavBoj::update(double delta) {
 					doInventara->skontrolujKlik(pozicia);
 					if (doInventara->Getzakliknute()) {
 						doInventara->Setzakliknute(false);
-						StavInventar* s = (StavInventar*)hra->dajStav("stavInventar");
+						StavInventar* s = static_cast<StavInventar*>(hra->dajStav("stavInventar"));
 						s->Setzboja(true);
 						hra->zmenStavRozhrania("stavInventar");
 					}
@@ -379,14 +374,14 @@ void StavBoj::update(double delta) {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
-				if (oznacene < hracoveAkcie->size() - 1) {
+				if (oznacene < static_cast<signed int>(hracoveAkcie->size()) - 1) {
 					oznacene++;
 				}
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
-				if (oznacene + 9 < hracoveAkcie->size() - 1) {
+				if (oznacene + 9 < static_cast<signed int>(hracoveAkcie->size()) - 1) {
 					oznacene += 9;
 				}
 				else {
@@ -408,7 +403,7 @@ void StavBoj::update(double delta) {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && !stlacenaKlavesa) {
 				if (boj->cakaNaVybratieAkcie() && !boj->koniecBoja()) {
-					StavInventar* s = (StavInventar*)hra->dajStav("stavInventar");
+					StavInventar* s = static_cast<StavInventar*>(hra->dajStav("stavInventar"));
 					s->Setzboja(true);
 					hra->zmenStavRozhrania("stavInventar");
 				}

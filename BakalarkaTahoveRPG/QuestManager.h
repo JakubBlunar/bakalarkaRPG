@@ -23,23 +23,23 @@ public:
 
 	//questy
 	void pridajQuest(Quest* quest);
-	deque<Quest*>* Getnedokoncenequesty();
-	deque<Quest*>* Getdokoncenequesty();
-	bool maQuest(string paNazovQuestu);
-	void udalost(QuestEvent e, void* param);
-	Quest* getQuest(string paNazov);
+	deque<Quest*>* Getnedokoncenequesty() const;
+	deque<Quest*>* Getdokoncenequesty() const;
+	bool maQuest(string paNazovQuestu) const;
+	void udalost(QuestEvent e, void* param) const;
+	Quest* getQuest(string paNazov) const;
 
 	void dokoncenieQuestu(string meno,Hrac* hrac);
-	void nacitanyQuest(Quest* paQuest);
+	void nacitanyQuest(Quest* paQuest) const;
 
-	Quest* GetNacitanyQuest(string paNazov);
-	deque<Quest*>* Getnacitanequesty();
+	Quest* GetNacitanyQuest(string paNazov) const;
+	deque<Quest*>* Getnacitanequesty() const;
 
-	Quest* Getzaciatocnyquestnpc(string menoNpc);
-	Quest* Getkonciaciquestnpc(string menoNpc);
+	Quest* Getzaciatocnyquestnpc(string menoNpc) const;
+	Quest* Getkonciaciquestnpc(string menoNpc) const;
 
-	void pridajDoNedokoncenych(Quest* paQuest);
-	void pridajDoDokoncenych(Quest* paQuest);
+	void pridajDoNedokoncenych(Quest* paQuest) const;
+	void pridajDoDokoncenych(Quest* paQuest) const;
 private:
 	deque<Quest*>* nacitaneQuesty;
 	

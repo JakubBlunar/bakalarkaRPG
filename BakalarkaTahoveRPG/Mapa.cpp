@@ -79,7 +79,8 @@ Mapa::~Mapa() {
 	delete[] mapa;
 }
 
-string Mapa::Getmeno() {
+string Mapa::Getmeno() const
+{
 	return menoMapy;
 }
 
@@ -97,7 +98,8 @@ void Mapa::setHrobSuradnice(sf::Vector2i paSuradnice) {
 	hrobSuradnice = paSuradnice;
 }
 
-sf::Vector2i Mapa::Gethrobsuradnice() {
+sf::Vector2i Mapa::Gethrobsuradnice() const
+{
 	return hrobSuradnice;
 }
 
@@ -180,6 +182,8 @@ void Mapa::render(sf::RenderWindow* okno) {
 								zltyOtaznik.setPosition(sf::Vector2f(32.f * i, 32 - 48.f + 32.f* j - 32.f));
 								okno->draw(zltyOtaznik);
 								break;
+							case DOKONCENY: break;
+							default: break;
 							}
 						}
 
@@ -209,7 +213,7 @@ void Mapa::render(sf::RenderWindow* okno) {
 			sirkaPolicka = vyskaPolicka;
 		}
 		sf::RectangleShape policko;
-		policko.setSize(sf::Vector2f(sirkaPolicka, vyskaPolicka));
+		policko.setSize(sf::Vector2f(sirkaPolicka+0.f, vyskaPolicka+0.f));
 	
 		for(int i = 0; i < sirka; i++)
 		{
@@ -217,7 +221,7 @@ void Mapa::render(sf::RenderWindow* okno) {
 			{
 				if (mapa[i][j]->jePrechodne()) {
 					
-					if (dynamic_cast<PolickoDvere*>(mapa[i][j]) == NULL) {
+					if (dynamic_cast<PolickoDvere*>(mapa[i][j]) == nullptr) {
 						policko.setFillColor(sf::Color(255, 0, 0, 75));
 					}
 					else {
@@ -241,7 +245,8 @@ void Mapa::render(sf::RenderWindow* okno) {
 	}
 }
 
-sf::FloatRect Mapa::Getzobrazenaoblast() {
+sf::FloatRect Mapa::Getzobrazenaoblast() const
+{
 	return sf::FloatRect(posunX + 0.f, posunY + 0.f, view.getSize().x + 0.f, view.getSize().y + 0.f);
 }
 
@@ -307,7 +312,8 @@ void Mapa::update(double delta) {
 }
 
 
-void Mapa::hracSkocilNaPolicko(int x, int y) {
+void Mapa::hracSkocilNaPolicko(int x, int y) const
+{
 	mapa[x][y]->hracSkok(hrac);
 }
 
@@ -330,11 +336,11 @@ void Mapa::posunHracaNaPolicko(int x, int y, int smerPohladu) {
 		posunMapyY = offsetHracaY - 5 * 32;
 	}
 
-	if ((int)posunMapyX + (int)hra->okno->getSize().x > sirka * 32) {
+	if (static_cast<int>(posunMapyX) + static_cast<int>(hra->okno->getSize().x) > sirka * 32) {
 		posunMapyX = sirka * 32 - hra->okno->getSize().x;
 	}
 
-	if ((int)posunMapyY + (int)hra->okno->getSize().y > vyska * 32) {
+	if (static_cast<int>(posunMapyY) + static_cast<int>(hra->okno->getSize().y) > vyska * 32) {
 		posunMapyY = vyska * 32 - hra->okno->getSize().y;
 	}
 
@@ -383,19 +389,23 @@ void Mapa::posunDole() {
 	smerPohybu = PohybMapy::DOLE;
 }
 
-PohybMapy Mapa::Getsmerpohybu() {
+PohybMapy Mapa::Getsmerpohybu() const
+{
 	return smerPohybu;
 }
 
-int Mapa::Getvyska() {
+int Mapa::Getvyska() const
+{
 	return vyska;
 }
 
-int Mapa::Getsirka() {
+int Mapa::Getsirka() const
+{
 	return sirka;
 }
 
-bool Mapa::jeMoznyPohyb(int x, int y) {
+bool Mapa::jeMoznyPohyb(int x, int y) const
+{
 	if (x < 0 || x >= sirka || y < 0 || y >= vyska) {
 		return false;
 	}
@@ -417,15 +427,18 @@ void Mapa::setSirkaVyska(int paSirka, int paVyska) {
 	this->vyska = paVyska;
 }
 
-void Mapa::nastavPolicko(int paX, int paY, Policko* paPolicko) {
+void Mapa::nastavPolicko(int paX, int paY, Policko* paPolicko) const
+{
 	mapa[paX][paY] = paPolicko;
 }
 
-Policko* Mapa::GetPolicko(int x, int y) {
+Policko* Mapa::GetPolicko(int x, int y) const
+{
 	return mapa[x][y];
 }
 
-void Mapa::hracInterakcia(StavHranieHry* paStav, void(StavHranieHry::*callbackFunkcia)()) {
+void Mapa::hracInterakcia(StavHranieHry* paStav, void(StavHranieHry::*callbackFunkcia)()) const
+{
 	if (hrac->GethybeSa() || smerPohybu != 0) return;
 
 	int x = hrac->GetpolickoX();
@@ -465,7 +478,8 @@ void Mapa::hracInterakcia(StavHranieHry* paStav, void(StavHranieHry::*callbackFu
 
 }
 
-sf::Time Mapa::aktCas() {
+sf::Time Mapa::aktCas() const
+{
 	return casovac.getElapsedTime();
 }
 

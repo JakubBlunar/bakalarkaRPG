@@ -30,8 +30,8 @@ public:
 	void akcia(string menoNepriatela);
 	bool jeSplnena();
 	string Getpopis();
-	string Getkohozabit();
-	int Getaktualnypocetzabitych();
+	string Getkohozabit() const;
+	int Getaktualnypocetzabitych() const;
 	void Setpocetzabiti(int paPocet);
 private:
 	int kolkoZabit;

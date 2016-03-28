@@ -2,7 +2,6 @@
 #include "Statistika.h"
 #include <map>
 #include "Predmet.h"
-#include <iostream>
 #include <random>
 
 AkciaPoskodenieZbranou::AkciaPoskodenieZbranou(std::string meno, std::string popis, Statistika* paStatistika):Akcia(meno,"ruka", 10000, 10000, 10000, popis, 0, AkciaTyp::FYZICKA)
@@ -45,7 +44,7 @@ std::string AkciaPoskodenieZbranou::vykonajSa(Statistika* statHrac, Statistika* 
 	double p = real(generator);
 
 	if (p >= statNepriatel->Getsancanauhyb()) {
-		int konecnePoskodenie = (int)ceil(poskodenie*(1 - statNepriatel->Getodolnostvociposkodeniu()));
+		int konecnePoskodenie = static_cast<int>(ceil(poskodenie*(1 - statNepriatel->Getodolnostvociposkodeniu())));
 		statNepriatel->Sethp(statNepriatel->Gethp() - konecnePoskodenie);
 		return meno + " - attack dmg " + std::to_string(konecnePoskodenie);
 	}
@@ -54,12 +53,13 @@ std::string AkciaPoskodenieZbranou::vykonajSa(Statistika* statHrac, Statistika* 
 	}
 }
 
-int AkciaPoskodenieZbranou::minPoskodenie() {
+int AkciaPoskodenieZbranou::minPoskodenie() const
+{
 	return statistika->Getminposkodenie();
-
 }
 
-int AkciaPoskodenieZbranou::maxPoskodenie() {
+int AkciaPoskodenieZbranou::maxPoskodenie() const
+{
 	return statistika->Getmaxposkodenie();
 }
 

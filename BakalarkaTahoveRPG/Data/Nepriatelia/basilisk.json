@@ -1,0 +1,71 @@
+{
+  "meno": "Basilisk",
+  "obrazok": "basilisk",
+  "levelOd": 10,
+  "levelDo": 13,
+  "hpOd": 150,
+  "hpDo": 190,
+  "mpOd": 20,
+  "mpDo": 28,
+  "silaOd": 20,
+  "silaDo": 30,
+  "intelektOd": 10,
+  "intelektDo": 20,
+  "redukciaMin": 30,
+  "redukciaMax": 40,
+  "uhybMin": 5,
+  "uhybMax": 15,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Bite",
+      "obrazok": "attack",
+      "rychlostCastenia": 1000,
+      "cooldown": 2000,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1.0
+    },
+    "2": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Stone scales",
+      "obrazok": "attack",
+      "rychlostCastenia": 1000,
+      "cooldown": 8000,
+      "trvanie": 7000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 8,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "25",
+        "stat": "obrana",
+        "hodnota": 2,
+        "naSeba": true
+      }
+
+    },
+    "3": {
+      "typ": "AkciaDmg",
+      "meno": "Stone Breath",
+      "obrazok": "attack",
+      "rychlostCastenia": 2500,
+      "cooldown": 5000,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1.1
+    }
+  },
+
+  "questDrop": {
+
+  }
+
+}

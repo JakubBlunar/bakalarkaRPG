@@ -3,7 +3,7 @@
 #include "Hra.h"
 #include "Hrac.h"
 #include "QuestManager.h"
-#include "VolbaUpravaQuestu.h"
+
 
 
 QuestPolozka::QuestPolozka(std::string paNazovQuestu) :DialogPolozka("")
@@ -42,7 +42,6 @@ std::string QuestPolozka::Gettext() {
 			break;
 		default:
 			return "Undefined";
-			break;
 		}
 	}
 	else {

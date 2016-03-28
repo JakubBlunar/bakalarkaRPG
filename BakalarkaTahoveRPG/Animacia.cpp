@@ -8,7 +8,7 @@ Animacia::Animacia(std::string cesta, int pocetObrazkov, int trvanie, int velkos
 	this->trvanie = trvanie;
 	this->velkostTexturyX = velkostX;
 	this->velkostTexturyY = velkostY;
-
+	this->trvanieCounter = 0;
 	
 	if (!textura.loadFromFile(cesta, sf::IntRect(0, 0, velkostX*pocetObrazkov, velkostY)))
 	{
@@ -26,7 +26,8 @@ Animacia::~Animacia() {
 	delete(obrazok);
 }
 
-sf::Sprite* Animacia::dajObrazok() {
+sf::Sprite* Animacia::dajObrazok() const
+{
 	obrazok->setTextureRect(sf::IntRect(aktObrazok*velkostTexturyX, 0, velkostTexturyX, velkostTexturyY));
 	return obrazok;
 }
@@ -49,10 +50,12 @@ void Animacia::tick() {
 	}
 }
 
-int Animacia::GetvelkostX() {
+int Animacia::GetvelkostX() const
+{
 	return velkostTexturyX;
 }
 
-int Animacia::GetvelkostY() {
+int Animacia::GetvelkostY() const
+{
 	return velkostTexturyY;
 }

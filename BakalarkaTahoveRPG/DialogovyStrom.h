@@ -14,6 +14,10 @@ class DialogPolozka;
 
 class DialogVolba {
 public:
+	virtual ~DialogVolba()
+	{
+	}
+
 	DialogVolba(string paText, int dalsia);
 	virtual string Gettext();
 	int dalsia;
@@ -27,7 +31,7 @@ private:
 class DialogPolozka {
 public:
 	DialogPolozka(string paText);
-	~DialogPolozka();
+	virtual ~DialogPolozka();
 	virtual int pocetMoznosti();
 	void pridajMoznost(DialogVolba* paVolba);
 	virtual string Gettext();
@@ -51,8 +55,8 @@ public:
 	void Setdialogquest(Quest* paQuest);
 
 	void init();
-	DialogStav Getstav();
-	DialogPolozka* Getaktualnapolozka();
+	DialogStav Getstav() const;
+	DialogPolozka* Getaktualnapolozka() const;
 	void vlozPolozku(DialogPolozka* paPolozka);
 	int zacniDialog();
 	int zmenPolozku(int moznost);

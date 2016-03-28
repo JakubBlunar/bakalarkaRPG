@@ -3,7 +3,6 @@
 #define npc_h
 
 #include <SFML\Graphics.hpp>
-#include <string>
 
 class Animacia;
 class Hrac;
@@ -15,12 +14,12 @@ class Npc
 public:
 	Npc(std::string meno, DialogovyStrom* dialog);
 	virtual ~Npc();
-	std::string Getmeno();
+	std::string Getmeno() const;
 
-	DialogovyStrom* Getdialog();
-	sf::Sprite* dajObrazok();
+	DialogovyStrom* Getdialog() const;
+	sf::Sprite* dajObrazok() const;
 	virtual void dialog(Hrac* hrac);
-	void update();
+	void update() const;
 
 	void Setanimacia(Animacia* animacia);
 private:

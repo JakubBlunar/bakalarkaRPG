@@ -122,7 +122,8 @@ void Hra::hlavnaSlucka() {
 
 }
 
-void Hra::zmenStavRozhrania(std::string paStav) {
+void Hra::zmenStavRozhrania(std::string paStav) const
+{
 	stavRozhraniaHry->zmenStav(paStav);
 }
 
@@ -130,15 +131,18 @@ void Hra::SetHrac(Hrac* paHrac) {
 	hrac = paHrac;
 }
 
-bool Hra::maFocus() {
+bool Hra::maFocus() const
+{
 	return focus;
 }
 
-Hrac* Hra::GetHrac() {
+Hrac* Hra::GetHrac() const
+{
 	return hrac;
 }
 
-Stav* Hra::dajStav(std::string stav) {
+Stav* Hra::dajStav(std::string stav) const
+{
 	return stavRozhraniaHry->dajStav(stav);
 }
 

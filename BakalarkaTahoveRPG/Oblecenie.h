@@ -15,7 +15,7 @@ public:
 	Oblecenie(std::string meno, int typ, std::string paObrazok, int cena, int paUroven);
 	virtual ~Oblecenie();
 
-	void pouzi(Hrac* hrac);
-	Oblecenie* copy();
+	void pouzi(Hrac* hrac) override;
+	Oblecenie* copy() override;
 };
 #endif

@@ -24,7 +24,7 @@ void VolbaBoj::akcia(Hrac* hrac) {
 	if (!pouzita) {
 		Hra* hra = Loader::Instance()->Gethra();
 		Nepriatel* nepriatel = Loader::Instance()->nacitajNepriatela(this->nepriatel);
-		StavBoj* stavBoj = (StavBoj*)hra->dajStav("stavBoj");
+		StavBoj* stavBoj = static_cast<StavBoj*>(hra->dajStav("stavBoj"));
 		stavBoj->setBoj(new Boj(hrac, nepriatel));
 		pouzita = true;
 		hra->zmenStavRozhrania("stavBoj");

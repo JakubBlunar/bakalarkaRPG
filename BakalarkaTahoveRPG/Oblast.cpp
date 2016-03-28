@@ -8,11 +8,13 @@ Oblast::Oblast(int paX, int paY, int paW, int paH)
 
 }
 
-bool Oblast::jeRovnaka(Oblast paOblast) {
+bool Oblast::jeRovnaka(Oblast paOblast) const
+{
 	return (this->x == paOblast.x && this->y == paOblast.y && this->w == paOblast.w && this->h == paOblast.h) ? true : false;
 }
 
-bool Oblast::obsahujeSuradnicu(sf::Vector2i paPos) {
+bool Oblast::obsahujeSuradnicu(sf::Vector2i paPos) const
+{
 	return (paPos.x >= x && paPos.x <= x + w && paPos.y >= y && paPos.y <= y + h) ? true : false;
 }
 
@@ -23,6 +25,7 @@ void Oblast::pridajNepriatela(string paMeno) {
 	}
 }
 
-vector<string> Oblast::Getnepriatelia() {
+vector<string> Oblast::Getnepriatelia() const
+{
 	return nepriatelia;
 }

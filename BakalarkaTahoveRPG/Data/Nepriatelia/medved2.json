@@ -1,0 +1,70 @@
+{
+  "meno": "Grisly bear",
+  "obrazok": "hnedymedved",
+  "levelOd": 10,
+  "levelDo": 13,
+  "hpOd": 125,
+  "hpDo": 150,
+  "mpOd": 25,
+  "mpDo": 35,
+  "silaOd": 17,
+  "silaDo": 23,
+  "intelektOd": 3,
+  "intelektDo": 5,
+  "redukciaMin": 35,
+  "redukciaMax": 50,
+  "uhybMin": 2,
+  "uhybMax": 10,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Maul",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1
+    },
+    "2": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Scary roar",
+      "obrazok": "attack",
+      "rychlostCastenia": 500,
+      "cooldown": 15000,
+      "trvanie": 8000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 2,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "shout",
+        "stat": "sila",
+        "hodnota": -2,
+        "naSeba": false
+      }
+    },
+    "3": {
+      "typ": "AkciaDmg",
+      "meno": "Bite",
+      "obrazok": "attack",
+      "rychlostCastenia": 500,
+      "cooldown": 5000,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 1,
+      "zakladnaHodnota": 1.2
+    }
+  },
+
+  "questDrop": {
+
+  }
+
+}

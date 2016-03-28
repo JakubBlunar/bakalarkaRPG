@@ -15,18 +15,22 @@ QuestOdmena::~QuestOdmena()
 	delete predmety;
 }
 
-int QuestOdmena::Getpocetxp() {
+int QuestOdmena::Getpocetxp() const
+{
 	return pocetXp;
 }
 
-int QuestOdmena::Getpocetzlata() {
+int QuestOdmena::Getpocetzlata() const
+{
 	return pocetZlata;
 }
 
-vector<Predmet*>* QuestOdmena::getPredmety() {
+vector<Predmet*>* QuestOdmena::getPredmety() const
+{
 	return predmety;
 }
 
-void QuestOdmena::pridajPredmet(Predmet* paPredmet) {
+void QuestOdmena::pridajPredmet(Predmet* paPredmet) const
+{
 	predmety->push_back(paPredmet);
 }

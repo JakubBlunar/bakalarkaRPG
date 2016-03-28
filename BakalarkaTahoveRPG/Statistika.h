@@ -2,7 +2,6 @@
 #define statistika_h
 
 #include <SFML\Graphics.hpp>
-#include <string>
 #include <map>
 #include <vector>
 #include "Timer.h"
@@ -22,28 +21,28 @@ public:
 	Statistika(int paUroven, int paHp, int paHpMax, int paMp, int mpMax,int paSila, int paIntelekt, int paRychlost, int paObrana,map<int, Predmet*>* paObleceneVeci = new map<int,Predmet*>());
 	virtual ~Statistika();
 
-	map<Efekt*, sf::Time>* Getaktivneefekty();
-	map<int, Predmet*>* Getoblecene();
-	vector<Akcia*>* Getakcie();
+	map<Efekt*, sf::Time>* Getaktivneefekty() const;
+	map<int, Predmet*>* Getoblecene() const;
+	vector<Akcia*>* Getakcie() const;
 	void vlozAkciu(Akcia* paAkcia);
 	void pridajEfekt(Efekt* paEfekt, sf::Time aktivnyDo);
 	void zrusEfekt(Efekt* paEfekt);
 
-	double Getsancanauhyb();
-	double Getodolnostvociposkodeniu();
-	int Getrychlostutoku();
+	double Getsancanauhyb() const;
+	double Getodolnostvociposkodeniu() const;
+	int Getrychlostutoku() const;
 
-	int dajUroven();
-	int Gethp();
-	int GethpMax();
-	int Getintelekt();
+	int dajUroven() const;
+	int Gethp() const;
+	int GethpMax() const;
+	int Getintelekt() const;
 	int Getmp();
-	int GetmpMax();
-	int Getobrana();
-	int Getrychlost();
-	int Getsila();
-	int Getskusenosti();
-	int Statistika::Getstat(string aky);
+	int GetmpMax() const;
+	int Getobrana() const;
+	int Getrychlost() const;
+	int Getsila() const;
+	int Getskusenosti() const;
+	int Statistika::Getstat(string aky) const;
 	void Sethp(int novaHodnota);
 	void SethpMax(int novaHodnota);
 	void Setintelekt(int novaHodnota);
@@ -59,8 +58,8 @@ public:
 	void setCombat(bool paNa);
 
 	void prepocitajPoskodenia();
-	int Getminposkodenie();
-	int Getmaxposkodenie();
+	int Getminposkodenie() const;
+	int Getmaxposkodenie() const;
 private:
 	int hp;
 	int hpMax;

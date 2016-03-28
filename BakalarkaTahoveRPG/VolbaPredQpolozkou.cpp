@@ -53,7 +53,6 @@ std::string VolbaPredQpolozkou::Gettext() {
 			break;
 		default:
 			return "Undefined";
-			break;
 		}
 
 

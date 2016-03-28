@@ -1,5 +1,3 @@
-#pragma once
-
 #if !defined(elixir_h)
 #define elixir_h
 
@@ -15,9 +13,9 @@ public:
 	Elixir(std::string meno, int typ, std::string paObrazok, int cena, int paUroven, std::string zvysCo, int paoKolko);
 	virtual ~Elixir();
 
-	void pouzi(Hrac* hrac);
+	void pouzi(Hrac* hrac) override;
 	std::string dajInfo();
-	Elixir* copy();
+	Elixir* copy() override;
 
 	std::string Getstat();
 	int Getokolko();

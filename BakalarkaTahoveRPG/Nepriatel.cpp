@@ -20,12 +20,14 @@ Nepriatel::~Nepriatel() {
 	delete statistika;
 }
 
-sf::Sprite* Nepriatel::Getobrazok() {
+sf::Sprite* Nepriatel::Getobrazok() const
+{
 	return obrazok;
 }
 
 
-Statistika* Nepriatel::Getstatistika() {
+Statistika* Nepriatel::Getstatistika() const
+{
 
 	return statistika;
 }
@@ -35,7 +37,8 @@ void Nepriatel::Setstatistika(Statistika* newVal) {
 	statistika = newVal;
 }
 
-Akcia* Nepriatel::vyberAkciu(std::map<Akcia*,int>* cooldowny) {
+Akcia* Nepriatel::vyberAkciu(std::map<Akcia*,int>* cooldowny) const
+{
 
 	if (statistika->Getakcie()->size() > 0) {
 		if (cooldowny->size() >= statistika->Getakcie()->size()) {
@@ -71,10 +74,12 @@ Akcia* Nepriatel::vyberAkciu(std::map<Akcia*,int>* cooldowny) {
 	
 
 }
-void Nepriatel::pridajDropItem(std::string paNazovQuestu, Predmet* paPredmet) {
+void Nepriatel::pridajDropItem(std::string paNazovQuestu, Predmet* paPredmet) const
+{
 	questDrop->insert_or_assign(paNazovQuestu, paPredmet);
 }
 
-std::map< std::string, Predmet*>* Nepriatel::dropQuestPredmetov() {
+std::map< std::string, Predmet*>* Nepriatel::dropQuestPredmetov() const
+{
 	return questDrop;
 }

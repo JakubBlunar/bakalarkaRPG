@@ -1,0 +1,59 @@
+{
+  "meno": "Sticky slime",
+  "obrazok": "slime",
+  "levelOd": 2,
+  "levelDo": 5,
+  "hpOd": 35,
+  "hpDo": 45,
+  "mpOd": 6,
+  "mpDo": 9,
+  "silaOd": 5,
+  "silaDo": 7,
+  "intelektOd": 3,
+  "intelektDo": 7,
+  "redukciaMin": 20,
+  "redukciaMax": 40,
+  "uhybMin": 10,
+  "uhybMax": 20,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Accidic touch",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1.0
+    },
+    "2": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Aciddic spittle",
+      "obrazok": "attack",
+      "rychlostCastenia": 1500,
+      "cooldown": 8000,
+      "trvanie": 4000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 2,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "shout",
+        "stat": "sila",
+        "hodnota": -2,
+        "naSeba": false
+      }
+
+    }
+  },
+
+  "questDrop": {
+
+  }
+
+}

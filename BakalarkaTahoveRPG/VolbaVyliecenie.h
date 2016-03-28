@@ -10,9 +10,7 @@ class VolbaVyliecenie :public DialogVolba
 public:
 	VolbaVyliecenie(string paText, int dalsia);
 	~VolbaVyliecenie();
-	void akcia(Hrac* hrac);
-private:
-	int alternativa;
+	void akcia(Hrac* hrac) override;
 };
 
 #endif

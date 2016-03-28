@@ -76,27 +76,32 @@ Predmet::~Predmet() {
 }
 
 
-int Predmet::Geturoven() {
+int Predmet::Geturoven() const
+{
 	return uroven;
 }
 
-int Predmet::Gettyp() {
+int Predmet::Gettyp() const
+{
 	return typ;
 }
 
-int Predmet::Getcena() {
+int Predmet::Getcena() const
+{
 
 	return cena;
 }
 
 
-std::string Predmet::Getmeno() {
+std::string Predmet::Getmeno() const
+{
 
 	return meno;
 }
 
 
-sf::Sprite* Predmet::Getobrazok() {
+sf::Sprite* Predmet::Getobrazok() const
+{
 
 	return obrazok;
 }
@@ -128,7 +133,8 @@ void Predmet::Settyp(int newVal) {
 	typ = newVal;
 }
 
-std::string Predmet::Getstringovytyp() {
+std::string Predmet::Getstringovytyp() const
+{
 	switch (typ)
 	{
 	case (1) :
@@ -159,7 +165,6 @@ std::string Predmet::Getstringovytyp() {
 		return "Quest item";
 	default:
 		return "Other";
-		break;
 	}
 }
 
@@ -167,6 +172,7 @@ Predmet* Predmet::copy() {
 	return new Predmet(meno, typ, sObrazok, cena, uroven);
 }
 
-std::string Predmet::Getsobrazok() {
+std::string Predmet::Getsobrazok() const
+{
 	return sObrazok;
 }

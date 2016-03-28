@@ -1,12 +1,11 @@
 #if !defined(boj_h)
 #define boj_h
 
-using namespace std;
-
 #include <map>
 #include <deque>
 #include "Timer.h"
 
+using namespace std;
 
 class Akcia;
 class Hrac;

@@ -9,11 +9,11 @@ public:
 	Animacia(std::string cesta, int pocetObrazkov, int trvanie, int velkostX,int velkostY);
 	virtual ~Animacia();
 
-	sf::Sprite* dajObrazok();
+	sf::Sprite* dajObrazok() const;
 	void reset();
 	void tick();
-	int GetvelkostX();
-	int GetvelkostY();
+	int GetvelkostX() const;
+	int GetvelkostY() const;
 
 private:
 	int aktObrazok;

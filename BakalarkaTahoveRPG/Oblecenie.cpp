@@ -1,6 +1,5 @@
 #include "Oblecenie.h"
 
-#include <iostream>
 #include <map>
 
 #include "Hrac.h"
@@ -32,7 +31,7 @@ void Oblecenie::pouzi(Hrac* hrac) {
 	if (!Pouzitelny::Isobleceny()) {
 		int typ = Gettyp();
 			if (oblecene->count(typ)) {
-				docasny = (Pouzitelny*)oblecene->at(typ);
+				docasny = static_cast<Pouzitelny*>(oblecene->at(typ));
 				oblecene->erase(typ);
 				oblecene->insert(std::pair<int, Predmet*>(typ, this));
 

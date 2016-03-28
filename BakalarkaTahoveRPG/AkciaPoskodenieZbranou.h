@@ -15,8 +15,8 @@ public:
 	sf::Sprite* Getobrazok();
 	std::string Getmeno();
 	std::string vykonajSa(Statistika* statHrac, Statistika* statNepriatel, sf::Time aktCas);
-	int minPoskodenie();
-	int maxPoskodenie();
+	int minPoskodenie() const;
+	int maxPoskodenie() const;
 
 private:
 	Statistika* statistika;

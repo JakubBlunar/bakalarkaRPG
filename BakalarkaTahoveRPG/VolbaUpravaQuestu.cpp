@@ -4,8 +4,6 @@
 #include "Hrac.h"
 #include "Loader.h"
 #include "Hra.h"
-#include "Stav.h"
-#include "PopupOkno.h"
 
 VolbaUpravaQuestu::VolbaUpravaQuestu(int dalsia, Quest* paQuest):DialogVolba("",dalsia)
 {
@@ -80,7 +78,6 @@ std::string VolbaUpravaQuestu::Gettext() {
 			break;
 		default:
 			return "Undefined";
-			break;
 		}
 		
 
@@ -92,6 +89,7 @@ void VolbaUpravaQuestu::vlozText(StavQuestu paStav, std::string paText) {
 	texty.insert_or_assign(paStav, paText);
 }
 
-Quest* VolbaUpravaQuestu::getQuest() {
+Quest* VolbaUpravaQuestu::getQuest() const
+{
 	return quest;
 }

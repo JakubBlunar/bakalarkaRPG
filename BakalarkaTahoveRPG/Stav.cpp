@@ -139,7 +139,8 @@ void Stav::onExit() {
 	
 }
 
-std::string Stav::Getnazov() {
+std::string Stav::Getnazov() const
+{
 	return nazov;
 }
 
@@ -152,14 +153,16 @@ void Stav::zobrazPopup(PopupOkno* paCo) {
 	stav = StavAkcia::ZOBRAZUJE_POPUP;
 }
 
-bool Stav::GetzobrazujePopup() {
+bool Stav::GetzobrazujePopup() const
+{
 	if (stav == StavAkcia::ZOBRAZUJE_POPUP) {
 		return true;
 	}
 	else return false;
 }
 
-std::string Stav::floattostring(float cislo) {
+std::string Stav::floattostring(float cislo)
+{
 	std::stringstream stream;
 	stream << std::fixed << std::setprecision(1) << cislo;
 	std::string ssekundy = stream.str();

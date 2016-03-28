@@ -20,6 +20,9 @@ StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 
 	oznacene = 1;
 
+	hrac = nullptr;
+	hracoveAkcie = nullptr;
+	oblecene = nullptr;
 
 	sf::Texture textura;
 	textura.create(50,50);
@@ -326,9 +329,9 @@ void StavInfoHraca::render() {
 		okno->draw(pozadieSpellov);
 
 	
-		for (unsigned int i = 0; i < (unsigned int)hracoveAkcie->size(); i++)
+		for (unsigned int i = 0; i < static_cast<unsigned int>(hracoveAkcie->size()); i++)
 		{
-			if (i >= (unsigned int)(riadok + 1)*nasirku) {
+			if (i >= static_cast<unsigned int>(riadok + 1)*nasirku) {
 				riadok++;
 			}
 			Akcia* akcia = hracoveAkcie->at(i);
@@ -347,7 +350,7 @@ void StavInfoHraca::render() {
 		pozadieInfo.setPosition(sf::Vector2f(kuzlaStartX, kuzlaStartY+200));
 		okno->draw(pozadieInfo);
 
-		for (unsigned int i = 0; i < (unsigned int) hracoveAkcie->size(); i++)
+		for (unsigned int i = 0; i < static_cast<unsigned int>(hracoveAkcie->size()); i++)
 		{
 			if (tlacidlaAkcie.at(i)->Getzakliknute()) {
 				
@@ -362,23 +365,22 @@ void StavInfoHraca::render() {
 				std::string info = akcia->Getmeno();
 				info += "\n" + akcia->dajPopis()+"\n";
 
-				if (dynamic_cast<AkciaDmg*>(akcia) != NULL) {
-					AkciaDmg* dmgakcia = (AkciaDmg*)akcia;
+				if (dynamic_cast<AkciaDmg*>(akcia) != nullptr) {
+					AkciaDmg* dmgakcia = static_cast<AkciaDmg*>(akcia);
 					info += "Damage: " + std::to_string(dmgakcia->minPoskodenie(hrac->Getstatistika())) + " - " + std::to_string(dmgakcia->maxPoskodenie(hrac->Getstatistika())) + "\n";
 				}
 
-				if (dynamic_cast<AkciaPoskodenieZbranou*>(akcia) != NULL) {
-					AkciaPoskodenieZbranou* dmgakcia = (AkciaPoskodenieZbranou*)akcia;
+				if (dynamic_cast<AkciaPoskodenieZbranou*>(akcia) != nullptr) {
+					AkciaPoskodenieZbranou* dmgakcia = static_cast<AkciaPoskodenieZbranou*>(akcia);
 					info += "Damage: " + std::to_string(dmgakcia->minPoskodenie()) + " - " + std::to_string(dmgakcia->maxPoskodenie()) + "\n";
 				}
 
-				if (dynamic_cast<AkciaLiecenie*>(akcia) != NULL) {
-					AkciaLiecenie* liecenieAkcia = (AkciaLiecenie*)akcia;
+				if (dynamic_cast<AkciaLiecenie*>(akcia) != nullptr) {
+					AkciaLiecenie* liecenieAkcia = static_cast<AkciaLiecenie*>(akcia);
 					info += "Healing: " + std::to_string(liecenieAkcia->minLiecenie(hrac->Getstatistika())) + " - " + std::to_string(liecenieAkcia->maxLiecenie(hrac->Getstatistika())) + "\n";
 				}
 
-				if (dynamic_cast<AkciaPridanieEfektu*>(akcia) != NULL) {
-					AkciaPridanieEfektu* efektAkcia = (AkciaPridanieEfektu*)akcia;
+				if (dynamic_cast<AkciaPridanieEfektu*>(akcia) != nullptr) {
 					info += "Last: " + floattostring(akcia->Gettrvanie()/1000.f) + " s\n";
 				}
 
@@ -419,7 +421,7 @@ void StavInfoHraca::update(double delta) {
 					tlacidlaAkcie[i]->skontrolujKlik(pozicia);
 					//zrusenie zakliknutia ostatnych
 					if (tlacidlaAkcie[i]->Getzakliknute()) {
-						for (unsigned int j = 0; j < (unsigned int)hracoveAkcie->size(); j++)
+						for (unsigned int j = 0; j < static_cast<unsigned int>(hracoveAkcie->size()); j++)
 						{
 							if (i != j) {
 								tlacidlaAkcie.at(j)->Setzakliknute(false);
@@ -485,7 +487,8 @@ void StavInfoHraca::update(double delta) {
 }
 
 
-void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::RenderWindow* okno) {
+void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::RenderWindow* okno) const
+{
 
 	// vykreslenie obdlznika na ktorom sa bude vypisovat info predmetu 
 	sf::RectangleShape obdlznik;
@@ -527,12 +530,12 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 
 		text.setColor(sf::Color::Black);
 		text.setCharacterSize(14U);
-		Pouzitelny* pouzitelny = (Pouzitelny*)predmet;
+		Pouzitelny* pouzitelny = static_cast<Pouzitelny*>(predmet);
 		std::string bonusy = "";
 
-		if (dynamic_cast<Zbran*>(predmet) != NULL)
+		if (dynamic_cast<Zbran*>(predmet) != nullptr)
 		{
-			Zbran* pom = (Zbran*)predmet;
+			Zbran* pom = static_cast<Zbran*>(predmet);
 			if (pom->Gettyp() != 11) {
 				bonusy += "Damage: ";
 				bonusy += std::to_string(pom->Getminposkodenie()) + " - ";
@@ -581,37 +584,37 @@ void StavInfoHraca::vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::
 
 		if (pouzitelny->GetarmorMult() != 0) {
 			bonusy += "Armor: ";
-			bonusy += std::to_string((int)round(pouzitelny->GetarmorMult() * 100));
+			bonusy += std::to_string(static_cast<int>(round(pouzitelny->GetarmorMult() * 100)));
 			bonusy += " %\n";
 		}
 
 		if (pouzitelny->GethpMult() != 0) {
 			bonusy += "Hp: ";
-			bonusy += std::to_string((int)round(pouzitelny->GethpMult() * 100));
+			bonusy += std::to_string(static_cast<int>(round(pouzitelny->GethpMult() * 100)));
 			bonusy += " %\n";
 		}
 
 		if (pouzitelny->GetmpMult() != 0) {
 			bonusy += "Mp: ";
-			bonusy += std::to_string((int)round(pouzitelny->GetmpMult() * 100));
+			bonusy += std::to_string(static_cast<int>(round(pouzitelny->GetmpMult() * 100)));
 			bonusy += " %\n";
 		}
 
 		if (pouzitelny->GetsilaMult() != 0) {
 			bonusy += "Strength: ";
-			bonusy += std::to_string((int)round(pouzitelny->GetsilaMult() * 100));
+			bonusy += std::to_string(static_cast<int>(round(pouzitelny->GetsilaMult() * 100)));
 			bonusy += " %\n";
 		}
 
 		if (pouzitelny->GetrychlostMult() != 0) {
 			bonusy += "Speed: ";
-			bonusy += std::to_string((int)round(pouzitelny->GetrychlostMult() * 100));
+			bonusy += std::to_string(static_cast<int>(round(pouzitelny->GetrychlostMult() * 100)));
 			bonusy += " %\n";
 		}
 
 		if (pouzitelny->GetinteligenciaMult() != 0) {
 			bonusy += "Intellect: ";
-			bonusy += std::to_string((int)round(pouzitelny->GetinteligenciaMult() * 100));
+			bonusy += std::to_string(static_cast<int>(round(pouzitelny->GetinteligenciaMult() * 100)));
 			bonusy += " %\n";
 		}
 

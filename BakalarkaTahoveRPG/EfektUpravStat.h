@@ -17,7 +17,7 @@ public:
 	void aplikujSa(Statistika* paHrac);
 	void zrusUcinok(Statistika* statistika);
 	std::string popis();
-	int hodnotaEfektu();
+	int hodnotaEfektu() const;
 private:
 	std::string co;
 	int zakladOkolko;

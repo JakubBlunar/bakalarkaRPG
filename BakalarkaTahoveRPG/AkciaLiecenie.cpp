@@ -26,24 +26,26 @@ std::string AkciaLiecenie::vykonajSa(Statistika* statHrac, Statistika* statNepri
 	return meno + " - heal by " + std::to_string(healing);
 }
 
-int AkciaLiecenie::minLiecenie(Statistika* statistika) {
-	int stat;
+int AkciaLiecenie::minLiecenie(Statistika* statistika) const
+{
+	int stat = 0;
 	if (typ == AkciaTyp::FYZICKA) {
 		stat = statistika->Getsila();
 	}
 	else if (typ == AkciaTyp::MAGICKA) {
 		stat = statistika->Getintelekt();
 	}
-	return (int)floor(0.9*floor(2 * stat + statistika->dajUroven() / 5 + 1) * zakladnyHeal);
+	return static_cast<int>(floor(0.9*floor(2 * stat + statistika->dajUroven() / 5 + 1) * zakladnyHeal));
 }
 
-int AkciaLiecenie::maxLiecenie(Statistika* statistika) {
-	int stat;
+int AkciaLiecenie::maxLiecenie(Statistika* statistika) const
+{
+	int stat = 0;
 	if (typ == AkciaTyp::FYZICKA) {
 		stat = statistika->Getsila();
 	}
 	else if (typ == AkciaTyp::MAGICKA) {
 		stat = statistika->Getintelekt();
 	}
-	return (int)floor(1.3*floor(2 * stat + statistika->dajUroven() / 5 + 1) * zakladnyHeal);
+	return static_cast<int>(floor(1.3*floor(2 * stat + statistika->dajUroven() / 5 + 1) * zakladnyHeal));
 }

@@ -1,19 +1,18 @@
 #include "Npc.h"
 #include "Hrac.h"
 #include "Animacia.h"
-#include <iostream>
 #include "DialogovyStrom.h"
 #include "Loader.h"
 #include "Hra.h"
 #include "StavDialog.h"
 
-#include <deque>
 #include "Quest.h"
 #include "QuestManager.h"
 
 Npc::Npc(std::string paMeno,DialogovyStrom* dialog) {
 	meno = paMeno;
 	dialogStrom = dialog;
+	animacia = nullptr;
 }
 
 Npc::~Npc() {
@@ -23,16 +22,19 @@ Npc::~Npc() {
 
 
 
-std::string Npc::Getmeno() {
+std::string Npc::Getmeno() const
+{
 	return meno;
 }
 
-sf::Sprite* Npc::dajObrazok() {
+sf::Sprite* Npc::dajObrazok() const
+{
 	return animacia->dajObrazok();
 }
 
 
-void Npc::dialog(Hrac* hrac) {
+void Npc::dialog(Hrac* hrac) 
+{
 
 	QuestManager* manager = hrac->Getmanazerquestov();
 	Quest* quest = manager->Getzaciatocnyquestnpc(meno);
@@ -51,20 +53,23 @@ void Npc::dialog(Hrac* hrac) {
 	dialogStrom->init();
 	dialogStrom->zacniDialog();
 	Loader* loader = Loader::Instance();
-	StavDialog* stav = (StavDialog*)loader->Gethra()->dajStav("stavDialog");
+	StavDialog* stav = static_cast<StavDialog*>(loader->Gethra()->dajStav("stavDialog"));
 	stav->Setdialog(this);
 	loader->Gethra()->zmenStavRozhrania("stavDialog");
 }
 
 
-void Npc::update() {
+void Npc::update() const
+{
 
 }
 
-void Npc::Setanimacia(Animacia* animacia) {
+void Npc::Setanimacia(Animacia* animacia) 
+{
 	this->animacia = animacia;
 }
 
-DialogovyStrom* Npc::Getdialog() {
+DialogovyStrom* Npc::Getdialog() const
+{
 	return dialogStrom;
 }

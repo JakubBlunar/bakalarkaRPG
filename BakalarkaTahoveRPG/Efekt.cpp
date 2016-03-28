@@ -11,6 +11,7 @@ Efekt::Efekt(std::string paObrazok)
 	obrazok = new sf::Sprite();
 	obrazok->setTexture(textura);
 	this->trvanieDo = sf::Time::Zero;
+	statistikaNaPocitanie = nullptr;
 }
 
 
@@ -19,7 +20,8 @@ Efekt::~Efekt()
 	delete obrazok;
 }
 
-sf::Time Efekt::GettrvanieDo() {
+sf::Time Efekt::GettrvanieDo() const
+{
 	return trvanieDo;
 }
 
@@ -28,7 +30,8 @@ void Efekt::setTrvanieDo(sf::Time paKoniec) {
 }
 
 
-sf::Sprite* Efekt::Getobrazok() {
+sf::Sprite* Efekt::Getobrazok() const
+{
 	return obrazok;
 }
 

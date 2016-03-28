@@ -1,7 +1,6 @@
 #include "StavObchod.h"
 
 #include "Loader.h"
-#include "Hrac.h"
 #include "Inventar.h"
 #include "Hra.h"
 #include "PopupOkno.h"
@@ -69,7 +68,7 @@ void StavObchod::render() {
 		sf::Sprite* predmetObrazok;
 		for (unsigned int i = 0; i < dostupnePredmety->size(); i++) {
 
-			rectangle.setPosition((float)startX + (i%nasirku) * 55, (float)startY + (i / nasirku) * 55);
+			rectangle.setPosition(startX + (i%nasirku) * 55.f, startY + (i / nasirku) * 55.f);
 			okno->draw(rectangle);
 			
 			predmetObrazok = dostupnePredmety->at(i)->Getobrazok();

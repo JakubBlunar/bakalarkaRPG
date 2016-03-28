@@ -13,7 +13,7 @@ class VolbaBoj :
 public:
 	VolbaBoj(string paText, int dalsia, string paNepriatel);
 	~VolbaBoj();
-	void akcia(Hrac* hrac);
+	void akcia(Hrac* hrac) override;
 private:
 	bool pouzita;
 	string nepriatel;

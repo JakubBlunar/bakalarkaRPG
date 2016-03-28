@@ -13,19 +13,17 @@ public:
 	StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra,Mapa* mapa);
 	virtual ~StavHranieHry();
 
-	void onEnter();
-	void onExit();
-	void render();
+	void onEnter() override;
+	void onExit() override;
+	void render() override;
 	void Setmapa(Mapa* newVal);
-	void update(double delta);
+	void update(double delta) override;
 	Mapa* getMapa();
 
 private:
 	void zobrazLoot();
 	Mapa* mapa;
 	Hrac* hrac;
-	int posHracaX;
-	int posHracaY;
 
 	std::vector<Predmet*>* loot;
 	int lootIndex;

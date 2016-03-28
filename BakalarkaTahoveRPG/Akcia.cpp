@@ -27,42 +27,43 @@ Akcia::~Akcia() {
 	delete textura;
 }
 
-std::string Akcia::dajPopis() {
-
+std::string Akcia::dajPopis() 
+{
 	return  popis;
 }
 
 
-int Akcia::GetcasCastenia() {
-
+int Akcia::GetcasCastenia() 
+{
 	return casCastenia;
 }
 
 
-int Akcia::Getcooldown() {
-
+int Akcia::Getcooldown() 
+{
 	return cooldown;
 }
 
 
-std::string Akcia::Getmeno() {
-
+std::string Akcia::Getmeno() 
+{
 	return meno;
 }
 
 
-sf::Sprite* Akcia::Getobrazok() {
-
+sf::Sprite* Akcia::Getobrazok() 
+{
 	return obrazok;
 }
 
 
-int Akcia::Gettrvanie() {
-
+int Akcia::Gettrvanie() const
+{
 	return trvanie;
 }
 
-int Akcia::Getcenamany() {
+int Akcia::Getcenamany() 
+{
 	return cenaMany;
 }
 

@@ -13,10 +13,10 @@ public:
 	StavBoj(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra);
 	~StavBoj();
 
-	void onEnter();
-	void onExit();
-	void render();
-	void update(double delta);
+	void onEnter() override;
+	void onExit() override;
+	void render() override;
+	void update(double delta) override;
 
 	void setBoj(Boj* boj);
 

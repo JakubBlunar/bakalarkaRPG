@@ -1,6 +1,5 @@
 #include "DialogovyStrom.h"
 
-#include <iostream>
 #include "Loader.h"
 #include "Hra.h"
 #include "Quest.h"
@@ -31,7 +30,7 @@ int DialogPolozka::pocetMoznosti() {
 }
 
 DialogVolba* DialogPolozka::Getvolba(int paIndex) {
-	if (paIndex >= 0 && (unsigned int)paIndex< (unsigned int)dialogoveMoznosti.size()) {
+	if (paIndex >= 0 && static_cast<unsigned int>(paIndex)< static_cast<unsigned int>(dialogoveMoznosti.size())) {
 		return dialogoveMoznosti[paIndex];
 	}
 	return nullptr;
@@ -71,7 +70,8 @@ DialogovyStrom::~DialogovyStrom()
 	castiDialogu.clear();
 }
 
-DialogStav DialogovyStrom::Getstav() {
+DialogStav DialogovyStrom::Getstav() const
+{
 	return stav;
 }
 
@@ -102,7 +102,8 @@ int DialogovyStrom::zmenPolozku(int moznost) {
 	else return -1;
 }
 
-DialogPolozka* DialogovyStrom::Getaktualnapolozka() {
+DialogPolozka* DialogovyStrom::Getaktualnapolozka() const
+{
 	return aktualnaPolozka;
 }
 

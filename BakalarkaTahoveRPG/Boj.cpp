@@ -227,7 +227,7 @@ void Boj::vyhodnotenie() {
 		boloVyhodnotenie = true;
 
 		Hra* hra = Loader::Instance()->Gethra();
-		StavHranieHry* stavHranieHry = (StavHranieHry*)Loader::Instance()->Gethra()->dajStav("hranieHry");
+		StavHranieHry* stavHranieHry = static_cast<StavHranieHry*>(Loader::Instance()->Gethra()->dajStav("hranieHry"));
 		Mapa* mapa = stavHranieHry->getMapa();
 
 		if (hrac->Getstatistika()->Gethp() > 0) {
@@ -245,7 +245,7 @@ void Boj::vyhodnotenie() {
 			QuestManager* qm = hrac->Getmanazerquestov();
 			qm->udalost(QuestEvent::ZABITIE_NPC, npc);
 
-			if (rand() % 100 < 100) {// 35% že padne predmet
+			if (rand() % 100 < 35) {// 35% že padne predmet
 				int cislo = rand() % 100;
 				int lvlOd = npc->Getstatistika()->dajUroven() - 2;
 				int lvlDo = npc->Getstatistika()->dajUroven() + 2;
@@ -271,7 +271,7 @@ void Boj::vyhodnotenie() {
 
 			for (unsigned int i = 0; i < nedokonceneQuesty->size(); i++) {
 				Quest* q = nedokonceneQuesty->at(i);
-				if (questDrop->count(q->Getnazov()) && q->Getstav() == StavQuestu::ROZROBENY) {// predmet je v npc drope a je rozrobeny
+				if (questDrop->count(q->Getnazov()) && q->Getstav() == StavQuestu::ROZROBENY) {// predmet je v npc drope a quest je rozrobeny
 					if (rand() % 100 < 40) {
 						mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(questDrop->at(q->Getnazov())->copy(), mapa->aktCas());
 					}
@@ -331,7 +331,7 @@ string Boj::Getlog(int paOd, int paDo) {
 	else indexDo = paDo;
 
 	string log = "";
-	for (signed int i = indexOd; i <= indexDo; i++) {
+	for (auto i = indexOd; i <= indexDo; i++) {
 		log += logBoja.at(i) + "\n";
 	}
 	return log;

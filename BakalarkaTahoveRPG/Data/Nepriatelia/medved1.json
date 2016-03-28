@@ -1,14 +1,14 @@
 {
   "meno": "Grisly bear",
   "obrazok": "hnedymedved",
-  "levelOd": 1,
-  "levelDo": 3,
-  "hpOd": 20,
-  "hpDo": 30,
+  "levelOd": 3,
+  "levelDo": 5,
+  "hpOd": 30,
+  "hpDo": 50,
   "mpOd": 5,
   "mpDo": 10,
-  "silaOd": 2,
-  "silaDo": 6,
+  "silaOd": 6,
+  "silaDo": 10,
   "intelektOd": 3,
   "intelektDo": 5,
   "redukciaMin": 20,
@@ -59,7 +59,7 @@
       "popis": "",
       "stat": "fyzicka",
       "mana": 1,
-      "zakladnaHodnota": 1.1
+      "zakladnaHodnota": 1.2
     }
   },
 

@@ -14,7 +14,7 @@ class Generator
 public:
 	static Generator* Instance();
 
-	Predmet* nahodnyElixir();
+	Predmet* nahodnyElixir() const;
 	Predmet* nahodnaZbran(int);
 	Predmet* nahodneOblecenie(int);
 
@@ -24,10 +24,10 @@ private:
 	Generator& operator=(Generator const&) {};
 	static Generator* instancia;
 
-	void generujStatistiky(Pouzitelny* paPredmet);
-	int randomInt(int min, int max);
+	void generujStatistiky(Pouzitelny* paPredmet) const;
+	int randomInt(int min, int max) const;
 
-	vector<string>* najdiSubory(string cesta);
+	vector<string>* najdiSubory(string cesta) const;
 };
 
 #endif

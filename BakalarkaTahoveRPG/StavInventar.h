@@ -17,15 +17,15 @@ public:
 	StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra);
 	virtual ~StavInventar();
 
-	virtual void onEnter();
-	virtual void onExit();
-	virtual void render();
-	virtual void update(double delta);
+	void onEnter() override;
+	void onExit() override;
+	void render() override;
+	void update(double delta) override;
 
 	void Setzboja(bool paNa);
 
 protected:
-	void vykresliOknoPredmetu(Predmet* predmet, int x, int y, sf::RenderWindow* okno, bool predaj);
+	void vykresliOknoPredmetu(Predmet* predmet, int x, int y, sf::RenderWindow* okno, bool predaj) const;
 
 	int oznacene;
 	sf::RectangleShape ukazovatel;

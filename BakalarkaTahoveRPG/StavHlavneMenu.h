@@ -15,10 +15,10 @@ public:
 	StavHlavneMenu(std::string paNazov, sf::RenderWindow* paOkno,Hra* paHra);
 	virtual ~StavHlavneMenu();
 
-	void onEnter();
-	void onExit();
-	void render();
-	void update(double delta);
+	void onEnter() override;
+	void onExit() override;
+	void render() override;
+	void update(double delta) override;
 
 private:
 	std::vector<Tlacidlo*> tlacidla;

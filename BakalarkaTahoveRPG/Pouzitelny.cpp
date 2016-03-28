@@ -27,79 +27,92 @@ Pouzitelny::~Pouzitelny() {
 
 
 
-int Pouzitelny::Getarmor() {
+int Pouzitelny::Getarmor() const
+{
 
 	return armor;
 }
 
 
-double Pouzitelny::GetarmorMult() {
+double Pouzitelny::GetarmorMult() const
+{
 
 	return armorMult;
 }
 
 
-int Pouzitelny::Gethp() {
+int Pouzitelny::Gethp() const
+{
 
 	return hp;
 }
 
 
-double Pouzitelny::GethpMult() {
+double Pouzitelny::GethpMult() const
+{
 
 	return hpMult;
 }
 
 
-int Pouzitelny::Getinteligencia() {
+int Pouzitelny::Getinteligencia() const
+{
 
 	return inteligencia;
 }
 
 
-double Pouzitelny::GetinteligenciaMult() {
+double Pouzitelny::GetinteligenciaMult() const
+{
 
 	return inteligenciaMult;
 }
 
 
-int Pouzitelny::Getmp() {
+int Pouzitelny::Getmp() const
+{
 
 	return mp;
 }
 
 
-double Pouzitelny::GetmpMult() {
+double Pouzitelny::GetmpMult() const
+{
 
 	return mpMult;
 }
 
 
-int Pouzitelny::Getrychlost() {
+int Pouzitelny::Getrychlost() const
+{
 
 	return rychlost;
 }
 
 
-double Pouzitelny::GetrychlostMult() {
+double Pouzitelny::GetrychlostMult() const
+{
 
 	return rychlostMult;
 }
 
 
-int Pouzitelny::Getsila() {
+int Pouzitelny::Getsila() const
+{
 
 	return sila;
 }
 
 
-double Pouzitelny::GetsilaMult() {
+double Pouzitelny::GetsilaMult() const
+{
 
 	return silaMult;
 }
 
 
-bool Pouzitelny::Isobleceny() {
+bool Pouzitelny::Isobleceny() const
+{
 
 	return obleceny;
 }

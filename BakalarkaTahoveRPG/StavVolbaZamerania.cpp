@@ -1,28 +1,16 @@
 #include "StavVolbaZamerania.h"
-#include <string>
 #include "Loader.h"
 #include "Hra.h"
 #include "Hrac.h"
 #include "Zameranie.h"
-#include "StavHranieHry.h"
-#include "Mapa.h"
-#include "Akcia.h"
-
-#include "AkciaDmg.h"
-
 #include "Nepriatel.h"
-#include "StavBoj.h"
-#include "Boj.h"
 #include "AkciaPoskodenieZbranou.h"
-#include "AkciaLiecenie.h"
-#include "AkciaPridanieEfektu.h"
-#include "EfektUpravStat.h"
-
 #include "Tlacidlo.h"
 
-#include "StavObchod.h"
 
 StavVolbaZamerania::StavVolbaZamerania(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
+	oznacene = 0;
+	scale = 0.0;
 	const std::string cesta = "./Data/Grafika/";
 
 	if (!rogueTextura.loadFromFile(cesta + "rogue.png", sf::IntRect(0, 0, 400, 400))) {
@@ -94,7 +82,7 @@ void StavVolbaZamerania::render() {
 	//warrior
 	ramcek.setFillColor(sf::Color::Black);
 	ramcek.setSize(sf::Vector2f(okno->getSize().x/4.f, okno->getSize().y - 115.f));
-	ramcek.setPosition((float)i, 90.f);
+	ramcek.setPosition(i +0.f, 90.f);
 	okno->draw(ramcek);
 
 	nadpis.setString("Warrior");
@@ -223,7 +211,8 @@ void StavVolbaZamerania::update(double delta) {
 }
 
 
-void StavVolbaZamerania::zvoleneZameranie(int paIndex) {
+void StavVolbaZamerania::zvoleneZameranie(int paIndex) const
+{
 	Zameranie* zameranie;
 	if (paIndex == 1) {
 		zameranie = Loader::Instance()->nacitajZameranie("Warrior");

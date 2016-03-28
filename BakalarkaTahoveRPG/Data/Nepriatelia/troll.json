@@ -1,0 +1,95 @@
+{
+  "meno": "Troll",
+  "obrazok": "troll",
+  "levelOd": 16,
+  "levelDo": 19,
+  "hpOd": 185,
+  "hpDo": 220,
+  "mpOd": 30,
+  "mpDo": 45,
+  "silaOd": 30,
+  "silaDo": 35,
+  "intelektOd": 18,
+  "intelektDo": 25,
+  "redukciaMin": 30,
+  "redukciaMax": 40,
+  "uhybMin": 25,
+  "uhybMax": 30,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Scratch",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1.0
+    },
+    "2": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Battle roar",
+      "obrazok": "24",
+      "rychlostCastenia": 1000,
+      "cooldown": 8000,
+      "trvanie": 6000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 11,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "24",
+        "stat": "obrana",
+        "hodnota": 2,
+        "naSeba": true
+      }
+
+    },
+
+    "3": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Scary roar",
+      "obrazok": "attack",
+      "rychlostCastenia": 1000,
+      "cooldown": 12000,
+      "trvanie": 8000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 9,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "28",
+        "stat": "shout",
+        "hodnota": -2,
+        "naSeba": false
+      }
+
+    },
+
+    "4": {
+      "typ": "AkciaDmg",
+      "meno": "Acid spittle",
+      "obrazok": "attack",
+      "rychlostCastenia": 1000,
+      "cooldown": 2000,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 6,
+      "zakladnaHodnota": 1.2
+    }
+
+  },
+
+  "questDrop": {
+
+  }
+
+}

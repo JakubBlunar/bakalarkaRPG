@@ -2,9 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <array>
 #include <map>
-#include <thread>
 
 #include "Loader.h"
 #include "Hra.h"
@@ -14,13 +12,11 @@
 #include "PolickoDvere.h"
 #include "StavHranieHry.h"
 #include "Hrac.h"
-#include "Vrstva.h"
 #include "Npc.h"
 #include "Animacia.h"
 #include "DialogovyStrom.h"
 #include "VolbaObchodovanie.h"
 #include "VolbaVyliecenie.h"
-#include "Npc.h"
 #include "PolickoBoj.h"
 #include "VolbaUpravaQuestu.h"
 #include "VolbaPredQpolozkou.h"
@@ -51,9 +47,8 @@
 #include "Zameranie.h"
 #include <deque>
 #include "Oblast.h"
-#include "StavRozhrania.h"
 
-Loader* Loader::instancia = NULL;
+Loader* Loader::instancia = nullptr;
 
 Loader* Loader::Instance()
 {
@@ -67,15 +62,18 @@ void Loader::setHra(Hra* paHra) {
 	this->hra = paHra;
 }
 
-bool Loader::Getnacitava() {
+bool Loader::Getnacitava() const
+{
 	return nacitava;
 }
 
-Hra* Loader::Gethra() {
+Hra* Loader::Gethra() const
+{
 	return hra;
 }
 
-DialogovyStrom* Loader::nacitajDialog(string paMeno) {
+DialogovyStrom* Loader::nacitajDialog(string paMeno) const
+{
 	string cestaDialogy = "./Data/Npc/Dialogy/";
 
 	Json::Value root;
@@ -94,7 +92,7 @@ DialogovyStrom* Loader::nacitajDialog(string paMeno) {
 		return dialog;
 	}
 
-	Json::Value objekt(Json::objectValue);
+	Json::Value objekt;
 	objekt = root["polozky"];
 
 	DialogovyStrom* dialog = new DialogovyStrom();
@@ -105,7 +103,7 @@ DialogovyStrom* Loader::nacitajDialog(string paMeno) {
 
 		string typPolozky = polozkaData["typ"].asString();
 
-		DialogPolozka* polozka;
+		DialogPolozka* polozka = nullptr;
 		if (typPolozky == "normalVolba") {
 			string textPolozky = polozkaData["text"].asString();
 			polozka = new DialogPolozka(textPolozky);
@@ -114,9 +112,9 @@ DialogovyStrom* Loader::nacitajDialog(string paMeno) {
 		Json::Value volby(Json::objectValue);
 		volby = polozkaData["volby"];
 
-		for (Json::Value::iterator it = volby.begin(); it != volby.end(); ++it) {
-			Json::Value volbaID = it.key();
-			Json::Value volbaData = (*it);
+		for (Json::Value::iterator volbaIterator = volby.begin(); volbaIterator != volby.end(); ++volbaIterator) {
+			Json::Value volbaID = volbaIterator.key();
+			Json::Value volbaData = (*volbaIterator);
 			int dalsia = volbaData["kam"].asInt();
 			string volbaText = volbaData["text"].asString();
 			string typ = volbaData["typ"].asString();
@@ -165,12 +163,12 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 		return;
 	}
 
-	Mapa* novaMapa;
+	Mapa* novaMapa = nullptr;
 
 	string cestaKMapam = "./Data/Mapy/";
 	string cestakTexturam = "./Data/Grafika/Textury/";
 
-	PolickoDvere*** polickoDvere;
+	PolickoDvere*** polickoDvere = nullptr;
 
 	bool alive = true;
 	while (alive) {
@@ -180,8 +178,12 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 		Json::Reader reader;
 		ifstream test(cestaKMapam + "" + paMeno + ".json", ifstream::binary);
 		ifstream data(cestaKMapam + "" + paMeno + "data.json", ifstream::binary);
-		bool parsingSuccessful = reader.parse(test, root, false);
-		parsingSuccessful = reader.parse(data, mapaData, false);
+		bool parsingSuccessful;
+		parsingSuccessful= reader.parse(test, root, false);
+		if (parsingSuccessful) {
+			parsingSuccessful = reader.parse(data, mapaData, false);
+		}
+
 		if (!parsingSuccessful)
 		{
 			cout << "chyba pri parsovani Jsonu mapy" << "\n";
@@ -204,8 +206,8 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 			Json::Value nepriatelia(Json::arrayValue);
 			nepriatelia = jOblast["nepriatelia"];
 
-			for (unsigned int i = 0; i < nepriatelia.size(); i++) {
-				novaMapa->pridajNepriatela(o,nepriatelia[i].asString());
+			for (unsigned int intexNepriatela = 0; intexNepriatela < nepriatelia.size(); intexNepriatela++) {
+				novaMapa->pridajNepriatela(o,nepriatelia[intexNepriatela].asString());
 			}
 			
 		}
@@ -233,17 +235,17 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 		
 		Json::Value dvere(Json::objectValue);
 		dvere = mapaData["dvere"];
-		int i = 0;
+	
 		for (Json::Value::iterator it = dvere.begin(); it != dvere.end(); ++it) {
 			Json::Value value = (*it);
 			int x = value["x"].asInt();
 			int y = value["y"].asInt();
-			int posX = value["poziciaX"].asInt();
-			int posY = value["poziciaY"].asInt();
+			int poziciaDveriX = value["poziciaX"].asInt();
+			int poziciaDveriY = value["poziciaY"].asInt();
 			int smerPohladu = value["smerPohladu"].asInt();
 			string kam = value["kam"].asString();
 
-			polickoDvere[x][y] = new PolickoDvere(true, kam, posX, posY, smerPohladu);
+			polickoDvere[x][y] = new PolickoDvere(true, kam, poziciaDveriX, poziciaDveriY, smerPohladu);
 		}
 		
 		Json::Value objekt(Json::objectValue);
@@ -272,7 +274,7 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 				int idTextury3 = root["Vrstva3"][riadok*sirka + stlpec].asInt();
 				int idTextury4 = root["boj"][riadok*sirka + stlpec].asInt();
 
-				Policko* policko = nullptr;
+				Policko* policko;
 
 				if (polickoDvere[stlpec][riadok] != nullptr) {
 					policko = polickoDvere[stlpec][riadok];
@@ -326,7 +328,7 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 	hra->GetHrac()->setMapa(novaMapa);
 	novaMapa->setHrac(hra->GetHrac());
 
-	StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
+	StavHranieHry* stav = static_cast<StavHranieHry*>(hra->dajStav("hranieHry"));
 	stav->Setmapa(novaMapa);
 
 	if (posX == -1 || posY == -1 || smer == -1) {
@@ -346,7 +348,8 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 }
 
 
-void Loader::nacitajNpc(string menoMapy, Mapa* mapa) {
+void Loader::nacitajNpc(string menoMapy, Mapa* mapa) const
+{
 	string cestaKNpc = "./Data/Npc/";
 	string cestaNpcAnimacie = "./Data/Grafika/Npc/";
 
@@ -436,7 +439,8 @@ sf::Font* Loader::nacitajFont(string menoFontu) {
 
 }
 
-Nepriatel* Loader::nacitajNepriatela(string paMeno) {
+Nepriatel* Loader::nacitajNepriatela(string paMeno) const
+{
 
 	string cestaKNepriatelom = "./Data/Nepriatelia/";
 
@@ -449,7 +453,7 @@ Nepriatel* Loader::nacitajNepriatela(string paMeno) {
 
 	if (!parsingSuccessful)
 	{
-		cout << "chyba pri parsovani Jsonu nepriatela " << "\n";
+		cout << "chyba pri parsovani Jsonu nepriatela  "<<paMeno << ".json\n";
 	}
 
 	string meno = nepriatel["meno"].asString();
@@ -476,17 +480,17 @@ Nepriatel* Loader::nacitajNepriatela(string paMeno) {
 	int sila = nahodneCislo(silaOd, silaDo);
 	int intelekt = nahodneCislo(intelentOd, intelektDo);
 
-	int rychlostMin = (int)ceil(((double)uhybMin / 100) * 6 * level);
-	int rychlostMax = (int)ceil(((double)uhybMax / 100) * 6 * level);
+	int rychlostMin = static_cast<int>(ceil((static_cast<double>(uhybMin) / 100) * 6 * level));
+	int rychlostMax = static_cast<int>(ceil((static_cast<double>(uhybMax) / 100) * 6 * level));
 	int rychlost = nahodneCislo(rychlostMin, rychlostMax);
 
-	int obranaMin = (int)ceil(((double)redukciaMin / 100) * 25 * level);
-	int obranaMax = (int)ceil(((double)redukciaMax / 100) * 25 * level);
+	int obranaMin = static_cast<int>(ceil((static_cast<double>(redukciaMin) / 100) * 25 * level));
+	int obranaMax = static_cast<int>(ceil((static_cast<double>(redukciaMax) / 100) * 25 * level));
 	int obrana = nahodneCislo(obranaMin, obranaMax);
 
 	Statistika* statistika = new Statistika(level, hp, hp, mp, mp, sila, intelekt, rychlost, obrana);
 
-	Json::Value akcie(Json::objectValue);
+	Json::Value akcie;
 	akcie = nepriatel["akcie"];
 
 	for (Json::Value::iterator it = akcie.begin(); it != akcie.end(); ++it) {
@@ -542,20 +546,20 @@ Nepriatel* Loader::nacitajNepriatela(string paMeno) {
 
 
 
-	Json::Value dropy(Json::objectValue);
+	Json::Value dropy;
 	dropy = nepriatel["questDrop"];
 
 	for (Json::Value::iterator it = dropy.begin(); it != dropy.end(); ++it) {
 		Json::Value key = it.key();
 		Json::Value predmet = (*it);
 
-		string meno = predmet["meno"].asString();
-		string obrazok = predmet["obrazok"].asString();
+		string menoPredmetu = predmet["meno"].asString();
+		string obrazokPredmetu = predmet["obrazok"].asString();
 		int typ = predmet["typ"].asInt();
 		int cena = predmet["cena"].asInt();
 		int uroven = predmet["uroven"].asInt();
 
-		novyNepriatel->pridajDropItem(key.asString(), new Predmet(meno, typ, obrazok, cena, uroven));
+		novyNepriatel->pridajDropItem(key.asString(), new Predmet(menoPredmetu, typ, obrazokPredmetu, cena, uroven));
 
 	}
 
@@ -563,12 +567,14 @@ Nepriatel* Loader::nacitajNepriatela(string paMeno) {
 	return novyNepriatel;
 }
 
-int Loader::nahodneCislo(int min, int max) {
+int Loader::nahodneCislo(int min, int max) const
+{
 	if (min == max) return min;
 	return min + rand() % (max - min);
 }
 
-vector<Predmet*>* Loader::nacitajObchod(string paMeno) {
+vector<Predmet*>* Loader::nacitajObchod(string paMeno) const
+{
 	string cestaKObchodom = "./Data/Obchody/";
 
 	vector<Predmet*>* obchod = new vector<Predmet*>();
@@ -583,7 +589,7 @@ vector<Predmet*>* Loader::nacitajObchod(string paMeno) {
 		cout << "chyba pri parsovani Jsonu obchodu " << "\n";
 	}
 
-	Json::Value polozky(Json::objectValue);
+	Json::Value polozky;
 	polozky = jObchod["polozky"];
 
 	for (Json::Value::iterator it = polozky.begin(); it != polozky.end(); ++it) {
@@ -601,8 +607,9 @@ vector<Predmet*>* Loader::nacitajObchod(string paMeno) {
 	return obchod;
 }
 
-Predmet* Loader::parsujPredmet(Json::Value jPredmet) {
-	Predmet* predmet = nullptr;
+Predmet* Loader::parsujPredmet(Json::Value jPredmet) const
+{
+	Predmet* predmet;
 
 	string typTriedy = jPredmet["typTriedy"].asString();
 
@@ -632,7 +639,7 @@ Predmet* Loader::parsujPredmet(Json::Value jPredmet) {
 			predmet = new Oblecenie(meno, typ, obrazok, cena, uroven);
 		}
 
-		Pouzitelny* ppredmet = (Pouzitelny*)predmet;
+		Pouzitelny* ppredmet = static_cast<Pouzitelny*>(predmet);
 		int hp = jPredmet["hp"].asInt();
 		double hpMult = jPredmet["hpMult"].asDouble();
 		int mp = jPredmet["mp"].asInt();
@@ -662,7 +669,8 @@ Predmet* Loader::parsujPredmet(Json::Value jPredmet) {
 	return predmet;
 }
 
-Quest* Loader::nacitajQuest(string paMeno) {
+Quest* Loader::nacitajQuest(string paMeno) const
+{
 
 	Quest* quest;
 	string cestaKuQuestom = "./Data/Questy/";
@@ -692,9 +700,10 @@ Quest* Loader::nacitajQuest(string paMeno) {
 
 		//nacitanie polozky ktorá bude predstavova to èo bude rozprava npc o queste
 		QuestPolozka* polozka = new QuestPolozka(quest->Getnazov());
-		Json::Value polozkaTexty(Json::arrayValue);
+
+		Json::Value polozkaTexty;
 		polozkaTexty = jQuest["polozkaTexty"];
-		QuestPolozka* qp = (QuestPolozka*)polozka;
+		QuestPolozka* qp = static_cast<QuestPolozka*>(polozka);
 		for (unsigned int i = 0; i < polozkaTexty.size(); i++) {
 			if (i == 0) {
 				qp->vlozText(StavQuestu::NEPRIJATY, polozkaTexty[i].asString());
@@ -715,7 +724,7 @@ Quest* Loader::nacitajQuest(string paMeno) {
 		}
 
 		// nacitanie volieb ked sa hráè dostane na quest polozku 
-		Json::Value volby(Json::objectValue);
+		Json::Value volby;
 		volby = jQuest["volby"];
 
 		for (Json::Value::iterator it = volby.begin(); it != volby.end(); ++it) {
@@ -769,10 +778,10 @@ Quest* Loader::nacitajQuest(string paMeno) {
 		quest->SetdialogPolozka(polozka);
 
 		// nacitanie volby ktorá sa zobrazi na zaciatku dialogu, a uvedie hraca na polozku z questom
-		Json::Value volbaKuQuestu(Json::objectValue);
+		Json::Value volbaKuQuestu;
 		volbaKuQuestu = jQuest["volbaKuQuestu"];
 
-		Json::Value volbaTexty(Json::arrayValue);
+		Json::Value volbaTexty;
 		volbaTexty = volbaKuQuestu["volbaTexty"];
 
 		VolbaPredQpolozkou* volba = new VolbaPredQpolozkou(0, quest);
@@ -807,7 +816,7 @@ Quest* Loader::nacitajQuest(string paMeno) {
 		}
 
 		// poziadavky na splnenie questu
-		Json::Value questPoziadavky(Json::arrayValue);
+		Json::Value questPoziadavky;
 		questPoziadavky = jQuest["poziadavky"];
 		for (unsigned int i = 0; i < questPoziadavky.size(); i++) {
 			Json::Value poziadavka(Json::objectValue);
@@ -828,10 +837,10 @@ Quest* Loader::nacitajQuest(string paMeno) {
 		}
 
 		// nacitanie predmetov ktoré su ako odmena za quest
-		Json::Value odmenaVeci(Json::arrayValue);
+		Json::Value odmenaVeci;
 		odmenaVeci = jQuest["predmety"];
 		for (unsigned int i = 0; i < odmenaVeci.size(); i++) {
-			Json::Value jPredmet(Json::objectValue);
+			Json::Value jPredmet;
 			jPredmet = odmenaVeci[i];
 			quest->pridajOdmenu(parsujPredmet(jPredmet));
 		}
@@ -843,7 +852,8 @@ Quest* Loader::nacitajQuest(string paMeno) {
 }
 
 
-Zameranie* Loader::nacitajZameranie(string paMeno) {
+Zameranie* Loader::nacitajZameranie(string paMeno) const
+{
 
 	zobrazLoadingScreen();
 
@@ -869,7 +879,7 @@ Zameranie* Loader::nacitajZameranie(string paMeno) {
 
 	zameranie = new Zameranie(nazov, rastHp, rastMp, rastSila, rastRychlost, rastIntelekt);
 	
-	Json::Value akcie(Json::objectValue);
+	Json::Value akcie;
 	akcie = jZameranie["akcie"];
 
 	for (Json::Value::iterator it = akcie.begin(); it != akcie.end(); ++it) {
@@ -907,7 +917,7 @@ Zameranie* Loader::nacitajZameranie(string paMeno) {
 			}
 		}
 		else {
-			Efekt* efekt;
+			Efekt* efekt = nullptr;
 			Json::Value jEfekt(Json::objectValue);
 			jEfekt = jAkcia["efekt"];
 
@@ -936,7 +946,8 @@ Zameranie* Loader::nacitajZameranie(string paMeno) {
 
 }
 
-bool Loader::save() {
+bool Loader::save() const
+{
 
 	Hrac* hrac = hra->GetHrac();
 	QuestManager* qm = hrac->Getmanazerquestov();
@@ -971,15 +982,15 @@ bool Loader::save() {
 		jPredmet["uroven"] = predmet->Geturoven();
 
 
-		if (dynamic_cast<Elixir*>(predmet) != NULL) {
+		if (dynamic_cast<Elixir*>(predmet) != nullptr) {
 			jPredmet["typTriedy"] = "elixir";
-			Elixir* e = (Elixir*)predmet;
+			Elixir* e = static_cast<Elixir*>(predmet);
 			jPredmet["stat"] = e->Getstat();
 			jPredmet["oKolko"] = e->Getokolko();
 		}
-		else if (dynamic_cast<Zbran*>(predmet) != NULL) {
+		else if (dynamic_cast<Zbran*>(predmet) != nullptr) {
 			jPredmet["typTriedy"] = "zbran";
-			Zbran* z = (Zbran*)predmet;
+			Zbran* z = static_cast<Zbran*>(predmet);
 			jPredmet["minDmg"] = z->Getminposkodenie();
 			jPredmet["maxDmg"] = z->Getmaxposkodenie();
 			jPredmet["rychlostUtoku"] = z->GetrychlostUtoku();
@@ -998,10 +1009,10 @@ bool Loader::save() {
 
 
 		}
-		else if(dynamic_cast<Oblecenie*>(predmet) != NULL) {
+		else if(dynamic_cast<Oblecenie*>(predmet) != nullptr) {
 			jPredmet["typTriedy"] = "oblecenie";
 
-			Oblecenie* o = (Oblecenie*)predmet;
+			Oblecenie* o = static_cast<Oblecenie*>(predmet);
 
 			jPredmet["hp"] = o->Gethp();
 			jPredmet["hpMult"] = o->GethpMult();
@@ -1043,15 +1054,15 @@ bool Loader::save() {
 		jPredmet["uroven"] = predmet->Geturoven();
 
 
-		if (dynamic_cast<Elixir*>(predmet) != NULL) {
+		if (dynamic_cast<Elixir*>(predmet) != nullptr) {
 			jPredmet["typTriedy"] = "elixir";
-			Elixir* e = (Elixir*)predmet;
+			Elixir* e = static_cast<Elixir*>(predmet);
 			jPredmet["stat"] = e->Getstat();
 			jPredmet["oKolko"] = e->Getokolko();
 		}
-		else if (dynamic_cast<Zbran*>(predmet) != NULL) {
+		else if (dynamic_cast<Zbran*>(predmet) != nullptr) {
 			jPredmet["typTriedy"] = "zbran";
-			Zbran* z = (Zbran*)predmet;
+			Zbran* z = static_cast<Zbran*>(predmet);
 			jPredmet["minDmg"] = z->Getminposkodenie();
 			jPredmet["maxDmg"] = z->Getmaxposkodenie();
 			jPredmet["rychlostUtoku"] = z->GetrychlostUtoku();
@@ -1070,10 +1081,10 @@ bool Loader::save() {
 
 
 		}
-		else if (dynamic_cast<Oblecenie*>(predmet) != NULL) {
+		else if (dynamic_cast<Oblecenie*>(predmet) != nullptr) {
 			jPredmet["typTriedy"] = "oblecenie";
 
-			Oblecenie* o = (Oblecenie*)predmet;
+			Oblecenie* o = static_cast<Oblecenie*>(predmet);
 
 			jPredmet["hp"] = o->Gethp();
 			jPredmet["hpMult"] = o->GethpMult();
@@ -1113,17 +1124,17 @@ bool Loader::save() {
 
 		Json::Value jPoziadavky;
 
-		for (unsigned int i = 0; i < poziadavky->size(); i++) {
-			Poziadavka* p = poziadavky->at(i);
-			if (dynamic_cast<PoziadavkaZabi*>(p) != NULL) {
-				PoziadavkaZabi* pz = (PoziadavkaZabi*)p;
+		for (unsigned int posPoziadavky = 0; posPoziadavky < poziadavky->size(); posPoziadavky++) {
+			Poziadavka* p = poziadavky->at(posPoziadavky);
+			if (dynamic_cast<PoziadavkaZabi*>(p) != nullptr) {
+				PoziadavkaZabi* pz = static_cast<PoziadavkaZabi*>(p);
 				Json::Value jPoziadavka;
 				jPoziadavka["typ"] = "kill";
 				jPoziadavka["koho"] = pz->Getkohozabit();
 				jPoziadavka["aktualnyPocet"] = pz->Getaktualnypocetzabitych();
 				jPoziadavky.append(jPoziadavka);
 			}
-			else if (dynamic_cast<PoziadavkaLoot*>(p) != NULL) {
+			else if (dynamic_cast<PoziadavkaLoot*>(p) != nullptr) {
 				// netereba niè , po nacitani sa predmety daju do inventara a tato požiadavka sa kontroluje z inventara
 			}
 			
@@ -1197,7 +1208,7 @@ void Loader::load(){
 		inv->Setzlato(save["inventar"]["zlato"].asInt());
 		inv->Setkapacita(save["inventar"]["kapacita"].asInt());
 
-		Json::Value oblecene(Json::arrayValue);
+		Json::Value oblecene;
 		oblecene = save["oblecene"];
 		if (!oblecene.isNull()) {
 			for (unsigned int i = 0; i < oblecene.size(); i++) {
@@ -1209,7 +1220,7 @@ void Loader::load(){
 		}
 
 
-		Json::Value predmety(Json::arrayValue);
+		Json::Value predmety;
 		predmety = save["inventar"]["predmety"];
 		if (!predmety.isNull()) {
 			for (unsigned int i = 0; i < predmety.size(); i++) {
@@ -1221,7 +1232,7 @@ void Loader::load(){
 
 		QuestManager* mng = hrac->Getmanazerquestov();
 
-		Json::Value jDokonceneQuesty(Json::arrayValue);
+		Json::Value jDokonceneQuesty;
 		jDokonceneQuesty = save["dokonceneQuesty"];
 		if (!jDokonceneQuesty.isNull()) {
 			for (unsigned int i = 0; i < jDokonceneQuesty.size(); i++) {
@@ -1233,7 +1244,7 @@ void Loader::load(){
 		}
 
 
-		Json::Value jNedokonceneQuesty(Json::arrayValue);
+		Json::Value jNedokonceneQuesty;
 		jNedokonceneQuesty = save["nedokonceneQuesty"];
 		if (!jNedokonceneQuesty.isNull()) {
 			for (unsigned int i = 0; i < jNedokonceneQuesty.size(); i++) {
@@ -1243,9 +1254,9 @@ void Loader::load(){
 				Json::Value jPoziadavky(Json::arrayValue);
 				jPoziadavky = jNedokonceneQuesty[i]["poziadavky"];
 				if (!jPoziadavky.isNull()) {
-					for (unsigned int i = 0; i < jPoziadavky.size(); i++) {
+					for (unsigned int indexPoziadavky = 0; indexPoziadavky < jPoziadavky.size(); indexPoziadavky++) {
 						Json::Value jPoziadavka(Json::objectValue);
-						jPoziadavka = jPoziadavky[i];
+						jPoziadavka = jPoziadavky[indexPoziadavky];
 						string typ = jPoziadavka["typ"].asString();
 						
 
@@ -1253,7 +1264,7 @@ void Loader::load(){
 							// pridanie poctu zabiti
 							int aktPocet = jPoziadavka["aktualnyPocet"].asInt();
 							
-							for (int i = 0; i < aktPocet; i++) {
+							for (int counterZabiti = 0; counterZabiti < aktPocet; counterZabiti++) {
 								for (unsigned int j = 0; j < poziadavky->size(); j++) {
 									poziadavky->at(j)->akcia(jPoziadavka["koho"].asString());
 								}
@@ -1280,7 +1291,8 @@ void Loader::load(){
 }
 
 
-void Loader::zobrazLoadingScreen() {
+void Loader::zobrazLoadingScreen() const
+{
 	hra->okno->clear();
 	hra->dajStav("stavLoading")->render();
 	hra->okno->display();

@@ -4,15 +4,15 @@
   "levelOd": 1,
   "levelDo": 3,
   "hpOd": 15,
-  "hpDo": 25,
+  "hpDo": 20,
   "mpOd": 2,
   "mpDo": 6,
   "silaOd": 1,
-  "silaDo": 5,
+  "silaDo": 4,
   "intelektOd": 1,
   "intelektDo": 1,
-  "redukciaMin": 20,
-  "redukciaMax": 40,
+  "redukciaMin": 10,
+  "redukciaMax": 20,
   "uhybMin": 10,
   "uhybMax": 20,
 
@@ -45,7 +45,7 @@
         "druh": "upravStat",
         "obrazok": "shout",
         "stat": "sila",
-        "hodnota": -2,
+        "hodnota": -1,
         "naSeba": false
       }
 

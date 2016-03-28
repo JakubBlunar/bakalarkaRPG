@@ -15,13 +15,13 @@ public:
 	StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra);
 	virtual ~StavInfoHraca();
 
-	void onEnter();
-	void onExit();
-	void render();
-	void update(double delta);
+	void onEnter() override;
+	void onExit() override;
+	void render() override;
+	void update(double delta) override;
 
 private:
-	void vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::RenderWindow* okno);
+	void vykresliOknoPredmetu(Predmet*predmet, float x, float y, sf::RenderWindow* okno) const;
 
 	int oznacene;
 	sf::RectangleShape ukazovatel;

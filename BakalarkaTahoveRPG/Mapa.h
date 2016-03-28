@@ -27,37 +27,37 @@ public:
 	Mapa(string menoMapy, Hrac* paHrac,Hra* hram,int paVyska , int paSirka);
 	~Mapa();
 	
-	void hracInterakcia(StavHranieHry* paStav, void(StavHranieHry::*callbackFunkcia)());
+	void hracInterakcia(StavHranieHry* paStav, void(StavHranieHry::*callbackFunkcia)()) const;
 
 	void setHrac(Hrac* paHrac);
-	int Getvyska();
-	int Getsirka();
+	int Getvyska() const;
+	int Getsirka() const;
 	void setSirkaVyska(int paSirka, int paVyska);
 
-	void hracSkocilNaPolicko(int x, int y);
-	bool jeMoznyPohyb(int x, int y);
+	void hracSkocilNaPolicko(int x, int y) const;
+	bool jeMoznyPohyb(int x, int y) const;
 	void posunVpravo();
 	void posunVlavo();
 	void posunHore();
 	void posunDole();
-	PohybMapy Getsmerpohybu();
+	PohybMapy Getsmerpohybu() const;
 
 	void posunHracaNaPolicko(int x, int y,int smerPohladu);
 	void posun(int posunX, int posunY);
 	void render(sf::RenderWindow* okno);
 	void update(double delta);
 
-	string Getmeno();
-	Policko* GetPolicko(int x, int y);
-	void nastavPolicko(int x, int y, Policko*);
-	sf::FloatRect Getzobrazenaoblast();
-	sf::Time aktCas();
+	string Getmeno() const;
+	Policko* GetPolicko(int x, int y) const;
+	void nastavPolicko(int x, int y, Policko*) const;
+	sf::FloatRect Getzobrazenaoblast() const;
+	sf::Time aktCas() const;
 	vector<string>* Getmoznynepriatelia();
 
 	void pridajNepriatela(Oblast paOblast, string paCo);
 
 	void setHrobSuradnice(sf::Vector2i);
-	sf::Vector2i Gethrobsuradnice();
+	sf::Vector2i Gethrobsuradnice() const;
 
 	void toogleMinimapa();
 private:

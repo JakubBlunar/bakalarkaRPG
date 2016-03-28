@@ -1,0 +1,90 @@
+{
+  "meno": "Wolf",
+  "obrazok": "wolf",
+  "levelOd": 11,
+  "levelDo": 15,
+  "hpOd": 170,
+  "hpDo": 200,
+  "mpOd": 12,
+  "mpDo": 15,
+  "silaOd": 23,
+  "silaDo": 25,
+  "intelektOd": 3,
+  "intelektDo": 5,
+  "redukciaMin": 30,
+  "redukciaMax": 40,
+  "uhybMin": 5,
+  "uhybMax": 15,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Bite",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1
+    },
+    "2": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Furious howl",
+      "obrazok": "attack",
+      "rychlostCastenia": 500,
+      "cooldown": 15000,
+      "trvanie": 8000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 5,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "shout",
+        "stat": "sila",
+        "hodnota": 2,
+        "naSeba": true
+      }
+    },
+    "3": {
+      "typ": "AkciaDmg",
+      "meno": "Bite",
+      "obrazok": "attack",
+      "rychlostCastenia": 500,
+      "cooldown": 5000,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1.2
+    },
+    "4": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Avoiding howl",
+      "obrazok": "attack",
+      "rychlostCastenia": 500,
+      "cooldown": 15000,
+      "trvanie": 8000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 4,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "5",
+        "stat": "rychlost",
+        "hodnota": 2,
+        "naSeba": true
+      }
+    }
+  },
+
+  "questDrop": {
+
+  }
+
+}

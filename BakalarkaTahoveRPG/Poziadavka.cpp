@@ -44,10 +44,12 @@ bool PoziadavkaZabi::jeSplnena() {
 	else return false;
 }
 
-string PoziadavkaZabi::Getkohozabit() {
+string PoziadavkaZabi::Getkohozabit() const
+{
 	return kohoZabit;
 }
-int PoziadavkaZabi::Getaktualnypocetzabitych() {
+int PoziadavkaZabi::Getaktualnypocetzabitych() const
+{
 	return pocetZabiti;
 }
 

@@ -9,21 +9,21 @@ class Pouzitelny : public Predmet
 {
 
 public:
-	int Getarmor();
-	double GetarmorMult();
-	int Gethp();
-	double GethpMult();
-	int Getinteligencia();
-	double GetinteligenciaMult();
-	int Getmp();
-	double GetmpMult();
-	int Getrychlost();
-	double GetrychlostMult();
-	int Getsila();
-	double GetsilaMult();
+	int Getarmor() const;
+	double GetarmorMult() const;
+	int Gethp() const;
+	double GethpMult() const;
+	int Getinteligencia() const;
+	double GetinteligenciaMult() const;
+	int Getmp() const;
+	double GetmpMult() const;
+	int Getrychlost() const;
+	double GetrychlostMult() const;
+	int Getsila() const;
+	double GetsilaMult() const;
 
 
-	bool Isobleceny();
+	bool Isobleceny() const;
 
 
 	void Setarmor(int newVal);

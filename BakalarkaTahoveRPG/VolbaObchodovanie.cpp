@@ -16,7 +16,7 @@ VolbaObchodovanie::~VolbaObchodovanie()
 
 
 void VolbaObchodovanie::akcia(Hrac* hrac) {
-	StavObchod* stavObchod = (StavObchod*)Loader::Instance()->Gethra()->dajStav("stavObchod");
+	StavObchod* stavObchod = static_cast<StavObchod*>(Loader::Instance()->Gethra()->dajStav("stavObchod"));
 	stavObchod->nacitajObchod(obchod);
 	Loader::Instance()->Gethra()->zmenStavRozhrania("stavObchod");
 }

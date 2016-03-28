@@ -234,14 +234,14 @@
     <ClInclude Include="VolbaPredQpolozkou.h">
       <Filter>Header Files\Dialog</Filter>
     </ClInclude>
-    <ClInclude Include="VolbaBoj.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Oblast.h">
       <Filter>Header Files\Mapa</Filter>
     </ClInclude>
     <ClInclude Include="StavLoading.h">
       <Filter>Header Files\Stavy</Filter>
+    </ClInclude>
+    <ClInclude Include="VolbaBoj.h">
+      <Filter>Header Files\Dialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -410,14 +410,14 @@
     <ClCompile Include="VolbaPredQpolozkou.cpp">
       <Filter>Source Files\Dialog</Filter>
     </ClCompile>
-    <ClCompile Include="VolbaBoj.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Oblast.cpp">
       <Filter>Source Files\Mapa</Filter>
     </ClCompile>
     <ClCompile Include="StavLoading.cpp">
       <Filter>Source Files\Stavy</Filter>
+    </ClCompile>
+    <ClCompile Include="VolbaBoj.cpp">
+      <Filter>Source Files\Dialog</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

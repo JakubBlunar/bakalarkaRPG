@@ -9,6 +9,6 @@ public:
 	PolickoBoj(bool paPriechodne);
 	~PolickoBoj();
 
-	void hracSkok(Hrac* paHrac);
+	void hracSkok(Hrac* paHrac) override;
 };
 

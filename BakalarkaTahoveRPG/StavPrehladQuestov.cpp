@@ -35,7 +35,7 @@ StavPrehladQuestov::StavPrehladQuestov(std::string paNazov, sf::RenderWindow* pa
 	}
 
 	tlacidloSpat = new Tlacidlo(normalne, normalne, "<--", sf::Vector2f(okno->getSize().x -60.f, 10.f), sf::Vector2f(30.f, 25.f), font, 20U);
-
+	spravcaQuestov = nullptr;
 }
 
 
@@ -66,9 +66,6 @@ void StavPrehladQuestov::render() {
 	pozadieVolba.setSize(sf::Vector2f(300.f, 600));
 	pozadieVolba.setPosition(sf::Vector2f(30.f, 85.f));
 	okno->draw(pozadieVolba);
-
-	float startX = 30.f;
-	float startY = 85.f;
 
 	for (unsigned int i = 0; i < pocet; i++)
 	{

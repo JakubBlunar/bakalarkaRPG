@@ -9,14 +9,14 @@ public:
 	void skontrolujKlik(sf::Vector2i pozicia);
 	void Setzakliknute(bool);
 	void Settext(std::string);
-	bool Getzakliknute();
-	sf::Sprite* Getsprite();
+	bool Getzakliknute() const;
+	sf::Sprite* Getsprite() const;
 	sf::Text Gettext();
-	bool hover(sf::Vector2i pozicia);
-	sf::Vector2f getPosition();
-	sf::Vector2f getSize();
-	sf::FloatRect getGlobalBounds();
-	sf::RectangleShape Getramcek();
+	bool hover(sf::Vector2i pozicia) const;
+	sf::Vector2f getPosition() const;
+	sf::Vector2f getSize() const;
+	sf::FloatRect getGlobalBounds() const;
+	sf::RectangleShape Getramcek() const;
 
 	void Setpozicia(sf::Vector2f paPozicia);
 	void setSize(sf::Vector2f paVelkost);

@@ -18,11 +18,6 @@ StavRozhrania::~StavRozhrania() {
 
 }
 
-
-void StavRozhrania::zmenMapu() {
-
-}
-
 void StavRozhrania::update(double cas) {
 	if (nasledujuci != nullptr && !aktualnyStav->GetzobrazujePopup()) {
 		zmenStav(nasledujuci->Getnazov());
@@ -32,7 +27,8 @@ void StavRozhrania::update(double cas) {
 	}
 }
 
-void StavRozhrania::render() {
+void StavRozhrania::render() const
+{
 	aktualnyStav->render();
 }
 
@@ -42,7 +38,8 @@ void StavRozhrania::pridajStav(Stav* stav) {
 }
 
 
-Stav* StavRozhrania::GetaktualnyStav() {
+Stav* StavRozhrania::GetaktualnyStav() const
+{
 	return aktualnyStav;
 }
 

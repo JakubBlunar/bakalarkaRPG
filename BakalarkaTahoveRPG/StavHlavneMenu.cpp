@@ -20,7 +20,7 @@ StavHlavneMenu::StavHlavneMenu(std::string paNazov, sf::RenderWindow* paOkno,Hra
 	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Load save", sf::Vector2f(0, 260), sf::Vector2f(500, 0), font,85));
 	tlacidla.push_back(new Tlacidlo(normalne, normalne, "Exit", sf::Vector2f(0, 350), sf::Vector2f(500, 0), font, 85));
 	
-	for (int i = 0; i < tlacidla.size(); i++) {
+	for (unsigned int i = 0; i < tlacidla.size(); i++) {
 		Tlacidlo* t = tlacidla.at(i);
 		t->setSize(sf::Vector2f(t->Gettext().getGlobalBounds().width, t->Gettext().getGlobalBounds().height));
 		t->Setpozicia(sf::Vector2f(paOkno->getSize().x / 2 - t->getSize().x/2,t->Gettext().getPosition().y));
@@ -127,7 +127,7 @@ void StavHlavneMenu::update(double delta) {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
-				if (oznacene < (signed int)tlacidla.size() - 1) {
+				if (oznacene < static_cast<signed int>(tlacidla.size()) - 1) {
 					oznacene++;
 				}
 			}

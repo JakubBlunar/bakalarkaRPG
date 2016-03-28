@@ -2,8 +2,6 @@
 #include "Hra.h"
 #include "Hrac.h"
 #include "Mapa.h"
-#include "Loader.h"
-#include "PopupOkno.h"
 #include "Inventar.h"
 #include "Policko.h"
 
@@ -13,6 +11,7 @@ StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 {
 	this->mapa = mapa;
 	loot = nullptr;
+	lootIndex = 0;
 }
 
 

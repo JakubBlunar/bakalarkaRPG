@@ -1,0 +1,59 @@
+{
+  "meno": "Bat",
+  "obrazok": "bat",
+  "levelOd": 5,
+  "levelDo": 8,
+  "hpOd": 70,
+  "hpDo": 140,
+  "mpOd": 8,
+  "mpDo": 15,
+  "silaOd": 8,
+  "silaDo": 13,
+  "intelektOd": 3,
+  "intelektDo": 7,
+  "redukciaMin": 20,
+  "redukciaMax": 25,
+  "uhybMin": 25,
+  "uhybMax": 30,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Scratch",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1.0
+    },
+    "2": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Fast wings",
+      "obrazok": "attack",
+      "rychlostCastenia": 1000,
+      "cooldown": 8000,
+      "trvanie": 5000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 4,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "shout",
+        "stat": "rychlost",
+        "hodnota": 2,
+        "naSeba": true
+      }
+
+    }
+  },
+
+  "questDrop": {
+
+  }
+
+}

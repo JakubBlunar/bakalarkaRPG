@@ -1,0 +1,71 @@
+{
+  "meno": "Rock golem",
+  "obrazok": "golem",
+  "levelOd": 7,
+  "levelDo": 10,
+  "hpOd": 110,
+  "hpDo": 170,
+  "mpOd": 20,
+  "mpDo": 35,
+  "silaOd": 13,
+  "silaDo": 17,
+  "intelektOd": 3,
+  "intelektDo": 7,
+  "redukciaMin": 50,
+  "redukciaMax": 70,
+  "uhybMin": 15,
+  "uhybMax": 20,
+
+  "akcie": {
+    "1": {
+      "typ": "AkciaDmg",
+      "meno": "Rock fist",
+      "obrazok": "attack",
+      "rychlostCastenia": 2000,
+      "cooldown": 500,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 0,
+      "zakladnaHodnota": 1.0
+    },
+    "2": {
+      "typ": "AkciaPridanieEfektu",
+      "meno": "Stone skin",
+      "obrazok": "attack",
+      "rychlostCastenia": 1000,
+      "cooldown": 8000,
+      "trvanie": 5000,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 7,
+      "zakladnaHodnota": 1,
+
+      "efekt": {
+        "druh": "upravStat",
+        "obrazok": "24",
+        "stat": "obrana",
+        "hodnota": 2,
+        "naSeba": true
+      }
+
+    },
+    "3": {
+      "typ": "AkciaDmg",
+      "meno": "Boulder bash",
+      "obrazok": "attack",
+      "rychlostCastenia": 3000,
+      "cooldown": 9000,
+      "trvanie": 0,
+      "popis": "",
+      "stat": "fyzicka",
+      "mana": 6,
+      "zakladnaHodnota": 1.1
+    }
+  },
+
+  "questDrop": {
+
+  }
+
+}

@@ -14,7 +14,7 @@ public:
 	void pridajStranku(string text);
 	string aktualnaStrana();
 	string dajDalsi();
-	bool skoncil();
+	bool skoncil() const;
 private:
 	queue<string> texty;
 	bool koniec;

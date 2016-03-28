@@ -1,5 +1,4 @@
 #include "Tlacidlo.h"
-#include <iostream>
 
 Tlacidlo::Tlacidlo(sf::Sprite* normalne, sf::Sprite* kliknute, std::string paText, sf::Vector2f pozicia,sf::Vector2f velkost,sf::Font *font, unsigned int velkostPisma) {
 	this->normalne = normalne;
@@ -40,12 +39,14 @@ void Tlacidlo::Setzakliknute(bool ake) {
 void Tlacidlo::Settext(std::string words) {
 	text.setString(words);
 }
-bool Tlacidlo::Getzakliknute() {
+bool Tlacidlo::Getzakliknute() const
+{
 	return zakliknute;
 }
-sf::Sprite* Tlacidlo::Getsprite() {
+sf::Sprite* Tlacidlo::Getsprite() const
+{
 	aktualne->setPosition(pozicia);
-	aktualne->setTextureRect(sf::IntRect(0, 0,(int) velkost.x,(int) velkost.y));
+	aktualne->setTextureRect(sf::IntRect(0, 0,static_cast<int>(velkost.x),static_cast<int>(velkost.y)));
 	return aktualne;
 }
 
@@ -54,7 +55,8 @@ sf::Text Tlacidlo::Gettext() {
 	return text;
 }
 
-bool Tlacidlo::hover(sf::Vector2i mousePos) {
+bool Tlacidlo::hover(sf::Vector2i mousePos) const
+{
 	if (mousePos.x>pozicia.x && mousePos.x<(pozicia.x + velkost.x)) {
 		if (mousePos.y>pozicia.y && mousePos.y<(pozicia.y + velkost.y)) {
 			return true;
@@ -64,15 +66,18 @@ bool Tlacidlo::hover(sf::Vector2i mousePos) {
 	return false;
 }
 
-sf::Vector2f Tlacidlo::getPosition() {
+sf::Vector2f Tlacidlo::getPosition() const
+{
 	return pozicia;
 }
 
-sf::FloatRect Tlacidlo::getGlobalBounds() {
+sf::FloatRect Tlacidlo::getGlobalBounds() const
+{
 	return sf::FloatRect(pozicia.x, pozicia.y, velkost.x, velkost.y);
 }
 
-sf::RectangleShape Tlacidlo::Getramcek() {
+sf::RectangleShape Tlacidlo::Getramcek() const
+{
 	sf::RectangleShape ramcek(velkost);
 	ramcek.setPosition(pozicia);
 	ramcek.setOutlineThickness(1);
@@ -87,6 +92,7 @@ void Tlacidlo::Setpozicia(sf::Vector2f paPozicia) {
 	pozicia = paPozicia;
 }
 
-sf::Vector2f Tlacidlo::getSize() {
+sf::Vector2f Tlacidlo::getSize() const
+{
 	return velkost;
 }

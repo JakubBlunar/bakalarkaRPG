@@ -4,9 +4,9 @@
   "levelOd": 2,
   "levelDo": 4,
   "hpOd": 20,
-  "hpDo": 25,
-  "mpOd": 25,
-  "mpDo": 30,
+  "hpDo": 30,
+  "mpOd": 10,
+  "mpDo": 16,
   "silaOd": 1,
   "silaDo": 5,
   "intelektOd": 2,
@@ -14,7 +14,7 @@
   "redukciaMin": 15,
   "redukciaMax": 5,
   "uhybMin": 5,
-  "uhybMax": 30,
+  "uhybMax": 20,
 
   "akcie": {
     "1": {
@@ -26,7 +26,7 @@
       "trvanie": 0,
       "popis": "",
       "stat": "magicka",
-      "mana": 1,
+      "mana": 3,
       "zakladnaHodnota": 1.1
     },
     "2": {
@@ -56,7 +56,7 @@
   },
 
   "questDrop": {
-    "Herbs for herbalist.": {
+    "Herbs for Karonnka.": {
       "meno": "Herb",
       "obrazok": "kvet",
       "typ": 13,

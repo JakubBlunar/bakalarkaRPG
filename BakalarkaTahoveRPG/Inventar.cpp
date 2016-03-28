@@ -2,10 +2,7 @@
 
 #include "Inventar.h"
 #include "Predmet.h"
-#include "Pouzitelny.h"
-#include "Oblecenie.h"
 #include "Zbran.h"
-#include "Elixir.h"
 
 #include "Loader.h"
 #include "Hra.h"
@@ -27,7 +24,8 @@ Inventar::~Inventar() {
 }
 
 
-int Inventar::Getzlato() {
+int Inventar::Getzlato() const
+{
 	return pocetZlata;
 }
 
@@ -40,7 +38,8 @@ void Inventar::pridajZlato(int paPocet) {
 }
 
 
-bool Inventar::maDostatokZlata(int potrebne) {
+bool Inventar::maDostatokZlata(int potrebne) const
+{
 	return (pocetZlata >= potrebne)? true:false;
 }
 
@@ -57,13 +56,14 @@ int Inventar::pocetPredmetov(std::string meno) {
 	return counter;
 }
 
-int Inventar::pocetPredmetov() {
+int Inventar::pocetPredmetov() const
+{
 	return predmety.size();
 }
 
 
 void Inventar::pridajPredmet(Predmet* predmet,bool loot){
-	if ((signed int)predmety.size() < kapacita) {
+	if (static_cast<signed int>(predmety.size()) < kapacita) {
 		predmety.push_back(predmet);
 		if (loot) {
 			Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(QuestEvent::VYHODENIE_PREDMETU, predmet);
@@ -88,7 +88,7 @@ void Inventar::zmazPredmet(std::string nazovPredmetu) {
 		}
 	}
 	
-	Predmet* predmet;
+	Predmet* predmet = nullptr;
 	while (naZmazanie.size() > 0) {
 		predmet = naZmazanie.back();
 		naZmazanie.pop_back();
@@ -102,7 +102,8 @@ Predmet* Inventar::dajPredmetNaIndexe(int i) {
 	return predmety.at(i);
 }
 
-int Inventar::Getkapacita() {
+int Inventar::Getkapacita() const
+{
 	return kapacita;
 }
 void Inventar::Setkapacita(int paNova) {

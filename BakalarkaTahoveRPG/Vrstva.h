@@ -9,8 +9,8 @@ public:
 	Vrstva(sf::Texture paTextura,int paVelkost);
 	virtual ~Vrstva();
 
-	sf::Sprite* Getobrazok();
-	void Setobrazok(sf::Texture* textura);
+	sf::Sprite* Getobrazok() const;
+	void Setobrazok(sf::Texture* textura) const;
 	void Setpriechodna(bool newVal);
 
 private:

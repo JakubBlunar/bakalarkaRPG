@@ -30,41 +30,41 @@ public:
 	Hrac(Zameranie* paZameranie);
 	virtual ~Hrac();
 
-	SmerPohladu GetSmerPohladu();
+	SmerPohladu GetSmerPohladu() const;
 
-	void render(sf::RenderWindow* paOkno);
+	void render(sf::RenderWindow* paOkno) const;
 	void update(double delta);
 	void zmenSmerPohladu(SmerPohladu smer);
 	void posun(int x, int y);
-	void animaciaTick();
+	void animaciaTick() const;
 
 	void chodVpravo();
 	void chodVlavo();
 	void chodHore();
 	void chodDole();
-	bool GethybeSa();
+	bool GethybeSa() const;
 
 	void setPolickoX(int paX);
 	void setPolickoY(int paY);
 	void setOffsetX(int paX);
 	void setOffsetY(int pax);
 
-	int GetoffsetX();
-	int GetoffsetY();
-	int GetpolickoX();
-	int GetpolickoY();
+	int GetoffsetX() const;
+	int GetoffsetY() const;
+	int GetpolickoX() const;
+	int GetpolickoY() const;
 
 	void setMapa(Mapa*);
-	Mapa* getMapa();
+	Mapa* getMapa() const;
 
-	Statistika* Getstatistika();
+	Statistika* Getstatistika() const;
 	void Setstatistika(Statistika* paStatistika);
-	Zameranie* GetZameranie();
-	Inventar* Getinventar();
-	void vyhodPredmet(Predmet* predemet);
+	Zameranie* GetZameranie() const;
+	Inventar* Getinventar() const;
+	void vyhodPredmet(Predmet* predemet) const;
 
-	void pridajSkusenosti(int pocet, bool oznamenie = true);
-	QuestManager* Getmanazerquestov();
+	void pridajSkusenosti(int pocet, bool oznamenie = true) const;
+	QuestManager* Getmanazerquestov() const;
 	
 	
 

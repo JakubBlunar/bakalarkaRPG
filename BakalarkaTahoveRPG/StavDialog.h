@@ -16,10 +16,10 @@ public:
 	StavDialog(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra);
 	virtual ~StavDialog();
 
-	void onEnter();
-	void onExit();
-	void render();
-	void update(double delta);
+	void onEnter() override;
+	void onExit() override;
+	void render() override;
+	void update(double delta) override;
 	void Setdialog(Npc* paNpc);
 
 private:

@@ -16,18 +16,18 @@ public:
 	virtual ~Policko();
 
 	virtual void hracSkok(Hrac* hrac);
-    void interakcia(Hrac* hrac);
-	bool jePrechodne();
+	void interakcia(Hrac* hrac);
+	bool jePrechodne() const;
 	void nastavTexturu(sf::Texture* textura, int poradie);
 	void Setpriechodne(bool paPriechodne);
 	sf::Sprite* dajObrazokVrstvy(int poradie);
 	void Setnpc(Npc* paNpc);
-	Npc* Getnpc();
+	Npc* Getnpc() const;
 	void polozPredmet(Predmet* paPredmet,sf::Time kedy);
-	std::vector<Predmet*>* dajPolozenePredmety();
-	bool polozenyPredmet();
+	std::vector<Predmet*>* dajPolozenePredmety() const;
+	bool polozenyPredmet() const;
 	void zmazPolozenePredmety();
-	float kedyZmazatPredmety();
+	float kedyZmazatPredmety() const;
 
 protected:
 	Npc* npc;

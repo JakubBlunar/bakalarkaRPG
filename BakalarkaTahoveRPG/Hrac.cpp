@@ -15,7 +15,6 @@
 #include "Stav.h"
 #include "Hra.h"
 #include "PopupOkno.h"
-#include "Akcia.h"
 
 
 Hrac::Hrac(Zameranie* paZameranie) {
@@ -46,6 +45,10 @@ Hrac::Hrac(Zameranie* paZameranie) {
 		}
 	}
 
+	smerPohybu = stoji;
+	pohybDelta = 0;
+	mapa = nullptr;
+
 	manazerQuestov = new QuestManager();
 
 }
@@ -57,9 +60,10 @@ Hrac::~Hrac() {
 }
 
 
-void Hrac::render(sf::RenderWindow* paOkno) {
+void Hrac::render(sf::RenderWindow* paOkno) const
+{
 
-	sf::Sprite* obrazok;
+	sf::Sprite* obrazok = nullptr;
 	if (smerPohladu == hore) {
 		obrazok = animaciaHore->dajObrazok();
 	}
@@ -76,9 +80,10 @@ void Hrac::render(sf::RenderWindow* paOkno) {
 		obrazok = animaciaVpravo->dajObrazok();
 	}
 
-	obrazok->setPosition(sf::Vector2f(offsetX+0.f, 32 - animaciaDole->GetvelkostY() +offsetY+0.f));
-
-	paOkno->draw(*obrazok);
+	if (obrazok != nullptr) {
+		obrazok->setPosition(sf::Vector2f(offsetX + 0.f, 32 - animaciaDole->GetvelkostY() + offsetY + 0.f));
+		paOkno->draw(*obrazok);
+	}
 }
 
 
@@ -146,7 +151,8 @@ void Hrac::update(double delta) {
 
 }
 
-bool Hrac::GethybeSa() {
+bool Hrac::GethybeSa() const
+{
 	return hybeSa;
 }
 
@@ -201,7 +207,8 @@ void Hrac::zmenSmerPohladu(SmerPohladu paSmer) {
 
 }
 
-void Hrac::animaciaTick() {
+void Hrac::animaciaTick() const
+{
 	animaciaDole->tick();
 	animaciaHore->tick();
 	animaciaVlavo->tick();
@@ -209,19 +216,23 @@ void Hrac::animaciaTick() {
 }
 
 
-int Hrac::GetoffsetX() {
+int Hrac::GetoffsetX() const
+{
 	return offsetX;
 }
 
-int Hrac::GetoffsetY() {
+int Hrac::GetoffsetY() const
+{
 	return offsetY;
 }
 
-int Hrac::GetpolickoX() {
+int Hrac::GetpolickoX() const
+{
 	return polickoX;
 }
 
-int Hrac::GetpolickoY() {
+int Hrac::GetpolickoY() const
+{
 	return polickoY;
 }
 
@@ -249,19 +260,23 @@ void Hrac::Setstatistika(Statistika* paStatistika) {
 	statistika = paStatistika;
 }
 
-Statistika* Hrac::Getstatistika() {
+Statistika* Hrac::Getstatistika() const
+{
 	return statistika;
 }
 
-Zameranie* Hrac::GetZameranie() {
+Zameranie* Hrac::GetZameranie() const
+{
 	return zameranie;
 }
 
-Inventar* Hrac::Getinventar() {
+Inventar* Hrac::Getinventar() const
+{
 	return inventar;
 }
 
-void Hrac::pridajSkusenosti(int pocet, bool oznamenie) {
+void Hrac::pridajSkusenosti(int pocet, bool oznamenie) const
+{
 	
 	int ostatok = pocet;
 
@@ -338,20 +353,24 @@ void Hrac::pridajSkusenosti(int pocet, bool oznamenie) {
 	
 }
 
-Mapa* Hrac::getMapa() {
+Mapa* Hrac::getMapa() const
+{
 	return mapa;
 }
 
-SmerPohladu Hrac::GetSmerPohladu() {
+SmerPohladu Hrac::GetSmerPohladu() const
+{
 	return smerPohladu;
 }
 
-void Hrac::vyhodPredmet(Predmet* paPredmet) {
+void Hrac::vyhodPredmet(Predmet* paPredmet) const
+{
 	Policko* policko = mapa->GetPolicko(polickoX, polickoY);
 	inventar->zmazPredmet(paPredmet);
 	policko->polozPredmet(paPredmet,mapa->aktCas());
 }
 
-QuestManager* Hrac::Getmanazerquestov() {
+QuestManager* Hrac::Getmanazerquestov() const
+{
 	return manazerQuestov;
 }

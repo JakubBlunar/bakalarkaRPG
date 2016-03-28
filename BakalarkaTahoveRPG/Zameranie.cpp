@@ -22,46 +22,47 @@ Zameranie::~Zameranie() {
 }
 
 
-std::string Zameranie::Getnazov() {
-
+std::string Zameranie::Getnazov() const
+{
 	return nazov;
 }
 
 
-int Zameranie::GetrastHp() {
-
+int Zameranie::GetrastHp() const
+{
 	return rastHp;
 }
 
-int Zameranie::GetrastMp() {
-
+int Zameranie::GetrastMp() const
+{
 	return rastMp;
 }
 
-int Zameranie::GetrastIntel() {
-
+int Zameranie::GetrastIntel() const
+{
 	return rastIntel;
 }
 
 
-int Zameranie::GetrastRychlost() {
-
+int Zameranie::GetrastRychlost() const
+{
 	return rastRychlost;
 }
 
 
-int Zameranie::GetrastSila() {
-
+int Zameranie::GetrastSila() const
+{
 	return rastSila;
 }
 
 
-int Zameranie::xpNaLevel(int level) {
-
-	return (int)round((7 * (level * level * level)) / 6);
+int Zameranie::xpNaLevel(int level) const
+{
+	return static_cast<int>(round((7 * (level * level * level)) / 6));
 }
 
-std::map<std::string, int> Zameranie::lvlUpBonusy(int lvl){
+std::map<std::string, int> Zameranie::lvlUpBonusy(int lvl) const
+{
 	std::map<std::string, int> bonusy;
 	bonusy.insert(std::pair<std::string, int>("hpMax", statFunkcia(lvl,rastHp)));
 	bonusy.insert(std::pair<std::string, int>("mpMax", statFunkcia(lvl, rastMp)));
@@ -72,15 +73,18 @@ std::map<std::string, int> Zameranie::lvlUpBonusy(int lvl){
 }
 
 
-void Zameranie::vlozAkciu(Akcia* paAkcia, int paUroven) {
+void Zameranie::vlozAkciu(Akcia* paAkcia, int paUroven) const
+{
 	spelly->insert(std::pair <Akcia*, int>(paAkcia, paUroven));
 }
 
-std::map<Akcia*, int>*  Zameranie::Getspelly() {
+std::map<Akcia*, int>*  Zameranie::Getspelly() const
+{
 	return spelly;
 }
 
 
-int Zameranie::statFunkcia(int lvl, int zaklad) {
-	return (int) floor(floor((2 * zaklad) * lvl / 100 + 5));
+int Zameranie::statFunkcia(int lvl, int zaklad) const
+{
+	return static_cast<int>(floor(floor((2 * zaklad) * lvl / 100 + 5)));
 }
