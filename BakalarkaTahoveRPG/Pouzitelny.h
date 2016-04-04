@@ -1,10 +1,11 @@
-#pragma once
-
 #if !defined(pouzitelny_h)
 #define pouzitelny_h
 
 #include "Predmet.h"
 
+/// <summary>
+/// Zakladná trieda , ktoru dedia predmety ktoré sa mou obliec
+/// </summary>
 class Pouzitelny : public Predmet
 {
 
@@ -22,9 +23,11 @@ public:
 	int Getsila() const;
 	double GetsilaMult() const;
 
-
+	/// <summary>
+	/// Vrati true false ci je predmet oblecenı
+	/// </summary>
+	/// <returns></returns>
 	bool Isobleceny() const;
-
 
 	void Setarmor(int newVal);
 	void SetarmorMult(double newVal);

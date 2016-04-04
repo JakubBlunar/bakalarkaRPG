@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
-#include <string>
+
 #include "Stav.h"
 
 class Hrac;
@@ -9,6 +9,9 @@ class Predmet;
 class DialogovyStrom;
 class Npc;
 
+/// <summary>
+/// Stav ktor˝ vykresluje dialog medzi npc a hr·Ëom
+/// </summary>
 class StavDialog : public Stav
 {
 
@@ -19,7 +22,12 @@ public:
 	void onEnter() override;
 	void onExit() override;
 	void render() override;
-	void update(double delta) override;
+	void update() override;
+
+	/// <summary>
+	/// NastavÌ dialog ktor˝ sa bude zobrazovaù
+	/// </summary>
+	/// <param name="paNpc"></param>
 	void Setdialog(Npc* paNpc);
 
 private:

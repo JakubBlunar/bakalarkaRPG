@@ -4,6 +4,7 @@
 #include "Hra.h"
 #include "Quest.h"
 #include "QuestPolozka.h"
+#include "Hrac.h"
 
 DialogPolozka::DialogPolozka(string paText) {
 	text = paText;
@@ -46,7 +47,7 @@ void DialogPolozka::zmazMoznost(DialogVolba* paVolba) {
 
 
 void DialogVolba::akcia(Hrac* hrac) {
-	
+
 }
 
 DialogVolba::DialogVolba(string paText, int dalsia) {
@@ -86,7 +87,7 @@ int DialogovyStrom::zmenPolozku(int moznost) {
 
 	if (moznost >= 0 && moznost< aktualnaPolozka->pocetMoznosti()) {
 		Loader* loader = Loader::Instance();
-		aktualnaPolozka->Getvolba(moznost)->akcia(loader->Gethra()->GetHrac());
+		aktualnaPolozka->Getvolba(moznost)->akcia(loader->Gethra()->Gethrac());
 		if (aktualnaPolozka->Getvolba(moznost)->dalsia == -1) {
 			stav = DialogStav::SKONCIL;
 			if (dialogQuest != nullptr) {
@@ -122,12 +123,12 @@ void DialogovyStrom::vlozPolozku(DialogPolozka* paPolozka) {
 	castiDialogu.push_back(paPolozka);
 }
 
-void DialogovyStrom::pridajMoznost(DialogVolba* paVolba,DialogPolozka* paPolozka){
+void DialogovyStrom::pridajMoznost(DialogVolba* paVolba, DialogPolozka* paPolozka) {
 	castiDialogu[0]->pridajMoznost(paVolba);
 	castiDialogu.push_back(paPolozka);
 	int pos = find(castiDialogu.begin(), castiDialogu.end(), paPolozka) - castiDialogu.begin();
 	paVolba->dalsia = pos;
-	
+
 }
 
 void DialogovyStrom::zmazMoznost(DialogVolba* paVolba, DialogPolozka* paPolozka) {

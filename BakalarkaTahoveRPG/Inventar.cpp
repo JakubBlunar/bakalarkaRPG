@@ -2,7 +2,6 @@
 
 #include "Inventar.h"
 #include "Predmet.h"
-#include "Zbran.h"
 
 #include "Loader.h"
 #include "Hra.h"
@@ -10,17 +9,11 @@
 #include "Stav.h"
 #include "Hrac.h"
 #include "QuestManager.h"
+#include "AudioManager.h"
 
 Inventar::Inventar(int kapacita) {
-	this->pocetZlata = 300;
-	this->kapacita = 65;
-	this->pridajPredmet(new Zbran("gm weapon", 10, "Twohand_sword/2", 100, 1, 100, 200, 500),false);
-}
-
-
-
-Inventar::~Inventar() {
-
+	this->pocetZlata = 100;
+	this->kapacita = 60;
 }
 
 
@@ -66,18 +59,19 @@ void Inventar::pridajPredmet(Predmet* predmet,bool loot){
 	if (static_cast<signed int>(predmety.size()) < kapacita) {
 		predmety.push_back(predmet);
 		if (loot) {
-			Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(QuestEvent::VYHODENIE_PREDMETU, predmet);
+			Loader::Instance()->Gethra()->Gethrac()->Getmanazerquestov()->udalost(QuestEvent::VYHODENIE_PREDMETU, predmet);
 		}
 	}
 	else {
-		Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(new PopupOkno("Inventory is full!"));
+		Loader::Instance()->Gethra()->Getstav("hranieHry")->zobrazPopup(new PopupOkno("Inventory is full!"));
+		AudioManager::Instance()->playEfekt("beep");
 		throw 1;
 	}
 }
 
 void Inventar::zmazPredmet(Predmet* predmet) {
 	predmety.erase(std::remove(predmety.begin(), predmety.end(), predmet), predmety.end());
-	Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(QuestEvent::VYHODENIE_PREDMETU, predmet);
+	Loader::Instance()->Gethra()->Gethrac()->Getmanazerquestov()->udalost(QuestEvent::VYHODENIE_PREDMETU, predmet);
 }
 
 void Inventar::zmazPredmet(std::string nazovPredmetu) {
@@ -95,7 +89,7 @@ void Inventar::zmazPredmet(std::string nazovPredmetu) {
 		zmazPredmet(predmet);
 	}
 
-	Loader::Instance()->Gethra()->GetHrac()->Getmanazerquestov()->udalost(QuestEvent::VYHODENIE_PREDMETU, predmet);
+	Loader::Instance()->Gethra()->Gethrac()->Getmanazerquestov()->udalost(QuestEvent::VYHODENIE_PREDMETU, predmet);
 }
 
 Predmet* Inventar::dajPredmetNaIndexe(int i) {

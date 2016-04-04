@@ -3,10 +3,59 @@
   "popis": "Murlocks took all Karonka's herbs. Go and find some for her.\n",
   "xp": 10,
   "zlato": 150,
-  "nasledujuci": "",
+  "nasledujuci": "jacobs_friend",
   "startNpc": "",
   "endNpc": "Karonnka",
+  "autoaccept" : true,
   "predmety": [
+    {
+      "typTriedy": "elixir",
+      "meno": "Small health potion",
+      "obrazok": "elixir",
+      "typ": 12,
+      "cena": 20,
+      "uroven": 1,
+
+      "stat": "hp",
+      "oKolko": 50,
+
+      "hp": 0,
+      "hpMult": 0,
+      "mp": 0,
+      "mpMult": 0,
+      "sila": 0,
+      "silaMult": 0,
+      "intelekt": 0,
+      "intelektMult": 0,
+      "rychlost": 0,
+      "rychlostMult": 0,
+      "obrana": 0,
+      "obranaMult": 0
+    },
+    {
+      "typTriedy": "elixir",
+      "meno": "Small mana potion",
+      "obrazok": "manae",
+      "typ": 12,
+      "cena": 20,
+      "uroven": 1,
+
+      "stat": "mp",
+      "oKolko": 30,
+
+      "hp": 0,
+      "hpMult": 0,
+      "mp": 0,
+      "mpMult": 0,
+      "sila": 0,
+      "silaMult": 0,
+      "intelekt": 0,
+      "intelektMult": 0,
+      "rychlost": 0,
+      "rychlostMult": 0,
+      "obrana": 0,
+      "obranaMult": 0
+    },
     {
       "typTriedy": "elixir",
       "meno": "Small health potion",
@@ -54,17 +103,12 @@
   "polozkaTexty": [
     "",
     "Yes brave warrior. Murlock stole all my herbs. Do you help me find some ?",
-    "Thank you very much. Here is potion from herbs that you have colected.\n",
+    "Thank you very much. Here is some potions from herbs that you have\n colected.\n",
     ""
   ],
 
   "volby": {
     "1": {
-      "kam": -1,
-      "text": "(leave)",
-      "typ": ""
-    },
-    "2": {
       "kam": -1,
       "text": "",
       "volbaTexty": [

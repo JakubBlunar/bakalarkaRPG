@@ -38,10 +38,10 @@ void StavLoading::render() {
 }
 
 
-void StavLoading::update(double delta) {
+void StavLoading::update() {
 
 	if (hra->maFocus()) {
-		Stav::update(delta);
+		Stav::update();
 		if (stav == StavAkcia::NORMAL) {
 			
 

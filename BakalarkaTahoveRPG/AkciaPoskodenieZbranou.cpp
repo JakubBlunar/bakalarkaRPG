@@ -3,6 +3,7 @@
 #include <map>
 #include "Predmet.h"
 #include <random>
+#include "AudioManager.h"
 
 AkciaPoskodenieZbranou::AkciaPoskodenieZbranou(std::string meno, std::string popis, Statistika* paStatistika):Akcia(meno,"ruka", 10000, 10000, 10000, popis, 0, AkciaTyp::FYZICKA)
 {
@@ -33,6 +34,8 @@ sf::Sprite* AkciaPoskodenieZbranou::Getobrazok() {
 
 std::string AkciaPoskodenieZbranou::vykonajSa(Statistika* statHrac, Statistika* statNepriatel,sf::Time aktCas) {
 	Akcia::vykonajSa(statHrac, statNepriatel,aktCas);
+
+	AudioManager::Instance()->playEfekt("svihnutie");
 
 	std::random_device rd;
 	std::mt19937 generator(rd());

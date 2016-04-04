@@ -7,6 +7,7 @@
 #include "Tlacidlo.h"
 
 #include <deque>
+#include "AudioManager.h"
 
 StavPrehladQuestov::StavPrehladQuestov(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra)
 	:Stav(paNazov,paOkno,paHra)
@@ -36,6 +37,7 @@ StavPrehladQuestov::StavPrehladQuestov(std::string paNazov, sf::RenderWindow* pa
 
 	tlacidloSpat = new Tlacidlo(normalne, normalne, "<--", sf::Vector2f(okno->getSize().x -60.f, 10.f), sf::Vector2f(30.f, 25.f), font, 20U);
 	spravcaQuestov = nullptr;
+	this->zakliknute = 0;
 }
 
 
@@ -45,10 +47,12 @@ StavPrehladQuestov::~StavPrehladQuestov()
 
 
 void StavPrehladQuestov::onEnter() {
-	spravcaQuestov = hra->GetHrac()->Getmanazerquestov();
+	spravcaQuestov = hra->Gethrac()->Getmanazerquestov();
 
 	stlacenaKlavesa = true;
 	stlacenaMys = true;
+	zakliknute = 0;
+	if(tlacidla.size()> 0) tlacidla.at(zakliknute)->Setzakliknute(true);
 }
 
 void StavPrehladQuestov::onExit() {
@@ -118,23 +122,18 @@ void StavPrehladQuestov::render() {
 
 	okno->draw(pozadieInfa);
 
-	for (unsigned int i = 0; i < pocet; i++) {
-		if (tlacidla.at(i+indexOd)->Getzakliknute()) {
-			if (i + indexOd < questy.size()) {
-
-				Quest* q = questy.at(i + indexOd);
-				sf::Text info(q->Getnazov(), *font, 22);
-				info.setColor(sf::Color::Red);
-				info.setPosition(sf::Vector2f(pozadieInfa.getGlobalBounds().left+5.f,pozadieInfa.getGlobalBounds().top+5.f));
-				okno->draw(info);
-				info.move(sf::Vector2f(0,30.f));
-				info.setColor(sf::Color::Black);
-				info.setString(q->getPopis());
-				info.setCharacterSize(13U);
-				okno->draw(info);
-			}
-		}
-
+	if(static_cast<signed int>(indexOd + zakliknute) < static_cast<signed int>(spravcaQuestov->Getpocetquestov()))
+	{
+		Quest* q = questy.at(indexOd +zakliknute);
+		sf::Text info(q->Getnazov(), *font, 22);
+		info.setColor(sf::Color::Red);
+		info.setPosition(sf::Vector2f(pozadieInfa.getGlobalBounds().left + 5.f, pozadieInfa.getGlobalBounds().top + 5.f));
+		okno->draw(info);
+		info.move(sf::Vector2f(0, 30.f));
+		info.setColor(sf::Color::Black);
+		info.setString(q->getPopis());
+		info.setCharacterSize(13U);
+		okno->draw(info);
 	}
 
 	okno->draw(tlacidloSpat->Getramcek());
@@ -146,18 +145,18 @@ void StavPrehladQuestov::render() {
 }
 
 
-void StavPrehladQuestov::update(double delta) {
+void StavPrehladQuestov::update() {
 
 	if (hra->maFocus()) {
 
-		Stav::update(delta);
+		Stav::update();
 
 		if (stav == StavAkcia::NORMAL) {
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
 			{
 				sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
-
+				AudioManager::Instance()->playEfekt("klik");
 				
 				tlacidloSpat->skontrolujKlik(pozicia);
 				if (tlacidloSpat->Getzakliknute()) {
@@ -170,16 +169,17 @@ void StavPrehladQuestov::update(double delta) {
 					tlacidla[i]->skontrolujKlik(pozicia);
 					//zrusenie zakliknutia ostatnych
 					if (tlacidla[i]->Getzakliknute()) {
+						zakliknute = i;
 						for (unsigned int j = 0; j < pocet; j++)
 						{
-							if (i != j) {
+							if (zakliknute != j) {
 								tlacidla.at(j)->Setzakliknute(false);
 							}
 						}
 					}
 
 				}
-
+				
 
 				if (hore.getGlobalBounds().intersects(sf::FloatRect(pozicia.x + 0.f,pozicia.y + 0.f,0.5f,0.5f))) { // kliknute na hore
 					if (indexOd > 0) {
@@ -205,13 +205,52 @@ void StavPrehladQuestov::update(double delta) {
 				dole.setFillColor(sf::Color::White);
 			}
 
+			for (unsigned int j = 0; j < pocet; j++)
+			{
+				if (zakliknute != j) {
+					tlacidla.at(j)->Setzakliknute(false);
+				}
+			}
+
 
 			if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::O) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) )) {
 				hra->zmenStavRozhrania("hranieHry");
 			}
 
+			if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))) {
+				stlacenaKlavesa = true;
+				if(zakliknute > 0)
+				{
+					zakliknute--;
+					tlacidla.at(zakliknute)->Setzakliknute(true);
+				}else
+				{
+					if(indexOd > 0)
+					{
+						indexOd--;
+					}
+				}
+			}
+
+			if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))) {
+				stlacenaKlavesa = true;
+				if (zakliknute < pocet-1)
+				{	
+					zakliknute++;
+					tlacidla.at(zakliknute)->Setzakliknute(true);
+				}else
+				{
+					if (static_cast<signed int>(indexOd + zakliknute) < static_cast<signed int>(spravcaQuestov->Getpocetquestov()-1))
+					{
+						indexOd++;
+					}
+				}
+			}
+
 			if (stlacenaKlavesa
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
 				stlacenaKlavesa = false;
 			}
@@ -219,6 +258,5 @@ void StavPrehladQuestov::update(double delta) {
 		}
 
 	}
-
 
 }

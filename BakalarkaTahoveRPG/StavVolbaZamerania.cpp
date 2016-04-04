@@ -6,6 +6,7 @@
 #include "Nepriatel.h"
 #include "AkciaPoskodenieZbranou.h"
 #include "Tlacidlo.h"
+#include "AudioManager.h"
 
 
 StavVolbaZamerania::StavVolbaZamerania(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
@@ -151,10 +152,10 @@ void StavVolbaZamerania::render() {
 }
 
 
-void StavVolbaZamerania::update(double delta) {
+void StavVolbaZamerania::update() {
 	if (hra->maFocus()) {
 
-		Stav::update(delta);
+		Stav::update();
 
 		if (stav == StavAkcia::NORMAL) {
 
@@ -165,6 +166,7 @@ void StavVolbaZamerania::update(double delta) {
 				{
 					tlacidla[i]->skontrolujKlik(pozicia);
 					if (tlacidla[i]->Getzakliknute()) {
+						AudioManager::Instance()->playEfekt("vyber");
 						stlacenaMys = true;
 						tlacidla[i]->Setzakliknute(false);
 						zvoleneZameranie(i+1);
@@ -176,6 +178,16 @@ void StavVolbaZamerania::update(double delta) {
 			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == true) {
 				stlacenaMys = false;
 			}
+
+			sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+			for (unsigned int i = 0; i < 3; i++)
+			{
+				if(tlacidla[i]->hover(pozicia))
+				{
+					oznacene = i+1;
+				}
+			}
+
 
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !stlacenaKlavesa) {
@@ -199,7 +211,9 @@ void StavVolbaZamerania::update(double delta) {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
+				AudioManager::Instance()->playEfekt("vyber");
 				zvoleneZameranie(oznacene);
+				
 
 			}
 
@@ -227,9 +241,9 @@ void StavVolbaZamerania::zvoleneZameranie(int paIndex) const
 
 	Hrac* hrac = new Hrac(zameranie);
 	hrac->Getstatistika()->vlozAkciu(new AkciaPoskodenieZbranou("Attack", "Attack with equipped weapon.", hrac->Getstatistika()));
-	hra->SetHrac(hrac);
+	hra->Sethrac(hrac);
 
 	Loader* loader = Loader::Instance();
-	loader->nacitajMapu("prva", 14, 8, 2);
+	loader->nacitajMapu("prva", 14, 9, 1);
 	hra->zmenStavRozhrania("hranieHry");
 }

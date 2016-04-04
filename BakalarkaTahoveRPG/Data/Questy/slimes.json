@@ -1,0 +1,84 @@
+{
+  "nazov": "Slimes everywhere",
+  "popis": "Jacob is kings recruiter. You decided to join him. He told you to kill some slimes near camp.",
+  "xp": 15,
+  "zlato": 50,
+  "nasledujuci": "quest1",
+  "startNpc": "Jacob",
+  "endNpc": "Jacob",
+  "autoaccept" : true,
+  "poziadavky": [
+    {
+      "typ": "kill",
+      "co": "Sticky slime",
+      "kolko": 5,
+      "kde": ""
+    }
+  ],
+  "predmety": [
+
+    {
+      "typTriedy": "zbran",
+      "meno": "Small sword",
+      "obrazok": "Onehand_Sword/1",
+      "typ": 9,
+      "cena": 15,
+      "uroven": 1,
+
+      "hp": 0,
+      "hpMult": 0,
+      "mp": 0,
+      "mpMult": 0,
+      "sila": 0,
+      "silaMult": 0,
+      "intelekt": 0,
+      "intelektMult": 0,
+      "rychlost": 0,
+      "rychlostMult": 0,
+      "obrana": 0,
+      "obranaMult": 0,
+
+      "minDmg": 1,
+      "maxDmg": 2,
+      "rychlostUtoku": 2500
+    }
+
+  ],
+
+  "volbaKuQuestu": {
+    "volbaTexty": [
+      "Looking for help ?",
+      "I am working on that quest. ",
+      "So I have killed a lot of slimes. What I have to do now ?",
+      ""
+    ]
+  },
+
+  "polozkaTexty": [
+    "Hi warrior. Wanna try some adventure ? Our king need people\nto fight aganist devil king.But it will be long journey.\nYou will need to become more powerfull in fight.There is many\nslimes nearby.I hate them go and kill some.",
+    "As I see , there is still a lot of slimes.\nSo go and kill more.",
+    "I knew that i can rely on you. But we still can't leave this area.\nWe have another threat here.Murlocks became very aggresive.\nNow you look much stronger.Try to beat some of them.We can't leave \npeople from here in danger. Here is my old sword I hope it helps you.",
+    ""
+  ],
+
+  "volby": {
+    "1": {
+      "kam": -1,
+      "text": "(leave)",
+      "typ": ""
+    },
+    "2": {
+      "kam": -1,
+      "text": "",
+      "volbaTexty": [
+        "Yes I will help you. Think of it as done.",
+        "So I will go now. See you soon.",
+        "Thank you for that sword. I will go to take care of murlocks.",
+        ""
+      ],
+      "typ": "upravaQuestu"
+    }
+  }
+
+
+}

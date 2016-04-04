@@ -4,6 +4,9 @@
 #include "Mapa.h"
 #include "Inventar.h"
 #include "Policko.h"
+#include "AudioManager.h"
+#include "PopupOkno.h"
+#include <random>
 
 #define RAMCEK 128
 
@@ -12,6 +15,8 @@ StavHranieHry::StavHranieHry(std::string paNazov, sf::RenderWindow* paOkno, Hra*
 	this->mapa = mapa;
 	loot = nullptr;
 	lootIndex = 0;
+	hrac = nullptr;
+	hudba = nullptr;
 }
 
 
@@ -22,7 +27,7 @@ StavHranieHry::~StavHranieHry()
 
 void StavHranieHry::onEnter() {
 	Stav::onEnter();
-	hrac = hra->GetHrac();
+	hrac = hra->Gethrac();
 	loot = nullptr;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
@@ -31,11 +36,36 @@ void StavHranieHry::onEnter() {
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
 		stlacenaKlavesa = true;
 	}
+
+	
+	if(hudba != nullptr)
+	{
+		if (hudba->isPaused())
+		{
+			hudba->play();
+		}
+		else
+		{
+			hudba = AudioManager::Instance()->dajNahodnuHudbu();
+			hudba->play();
+		}
+	}else
+	{
+		hudba = AudioManager::Instance()->dajNahodnuHudbu();
+		if (hudba != nullptr) {
+			hudba->play();
+		}
+	}
+
 }
 
 
 void StavHranieHry::onExit() {
 	Stav::onExit();
+	if(hudba != nullptr)
+	{
+		hudba->pause();
+	}
 }
 
 
@@ -114,10 +144,19 @@ void StavHranieHry::Setmapa(Mapa* newVal) {
 	mapa = newVal;
 }
 
-void StavHranieHry::update(double delta) {
+void StavHranieHry::update() {
+
+	if (hudba != nullptr)
+	{	
+		if (hudba->isStopped()) {
+			hudba = AudioManager::Instance()->dajNahodnuHudbu();
+			hudba->play();
+		}
+		
+	}
 
 	if (hra->maFocus()) {
-		Stav::update(delta);
+		Stav::update();
 
 		if (stav == StavAkcia::ZOBRAZUJE_LOOT) {
 
@@ -145,16 +184,23 @@ void StavHranieHry::update(double delta) {
 			if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) || sf::Keyboard::isKeyPressed(sf::Keyboard::E))) {
 				stlacenaKlavesa = true;
 				Predmet* predmet = loot->at(lootIndex);
-				hrac->Getinventar()->pridajPredmet(predmet);
-				loot->erase(loot->begin() + lootIndex);
-				if ((unsigned int)lootIndex >= loot->size()) {
-					lootIndex = 0;
-				}
-
-				if (loot->size() == 0) {
-					loot = nullptr;
-					lootIndex = 0;
-					stav = StavAkcia::NORMAL;
+				if (hrac->Getinventar()->pocetPredmetov() < hrac->Getinventar()->Getkapacita()) {
+					hrac->Getinventar()->pridajPredmet(predmet);
+					AudioManager::Instance()->playEfekt("zobratie_predmetu");
+					loot->erase(loot->begin() + lootIndex);
+					if ((unsigned int)lootIndex >= loot->size()) {
+						lootIndex = 0;
+					}
+				
+					if (loot->size() == 0) {
+						loot = nullptr;
+						lootIndex = 0;
+						stav = StavAkcia::NORMAL;
+					}
+				}else
+				{
+					AudioManager::Instance()->playEfekt("beep");
+					zobrazPopup(new PopupOkno("Inventory is full!"));
 				}
 			}
 
@@ -269,12 +315,40 @@ void StavHranieHry::update(double delta) {
 
 			}
 
+			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
+				stlacenaKlavesa = true;
+
+				const char alphabet[] =
+					"abcdefghijklmnopqrstuvwxyz"
+					"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+					"0123456789";
+
+				const size_t S_LEN = 32;
+
+				std::random_device rd;
+				std::default_random_engine rng(rd());
+				std::uniform_int_distribution<> dist(0, sizeof(alphabet) / sizeof(*alphabet) - 2);
+
+				std::string str;
+				str.reserve(S_LEN);
+				std::generate_n(std::back_inserter(str), S_LEN,
+					[&]() { return alphabet[dist(rng)]; });
+
+
+				sf::Image Screen = okno->capture();
+				Screen.saveToFile("./Data/Screenshots/"+str+".jpg");
+				zobrazPopup(new PopupOkno("Screenshot " + str + ".jpg captured!"));
+				AudioManager::Instance()->playEfekt("beep");
+			}
+
+
 			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::C)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::X)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::I)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::E)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::M)
+				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::F1)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
 				&& !sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
 				stlacenaKlavesa = false;
@@ -283,12 +357,13 @@ void StavHranieHry::update(double delta) {
 		}
 	}
 
-	mapa->update(delta);
-	hra->GetHrac()->update(delta);
+	mapa->update();
+	hra->Gethrac()->update();
 
 }
 
-Mapa* StavHranieHry::getMapa() {
+Mapa* StavHranieHry::getMapa() const
+{
 	return mapa;
 }
 

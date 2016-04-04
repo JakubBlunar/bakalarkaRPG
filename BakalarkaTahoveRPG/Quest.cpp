@@ -12,7 +12,7 @@
 #include "QuestPolozka.h"
 #include "DialogovyStrom.h"
 
-Quest::Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata, string paStartNpc, string paEndNpc, std::string nazovSuboru)
+Quest::Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata, string paStartNpc, string paEndNpc, std::string nazovSuboru, bool autoAccept)
 {
 	this->poziadavky = new vector<Poziadavka*>();
 	this->nazovSuboru = nazovSuboru;
@@ -26,6 +26,7 @@ Quest::Quest(string paNazov, string paPopis, int pocetXp, int pocetZlata, string
 	stav = StavQuestu::NEPRIJATY;
 	dialogPolozka = nullptr;
 	volbaKuQuestu = nullptr;
+	this->autoAccept = autoAccept;
 }
 
 Quest::~Quest() {
@@ -51,7 +52,8 @@ string Quest::Getnazov() const
 	return nazov;
 }
 
-string Quest::getPopis() {
+string Quest::getPopis() const
+{
 
 
 	string popisQuestu = "";
@@ -73,12 +75,14 @@ string Quest::getPopis() {
 		break;
 	}
 	popisQuestu += "State: " + ts + "\n\n" + popis + "\n\n";
-
-	for (unsigned int i = 0; i < poziadavky->size(); i++) {
-		popisQuestu += poziadavky->at(i)->Getpopis() + "\n";
+	
+	if (stav != StavQuestu::DOKONCENY) {
+		for (unsigned int i = 0; i < poziadavky->size(); i++) {
+			popisQuestu += poziadavky->at(i)->Getpopis() + "\n";
+		}
+		popisQuestu += "\n";
 	}
-
-	popisQuestu += "\n" + GetpopisOdmeny();
+	popisQuestu += GetpopisOdmeny();
 
 	return popisQuestu;
 }
@@ -154,6 +158,7 @@ void Quest::kontrola() {
 	bool splnene = true;
 	for (unsigned int i = 0; i < poziadavky->size(); i++) {
 		if (!poziadavky->at(i)->jeSplnena()) splnene = false;
+		break;
 	}
 
 	if (splnene && stav != StavQuestu::DOKONCENY) {
@@ -216,4 +221,9 @@ DialogVolba* Quest::GetvolbaKuQuestu() const
 vector<Poziadavka*>* Quest::Getpoziadavky() const
 {
 	return poziadavky;
+}
+
+bool Quest::Getautoaccept() const
+{
+	return autoAccept;
 }

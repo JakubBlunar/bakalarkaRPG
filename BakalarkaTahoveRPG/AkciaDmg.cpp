@@ -2,6 +2,7 @@
 #include "Statistika.h"
 #include <math.h>
 #include <cstdlib>
+#include "AudioManager.h"
 
 AkciaDmg::AkciaDmg(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis, int mana,AkciaTyp typ,double paZakladnyDmg)
 	:Akcia(meno,obrazok,casCastenia,cooldown,trvanie,popis,mana,typ)
@@ -28,8 +29,15 @@ std::string AkciaDmg::vykonajSa(Statistika* stat1, Statistika* stat2, sf::Time a
 		poskodenie = minP;
 	}
 
+	if(typ == AkciaTyp::FYZICKA)
+	{
+		AudioManager::Instance()->playEfekt("fyzicka");
+	}else
+	{
+		AudioManager::Instance()->playEfekt("magicka");
+	}
+
 	double p = rand()%100;
-	
 	if (p >= stat2->Getsancanauhyb()*100) {
 		int konecnePoskodenie = static_cast<int>(ceil(poskodenie*(1 - stat2->Getodolnostvociposkodeniu())));
 		stat2->Sethp(stat2->Gethp() - konecnePoskodenie);
@@ -38,6 +46,8 @@ std::string AkciaDmg::vykonajSa(Statistika* stat1, Statistika* stat2, sf::Time a
 	else {
 		return meno + "\nmiss.";
 	}
+
+	
 	
 }
 

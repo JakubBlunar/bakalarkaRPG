@@ -10,6 +10,7 @@
 #include "Elixir.h"
 #include "PopupOkno.h"
 #include "Tlacidlo.h"
+#include "AudioManager.h"
 
 
 StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
@@ -17,7 +18,7 @@ StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* p
 	ukazovatel.setSize(sf::Vector2f(48, 48));
 	ukazovatel.setFillColor(sf::Color(255, 0, 0, 128));
 	oznacene = 0;
-	nasirku =13;
+	nasirku =12;
 	otvoreneZboja = false;
 
 	inventar = nullptr;
@@ -25,6 +26,10 @@ StavInventar::StavInventar(std::string paNazov, sf::RenderWindow* paOkno, Hra* p
 
 	sf::Sprite* s = new sf::Sprite();
 	tlacidloSpat = new Tlacidlo(s, s, "<--", sf::Vector2f(okno->getSize().x - 60.f, 10.f), sf::Vector2f(30, 25.f), font, 20U);
+	
+
+	
+
 }
 
 
@@ -39,10 +44,28 @@ void StavInventar::onEnter() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
 		stlacenaKlavesa = true;
 	}
-	
 
-	hrac = hra->GetHrac();
+	tlacidla.clear();
+	
+	hrac = hra->Gethrac();
 	inventar = hrac->Getinventar();
+
+	sf::Texture texture;
+	texture.create(1000, 1000);
+
+	sf::Sprite* normalne = new sf::Sprite();
+	normalne->setTexture(texture);
+	normalne->setTextureRect(sf::IntRect(0, 0, 48, 48));
+	normalne->setColor(sf::Color(0, 0, 0, 255));
+
+	int startX = 20;
+	int startY = 70;
+
+	for (int i = 0; i < inventar->Getkapacita(); i++) {
+		tlacidla.push_back(new Tlacidlo(normalne, normalne, "", sf::Vector2f((startX)+(i%nasirku)*55.f, (startY)+(i / nasirku)*55.f), sf::Vector2f(48.f, 48.f), font, 5));
+	}
+
+
 	oznacene = 0;
 	
 }
@@ -158,9 +181,9 @@ void StavInventar::render() {
 }
 
 
-void StavInventar::update(double delta) {
+void StavInventar::update() {
 	if (hra->maFocus()) {
-		Stav::update(delta);
+		Stav::update();
 
 		if (stav == StavAkcia::NORMAL) {
 
@@ -171,6 +194,7 @@ void StavInventar::update(double delta) {
 
 				tlacidloSpat->skontrolujKlik(pozicia);
 				if (tlacidloSpat->Getzakliknute()) {
+					AudioManager::Instance()->playEfekt("klik");
 					tlacidloSpat->Setzakliknute(false);
 					if (otvoreneZboja) {
 						otvoreneZboja = false;
@@ -181,7 +205,17 @@ void StavInventar::update(double delta) {
 					}
 				}
 
+				for (unsigned int i = 0; i < tlacidla.size(); i++) {
+					tlacidla.at(i)->skontrolujKlik(pozicia);
+					if (tlacidla.at(i)->Getzakliknute())
+					{
+						oznacene = i;
+						tlacidla.at(i)->Setzakliknute(false);
+						pouziPredmet();
+					}
 
+				}
+				stlacenaMys = true;
 
 			}
 
@@ -189,10 +223,21 @@ void StavInventar::update(double delta) {
 				stlacenaMys = false;
 			}
 
+			sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+			for (unsigned int i = 0; i < tlacidla.size(); i++){
+					
+					if(tlacidla.at(i)->hover(pozicia))
+					{
+						oznacene = i;
+					}
+					
+			}
+			
+
 
 			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 				stlacenaKlavesa = true;
-
+				AudioManager::Instance()->playEfekt("klik");
 				if (oznacene + nasirku < inventar->pocetPredmetov()) {
 					oznacene += nasirku;
 				}
@@ -203,6 +248,7 @@ void StavInventar::update(double delta) {
 
 			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 				stlacenaKlavesa = true;
+				AudioManager::Instance()->playEfekt("klik");
 				if (oznacene >= nasirku) {
 					oznacene -= nasirku;
 				}
@@ -213,6 +259,7 @@ void StavInventar::update(double delta) {
 
 			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 				stlacenaKlavesa = true;
+				AudioManager::Instance()->playEfekt("klik");
 				if (oznacene > 0) {
 					oznacene--;
 				}
@@ -220,6 +267,7 @@ void StavInventar::update(double delta) {
 
 			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 				stlacenaKlavesa = true;
+				AudioManager::Instance()->playEfekt("klik");
 				if (oznacene < inventar->pocetPredmetov() - 1) {
 					oznacene++;
 				}
@@ -228,26 +276,14 @@ void StavInventar::update(double delta) {
 
 			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
 				stlacenaKlavesa = true;
-				if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
-					Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
-					if(otvoreneZboja){
-						if (dynamic_cast<Elixir*>(p) != nullptr) {
-							p->pouzi(hrac);
-						}
-						else {
-							zobrazPopup(new PopupOkno("You can't equip your items while you are fighting!"));
-						}
-					}
-					else {
-						p->pouzi(hrac);
-					}
-				}
+				pouziPredmet();
 			}
 
 			if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
 				stlacenaKlavesa = true;
 				if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
 					hrac->vyhodPredmet(inventar->dajPredmetNaIndexe(oznacene));
+					AudioManager::Instance()->playEfekt("polozenie_predmetu");
 				}
 			}
 
@@ -454,6 +490,25 @@ void StavInventar::vykresliOknoPredmetu(Predmet*predmet, int x, int y, sf::Rende
 
 	}
 
+}
+
+void StavInventar::pouziPredmet()
+{
+	if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
+		Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
+		if (otvoreneZboja) {
+			if (dynamic_cast<Elixir*>(p) != nullptr) {
+				p->pouzi(hrac);
+			}
+			else {
+				zobrazPopup(new PopupOkno("You can't equip your items while you are fighting!"));
+				AudioManager::Instance()->playEfekt("beep");
+			}
+		}
+		else {
+			p->pouzi(hrac);
+		}
+	}
 }
 
 void StavInventar::Setzboja(bool paNa) {

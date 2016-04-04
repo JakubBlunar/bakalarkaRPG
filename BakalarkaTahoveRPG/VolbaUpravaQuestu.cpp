@@ -11,12 +11,6 @@ VolbaUpravaQuestu::VolbaUpravaQuestu(int dalsia, Quest* paQuest):DialogVolba("",
 }
 
 
-VolbaUpravaQuestu::~VolbaUpravaQuestu()
-{
-}
-
-
-
 void VolbaUpravaQuestu::akcia(Hrac* hrac) {
 
 
@@ -49,7 +43,7 @@ void VolbaUpravaQuestu::akcia(Hrac* hrac) {
 
 std::string VolbaUpravaQuestu::Gettext() {
 	
-	Hrac* hrac = Loader::Instance()->Gethra()->GetHrac();
+	Hrac* hrac = Loader::Instance()->Gethra()->Gethrac();
 
 	if (!hrac->Getmanazerquestov()->maQuest(quest->Getnazov())) {
 		if (texty.count(StavQuestu::NEPRIJATY)) {
@@ -87,9 +81,4 @@ std::string VolbaUpravaQuestu::Gettext() {
 
 void VolbaUpravaQuestu::vlozText(StavQuestu paStav, std::string paText) {
 	texty.insert_or_assign(paStav, paText);
-}
-
-Quest* VolbaUpravaQuestu::getQuest() const
-{
-	return quest;
 }

@@ -7,6 +7,7 @@
 #include "Stav.h"
 #include "Hra.h"
 #include "PopupOkno.h"
+#include "AudioManager.h"
 
 Zbran::Zbran(std::string meno, int typ, std::string paObrazok, int cena, int paUroven, int paMinPoskodenie, int paMaxPoskodnie,int rychlostUtoku) :Pouzitelny(meno, typ, paObrazok, cena, paUroven) {
 	minPoskodenie = paMinPoskodenie;
@@ -191,10 +192,11 @@ void Zbran::pouzi(Hrac* hrac) {
 				docasny1->Setobleceny(false);
 				hrac->Getinventar()->pridajPredmet(docasny1);
 				Pouzitelny::Setobleceny(true);
+				
 			}
 		}
 
-		
+		AudioManager::Instance()->playEfekt("eq_zbran");
 				
 	}
 	else { // predmet je oblecený tak sa vyzlecie
@@ -205,9 +207,11 @@ void Zbran::pouzi(Hrac* hrac) {
 						Pouzitelny::Setobleceny(false);
 						hrac->Getinventar()->pridajPredmet(this);
 						oblecene->erase(i);
+						AudioManager::Instance()->playEfekt("eq_zbran");
 					}
 					else {
-						Loader::Instance()->Gethra()->dajStav("")->zobrazPopup(new PopupOkno("Inventory is full!"));
+						Loader::Instance()->Gethra()->Getstav("")->zobrazPopup(new PopupOkno("Inventory is full!"));
+						AudioManager::Instance()->playEfekt("beep");
 					}
 
 				}
@@ -215,7 +219,7 @@ void Zbran::pouzi(Hrac* hrac) {
 		}
 
 	}
-
+	
 	hrac->Getstatistika()->prepocitajPoskodenia();
 }
 

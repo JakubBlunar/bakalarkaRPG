@@ -1,8 +1,13 @@
-#pragma once
+#if !defined(StavPauza_h)
+#define StavPauza_h
+
 #include "Stav.h"
 
 class Tlacidlo;
 
+/// <summary>
+/// Stav Zobrazuje obrazovku , ktoru hráè vidí ked pozastaví hru
+/// </summary>
 class StavPauza : public Stav
 {
 
@@ -13,9 +18,10 @@ public:
 	void onEnter() override;
 	void onExit() override;
 	void render() override;
-	void update(double delta) override;
+	void update() override;
 
 private:
 	std::vector<Tlacidlo*> tlacidla;
 	signed int oznacene;
 };
+#endif

@@ -1,6 +1,30 @@
 {
   "npc": {
-    
-
+     "0": {
+      "animacia": {
+        "aniX": 32,
+        "aniY": 48,
+        "nazov": "31",
+        "pocet": 4,
+        "trvanie": 10
+      },
+      "dialog": "",
+      "meno": "Mike",
+      "posX": 28,
+      "posY": 41
+    },
+     "1": {
+      "animacia": {
+        "aniX": 32,
+        "aniY": 32,
+        "nazov": "125",
+        "pocet": 4,
+        "trvanie": 10
+      },
+      "dialog": "",
+      "meno": "Gimli",
+      "posX": 30,
+      "posY": 44
+    }
   }
 }

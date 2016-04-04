@@ -9,14 +9,8 @@ VolbaObchodovanie::VolbaObchodovanie(string paText, int dalsia,std::string akyOb
 	obchod = akyObchod;
 }
 
-
-VolbaObchodovanie::~VolbaObchodovanie()
-{
-}
-
-
 void VolbaObchodovanie::akcia(Hrac* hrac) {
-	StavObchod* stavObchod = static_cast<StavObchod*>(Loader::Instance()->Gethra()->dajStav("stavObchod"));
+	StavObchod* stavObchod = static_cast<StavObchod*>(Loader::Instance()->Gethra()->Getstav("stavObchod"));
 	stavObchod->nacitajObchod(obchod);
 	Loader::Instance()->Gethra()->zmenStavRozhrania("stavObchod");
 }

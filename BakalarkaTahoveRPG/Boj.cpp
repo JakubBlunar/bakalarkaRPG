@@ -15,9 +15,9 @@
 #include "Quest.h"
 
 #include <map>
-#include <iostream>
 #include <random>
 #include <deque>
+#include "AudioManager.h"
 
 
 
@@ -29,6 +29,8 @@ Boj::Boj(Hrac* paHrac, Nepriatel* paNpc) {
 	npcAkcia = nullptr;
 	hracCasVykonaniaAkcie = 0;
 	npcCasVykonaniaAkcie = 0;
+	koniec = true;
+	boloVyhodnotenie = true;
 }
 
 
@@ -46,27 +48,33 @@ void Boj::bojStart() {
 	npc->Getstatistika()->setCombat(true);
 }
 
-Nepriatel* Boj::Getnepriatel() {
+Nepriatel* Boj::Getnepriatel() const
+{
 	return npc;
 }
 
-bool Boj::koniecBoja() {
+bool Boj::koniecBoja() const
+{
 	return koniec;
 }
 
-Statistika* Boj::Gethracovastatistika() {
+Statistika* Boj::Gethracovastatistika() const
+{
 	return hrac->Getstatistika();
 }
 
-Statistika* Boj::Getnpcstatistika() {
+Statistika* Boj::Getnpcstatistika() const
+{
 	return npc->Getstatistika();
 }
 
-bool Boj::cakaNaVybratieAkcie() {
+bool Boj::cakaNaVybratieAkcie() const
+{
 	return vyber;
 }
 
-sf::Time Boj::Getcasvboji() {
+sf::Time Boj::Getcasvboji() const
+{
 	return casovac.getElapsedTime();
 }
 
@@ -77,7 +85,8 @@ void Boj::hracVybralAkciu(Akcia* paAkcia) {
 	casovac.resume();
 }
 
-float Boj::castBarProgres() {
+float Boj::castBarProgres() const
+{
 	if (hracAkcia == nullptr) {
 		return -1;
 	}
@@ -227,7 +236,7 @@ void Boj::vyhodnotenie() {
 		boloVyhodnotenie = true;
 
 		Hra* hra = Loader::Instance()->Gethra();
-		StavHranieHry* stavHranieHry = static_cast<StavHranieHry*>(Loader::Instance()->Gethra()->dajStav("hranieHry"));
+		StavHranieHry* stavHranieHry = static_cast<StavHranieHry*>(Loader::Instance()->Gethra()->Getstav("hranieHry"));
 		Mapa* mapa = stavHranieHry->getMapa();
 
 		if (hrac->Getstatistika()->Gethp() > 0) {
@@ -245,6 +254,31 @@ void Boj::vyhodnotenie() {
 			QuestManager* qm = hrac->Getmanazerquestov();
 			qm->udalost(QuestEvent::ZABITIE_NPC, npc);
 
+			SmerPohladu smerPohladu = hrac->GetSmerPohladu();
+			int hracX = hrac->GetpolickoX();
+			int hracY = hrac->GetpolickoY();
+			if (smerPohladu == hore) {
+				hracY--;
+			}
+
+			if (smerPohladu == dole) {
+				hracY++;
+			}
+
+			if (smerPohladu == vlavo) {
+				hracX--;
+			}
+
+			if (smerPohladu == vpravo) {
+				hracX++;
+			}
+
+			if(!mapa->jeMoznyPohyb(hracX,hracY))
+			{
+				hracX = hrac->GetpolickoX();
+				hracY = hrac->GetpolickoY();
+			}
+
 			if (rand() % 100 < 35) {// 35% že padne predmet
 				int cislo = rand() % 100;
 				int lvlOd = npc->Getstatistika()->dajUroven() - 2;
@@ -256,13 +290,13 @@ void Boj::vyhodnotenie() {
 				int vyslednyLvl = lvlOd + rand() % (lvlDo - lvlOd + 1);
 
 				if (cislo < 25) {
-					mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(Generator::Instance()->nahodnaZbran(vyslednyLvl), mapa->aktCas());
+					mapa->GetPolicko(hracX, hracY)->polozPredmet(Generator::Instance()->nahodnaZbran(vyslednyLvl), mapa->aktCas());
 				}
 				else if (cislo < 50) {
-					mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(Generator::Instance()->nahodneOblecenie(vyslednyLvl), mapa->aktCas());
+					mapa->GetPolicko(hracX, hracY)->polozPredmet(Generator::Instance()->nahodneOblecenie(vyslednyLvl), mapa->aktCas());
 				}
 				else {
-					mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(Generator::Instance()->nahodnyElixir(), mapa->aktCas());
+					mapa->GetPolicko(hracX, hracY)->polozPredmet(Generator::Instance()->nahodnyElixir(), mapa->aktCas());
 				}
 			}
 
@@ -273,7 +307,7 @@ void Boj::vyhodnotenie() {
 				Quest* q = nedokonceneQuesty->at(i);
 				if (questDrop->count(q->Getnazov()) && q->Getstav() == StavQuestu::ROZROBENY) {// predmet je v npc drope a quest je rozrobeny
 					if (rand() % 100 < 40) {
-						mapa->GetPolicko(hrac->GetpolickoX(), hrac->GetpolickoY())->polozPredmet(questDrop->at(q->Getnazov())->copy(), mapa->aktCas());
+						mapa->GetPolicko(hracX, hracY)->polozPredmet(questDrop->at(q->Getnazov())->copy(), mapa->aktCas());
 					}
 				}
 			}
@@ -314,6 +348,13 @@ void Boj::vyhodnotenie() {
 		}
 
 		hrac->Getstatistika()->setCombat(false);
+		if (hrac->Getstatistika()->Gethp() > 0)
+		{
+			AudioManager::Instance()->playEfekt("bojVyhra");
+		}else
+		{
+			AudioManager::Instance()->playEfekt("bojPrehra");
+		}
 		hra->zmenStavRozhrania("hranieHry");
 	}
 }

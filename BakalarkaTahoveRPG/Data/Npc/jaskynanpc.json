@@ -1,6 +1,18 @@
 {
   "npc": {
-
+    "0": {
+      "animacia": {
+        "aniX": 32,
+        "aniY": 48,
+        "nazov": "96",
+        "pocet": 1,
+        "trvanie": 10
+      },
+      "dialog": "",
+      "meno": "Branden",
+      "posX": 60,
+      "posY": 76
+    }
 
   }
 }

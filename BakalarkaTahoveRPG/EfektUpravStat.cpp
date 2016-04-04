@@ -1,6 +1,6 @@
 #include "EfektUpravStat.h"
 #include "Statistika.h"
-
+#include  "AudioManager.h"
 
 EfektUpravStat::EfektUpravStat(std::string obrazok,std::string paCo, int paZaklad):Efekt(obrazok)
 {
@@ -16,10 +16,13 @@ EfektUpravStat::~EfektUpravStat()
 
 void EfektUpravStat::aplikujSa(Statistika* statistika) {
 	statistika->zvysStat(hodnotaEfektu(), co);
+	AudioManager::Instance()->playEfekt("efekton");
+
 }
 
 void EfektUpravStat::zrusUcinok(Statistika* statistika) {
 	statistika->zvysStat(-hodnotaEfektu(), co);
+	AudioManager::Instance()->playEfekt("efektoff");
 }
 
 int EfektUpravStat::hodnotaEfektu() const

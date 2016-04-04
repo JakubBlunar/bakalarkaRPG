@@ -7,6 +7,7 @@
 
 #include <sstream>
 #include <iomanip>  
+#include "AudioManager.h"
 
 Stav::Stav(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) {
 	nazov = paNazov;
@@ -30,7 +31,7 @@ Stav::~Stav() {
 
 
 
-void Stav::update(double delta) {
+void Stav::update() {
 
 	if (stav == StavAkcia::ZOBRAZUJE_POPUP) {
 		
@@ -45,7 +46,7 @@ void Stav::update(double delta) {
 		}
 
 		if ((!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) || popDalej->Getzakliknute() ) {
-
+			AudioManager::Instance()->playEfekt("klik");
 			if (popDalej->Getzakliknute()) {
 				stlacenaMys = true;
 				popDalej->Setzakliknute(false);
@@ -142,10 +143,6 @@ void Stav::onExit() {
 std::string Stav::Getnazov() const
 {
 	return nazov;
-}
-
-void Stav::Setnazov(std::string paNazov) {
-	nazov = paNazov;
 }
 
 void Stav::zobrazPopup(PopupOkno* paCo) {

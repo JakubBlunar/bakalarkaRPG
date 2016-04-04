@@ -1,6 +1,10 @@
-#pragma once
+#if !defined(StavLoading_h)
+#define StavLoading_h
 #include "Stav.h"
 
+/// <summary>
+/// Stav ktorý sa vykresli na zaèiatku naèítavania
+/// </summary>
 class StavLoading:public Stav
 {
 public:
@@ -10,7 +14,8 @@ public:
 	void onEnter() override;
 	void onExit() override;
 	void render() override;
-	void update(double delta) override;
+	void update() override;
 
 };
 
+#endif

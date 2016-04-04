@@ -1,0 +1,54 @@
+{
+  "nazov": "Cleaning the cave.",
+  "popis": "You are helping Branden to kill golems in the cave. \n",
+  "xp": 40,
+  "zlato": 200,
+  "nasledujuci": "",
+  "startNpc": "Branden",
+  "endNpc": "Branden",
+  "autoaccept" : true,
+  "predmety": [
+    
+
+  ],
+  "poziadavky": [
+    {
+      "typ": "kill",
+      "co": "Rock golem",
+      "kolko": 8
+    }
+
+  ],
+
+  "volbaKuQuestu": {
+    "volbaTexty": [
+      "",
+      "Tell me about those golems.",
+      "I have everything you need now.",
+      ""
+    ]
+  },
+
+  "polozkaTexty": [
+    "",
+    "Golems are stone creatures.They have great resistance, but lack of speed.\n They know how to throw rocks and have powerfull punches.",
+    "Now the cave is more secured. I can handle it from now. \nBut there can stil be some golems and bats. But i will try to take \ncare of them.\n You can continue by second exit of the cave. It leads to castle. \nI wish you good luck.",
+    ""
+  ],
+
+  "volby": {
+    "1": {
+      "kam": -1,
+      "text": "",
+      "volbaTexty": [
+        "",
+        "Thank you, so I am going now.",
+        "I am on my way then.",
+        ""
+      ],
+      "typ": "upravaQuestu"
+    }
+  }
+
+
+}

@@ -1,32 +1,33 @@
 {
   "nazov": "Dangerous murlocks",
-  "popis": "There are murlocks nearby. hey are threatening people \nso somenone have to take care of them.",
-  "xp": 15,
-  "zlato": 50,
+  "popis": "There are murlocks nearby. They are threatening people \nso somenone have to take care of them.",
+  "xp": 10,
+  "zlato": 35,
   "nasledujuci": "quest2",
   "startNpc": "Jacob",
   "endNpc": "Jacob",
+  "autoaccept" : true,
   "poziadavky": [
     {
       "typ": "kill",
       "co": "Murlock",
-      "kolko": 4,
+      "kolko": 5,
       "kde": ""
     }
   ],
   "predmety": [
 
-    {
-      "typTriedy": "zbran",
-      "meno": "Small sword",
-      "obrazok": "Onehand_Sword/1",
-      "typ": 9,
-      "cena": 100,
+     {
+      "typTriedy": "oblecenie",
+      "meno": "Armor",
+      "obrazok": "ch1",
+      "typ": 3,
+      "cena": 50,
       "uroven": 1,
 
-      "hp": 0,
+      "hp": 3,
       "hpMult": 0,
-      "mp": 0,
+      "mp": 2,
       "mpMult": 0,
       "sila": 0,
       "silaMult": 0,
@@ -34,45 +35,36 @@
       "intelektMult": 0,
       "rychlost": 0,
       "rychlostMult": 0,
-      "obrana": 0,
-      "obranaMult": 0,
-
-      "minDmg": 1,
-      "maxDmg": 2,
-      "rychlostUtoku": 2000
+      "obrana": 2,
+      "obranaMult": 0
     }
 
   ],
 
   "volbaKuQuestu": {
     "volbaTexty": [
-      "Don't you have some quest for me ?",
-      "I am working on that quest. ",
-      "I have finally finished it! ",
+      "",
+      "What do you know about murlocks?",
+      "Murlocks won't be doing problems anymore. ",
       ""
     ]
   },
 
   "polozkaTexty": [
-    "Yes, i have got one. There is a lot of murlocks here and they threat people \non they journey. ",
-    "As I see , there is still a lot of murlocks.\n Go and kill some more.",
-    "Thank you. You help us a lot. Here , I give you my old sword.\n I hope it will serve you well.\nMy friend Karonnka need some herbs.Go and find her some.\nThen deliver them to her she will be happy. ",
+    "",
+    "Murlocks are water creatures. They are inteligent and can use magic.\n They are dangerous so don't underestimate them. ",
+    "I am glad that i have met you.You will be great help for our kingdom.\n Here is a gift from me. It is old but it can protect you well.\nMy friend Karonnka need some herbs.Go and find her some.\nThen deliver them to her she will be happy. ",
     ""
   ],
 
   "volby": {
     "1": {
       "kam": -1,
-      "text": "(leave)",
-      "typ": ""
-    },
-    "2": {
-      "kam": -1,
       "text": "",
       "volbaTexty": [
-        "Sure I would like to help you.",
-        "So i will go now.",
-        "Thank you. So i will help Karonnka ",
+        "",
+        "I am going to take care of them.",
+        "Thank you. So i will help Karonnka. ",
         ""
       ],
       "typ": "upravaQuestu"

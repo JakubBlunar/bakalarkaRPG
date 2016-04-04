@@ -12,7 +12,7 @@
 #include "Oblecenie.h"
 #include "Elixir.h"
 
-Generator* Generator::instancia = NULL;
+Generator* Generator::instancia = nullptr;
 
 Generator* Generator::Instance()
 {
@@ -29,7 +29,7 @@ int Generator::randomInt(int min, int max) const
 	if (min == max) {
 		return min;
 	}
-	return min + (rand() % (int)(max - min + 1));
+	return min + (rand() % static_cast<int>(max - min + 1));
 }
 
 Predmet* Generator::nahodnyElixir() const
@@ -63,7 +63,8 @@ Predmet* Generator::nahodnyElixir() const
 }
 
 
-Predmet* Generator::nahodneOblecenie(int paUroven) {
+Predmet* Generator::nahodneOblecenie(int paUroven) const
+{
 	
 	Pouzitelny* oblecenie;
 
@@ -117,9 +118,9 @@ Predmet* Generator::nahodneOblecenie(int paUroven) {
 	obrazok = obrazok.substr(0, lastindex);
 	delete obrazky;
 
-	vector<string> list1 = { "adept", "raiding", "fiendish", "noble", "vampiric", "socketed", "brutal", "dazzling" };
-	vector<string> list2 = { "marauder", "champion", "mage", "barbarian", "warrior", "rogue" };
-	vector<string> list3 = { "of invasion", "of war", "of love", "of peace", "of fire", "of frost" };
+	vector<string> list1 = { "Adept", "Raiding", "Fiendish", "Noble", "Vampiric", "Socketed", "Brutal", "Dazzling" };
+	vector<string> list2 = { "Marauder", "Champion", "Mage", "Barbarian", "Warrior", "Rogue" };
+	vector<string> list3 = { "of Invasion", "of War", "of Love", "of Peace", "of Fire", "of Frost" };
 
 	string pridmeno = "";
 	int p = randomInt(0, 99);
@@ -152,7 +153,8 @@ Predmet* Generator::nahodneOblecenie(int paUroven) {
 
 
 
-Predmet* Generator::nahodnaZbran(int paUroven) {
+Predmet* Generator::nahodnaZbran(int paUroven) const
+{
 
 	int typ = randomInt(9,11);
 	ZbranTyp enumTyp;
@@ -238,9 +240,9 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 
 	delete obrazky;
 
-	vector<string> list1 = { "adept", "raiding", "fiendish", "noble", "vampiric", "socketed", "brutal", "dazzling" };
-	vector<string> list2 = { "marauder", "champion", "mage", "barbarian", "warrior", "rogue" };
-	vector<string> list3 = { "of invasion", "of war", "of love", "of peace", "of fire", "of frost" };
+	vector<string> list1 = { "Adept", "Raiding", "Fiendish", "Noble", "Vampiric", "Socketed", "Brutal", "Dazzling" };
+	vector<string> list2 = { "Marauder", "Champion", "Mage", "Barbarian", "Warrior", "Rogue" };
+	vector<string> list3 = { "of Invasion", "of War", "of Love", "of Peace", "of Fire", "of Frost" };
 
 	string pridmeno = "";
 	int p = randomInt(0, 99);
@@ -297,23 +299,7 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 		break;
 	}
 
-	menoZbrane += dodatok;
-	/*
-	if (typ != 11) {
-		vector<string> oneHand = { "Sword", "Axe", "Dagger","Mace" };
-		vector<string> twoHand = { "Greatsword","Greataxe","Polearm","Staff","Warhammer" };
-		if (typ == 9) {
-			menoZbrane = pridmeno + classa + oneHand.at(randomInt(0, oneHand.size()-1)) + dodatok;
-		}
-
-		if (typ == 10) {
-			menoZbrane = pridmeno + classa + twoHand.at(randomInt(0, twoHand.size()-1)) + dodatok;
-		}
-	}
-	else {
-		menoZbrane = pridmeno + classa + "Shield" + dodatok;
-	}*/
-	
+	menoZbrane += dodatok;	
 	int cena = randomInt(paUroven * 45, paUroven * 75);
 
 
@@ -331,13 +317,12 @@ Predmet* Generator::nahodnaZbran(int paUroven) {
 
 		minPoskodenie = randomInt(poskOd, paUroven);
 		maxPoskodenie = randomInt(paUroven, paUroven + 2);
-
+		int rychlost = randomInt(2, 5) * 500;
 		if (typ == 10) {
 			minPoskodenie = static_cast<int>(round(minPoskodenie*1.3));
 			maxPoskodenie = static_cast<int>(round(maxPoskodenie*1.3));
+			rychlost = randomInt(5, 6) * 500;
 		}
-
-		int rychlost = randomInt(1, 5) * 500;
 
 		zbran = new Zbran(menoZbrane, typ, obrazok, cena,paUroven,minPoskodenie,maxPoskodenie,rychlost);
 	}

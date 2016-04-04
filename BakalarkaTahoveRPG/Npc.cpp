@@ -53,16 +53,11 @@ void Npc::dialog(Hrac* hrac)
 	dialogStrom->init();
 	dialogStrom->zacniDialog();
 	Loader* loader = Loader::Instance();
-	StavDialog* stav = static_cast<StavDialog*>(loader->Gethra()->dajStav("stavDialog"));
+	StavDialog* stav = static_cast<StavDialog*>(loader->Gethra()->Getstav("stavDialog"));
 	stav->Setdialog(this);
 	loader->Gethra()->zmenStavRozhrania("stavDialog");
 }
 
-
-void Npc::update() const
-{
-
-}
 
 void Npc::Setanimacia(Animacia* animacia) 
 {

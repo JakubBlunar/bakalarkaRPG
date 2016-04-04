@@ -11,20 +11,9 @@ VolbaPredQpolozkou::VolbaPredQpolozkou(int dalsia, Quest* paQuest) :DialogVolba(
 	this->quest = paQuest;
 }
 
-
-VolbaPredQpolozkou::~VolbaPredQpolozkou()
-{
-}
-
-
-
-void VolbaPredQpolozkou::akcia(Hrac* hrac) {
-
-}
-
 std::string VolbaPredQpolozkou::Gettext() {
 
-	Hrac* hrac = Loader::Instance()->Gethra()->GetHrac();
+	Hrac* hrac = Loader::Instance()->Gethra()->Gethrac();
 
 	if (!hrac->Getmanazerquestov()->maQuest(quest->Getnazov())) {
 		if (texty.count(StavQuestu::NEPRIJATY)) {
@@ -62,8 +51,4 @@ std::string VolbaPredQpolozkou::Gettext() {
 
 void VolbaPredQpolozkou::vlozText(StavQuestu paStav, std::string paText) {
 	texty.insert_or_assign(paStav, paText);
-}
-
-Quest* VolbaPredQpolozkou::getQuest() {
-	return quest;
 }

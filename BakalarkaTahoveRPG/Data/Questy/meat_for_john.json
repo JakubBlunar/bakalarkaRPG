@@ -1,0 +1,58 @@
+{
+  "nazov": "Meat for John",
+  "popis": "John is running out of food. There are a lot of bears, so you promise him to get some food.\n",
+  "xp": 25,
+  "zlato": 150,
+  "nasledujuci": "into_the_cave",
+  "startNpc": "John",
+  "endNpc": "John",
+  "autoaccept" : true,
+  "predmety": [
+   
+
+  ],
+  "poziadavky": [
+    {
+      "typ": "loot",
+      "co": "Bear meat",
+      "kolko": 4
+    },
+    {
+      "typ": "kill",
+      "co": "Grisly bear",
+      "kolko": 6
+    }
+  ],
+
+  "volbaKuQuestu": {
+    "volbaTexty": [
+      "",
+      "Tell me about those bears.",
+      "I have everything you need now.",
+      ""
+    ]
+  },
+
+  "polozkaTexty": [
+    "",
+    "Bears have good meat but they are dangerous. They have scary roar \nand weapons don't hurt them a lot. But I know you can do it.",
+    "Thank you. You hepld me a lot. Now you look that you can make \nit through cave in the north. But be carefull Stone golems are there and they\n are dangerous.My friend Branden went there to beat those golems.\n Since he went to cave, we haven't heard anything about him. I hope he is okay.\n Can you please look for him ?",
+    ""
+  ],
+
+  "volby": {
+    "1": {
+      "kam": -1,
+      "text": "",
+      "volbaTexty": [
+        "",
+        "I am going now to get some food. See you soon.",
+        "Thank you, I am leading to that cave now.",
+        ""
+      ],
+      "typ": "upravaQuestu"
+    }
+  }
+
+
+}

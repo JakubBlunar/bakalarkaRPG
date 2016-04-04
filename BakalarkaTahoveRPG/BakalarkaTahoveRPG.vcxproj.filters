@@ -243,6 +243,15 @@
     <ClInclude Include="VolbaBoj.h">
       <Filter>Header Files\Dialog</Filter>
     </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StavCredits.h">
+      <Filter>Header Files\Stavy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -418,6 +427,15 @@
     </ClCompile>
     <ClCompile Include="VolbaBoj.cpp">
       <Filter>Source Files\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StavCredits.cpp">
+      <Filter>Source Files\Stavy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -13,8 +13,14 @@
 #include "StavObchod.h"
 #include "StavPrehladQuestov.h"
 #include "StavLoading.h"
+#include "AudioManager.h"
+#include "StavCredits.h"
 
-#define NAZOV "Moje Rpg"
+#include "Generator.h"
+
+#include <vector>
+
+#define NAZOV ""
 
 
 Hra::Hra() {
@@ -24,11 +30,10 @@ Hra::Hra() {
 	init();
 	loader->setHra(this);
 	
-
-	std::string nazov = "hlavneMenu";
-	Stav* stav1 = new StavHlavneMenu(nazov, okno, this);
-
+	std::string nazov = "stavLoading";
+	Stav* stav1 = new StavLoading(nazov, okno, this);
 	stavRozhraniaHry = new StavRozhrania(stav1);
+	stav1->render();
 
 	std::string nazov2 = "volbaZamerania";
 	Stav* stav2 = new StavVolbaZamerania(nazov2, okno, this);
@@ -42,8 +47,9 @@ Hra::Hra() {
 	Stav* stav4 = new StavPauza(nazov4, okno, this);
 	stavRozhraniaHry->pridajStav(stav4);
 
-	std::string nazov5 = "stavLoading";
-	Stav* stav5 = new StavLoading(nazov5, okno, this);
+
+	std::string nazov5 = "hlavneMenu";
+	Stav* stav5 = new StavHlavneMenu(nazov5, okno, this);
 	stavRozhraniaHry->pridajStav(stav5);
 
 	std::string nazov6 = "stavInfoHraca";
@@ -69,15 +75,25 @@ Hra::Hra() {
 	std::string nazov11 = "stavPrehladQuestov";
 	Stav* stav11 = new StavPrehladQuestov(nazov11, okno, this);
 	stavRozhraniaHry->pridajStav(stav11);
+	std::string nazov12 = "stavCredits";
+	Stav* stav12 = new StavCredits(nazov12, okno, this);
+	stavRozhraniaHry->pridajStav(stav12);
 	
-	
+
+	AudioManager* a = AudioManager::Instance();
+	std::vector<std::string>* efekty = Generator::Instance()->najdiSubory("./Data/Zvuky/*.ogg");
+	for (unsigned int i = 0; i < efekty->size(); i++) a->nacitajEfekt(efekty->at(i), 70);
+
+	std::vector<std::string>* background_music = Generator::Instance()->najdiSubory("./Data/Zvuky/Hudba/*.ogg");
+	for (unsigned int i = 0; i < background_music->size(); i++) a->nacitajHudbu("Hudba/"+background_music->at(i),30);
+
+	stavRozhraniaHry->zmenStav("hlavneMenu");
 }
 
-Hra::~Hra() {
-	delete(stavRozhraniaHry);
-	delete(okno);
+sf::RenderWindow* Hra::Getokno() const
+{
+	return okno;
 }
-
 
 void Hra::start() {
 	hlavnaSlucka();
@@ -86,7 +102,7 @@ void Hra::start() {
 
 
 void Hra::hlavnaSlucka() {
-	const sf::Time ObnovovaciCas = sf::seconds(1.f / 120.f);
+	const sf::Time ObnovovaciCas = sf::seconds(1.f / 110.f);
 	sf::Clock clock;
 	sf::Time casOdPoslednehoUpdate = sf::Time::Zero;
 
@@ -101,16 +117,17 @@ void Hra::hlavnaSlucka() {
 				focus = true;
 			if (event.type == sf::Event::LostFocus) 
 				focus = false;
-
+			if (event.type == sf::Event::LostFocus)
+				focus = false;
 		}
 
 		sf::Time uplynulyCas = clock.restart();
 		casOdPoslednehoUpdate += uplynulyCas;
 		while (casOdPoslednehoUpdate > ObnovovaciCas){
 			casOdPoslednehoUpdate -= ObnovovaciCas;
-			stavRozhraniaHry->update(20);
+			stavRozhraniaHry->update();
 		}
-			
+		
 		if (focus) {
 			okno->clear();
 			stavRozhraniaHry->render();
@@ -127,7 +144,7 @@ void Hra::zmenStavRozhrania(std::string paStav) const
 	stavRozhraniaHry->zmenStav(paStav);
 }
 
-void Hra::SetHrac(Hrac* paHrac) {
+void Hra::Sethrac(Hrac* paHrac) {
 	hrac = paHrac;
 }
 
@@ -136,23 +153,24 @@ bool Hra::maFocus() const
 	return focus;
 }
 
-Hrac* Hra::GetHrac() const
+Hrac* Hra::Gethrac() const
 {
 	return hrac;
 }
 
-Stav* Hra::dajStav(std::string stav) const
+Stav* Hra::Getstav(std::string stav) const
 {
 	return stavRozhraniaHry->dajStav(stav);
 }
 
 void Hra::init() {
 	loader = Loader::Instance();
+
 	focus = true;
 
 	okno = new sf::RenderWindow(sf::VideoMode(1024, 700), NAZOV,sf::Style::Titlebar|sf::Style::Close);
 	okno->setFramerateLimit(60);
-	okno->setVerticalSyncEnabled(true);
+	//okno->setVerticalSyncEnabled(true);
 	if (sf::VideoMode::getDesktopMode().height < 769) {
 		okno->setPosition(sf::Vector2i(okno->getPosition().x, 0));
 	}

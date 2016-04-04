@@ -15,6 +15,7 @@
 #include "Stav.h"
 #include "Hra.h"
 #include "PopupOkno.h"
+#include "AudioManager.h"
 
 
 Hrac::Hrac(Zameranie* paZameranie) {
@@ -87,7 +88,7 @@ void Hrac::render(sf::RenderWindow* paOkno) const
 }
 
 
-void Hrac::update(double delta) {
+void Hrac::update() {
 		if (smerPohybu == vpravo && hybeSa) {
 			if (pohybDelta < 32) {
 				animaciaVpravo->tick();
@@ -343,7 +344,9 @@ void Hrac::pridajSkusenosti(int pocet, bool oznamenie) const
 			}
 		}
 		if (oznamenie) {
-			Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(pop);
+			Loader::Instance()->Gethra()->Getstav("hranieHry")->zobrazPopup(pop);
+			AudioManager::Instance()->playEfekt("beep");
+
 		}
 		else {
 			delete pop;

@@ -4,7 +4,7 @@
       "animacia": {
         "aniX": 32,
         "aniY": 48,
-        "nazov": "npc1_dole",
+        "nazov": "13",
         "pocet": 4,
         "trvanie": 10
       },
@@ -18,14 +18,14 @@
       "animacia": {
         "aniX": 32,
         "aniY": 48,
-        "nazov": "npc1_dole",
+        "nazov": "37",
         "pocet": 4,
         "trvanie": 10
       },
-      "dialog": "null",
+      "dialog": "",
       "meno": "John",
-      "posX": 5,
-      "posY": 0
+      "posX": 55,
+      "posY": 29
     },
 
     "2": {
@@ -36,7 +36,7 @@
         "pocet": 4,
         "trvanie": 10
       },
-      "dialog": "",
+      "dialog": "liecitel",
       "meno": "Karonnka",
       "posX": 12,
       "posY": 8

@@ -3,6 +3,7 @@
 #include "DialogovyStrom.h"
 #include <string>
 #include "Npc.h"
+#include "AudioManager.h"
 
 
 StavDialog::StavDialog(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
@@ -65,11 +66,11 @@ void StavDialog::render() {
 }
 
 
-void StavDialog::update(double delta) {
+void StavDialog::update() {
 
 	if (hra->maFocus()) {
 
-		Stav::update(delta);
+		Stav::update();
 
 		if (stav == StavAkcia::NORMAL) {
 
@@ -83,16 +84,21 @@ void StavDialog::update(double delta) {
 					stlacenaKlavesa = true;
 					if (oznacene < dialog->Getaktualnapolozka()->pocetMoznosti() - 1) {
 						oznacene++;
+						AudioManager::Instance()->playEfekt("klik");
 					}
 				}
 
 				if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 					stlacenaKlavesa = true;
-					if (oznacene > 0) oznacene--;
+					if (oznacene > 0) {
+						oznacene--;
+						AudioManager::Instance()->playEfekt("klik");
+					}
 				}
 
 				if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)|| sf::Keyboard::isKeyPressed(sf::Keyboard::E))) {
 					stlacenaKlavesa = true;
+					AudioManager::Instance()->playEfekt("vyber");
 					dialog->zmenPolozku(oznacene);
 					oznacene = 0;
 				}

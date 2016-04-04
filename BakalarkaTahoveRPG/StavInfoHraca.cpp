@@ -12,6 +12,7 @@
 #include "AkciaLiecenie.h"
 #include "AkciaPoskodenieZbranou.h"
 #include "AkciaPridanieEfektu.h"
+#include "AudioManager.h"
 
 StavInfoHraca::StavInfoHraca(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra) : Stav(paNazov, paOkno, paHra) {
 	
@@ -57,7 +58,7 @@ void StavInfoHraca::onEnter() {
 	stlacenaMys = true;
 
 	oznacene = 1;
-	hrac = hra->GetHrac();
+	hrac = hra->Gethrac();
 	oblecene = hrac->Getstatistika()->Getoblecene();
 	hracoveAkcie = hrac->Getstatistika()->Getakcie();
 	
@@ -406,11 +407,11 @@ void StavInfoHraca::render() {
 }
 
 
-void StavInfoHraca::update(double delta) {
+void StavInfoHraca::update() {
 
 	if (hra->maFocus()) {
 
-		Stav::update(delta);
+		Stav::update();
 		if (stav == StavAkcia::NORMAL) {
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
@@ -421,6 +422,7 @@ void StavInfoHraca::update(double delta) {
 					tlacidlaAkcie[i]->skontrolujKlik(pozicia);
 					//zrusenie zakliknutia ostatnych
 					if (tlacidlaAkcie[i]->Getzakliknute()) {
+						AudioManager::Instance()->playEfekt("klik");
 						for (unsigned int j = 0; j < static_cast<unsigned int>(hracoveAkcie->size()); j++)
 						{
 							if (i != j) {

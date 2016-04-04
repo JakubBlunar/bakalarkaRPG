@@ -5,12 +5,13 @@
 #include "Mapa.h"
 #include "StavHranieHry.h"
 #include "Loader.h"
-#include <random>
 
 #include "StavBoj.h"
 #include "Boj.h"
 #include "PopupOkno.h"
 #include "Nepriatel.h"
+#include "AudioManager.h"
+#include "Generator.h"
 
 PolickoBoj::PolickoBoj(bool paPriechodne) :Policko(paPriechodne)
 {
@@ -25,38 +26,26 @@ PolickoBoj::~PolickoBoj()
 void PolickoBoj::hracSkok(Hrac* paHrac) {
 
 	Hra* hra = Loader::Instance()->Gethra();
-	StavHranieHry* stavHranieHry = static_cast<StavHranieHry*>(Loader::Instance()->Gethra()->dajStav("hranieHry"));
+	StavHranieHry* stavHranieHry = static_cast<StavHranieHry*>(Loader::Instance()->Gethra()->Getstav("hranieHry"));
 	Mapa* mapa = stavHranieHry->getMapa();
 
 
-	std::random_device rd;
-	std::mt19937 generator(rd());
-	std::uniform_real_distribution<double> real(0, 1);
-	double p = real(generator);
+	int p = Generator::Instance()->randomInt(0, 99);
 
-	if (0.15 >= p) {
+	if (p < 15) {
 
 		std::vector<std::string>* moznyNepriatelia = mapa->Getmoznynepriatelia();
 		if (moznyNepriatelia->size() > 0) {
-			std::uniform_int_distribution<int> rand(0, moznyNepriatelia->size() - 1);
-			int id = rand(generator);
-
-			/*
-
-			*/
-
+			int id = Generator::Instance()->randomInt(0, moznyNepriatelia->size() - 1);
 			Nepriatel* nepriatel = Loader::Instance()->nacitajNepriatela(moznyNepriatelia->at(id));
-			StavBoj* stavBoj = static_cast<StavBoj*>(hra->dajStav("stavBoj"));
+			StavBoj* stavBoj = static_cast<StavBoj*>(hra->Getstav("stavBoj"));
 			stavBoj->setBoj(new Boj(paHrac, nepriatel));
+			AudioManager::Instance()->playEfekt("start_boja");
 
 			stavHranieHry->zobrazPopup(new PopupOkno(nepriatel->Getmeno() + " level " + std::to_string(nepriatel->Getstatistika()->dajUroven()) + " appeared!."));
 			hra->zmenStavRozhrania("stavBoj");
 		}
 	}
-
-
-
-		
 
 
 }

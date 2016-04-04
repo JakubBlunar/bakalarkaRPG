@@ -1,0 +1,48 @@
+{
+  "nazov": "Into the cave",
+  "popis": "John told you the way into kingdom. It leads into dangeorus cave.\nMan named Brenden went there but he didnt report back. You have to find him.",
+  "xp": 25,
+  "zlato": 0,
+  "nasledujuci": "brandens_manga",
+  "startNpc": "",
+  "endNpc": "Branden",
+  "autoaccept" : true,
+  "poziadavky": [
+   
+  ],
+  "predmety": [
+
+  ],
+
+  "volbaKuQuestu": {
+    "volbaTexty": [
+      "",
+      "",
+      "Hi, I am looking for you. Everyone is worried.",
+      ""
+    ]
+  },
+
+  "polozkaTexty": [
+    "",
+    "",
+    "I don't know what to do. Golems are far too strong. And those stupid bats \nhave stolen my manga ! I can't do anything I have to get it back! But I am too slow. Would \nyou mind to help me ?",
+    ""
+  ],
+
+  "volby": {
+    "1": {
+      "kam": -1,
+      "text": "",
+      "volbaTexty": [
+        "",
+        "",
+        "You are crazy !",
+        ""
+      ],
+      "typ": "upravaQuestu"
+    }
+  }
+
+
+}

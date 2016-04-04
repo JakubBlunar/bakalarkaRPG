@@ -18,7 +18,7 @@ QuestPolozka::~QuestPolozka()
 
 std::string QuestPolozka::Gettext() {
 
-	Hrac* hrac = Loader::Instance()->Gethra()->GetHrac();
+	Hrac* hrac = Loader::Instance()->Gethra()->Gethrac();
 	
 	if (hrac->Getmanazerquestov()->maQuest(nazovQuestu)) {
 		Quest* quest = hrac->Getmanazerquestov()->getQuest(nazovQuestu);

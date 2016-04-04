@@ -7,10 +7,10 @@
   "hpDo": 50,
   "mpOd": 5,
   "mpDo": 10,
-  "silaOd": 6,
-  "silaDo": 10,
-  "intelektOd": 3,
-  "intelektDo": 5,
+  "silaOd": 13,
+  "silaDo": 19,
+  "intelektOd": 8,
+  "intelektDo": 10,
   "redukciaMin": 20,
   "redukciaMax": 40,
   "uhybMin": 2,
@@ -64,7 +64,13 @@
   },
 
   "questDrop": {
-
+     "Meat for John": {
+      "meno": "Bear meat",
+      "obrazok": "bear_meat",
+      "typ": 13,
+      "cena": 15,
+      "uroven": 1
+    }
   }
 
 }

@@ -1,0 +1,53 @@
+{
+  "nazov": "Friend of Jacob",
+  "popis": "",
+  "xp": 5,
+  "zlato": 0,
+  "nasledujuci": "meat_for_john",
+  "startNpc": "Jacob",
+  "endNpc": "John",
+  "autoaccept" : false,
+  "poziadavky": [
+   
+  ],
+  "predmety": [
+
+  ],
+
+  "volbaKuQuestu": {
+    "volbaTexty": [
+      "I am stronger now. ",
+      "",
+      "Hi! Jacob told me that you show me way to castle.",
+      ""
+    ]
+  },
+
+  "polozkaTexty": [
+    "I see. But I can't leave this area. You can go alone and we will meet later.\n Now go to see John.Find him in forrest.He show you way to castle. ",
+    "",
+    "I can show you but the way is very dangerous.You can't make it alive\n in you condition. You need to become more powerfull.\n The bears here have good meat. Would you help me ?",
+    ""
+  ],
+
+  "volby": {
+    "1": {
+      "kam": -1,
+      "text": "(leave)",
+      "typ": ""
+    },
+    "2": {
+      "kam": -1,
+      "text": "",
+      "volbaTexty": [
+        "I will go alone then. See you soon.",
+        "",
+        "Sure I will help you.",
+        ""
+      ],
+      "typ": "upravaQuestu"
+    }
+  }
+
+
+}

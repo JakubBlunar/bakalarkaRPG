@@ -1,0 +1,74 @@
+{
+  "nazov": "Brandens manga.",
+  "popis": "Bats stole all Brandens manga. He don't want to do anything until he get it back.\n",
+  "xp": 35,
+  "zlato": 150,
+  "nasledujuci": "cleaning_the_cave",
+  "startNpc": "Branden",
+  "endNpc": "Branden",
+  "autoaccept" : false,
+  "predmety": [
+      {
+      "typTriedy": "oblecenie",
+      "meno": "Brilliant Necklace",
+      "obrazok": "2",
+      "typ": 5,
+      "cena": 250,
+      "uroven": 5,
+
+      "hp": 0,
+      "hpMult": 0.05,
+      "mp": 0,
+      "mpMult": 0.05,
+      "sila": 0,
+      "silaMult": 0,
+      "intelekt": 0,
+      "intelektMult": 0,
+      "rychlost": 0,
+      "rychlostMult": 0,
+      "obrana": 0,
+      "obranaMult": 0
+    }
+
+  ],
+  "poziadavky": [
+    {
+      "typ": "loot",
+      "co": "Manga",
+      "kolko": 3
+    }
+
+  ],
+
+  "volbaKuQuestu": {
+    "volbaTexty": [
+      "So what do you need to help with ?",
+      "Where can I find those bats ?",
+      "I have everything you need now.",
+      ""
+    ]
+  },
+
+  "polozkaTexty": [
+    "You have to kill those bats and get me my manga! I will die without it! ",
+    "You still dont have it ? Those bats were near entrance of cave.",
+    "Thank you very much. I am glad they are in one piece.\nNow we can get rid of those Golems. Do you help me ?\n",
+    ""
+  ],
+
+  "volby": {
+    "1": {
+      "kam": -1,
+      "text": "",
+      "volbaTexty": [
+        "So I think I don't have a choice.",
+        "Yes, I am going now.",
+        "Okay lets go to beat some monsters.",
+        ""
+      ],
+      "typ": "upravaQuestu"
+    }
+  }
+
+
+}

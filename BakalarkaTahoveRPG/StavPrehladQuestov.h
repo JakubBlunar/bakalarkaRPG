@@ -7,6 +7,9 @@
 class QuestManager;
 class Tlacidlo;
 
+/// <summary>
+/// Stav ktorý zobrazuje rozrobené a dokoncené hráèove questy
+/// </summary>
 class StavPrehladQuestov :
 	public Stav
 {
@@ -17,13 +20,14 @@ public:
 	void onEnter() override;
 	void onExit() override;
 	void render() override;
-	void update(double delta) override;
+	void update() override;
 
 private:
 	QuestManager* spravcaQuestov;
 	sf::CircleShape dole;
 	sf::CircleShape hore;
 
+	unsigned int zakliknute;
 	unsigned int indexOd;
 	unsigned int pocet;
 	std::vector<Tlacidlo*> tlacidla;

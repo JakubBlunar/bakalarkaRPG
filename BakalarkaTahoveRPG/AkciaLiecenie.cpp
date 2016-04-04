@@ -2,7 +2,7 @@
 #include "Statistika.h"
 #include <random>
 
-
+#include "AudioManager.h"
 
 AkciaLiecenie::AkciaLiecenie(std::string meno, std::string obrazok, int casCastenia, int cooldown, int trvanie, std::string popis, int mana, AkciaTyp typ, double paZakladnyHeal):Akcia(meno, obrazok, casCastenia, cooldown, trvanie, popis, mana, typ)
 {
@@ -23,6 +23,7 @@ std::string AkciaLiecenie::vykonajSa(Statistika* statHrac, Statistika* statNepri
 	std::uniform_int_distribution<int> uni(minLiecenie(statHrac), maxLiecenie(statHrac));
 	int healing = uni(generator);
 	statHrac->zvysStat(healing, "hp");
+	AudioManager::Instance()->playEfekt("healing");
 	return meno + " - heal by " + std::to_string(healing);
 }
 

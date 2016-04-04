@@ -1,11 +1,15 @@
-#pragma once
+#if !defined(StavVolbaZamerania_h)
+#define StavVolbaZamerania_h
+
 #include <vector>
-#include <iostream>
 #include "Stav.h"
 #include <SFML\Graphics.hpp>
 
 class Zameranie;
 
+/// <summary>
+/// Stav kde si hráè vyberie svoje Zameranie
+/// </summary>
 class StavVolbaZamerania : public Stav
 {
 
@@ -16,7 +20,7 @@ public:
 	void onEnter() override;
 	void onExit() override;
 	void render() override;
-	void update(double delta) override;
+	void update() override;
 private:
 	signed int oznacene;
 
@@ -34,5 +38,11 @@ private:
 	sf::Texture rogueTextura;
 	sf::Sprite rogueObrazok;
 
+	/// <summary>
+	/// Nacita zvolene zameranie , nacita mapu, hraca a spustí novu hru
+	/// </summary>
+	/// <param name="paIndex">volba zamerania od hraca</param>
 	void zvoleneZameranie(int paIndex) const;
 };
+
+#endif

@@ -139,7 +139,7 @@ void Mapa::render(sf::RenderWindow* okno) {
 				if (vrstva == 2 && hrac->GetpolickoY() < j) {
 					if (mapa[i][j]->Getnpc() != nullptr) {
 						sf::Sprite* npcObrazok = mapa[i][j]->Getnpc()->dajObrazok();
-						npcObrazok->setPosition(sf::Vector2f(32.f * i, 32 - 48.f + 32.f* j));
+						npcObrazok->setPosition(sf::Vector2f(32.f * i, 32 - npcObrazok->getGlobalBounds().height + 32.f* j));
 						okno->draw(*npcObrazok);
 					}
 				}
@@ -151,7 +151,7 @@ void Mapa::render(sf::RenderWindow* okno) {
 				if (vrstva == 1 && hrac->GetpolickoY() >= j) {
 					if (mapa[i][j]->Getnpc() != nullptr) {
 						sf::Sprite* npcObrazok = mapa[i][j]->Getnpc()->dajObrazok();
-						npcObrazok->setPosition(sf::Vector2f(32.f * i, 32 - 48.f + 32.f* j));
+						npcObrazok->setPosition(sf::Vector2f(32.f * i, 32 - npcObrazok->getGlobalBounds().height + 32.f* j));
 						okno->draw(*npcObrazok);
 					}
 				}
@@ -250,7 +250,7 @@ sf::FloatRect Mapa::Getzobrazenaoblast() const
 	return sf::FloatRect(posunX + 0.f, posunY + 0.f, view.getSize().x + 0.f, view.getSize().y + 0.f);
 }
 
-void Mapa::update(double delta) {
+void Mapa::update() {
 
 	for (int i = 0; i < sirka; i++)
 	{
@@ -336,12 +336,12 @@ void Mapa::posunHracaNaPolicko(int x, int y, int smerPohladu) {
 		posunMapyY = offsetHracaY - 5 * 32;
 	}
 
-	if (static_cast<int>(posunMapyX) + static_cast<int>(hra->okno->getSize().x) > sirka * 32) {
-		posunMapyX = sirka * 32 - hra->okno->getSize().x;
+	if (static_cast<int>(posunMapyX) + static_cast<int>(hra->Getokno()->getSize().x) > sirka * 32) {
+		posunMapyX = sirka * 32 - hra->Getokno()->getSize().x;
 	}
 
-	if (static_cast<int>(posunMapyY) + static_cast<int>(hra->okno->getSize().y) > vyska * 32) {
-		posunMapyY = vyska * 32 - hra->okno->getSize().y;
+	if (static_cast<int>(posunMapyY) + static_cast<int>(hra->Getokno()->getSize().y) > vyska * 32) {
+		posunMapyY = vyska * 32 - hra->Getokno()->getSize().y;
 	}
 
 

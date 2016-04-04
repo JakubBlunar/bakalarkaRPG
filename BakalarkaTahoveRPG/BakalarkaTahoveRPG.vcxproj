@@ -125,7 +125,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>E:\BakalarkaTahoveRPG\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -152,6 +152,8 @@
     <ClInclude Include="AkciaPoskodenieZbranou.h" />
     <ClInclude Include="AkciaPridanieEfektu.h" />
     <ClInclude Include="Animacia.h" />
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Boj.h" />
     <ClInclude Include="DialogovyStrom.h" />
     <ClInclude Include="Efekt.h" />
@@ -183,6 +185,7 @@
     <ClInclude Include="Statistika.h" />
     <ClInclude Include="Stav.h" />
     <ClInclude Include="StavBoj.h" />
+    <ClInclude Include="StavCredits.h" />
     <ClInclude Include="StavDialog.h" />
     <ClInclude Include="StavHlavneMenu.h" />
     <ClInclude Include="StavHranieHry.h" />
@@ -212,6 +215,8 @@
     <ClCompile Include="AkciaPoskodenieZbranou.cpp" />
     <ClCompile Include="AkciaPridanieEfektu.cpp" />
     <ClCompile Include="Animacia.cpp" />
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Boj.cpp" />
     <ClCompile Include="DialogovyStrom.cpp" />
     <ClCompile Include="Efekt.cpp" />
@@ -243,6 +248,7 @@
     <ClCompile Include="Statistika.cpp" />
     <ClCompile Include="Stav.cpp" />
     <ClCompile Include="StavBoj.cpp" />
+    <ClCompile Include="StavCredits.cpp" />
     <ClCompile Include="StavDialog.cpp" />
     <ClCompile Include="StavHlavneMenu.cpp" />
     <ClCompile Include="StavHranieHry.cpp" />

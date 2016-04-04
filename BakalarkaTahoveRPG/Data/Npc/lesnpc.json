@@ -4,12 +4,12 @@
       "animacia": {
         "aniX": 32,
         "aniY": 48,
-        "nazov": "knazka_dole",
+        "nazov": "47",
         "pocet": 1,
         "trvanie": 10
       },
-      "dialog": "liecitel",
-      "meno": "Priest",
+      "dialog": "",
+      "meno": "Peter",
       "posX": 10,
       "posY": 7
     }

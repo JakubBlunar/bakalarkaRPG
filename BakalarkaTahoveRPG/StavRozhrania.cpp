@@ -18,12 +18,12 @@ StavRozhrania::~StavRozhrania() {
 
 }
 
-void StavRozhrania::update(double cas) {
+void StavRozhrania::update() {
 	if (nasledujuci != nullptr && !aktualnyStav->GetzobrazujePopup()) {
 		zmenStav(nasledujuci->Getnazov());
 	}
 	else {
-		aktualnyStav->update(cas);
+		aktualnyStav->update();
 	}
 }
 

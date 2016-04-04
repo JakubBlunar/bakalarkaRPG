@@ -74,9 +74,6 @@ void StavBoj::onEnter() {
 }
 
 
-
-
-
 void StavBoj::onExit() {
 	Stav::onExit();
 }
@@ -150,8 +147,8 @@ void StavBoj::render() {
 
 	sf::RectangleShape hpBarPredny;
 	hpBarPredny.setFillColor(sf::Color::Red);
-	hpBarPredny.setSize(sf::Vector2f(50.f, ((float)hracHp / hracMaxHp)*hpBarZadny.getSize().y));
-	hpBarPredny.setPosition(sf::Vector2f(20.f, okno->getSize().y - pozadieAkcie.getSize().y + 20.f + (1 - ((float)hracHp / hracMaxHp))*hpBarZadny.getSize().y));
+	hpBarPredny.setSize(sf::Vector2f(50.f, (static_cast<float>(hracHp) / hracMaxHp)*hpBarZadny.getSize().y));
+	hpBarPredny.setPosition(sf::Vector2f(20.f, okno->getSize().y - pozadieAkcie.getSize().y + 20.f + (1 - (static_cast<float>(hracHp) / hracMaxHp))*hpBarZadny.getSize().y));
 
 	okno->draw(hpBarZadny);
 	okno->draw(hpBarPredny);
@@ -163,8 +160,8 @@ void StavBoj::render() {
 
 	sf::RectangleShape mpBarPredny;
 	mpBarPredny.setFillColor(sf::Color::Blue);
-	mpBarPredny.setSize(sf::Vector2f(50.f, ((float)hracMp / hracMaxMp)*mpBarZadny.getSize().y));
-	mpBarPredny.setPosition(sf::Vector2f(okno->getSize().x - 70.f, okno->getSize().y - pozadieAkcie.getSize().y + 20.f + +(1 - ((float)hracMp / hracMaxMp))*mpBarZadny.getSize().y));
+	mpBarPredny.setSize(sf::Vector2f(50.f, (static_cast<float>(hracMp) / hracMaxMp)*mpBarZadny.getSize().y));
+	mpBarPredny.setPosition(sf::Vector2f(okno->getSize().x - 70.f, okno->getSize().y - pozadieAkcie.getSize().y + 20.f + +(1 - (static_cast<float>(hracMp) / hracMaxMp))*mpBarZadny.getSize().y));
 
 	okno->draw(mpBarZadny);
 	okno->draw(mpBarPredny);
@@ -222,17 +219,18 @@ void StavBoj::render() {
 		}
 	}
 	
-	//okno s infom predmetu
+	//okno s infom akcie
 	sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 9; j++) {	
 			unsigned int index = i * 9 + j;
-			if (tlacidla[i][j]->hover(pozicia) && index < hracoveAkcie->size()) {
+			if ((index == oznacene) && index < hracoveAkcie->size()) {
 				vykresliInfoAkcie(hracoveAkcie->at(index), tlacidla[i][j]->getPosition());
 			}
 		}
 	}
 
+	
 
 
 	text.setColor(sf::Color::White);
@@ -255,7 +253,7 @@ void StavBoj::render() {
 
 	sf::RectangleShape npcHpBarPredny;
 	npcHpBarPredny.setFillColor(sf::Color::Red);
-	npcHpBarPredny.setSize(sf::Vector2f(((float)npcHp / npcMaxHp)*150.f, 35.f));
+	npcHpBarPredny.setSize(sf::Vector2f((static_cast<float>(npcHp) / npcMaxHp)*150.f, 35.f));
 	npcHpBarPredny.setPosition(sf::Vector2f(okno->getSize().x - 200.f, 20.f));
 
 	okno->draw(npcHpBarZadny);
@@ -268,7 +266,7 @@ void StavBoj::render() {
 
 	sf::RectangleShape npcMpBarPredny;
 	npcMpBarPredny.setFillColor(sf::Color::Blue);
-	npcMpBarPredny.setSize(sf::Vector2f(((float)npcMp / npcMaxMp)*150.f, 35));
+	npcMpBarPredny.setSize(sf::Vector2f((static_cast<float>(npcMp) / npcMaxMp)*150.f, 35));
 	npcMpBarPredny.setPosition(sf::Vector2f(okno->getSize().x - 200.f, 60.f));
 
 	okno->draw(npcMpBarZadny);
@@ -324,10 +322,10 @@ void StavBoj::render() {
 }
 
 
-void StavBoj::update(double delta) {
+void StavBoj::update() {
 
 	if (hra->maFocus()) {
-		Stav::update(delta);
+		Stav::update();
 		if (stav == StavAkcia::NORMAL) {
 			boj->update();
 
@@ -339,7 +337,7 @@ void StavBoj::update(double delta) {
 					doInventara->skontrolujKlik(pozicia);
 					if (doInventara->Getzakliknute()) {
 						doInventara->Setzakliknute(false);
-						StavInventar* s = static_cast<StavInventar*>(hra->dajStav("stavInventar"));
+						StavInventar* s = static_cast<StavInventar*>(hra->Getstav("stavInventar"));
 						s->Setzboja(true);
 						hra->zmenStavRozhrania("stavInventar");
 					}
@@ -363,7 +361,19 @@ void StavBoj::update(double delta) {
 			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == true) {
 				stlacenaMys = false;
 			}
-		
+			
+			sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 9; j++) {
+					unsigned int index = i * 9 + j;
+					if(tlacidla[i][j]->hover(pozicia) && index < hracoveAkcie->size())
+					{
+						oznacene = index;
+					}
+					
+				}
+			}
+
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !stlacenaKlavesa) {
 				stlacenaKlavesa = true;
@@ -403,7 +413,7 @@ void StavBoj::update(double delta) {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && !stlacenaKlavesa) {
 				if (boj->cakaNaVybratieAkcie() && !boj->koniecBoja()) {
-					StavInventar* s = static_cast<StavInventar*>(hra->dajStav("stavInventar"));
+					StavInventar* s = static_cast<StavInventar*>(hra->Getstav("stavInventar"));
 					s->Setzboja(true);
 					hra->zmenStavRozhrania("stavInventar");
 				}
@@ -442,7 +452,8 @@ void StavBoj::setBoj(Boj* paBoj) {
 	boj = paBoj;
 }
 
-void StavBoj::vykresliInfoAkcie(Akcia* akcia, sf::Vector2f pozicia) {
+void StavBoj::vykresliInfoAkcie(Akcia* akcia, sf::Vector2f pozicia) const
+{
 
 	sf::RectangleShape akciaInfo;
 	akciaInfo.setFillColor(sf::Color::White);
@@ -458,24 +469,24 @@ void StavBoj::vykresliInfoAkcie(Akcia* akcia, sf::Vector2f pozicia) {
 		popis += "Mana needed: " + std::to_string(akcia->Getcenamany()) + "\n";
 	}
 
-	if (dynamic_cast<AkciaDmg*>(akcia) != NULL) {
-		AkciaDmg* dmgakcia = (AkciaDmg*)akcia;
+	if (dynamic_cast<AkciaDmg*>(akcia) != nullptr) {
+		AkciaDmg* dmgakcia = static_cast<AkciaDmg*>(akcia);
 		popis += "Damage:" + std::to_string(dmgakcia->minPoskodenie(boj->Gethracovastatistika())) + " - " + std::to_string(dmgakcia->maxPoskodenie(boj->Gethracovastatistika())) + "\n";
 	}
 
-	if (dynamic_cast<AkciaPoskodenieZbranou*>(akcia) != NULL) {
-		AkciaPoskodenieZbranou* dmgakcia = (AkciaPoskodenieZbranou*)akcia;
+	if (dynamic_cast<AkciaPoskodenieZbranou*>(akcia) != nullptr) {
+		AkciaPoskodenieZbranou* dmgakcia = static_cast<AkciaPoskodenieZbranou*>(akcia);
 		popis += "Damage:" + std::to_string(dmgakcia->minPoskodenie()) + " - " + std::to_string(dmgakcia->maxPoskodenie()) + "\n";
 	}
 
-	if (dynamic_cast<AkciaLiecenie*>(akcia) != NULL) {
-		AkciaLiecenie* liecenieAkcia = (AkciaLiecenie*)akcia;
+	if (dynamic_cast<AkciaLiecenie*>(akcia) != nullptr) {
+		AkciaLiecenie* liecenieAkcia = static_cast<AkciaLiecenie*>(akcia);
 		popis += "Healing:" + std::to_string(liecenieAkcia->minLiecenie(boj->Gethracovastatistika())) + " - " + std::to_string(liecenieAkcia->maxLiecenie(boj->Gethracovastatistika())) + "\n";
 	}
 
 
-	if (dynamic_cast<AkciaPridanieEfektu*>(akcia) != NULL) {
-		AkciaPridanieEfektu* efektAkcia = (AkciaPridanieEfektu*)akcia;
+	if (dynamic_cast<AkciaPridanieEfektu*>(akcia) != nullptr) {
+		AkciaPridanieEfektu* efektAkcia = static_cast<AkciaPridanieEfektu*>(akcia);
 		popis += "Last: "+ floattostring(efektAkcia->Gettrvanie() / 1000.f)+" s\n";
 	}
 

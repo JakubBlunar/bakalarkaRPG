@@ -8,11 +8,13 @@
 #include "Elixir.h"
 #include "Zbran.h"
 #include "Oblecenie.h"
+#include "AudioManager.h"
+#include  "Tlacidlo.h"
 
 StavObchod::StavObchod(std::string paNazov, sf::RenderWindow* paOkno, Hra* paHra):StavInventar(paNazov,paOkno,paHra)
 {
 	typObchodu = KUPA;
-	nasirku = 18;
+	nasirku = 12;
 	dostupnePredmety = new std::vector<Predmet*>();
 }
 
@@ -28,10 +30,59 @@ void StavObchod::nacitajObchod(std::string aky){
 
 }
 
+void StavObchod::predajPredmet()
+{
+	if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
+		Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
+		inventar->zmazPredmet(p);
+		inventar->pridajZlato(static_cast<int>(round(p->Getcena() / 2)));
+		std::string info = "You sold " + p->Getmeno() + ".";
+		delete p;
+		zobrazPopup(new PopupOkno(info));
+		AudioManager::Instance()->playEfekt("sell_buy");
+	}
+}
 
+void StavObchod::kupPredmet()
+{
+	Predmet* p = dostupnePredmety->at(oznacene);
 
+	if (inventar->Getzlato() >= p->Getcena()) {
 
+		Predmet* kopia = nullptr;
+		if (dynamic_cast<Elixir*>(p) != nullptr) {
+			Elixir* elixir = static_cast<Elixir*>(p);
+			kopia = elixir->copy();
+		}
 
+		if (dynamic_cast<Zbran*>(p) != nullptr) {
+			Zbran* zbran = static_cast<Zbran*>(p);
+			kopia = zbran->copy();
+		}
+
+		if (dynamic_cast<Oblecenie*>(p) != nullptr) {
+			Oblecenie* oblecenie = static_cast<Oblecenie*>(p);
+			kopia = oblecenie->copy();
+		}
+
+		if (kopia != nullptr) {
+			if (inventar->Getkapacita() > inventar->pocetPredmetov()) {
+				inventar->Setzlato(inventar->Getzlato() - kopia->Getcena());
+				inventar->pridajPredmet(kopia);
+				zobrazPopup(new PopupOkno("You bought " + kopia->Getmeno() + " !"));
+				AudioManager::Instance()->playEfekt("sell_buy");
+			}
+			else {
+				zobrazPopup(new PopupOkno("Inventory is full! You can't buy " + kopia->Getmeno() + "."));
+				AudioManager::Instance()->playEfekt("beep");
+			}
+		}
+	}
+	else {
+		zobrazPopup(new PopupOkno("You cant't afford that!"));
+		AudioManager::Instance()->playEfekt("beep");
+	}
+}
 
 void StavObchod::onEnter() {
 	StavInventar::onEnter();
@@ -73,20 +124,20 @@ void StavObchod::render() {
 			
 			predmetObrazok = dostupnePredmety->at(i)->Getobrazok();
 			predmetObrazok->setScale(sf::Vector2f(1.5f, 1.5f));
-			predmetObrazok->setPosition(sf::Vector2f((float)startX + (i%nasirku) * 55, (float)startY + (i / nasirku) * 55));
+			predmetObrazok->setPosition(sf::Vector2f(startX + (i%nasirku) * 55.f, startY + (i / nasirku) * 55.f));
 			
 			okno->draw(*predmetObrazok);
 			
 
 
 			if (i == oznacene) {
-				ukazovatel.setPosition(sf::Vector2f((float)startX + (i%nasirku) * 55, (float)startY + (i / nasirku) * 55));
+				ukazovatel.setPosition(sf::Vector2f(startX + (i%nasirku) * 55.f, startY + (i / nasirku) * 55.f));
 				okno->draw(ukazovatel);
 
 			}
 		}
 
-		if (oznacene >= 0 && (signed int)oznacene < (signed int)dostupnePredmety->size()) {
+		if (oznacene >= 0 &&oznacene < static_cast<signed int>(dostupnePredmety->size())) {
 			vykresliOknoPredmetu(dostupnePredmety->at(oznacene), startX + (oznacene%nasirku) * 55 + 48, startY + (oznacene / nasirku) * 55 + 48, okno,false);
 		}
 
@@ -102,13 +153,17 @@ void StavObchod::render() {
 		obdlznik.setPosition(0, 0);
 		okno->draw(obdlznik);
 
+		obdlznik.setPosition(okno->getSize().x - 100.f, 0.f);
+		okno->draw(obdlznik);
+
+
 		obdlznik.setSize(sf::Vector2f(500, 200));
 		obdlznik.setPosition(0.f, okno->getSize().y - 200.f);
 		okno->draw(obdlznik);
 
-		sf::Text text("Sell", *font, 45U);
-		text.setPosition(sf::Vector2f(10.f, 10.f));
-		okno->draw(text);
+		sf::Text text2("Sell", *font, 45U);
+		text2.setPosition(sf::Vector2f(10.f, 10.f));
+		okno->draw(text2);
 
 
 
@@ -124,9 +179,9 @@ void StavObchod::render() {
 }
 
 
-void StavObchod::update(double delta) {
+void StavObchod::update() {
 	if (hra->maFocus()) {
-		Stav::update(delta);
+		Stav::update();
 
 		if (stav == StavAkcia::NORMAL) {
 
@@ -143,10 +198,43 @@ void StavObchod::update(double delta) {
 			if (typObchodu == KUPA) { // kupovanie
 
 
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
+				{
+					sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+
+					for (unsigned int i = 0; i < dostupnePredmety->size(); i++) {
+						tlacidla.at(i)->skontrolujKlik(pozicia);
+						if (tlacidla.at(i)->Getzakliknute())
+						{
+							oznacene = i;
+							tlacidla.at(i)->Setzakliknute(false);
+							kupPredmet();
+						}
+
+					}
+					stlacenaMys = true;
+
+				}
+
+				if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					stlacenaMys = false;
+				}
+
+				sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+
+				for (unsigned int i = 0; i < dostupnePredmety->size(); i++)
+				{
+					if(tlacidla.at(i)->hover(pozicia))
+					{
+						oznacene = i;
+					}
+				}
+
+
 				if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 					stlacenaKlavesa = true;
 
-					if (oznacene + nasirku <(signed int)dostupnePredmety->size()) {
+					if (oznacene + nasirku <static_cast<signed int>(dostupnePredmety->size())) {
 						oznacene += nasirku;
 					}
 					else {
@@ -173,7 +261,7 @@ void StavObchod::update(double delta) {
 
 				if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 					stlacenaKlavesa = true;
-					if (oznacene < (signed int)dostupnePredmety->size() - 1) {
+					if (oznacene < static_cast<signed int>(dostupnePredmety->size()) - 1) {
 						oznacene++;
 					}
 				}
@@ -181,38 +269,7 @@ void StavObchod::update(double delta) {
 
 				if (!stlacenaKlavesa && (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) || sf::Keyboard::isKeyPressed(sf::Keyboard::E))) {
 					stlacenaKlavesa = true;
-					Predmet* p = dostupnePredmety->at(oznacene);
-					
-					if (inventar->Getzlato() >= p->Getcena()) {
-
-						Predmet* kopia;
-						if (dynamic_cast<Elixir*>(p) != NULL) {
-							Elixir* elixir = (Elixir*)p;
-							kopia = elixir->copy();
-						}
-
-						if (dynamic_cast<Zbran*>(p) != NULL) {
-							Zbran* zbran = (Zbran*)p;
-							kopia = zbran->copy();
-						}
-
-						if (dynamic_cast<Oblecenie*>(p) != NULL) {
-							Oblecenie* oblecenie = (Oblecenie*)p;
-							kopia = oblecenie->copy();
-						}
-						
-						if (inventar->Getkapacita() > inventar->pocetPredmetov()) {
-							inventar->Setzlato(inventar->Getzlato() - kopia->Getcena());
-							inventar->pridajPredmet(kopia);
-							zobrazPopup(new PopupOkno("You bought ' ' " + kopia->Getmeno() + " !"));
-						}
-						else {
-							zobrazPopup(new PopupOkno("Inventory is full! You can't buy " + kopia->Getmeno() + "."));
-						}
-					}
-					else {
-						zobrazPopup(new PopupOkno("You cant't afford that!"));
-					}
+					kupPredmet();
 				}
 
 
@@ -232,6 +289,40 @@ void StavObchod::update(double delta) {
 
 			}
 			else { // predaj veci
+
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stlacenaMys == false)
+				{
+					sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+
+					for (unsigned int i = 0; i < tlacidla.size(); i++) {
+						tlacidla.at(i)->skontrolujKlik(pozicia);
+						if (tlacidla.at(i)->Getzakliknute())
+						{
+							oznacene = i;
+							tlacidla.at(i)->Setzakliknute(false);
+							predajPredmet();
+						}
+
+					}
+					stlacenaMys = true;
+
+				}
+
+				if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					stlacenaMys = false;
+				}
+
+				sf::Vector2i pozicia = sf::Mouse::getPosition(*okno);
+
+				for (unsigned int i = 0; i < tlacidla.size(); i++)
+				{
+					if (tlacidla.at(i)->hover(pozicia))
+					{
+						oznacene = i;
+					}
+				}
+
 				if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 					stlacenaKlavesa = true;
 
@@ -270,15 +361,7 @@ void StavObchod::update(double delta) {
 
 				if (!stlacenaKlavesa && sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
 					stlacenaKlavesa = true;
-					if (oznacene >= 0 && oznacene < inventar->pocetPredmetov()) {
-						Predmet* p = inventar->dajPredmetNaIndexe(oznacene);
-						inventar->zmazPredmet(p);
-						inventar->pridajZlato((int)round(p->Getcena()/2));
-						std::string info = "You sold " + p->Getmeno() + ".";
-						delete p;
-						zobrazPopup(new PopupOkno(info));
-
-					}
+					predajPredmet();
 				}
 
 

@@ -62,11 +62,6 @@ void Loader::setHra(Hra* paHra) {
 	this->hra = paHra;
 }
 
-bool Loader::Getnacitava() const
-{
-	return nacitava;
-}
-
 Hra* Loader::Gethra() const
 {
 	return hra;
@@ -147,10 +142,10 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 
 	if (nacitaneMapy.find(paMeno) != nacitaneMapy.end()) {
 		Mapa* novaMapa = nacitaneMapy.at(paMeno);
-		hra->GetHrac()->setMapa(novaMapa);
-		novaMapa->setHrac(hra->GetHrac());
+		hra->Gethrac()->setMapa(novaMapa);
+		novaMapa->setHrac(hra->Gethrac());
 
-		StavHranieHry* stav = (StavHranieHry*)hra->dajStav("hranieHry");
+		StavHranieHry* stav = (StavHranieHry*)hra->Getstav("hranieHry");
 		//Mapa* staraMapa = stav->getMapa();
 		stav->Setmapa(novaMapa);
 
@@ -191,7 +186,7 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 
 		int vyska = root["height"].asInt();
 		int sirka = root["width"].asInt();
-		novaMapa = new Mapa(paMeno, this->hra->GetHrac(), this->hra, sirka, vyska);
+		novaMapa = new Mapa(paMeno, this->hra->Gethrac(), this->hra, sirka, vyska);
 
 		novaMapa->setHrobSuradnice(sf::Vector2i(mapaData["hrobX"].asInt(), mapaData["hrobY"].asInt()));
 		
@@ -325,10 +320,10 @@ void Loader::nacitajMapu(string paMeno, int posX, int posY, int smer) {
 
 	nacitaneMapy.insert(pair<string, Mapa*>(paMeno, novaMapa));
 
-	hra->GetHrac()->setMapa(novaMapa);
-	novaMapa->setHrac(hra->GetHrac());
+	hra->Gethrac()->setMapa(novaMapa);
+	novaMapa->setHrac(hra->Gethrac());
 
-	StavHranieHry* stav = static_cast<StavHranieHry*>(hra->dajStav("hranieHry"));
+	StavHranieHry* stav = static_cast<StavHranieHry*>(hra->Getstav("hranieHry"));
 	stav->Setmapa(novaMapa);
 
 	if (posX == -1 || posY == -1 || smer == -1) {
@@ -391,21 +386,7 @@ void Loader::nacitajNpc(string menoMapy, Mapa* mapa) const
 			int pocetSnimkov = animacia["pocet"].asInt();
 			int trvanieAnimacie = animacia["trvanie"].asInt();
 
-
-
-			DialogovyStrom* dialog;
-
-			if (nazovDialogu == "null") {
-				dialog = new DialogovyStrom();
-				DialogPolozka *node0 = new DialogPolozka("Ahoj udatny bojovnik.");
-				node0->pridajMoznost(new DialogVolba("Ahoj.", -1));
-				dialog->vlozPolozku(node0);
-
-			}
-			else {
-				dialog = nacitajDialog(nazovDialogu);
-			}
-
+			DialogovyStrom* dialog = nacitajDialog(nazovDialogu);
 
 			Npc* npc = new Npc(meno, dialog);
 
@@ -623,6 +604,9 @@ Predmet* Loader::parsujPredmet(Json::Value jPredmet) const
 		string co = jPredmet["stat"].asString();
 		int oKolko = jPredmet["oKolko"].asInt();
 		predmet = new Elixir(meno, typ, obrazok, cena, uroven, co, oKolko);
+	}else if(typTriedy == "normalny")
+	{
+		predmet = new Predmet(meno, typ, obrazok, cena, uroven);
 	}
 	else {
 
@@ -686,7 +670,7 @@ Quest* Loader::nacitajQuest(string paMeno) const
 	}
 
 	string questNazov = jQuest["nazov"].asString();
-	quest = hra->GetHrac()->Getmanazerquestov()->GetNacitanyQuest(questNazov);
+	quest = hra->Gethrac()->Getmanazerquestov()->GetNacitanyQuest(questNazov);
 
 	if (quest == nullptr) {
 
@@ -695,8 +679,8 @@ Quest* Loader::nacitajQuest(string paMeno) const
 		int odmenaZlato = jQuest["zlato"].asInt();
 		string startNpc = jQuest["startNpc"].asString();
 		string endNpc = jQuest["endNpc"].asString();
-
-		quest = new Quest(questNazov, questPopis, odmenaXp, odmenaZlato, startNpc, endNpc,paMeno);
+		bool autoAccept = jQuest["autoaccept"].asBool();
+		quest = new Quest(questNazov, questPopis, odmenaXp, odmenaZlato, startNpc, endNpc,paMeno,autoAccept);
 
 		//nacitanie polozky ktorá bude predstavova to èo bude rozprava npc o queste
 		QuestPolozka* polozka = new QuestPolozka(quest->Getnazov());
@@ -826,8 +810,7 @@ Quest* Loader::nacitajQuest(string paMeno) const
 			if (pTyp == "kill") {
 				string pKoho = poziadavka["co"].asString();
 				int pKolko = poziadavka["kolko"].asInt();
-				string pKde = poziadavka["kde"].asString();
-				quest->pridajPoziadavku(new PoziadavkaZabi(pKoho, pKolko, pKde));
+				quest->pridajPoziadavku(new PoziadavkaZabi(pKoho, pKolko));
 			}
 			else if (pTyp == "loot") {
 				string pCo = poziadavka["co"].asString();
@@ -844,7 +827,7 @@ Quest* Loader::nacitajQuest(string paMeno) const
 			jPredmet = odmenaVeci[i];
 			quest->pridajOdmenu(parsujPredmet(jPredmet));
 		}
-		hra->GetHrac()->Getmanazerquestov()->nacitanyQuest(quest);
+		hra->Gethrac()->Getmanazerquestov()->nacitanyQuest(quest);
 	}
 	
 	
@@ -949,7 +932,7 @@ Zameranie* Loader::nacitajZameranie(string paMeno) const
 bool Loader::save() const
 {
 
-	Hrac* hrac = hra->GetHrac();
+	Hrac* hrac = hra->Gethrac();
 	QuestManager* qm = hrac->Getmanazerquestov();
 	Inventar* inv = hrac->Getinventar();
 	Statistika* stat = hrac->Getstatistika();
@@ -1191,7 +1174,7 @@ void Loader::load(){
 		Hrac* hrac = new Hrac(nacitajZameranie(zameranie));
 
 		hrac->Getstatistika()->vlozAkciu(new AkciaPoskodenieZbranou("Attack", "Attack with equipped weapon.", hrac->Getstatistika()));
-		hra->SetHrac(hrac);
+		hra->Sethrac(hrac);
 		hrac->pridajSkusenosti(hracSkusenosti, false);
 		
 		hrac->Getstatistika()->Sethp(save["hp"].asInt());
@@ -1293,7 +1276,7 @@ void Loader::load(){
 
 void Loader::zobrazLoadingScreen() const
 {
-	hra->okno->clear();
-	hra->dajStav("stavLoading")->render();
-	hra->okno->display();
+	hra->Getokno()->clear();
+	hra->Getstav("stavLoading")->render();
+	hra->Getokno()->display();
 }

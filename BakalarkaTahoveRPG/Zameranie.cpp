@@ -28,34 +28,6 @@ std::string Zameranie::Getnazov() const
 }
 
 
-int Zameranie::GetrastHp() const
-{
-	return rastHp;
-}
-
-int Zameranie::GetrastMp() const
-{
-	return rastMp;
-}
-
-int Zameranie::GetrastIntel() const
-{
-	return rastIntel;
-}
-
-
-int Zameranie::GetrastRychlost() const
-{
-	return rastRychlost;
-}
-
-
-int Zameranie::GetrastSila() const
-{
-	return rastSila;
-}
-
-
 int Zameranie::xpNaLevel(int level) const
 {
 	return static_cast<int>(round((7 * (level * level * level)) / 6));

@@ -10,16 +10,11 @@
 #include "Stav.h"
 #include "Hra.h"
 #include "PopupOkno.h"
+#include "AudioManager.h"
 
 Oblecenie::Oblecenie(std::string meno, int typ, std::string paObrazok, int cena, int paUroven):Pouzitelny(meno, typ, paObrazok, cena,paUroven) {
 
 }
-
-
-
-Oblecenie::~Oblecenie() {
-}
-
 
 void Oblecenie::pouzi(Hrac* hrac) {
 
@@ -44,17 +39,21 @@ void Oblecenie::pouzi(Hrac* hrac) {
 			
 			hrac->Getinventar()->zmazPredmet(this);
 			Pouzitelny::Setobleceny(true);
+			AudioManager::Instance()->playEfekt("eq_oblecenie");
 	}
 	else {
 		if (hrac->Getinventar()->pocetPredmetov() < hrac->Getinventar()->Getkapacita()) {
 			Pouzitelny::Setobleceny(false);
 			oblecene->erase(this->Gettyp());
 			hrac->Getinventar()->pridajPredmet(this);
+			AudioManager::Instance()->playEfekt("eq_oblecenie");
 		}
 		else {
-			Loader::Instance()->Gethra()->dajStav("")->zobrazPopup(new PopupOkno("Inventory is full!"));
+			Loader::Instance()->Gethra()->Getstav("")->zobrazPopup(new PopupOkno("Inventory is full!"));
+			AudioManager::Instance()->playEfekt("beep");
 		}
 	}
+	
 }
 
 Oblecenie* Oblecenie::copy() {

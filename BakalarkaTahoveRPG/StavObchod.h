@@ -5,7 +5,11 @@
 #include <vector>
 
 class Predmet;
+class Tlacidlo;
 
+/// <summary>
+/// Stav predstavuje Obchodovanie s npc, kde hr·Ë moûe kupvoaù a pred·vaù predmety.
+/// </summary>
 class StavObchod :
 	public StavInventar
 {
@@ -16,13 +20,18 @@ public:
 	void onEnter() override;
 	void onExit() override;
 	void render() override;
-	void update(double delta) override;
+	void update() override;
 
+	/// <summary>
+	/// Nacita obchod, ktor˝ bude dan˝ stav zobrazovaù
+	/// </summary>
+	/// <param name="aky">nazov suboru v ktorom je ulozeny obchod</param>
 	void nacitajObchod(std::string aky);
 private:
 	enum {KUPA,PREDAJ} typObchodu;
 	std::vector<Predmet*>* dostupnePredmety;
-	
+	void predajPredmet();
+	void kupPredmet();
 
 
 };

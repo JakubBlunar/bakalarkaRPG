@@ -7,8 +7,8 @@
   "hpDo": 140,
   "mpOd": 8,
   "mpDo": 15,
-  "silaOd": 8,
-  "silaDo": 13,
+  "silaOd": 13,
+  "silaDo": 18,
   "intelektOd": 3,
   "intelektDo": 7,
   "redukciaMin": 20,
@@ -53,7 +53,13 @@
   },
 
   "questDrop": {
-
+    "Brandens manga.": {
+      "meno": "Manga",
+      "obrazok": "manga",
+      "typ": 13,
+      "cena": 25,
+      "uroven": 4
+    }
   }
 
 }

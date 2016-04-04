@@ -6,6 +6,7 @@
 #include "Hra.h"
 #include "Stav.h"
 #include "PopupOkno.h"
+#include "AudioManager.h"
 
 QuestManager::QuestManager()
 {
@@ -20,11 +21,13 @@ QuestManager::~QuestManager()
 	
 }
 
-void QuestManager::pridajQuest(Quest* quest) {
+void QuestManager::pridajQuest(Quest* quest) const
+{
 	if (!maQuest(quest->Getnazov())) {
 		nedokonceneQuesty->push_front(quest);
 		quest->setStav(StavQuestu::ROZROBENY);
-		Loader::Instance()->Gethra()->dajStav("hranieHry")->zobrazPopup(new PopupOkno("You have got a new quest: " + quest->Getnazov()));
+		Loader::Instance()->Gethra()->Getstav("hranieHry")->zobrazPopup(new PopupOkno("You have got a new quest: " + quest->Getnazov()));
+		AudioManager::Instance()->playEfekt("beep");
 	}
 }
 
@@ -113,7 +116,7 @@ void QuestManager::dokoncenieQuestu(std::string meno, Hrac* hrac) {
 			dokonceneQuesty->push_back(q);
 			q->dokonciSa(hrac);
 			if (q->Getnasledujuci() != nullptr) {
-				pridajQuest(q->Getnasledujuci());
+				if(q->Getnasledujuci()->Getautoaccept()) pridajQuest(q->Getnasledujuci());
 			}
 		}
 	}
@@ -135,6 +138,12 @@ Quest* QuestManager::Getzaciatocnyquestnpc(string menoNpc) const
 
 	for (unsigned int i = 0; i < nacitaneQuesty->size(); i++) {
 		if (nacitaneQuesty->at(i)->Getstartnpc() == menoNpc && nacitaneQuesty->at(i)->Getpredchadzajuci() == nullptr && nacitaneQuesty->at(i)->Getstav() == StavQuestu::NEPRIJATY) {
+			if (std::find(nedokonceneQuesty->begin(), nedokonceneQuesty->end(), nacitaneQuesty->at(i)) == nedokonceneQuesty->end()) {
+				return nacitaneQuesty->at(i);
+			}
+		}
+		else if(nacitaneQuesty->at(i)->Getstartnpc() == menoNpc && nacitaneQuesty->at(i)->Getpredchadzajuci() != nullptr && nacitaneQuesty->at(i)->Getpredchadzajuci()->Getstav() == StavQuestu::DOKONCENY  && nacitaneQuesty->at(i)->Getstav() == StavQuestu::NEPRIJATY)
+		{
 			if (std::find(nedokonceneQuesty->begin(), nedokonceneQuesty->end(), nacitaneQuesty->at(i)) == nedokonceneQuesty->end()) {
 				return nacitaneQuesty->at(i);
 			}
@@ -178,4 +187,9 @@ void QuestManager::pridajDoDokoncenych(Quest* paQuest) const
 	}
 
 	dokonceneQuesty->push_back(paQuest);
+}
+
+int QuestManager::Getpocetquestov() const
+{
+	return nedokonceneQuesty->size() + dokonceneQuesty->size();
 }
