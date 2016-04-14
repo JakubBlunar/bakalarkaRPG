@@ -169,8 +169,8 @@ void StavObchod::render() {
 
 	}
 
-	text.setString("Tab - change buying or selling\nEnter/E - buy/sell item");
-	text.setPosition(20.f, okno->getSize().y - 55.f);
+	text.setString("Esc - Exit\nTab - change buying or selling\nEnter/E - buy/sell item");
+	text.setPosition(20.f, okno->getSize().y - 75.f);
 	text.setColor(sf::Color::Yellow);
 	text.setCharacterSize(20);
 	okno->draw(text);
