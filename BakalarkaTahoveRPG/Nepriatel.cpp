@@ -76,7 +76,9 @@ Akcia* Nepriatel::vyberAkciu(std::map<Akcia*,int>* cooldowny) const
 }
 void Nepriatel::pridajDropItem(std::string paNazovQuestu, Predmet* paPredmet) const
 {
-	questDrop->insert_or_assign(paNazovQuestu, paPredmet);
+	if (questDrop->find(paNazovQuestu) == questDrop->end()) {
+		questDrop->insert(std::make_pair(paNazovQuestu, paPredmet));
+	}
 }
 
 std::map< std::string, Predmet*>* Nepriatel::dropQuestPredmetov() const

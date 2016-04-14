@@ -50,5 +50,7 @@ std::string VolbaPredQpolozkou::Gettext() {
 }
 
 void VolbaPredQpolozkou::vlozText(StavQuestu paStav, std::string paText) {
-	texty.insert_or_assign(paStav, paText);
+	if (texty.find(paStav) == texty.end()) {
+		texty.insert(std::make_pair(paStav, paText));
+	}
 }

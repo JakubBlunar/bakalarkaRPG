@@ -22,7 +22,7 @@ void AudioManager::nacitajEfekt(string src,float volume)
 	{
 		Audio* a = new Audio();
 		a->init(src, false, volume);
-		efekty.insert_or_assign(src, a);
+		efekty.insert(std::make_pair(src, a));
 	}
 }
 
@@ -32,7 +32,7 @@ void AudioManager::nacitajHudbu(string src, float volume)
 	{
 		Audio* a = new Audio();
 		a->init(src, false, volume);
-		hudba.insert_or_assign(src, a);
+		hudba.insert(std::make_pair(src, a));
 	}
 }
 
