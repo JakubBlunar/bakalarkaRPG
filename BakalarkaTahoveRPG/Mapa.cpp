@@ -118,7 +118,7 @@ void Mapa::render(sf::RenderWindow* okno) {
 	if (doY > vyska) doY = vyska;
 
 	sf::Sprite* sprite;
-	for (int vrstva = 0; vrstva < 4; vrstva++) {
+	for (int vrstva = 0; vrstva < 3; vrstva++) {
 
 		for (int i = odX; i < doX; i++)
 		{
@@ -156,7 +156,7 @@ void Mapa::render(sf::RenderWindow* okno) {
 					}
 				}
 
-				if (vrstva == 3) {
+				if (vrstva == 2) {
 					if (mapa[i][j]->Getnpc() != nullptr) {
 						Npc* npc = mapa[i][j]->Getnpc();
 						QuestManager* mng = hrac->Getmanazerquestov();

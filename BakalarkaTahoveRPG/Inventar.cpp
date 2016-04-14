@@ -12,7 +12,7 @@
 #include "AudioManager.h"
 
 Inventar::Inventar(int kapacita) {
-	this->pocetZlata = 100;
+	this->pocetZlata = 0;
 	this->kapacita = 60;
 }
 

@@ -108,7 +108,7 @@ protected:
 	Npc* npc;
 	std::vector<Predmet*>* polozenePredmety;
 	bool priechodne;
-	std::array<Vrstva*, 4> vrstvy;
+	std::array<Vrstva*, 3> vrstvy;
 	
 	float casMazaniaPredmetov;
 
