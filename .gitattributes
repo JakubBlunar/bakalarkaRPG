@@ -62,4 +62,6 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 
-*.rb linguist-language=C++
+SFML/* linguist-vendored
+BakalarkaTahoveRPG/Data/* linguist-vendored
+
